@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il Mio Account - InfuseMe</title>
+    <meta name="description" content="Gestisci il tuo account personale nel nostro negozio di tè, infusi e tisane di qualità">
+    <meta name="keywords" content="tè, infusi, tisane, account utente, profilo, ordini, preferenze">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+        <!-- Header -->
+    <header>
+        <!--logo Infuse Me in alto a sinistra-->
+        <div class="header-container">
+            <div class="header-container">
+            <div class="logo">
+                <img src="Images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
+                <img src="Images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
+            </div>
+            
+            <!-- Navigation (menù)-->
+            <nav aria-label="Menu principale" role="navigation">
+                <ul class="main-nav">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="catalogo.html">Catalogo</a></li>
+                    <li><a href="creaBlend.html">Crea il tuo Blend</a></li>
+                    <li><a href="chiSiamo.html">Chi Siamo</a></li>
+                </ul>
+            </nav>
+
+             <!-- Utility Icons -->
+            <div class="header-utilities">
+                <button class="icon-button" aria-label="Cerca prodotti">
+                <!--icona di ricerca-->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 513.749 513.749" width="24" height="24" aria-hidden="true">
+                        <path d="M504.352,459.061l-99.435-99.477c74.402-99.427,54.115-240.344-45.312-314.746S119.261-9.277,44.859,90.15 S-9.256,330.494,90.171,404.896c79.868,59.766,189.565,59.766,269.434,0l99.477,99.477c12.501,12.501,32.769,12.501,45.269,0 c12.501-12.501,12.501-32.769,0-45.269L504.352,459.061z M225.717,385.696c-88.366,0-160-71.634-160-160s71.634-160,160-160 s160,71.634,160,160C385.623,314.022,314.044,385.602,225.717,385.696z" fill="currentColor"/>
+                    </svg>
+                </button>
+                
+                <a href="carrello.php" class="icon-button" aria-label="Vai al carrello">
+                    <!--icona del carrello-->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+                        <path d="M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.994,0,0,0,22.713,4.077ZM21.4,6.178l-.786,4.354A3,3,0,0,1,17.657,13H5.419L4.478,5H20.41A1,1,0,0,1,21.4,6.178Z" fill="currentColor"/>
+                        <circle cx="7" cy="22" r="2" fill="currentColor"/>
+                        <circle cx="17" cy="22" r="2" fill="currentColor"/>
+                    </svg>
+                </a>
+                
+                <a href="paginaUtente.html" class="icon-button current-page" aria-label="Accedi all'area personale" aria-current="page">
+                    <!--icona dell'user per area personale, login, registrazione-->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+                        <path d="M12,12A6,6,0,1,0,6,6,6.006,6.006,0,0,0,12,12ZM12,2A4,4,0,1,1,8,6,4,4,0,0,1,12,2Z" fill="currentColor"/>
+                        <path d="M12,14a9.01,9.01,0,0,0-9,9,1,1,0,0,0,2,0,7,7,0,0,1,14,0,1,1,0,0,0,2,0A9.01,9.01,0,0,0,12,14Z" fill="currentColor"/>
+                    </svg>
+                </a>
+
+                <!-- icone per modalità chiara/scura -->
+                <button class="icon-button theme-toggle">
+                    <!-- Icona sole -->
+                     <svg class="theme-icon sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+                        <path d="M12,17c-2.76,0-5-2.24-5-5s2.24-5,5-5,5,2.24,5,5-2.24,5-5,5Zm0-8c-1.65,0-3,1.35-3,3s1.35,3,3,3,3-1.35,3-3-1.35-3-3-3Zm1-5V1c0-.55-.45-1-1-1s-1,.45-1,1v3c0,.55,.45,1,1,1s1-.45,1-1Zm0,19v-3c0-.55-.45-1-1-1s-1,.45-1,1v3c0,.55,.45,1,1,1s1-.45,1-1ZM5,12c0-.55-.45-1-1-1H1c-.55,0-1,.45-1,1s.45,1,1,1h3c.55,0,1-.45,1-1Zm19,0c0-.55-.45-1-1-1h-3c-.55,0-1,.45-1,1s.45,1,1,1h3c.55,0,1-.45,1-1ZM6.71,6.71c.39-.39,.39-1.02,0-1.41l-2-2c-.39-.39-1.02-.39-1.41,0s-.39,1.02,0,1.41l2,2c.2,.2,.45,.29,.71,.29s.51-.1,.71-.29Zm14,14c.39-.39,.39-1.02,0-1.41l-2-2c-.39-.39-1.02-.39-1.41,0s-.39,1.02,0,1.41l2,2c.2,.2,.45,.29,.71,.29s.51-.1,.71-.29Zm-16,0l2-2c.39-.39,.39-1.02,0-1.41s-1.02-.39-1.41,0l-2,2c-.39,.39-.39,1.02,0,1.41,.2,.2,.45,.29,.71,.29s.51-.1,.71-.29ZM18.71,6.71l2-2c.39-.39,.39-1.02,0-1.41s-1.02-.39-1.41,0l-2,2c-.39,.39-.39,1.02,0,1.41,.2,.2,.45,.29,.71,.29s.51-.1,.71-.29Z" fill="currentColor"/>
+                    </svg>
+
+                    
+                    <!-- Icona luna -->
+                     <svg class="theme-icon moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+                        <path d="M22.386,12.003c-.402-.167-.871-.056-1.151,.28-.928,1.105-2.506,1.62-4.968,1.62-3.814,0-6.179-1.03-6.179-6.158,0-2.397,.532-4.019,1.626-4.957,.33-.283,.439-.749,.269-1.149-.17-.401-.571-.655-1.015-.604C5.285,1.573,1,6.277,1,11.978c0,6.062,4.944,10.993,11.022,10.993,5.72,0,10.438-4.278,10.973-9.951,.042-.436-.205-.848-.609-1.017Z" fill="currentColor"/>
+                    </svg>
+                </button>
+
+
+            </div> <!--fine header utilities icons-->
+
+        </div>
+    </header>
+
+<main id="content">
+    <!-- Sistema di Login -->
+    <section id="login-section">
+        <div class="login-container">
+            <h2>Accedi al tuo account</h2>
+            <form id="login-form" action="login.php" method="post">
+                <div class="form-group">
+                    <label for="username">Username o Email:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-login">Accedi</button>
+                </div>
+                
+                <div class="form-links">
+                    <p><a href="recupera-password.html">Password dimenticata?</a></p>
+                    <p>Non hai un account? <a href="registrazione.html">Registrati</a></p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Sezione Registrazione (nascosta di default) -->
+    <section id="registrazione-section" style="display: none;">
+        <div class="login-container">
+            <h2>Crea un account</h2>
+            <form id="registrazione-form" action="registrazione.php" method="post">
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cognome">Cognome:</label>
+                    <input type="text" id="cognome" name="cognome" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="username-reg">Username:</label>
+                    <input type="text" id="username-reg" name="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password-reg">Password:</label>
+                    <input type="password" id="password-reg" name="password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="conferma-password">Conferma Password:</label>
+                    <input type="password" id="conferma-password" name="conferma-password" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="checkbox" id="accetta-termini" name="accetta-termini" required>
+                    <label for="accetta-termini">Accetto i <a href="termini.html">termini e condizioni</a></label>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-registrati">Registrati</button>
+                </div>
+                
+                <div class="form-links">
+                    <p>Hai già un account? <a href="#" id="torna-login">Accedi</a></p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Area Account (visibile solo dopo il login) -->
+    <section id="area-account" style="display: none;">
+        <h1>Il Mio Account</h1>
+        
+        <section id="profilo-utente">
+            <h2>Il Mio Profilo</h2>
+            <div class="user-info">
+                <img src="images/avatar-utente.jpg" alt="Immagine profilo utente">
+                <div class="user-details">
+                    <p><strong>Nome:</strong> <span id="user-nome">Maria Rossi</span></p>
+                    <p><strong>Email:</strong> <span id="user-email">maria.rossi@example.com</span></p>
+                    <p><strong>Username:</strong> <span id="user-username">maria_tea</span></p>
+                    <p><strong>Data registrazione:</strong> <time datetime="2023-05-15">15 maggio 2023</time></p>
+                    <p><a href="modifica-profilo.html">Modifica profilo</a></p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Resto del contenuto dell'account... -->
+        <section id="ordini-recenti">
+            <h2>I Miei Ordini Recenti</h2>
+            
+            <article class="ordine">
+                <h3>Ordine #TEA-2024-0012</h3>
+                <p><strong>Data:</strong> <time datetime="2024-01-15">15 gennaio 2024</time></p>
+                <p><strong>Stato:</strong> Consegnato</p>
+                <p><strong>Totale:</strong> €42,50</p>
+                
+                <h4>Prodotti acquistati:</h4>
+                <ul>
+                    <li>Tè Verde Giapponese - 100g</li>
+                    <li>Tisana Relax - 80g</li>
+                    <li>Infusore in metallo</li>
+                </ul>
+                
+                <p><a href="dettaglio-ordine.html">Visualizza dettagli ordine</a></p>
+            </article>
+            
+            <!-- Altri ordini... -->
+        </section>
+        
+        <button id="logout-btn" class="btn btn-logout">Esci</button>
+    </section>
+</main>
+
+   <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+               <!-- Colonna 1: Brand -->
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <div class="brand-name">InfuseMe</div>
+                        <div class="brand-tagline">Taste Tradition</div>
+                    </div>
+                </div>
+
+                <!-- Colonna 2: Contatti e Lavora con Noi-->
+                <div class="footer-section">
+                    <h3>Contatti</h3>
+                    <address>
+                        <div class="contact">
+                            <strong>Centralino:</strong> +39 000 111 abcd
+                        </div>
+                        <div class="contact">
+                            <strong>Customer Care:</strong> +39 111 222 efgh
+                        </div>
+                        <div class="contact">
+                            <strong>Assistenza Clienti:</strong> assistenza@infuseme.com
+                        </div>
+                    </address>
+
+                    <h3 class="work-with-us-title">Lavora con Noi</h3>
+                    <div class="work-with-us">
+                        <div class="work-item">
+                            <strong>Carriere:</strong> hr@infuseme.com
+                        </div>
+                        <div class="work-item">
+                            <strong>Collaborazioni:</strong> procurement@infuseme.com
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Colonna 3: Orari Sedi -->
+                <div class="footer-section">
+                    <h3>Orari Ufficio</h3>
+                    <div class="office-hours">
+                        <div class="hours">
+                            <strong>Lunedì - Venerdì:</strong> 9:00 - 18:00
+                        </div>
+                        <div class="hours">
+                            <strong>Sabato:</strong> 9:00 - 13:00
+                        </div>
+                        <div class="hours">
+                            <strong>Domenica:</strong> Chiuso
+                        </div>
+                    </div>
+
+                    <h3>Le Nostre Sedi</h3>
+                    <div class="locations">
+                        <div class="location-item">Val d'Ossola (Piemonte)</div>
+                        <div class="location-item">Biella</div>
+                    </div>
+                    
+                </div> <!--fine footer content-->
+
+
+            <!-- Social Media Icons - solo icoe dei social-->
+            <div class="footer-social">
+                <h3>Seguici sui social</h3>
+                <div class="social-icons">
+                    <!-- Instagram -->
+                    <span class="social-icon" aria-label="Instagram" title="Seguici su Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+                            <path d="m14.502,11.986c0,1.431-1.16,2.591-2.591,2.591s-2.59-1.16-2.59-2.591,1.16-2.591,2.59-2.591,2.591,1.16,2.591,2.591h0Zm0,0" fill="currentColor"/>
+                            <path d="m12,0h0C5.373,0,0,5.373,0,12h0c0,6.627,5.373,12,12,12h0c6.627,0,12-5.373,12-12h0C24,5.373,18.627,0,12,0Zm7.637,15.19c-.037.827-.169,1.392-.361,1.886-.199.511-.465.945-.897,1.377-.432.432-.866.698-1.376.896-.494.192-1.06.323-1.887.361-.829.038-1.094.047-3.205.047s-2.375-.009-3.204-.047c-.827-.038-1.392-.169-1.887-.361-.511-.198-.944-.465-1.377-.896-.432-.432-.698-.866-.897-1.377-.192-.494-.323-1.059-.361-1.886-.038-.829-.047-1.094-.047-3.205s.009-2.375.047-3.204c.038-.827.169-1.392.361-1.887.199-.511.465-.944.897-1.376s.866-.698,1.377-.897c.494-.192,1.06-.323,1.887-.361.829-.038,1.094-.047,3.204-.047s2.376.009,3.205.047c.827.037,1.392.169,1.887.361.511.198.944.465,1.376.897.432.432.698.866.897,1.376.192.494.323,1.06.361,1.887.038.829.047,1.093.047,3.204s-.009,2.375-.047,3.205h0Zm-1.666-7.788c-.141-.363-.309-.622-.582-.894-.272-.272-.531-.441-.894-.582-.274-.106-.685-.233-1.443-.267-.82-.038-1.066-.045-3.141-.045s-2.321.008-3.141.045c-.757.034-1.169.161-1.443.267-.363.141-.622.309-.894.582-.272.272-.441.531-.582.894-.106.274-.233.685-.267,1.443-.038.819-.045,1.065-.045,3.141s.008,2.321.045,3.141c.035.757.161,1.169.267,1.443.141.363.309.622.582.894.272.272.531.44.894.581.274.107.685.233,1.443.268.819.038,1.065.045,3.141.045s2.322-.008,3.141-.045c.758-.035,1.169-.161,1.443-.268.363-.141.622-.309.894-.581s.441-.531.582-.894c.106-.274.233-.685.267-1.443.038-.82.046-1.066.046-3.141s-.008-2.321-.046-3.141c-.035-.758-.161-1.169-.267-1.443h0Zm-6.059,8.574c-2.204,0-3.991-1.787-3.991-3.991s1.787-3.991,3.991-3.991,3.991,1.787,3.991,3.991-1.787,3.991-3.991,3.991h0Zm4.149-7.207c-.515,0-.933-.417-.933-.932s.417-.933.933-.933.933.418.933.933-.418.932-.933.932h0Zm0,0" fill="currentColor"/>
+                        </svg>
+                    </span>
+
+                    <!-- Facebook -->
+                    <span class="social-icon" aria-label="Facebook" title="Seguici su Facebook">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+                            <path d="M24,12.073c0,5.989-4.394,10.954-10.13,11.855v-8.363h2.789l0.531-3.46H13.87V9.86c0-0.947,0.464-1.869,1.95-1.869h1.509V5.045c0,0-1.37-0.234-2.679-0.234c-2.734,0-4.52,1.657-4.52,4.656v2.637H7.091v3.46h3.039v8.363C4.395,23.025,0,18.061,0,12.073c0-6.627,5.373-12,12-12S24,5.445,24,12.073z" fill="currentColor"/>
+                        </svg>
+                    </span>
+
+                    <!-- TikTok -->
+                    <span class="social-icon" aria-label="TikTok" title="Seguici su TikTok">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+                            <path d="m12,0C5.373,0,0,5.373,0,12s5.373,12,12,12,12-5.373,12-12S18.627,0,12,0h0Zm7.439,10.483c-1.52,0-2.93-.486-4.081-1.312v5.961c0,2.977-2.422,5.399-5.399,5.399-1.151,0-2.217-.363-3.094-.978-1.393-.978-2.305-2.594-2.305-4.421,0-2.977,2.422-5.399,5.399-5.399.247,0,.489.02.727.053v2.994c-.23-.072-.474-.114-.727-.114-1.36,0-2.466,1.106-2.466,2.466,0,.947.537,1.769,1.322,2.183.342.18.731.283,1.144.283,1.329,0,2.412-1.057,2.461-2.373l.005-11.756h2.933c0,.254.025.503.069.744.207,1.117.87,2.077,1.789,2.676.64.418,1.403.661,2.222.661v2.933Zm0,0" fill="currentColor"/>
+                        </svg>
+                    </span>
+
+                    <!-- LinkedIn -->
+                    <span class="social-icon" aria-label="LinkedIn" title="Seguici su LinkedIn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+                            <path d="m20.65,18.172h-.174v-.353h.22c.114,0,.244.018.244.167,0,.171-.131.185-.29.185Z" fill="currentColor"/>
+                            <path d="m20.639,17.366c-.473.008-.85.398-.843.871.008.473.398.851.871.843h0s.022,0,.022,0c.463-.01.83-.393.821-.856v-.014c-.008-.473-.398-.851-.871-.843h0Zm.31,1.378l-.285-.449-.004-.005h-.184v.454h-.149v-1.043h.398c.246,0,.367.095.367.294,0,.006,0,.012,0,.018-.001.147-.095.266-.289.266l.308.465h-.160Z" fill="currentColor"/>
+                            <path d="m12,0h0C5.373,0,0,5.373,0,12h0c0,6.627,5.373,12,12,12h0c6.627,0,12-5.373,12-12h0C24,5.373,18.627,0,12,0Zm7.037,18.056c-.008.578-.483,1.042-1.062,1.034H5.76c-.577.006-1.051-.457-1.058-1.034V5.79c.007-.577.48-1.04,1.058-1.033h12.215c.578-.009,1.053.454,1.062,1.032v12.267Zm1.65,1.136c-.54.005-.982-.428-.987-.968-.005-.539.428-.981.968-.987h.019c.532.005.963.436.968.968.005.539-.428.981-.968.987Zm-6.32-9.232c-.823-.03-1.596.394-2.012,1.105h-.028v-.935h-2.039v6.84h2.124v-3.383c0-.893.169-1.756,1.276-1.756,1.09,0,1.104,1.021,1.104,1.814v3.326h2.124v-3.752c0-1.843-.396-3.258-2.549-3.258h0Zm-7.54,7.01h2.126v-6.84h-2.126v6.84Zm1.064-10.24c-.681,0-1.233.552-1.233,1.233,0,.681.552,1.232,1.233,1.232s1.233-.552,1.233-1.233c0-.681-.552-1.233-1.233-1.232Z" fill="currentColor"/>
+                        </svg>
+                    </span>
+
+                    <!-- Pinterest -->
+                    <span class="social-icon" aria-label="Pinterest" title="Seguici su Pinterest">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+                            <path d="M12.01,0C5.388,0,0.02,5.368,0.02,11.99c0,5.082,3.158,9.424,7.618,11.171c-0.109-0.947-0.197-2.408,0.039-3.444c0.217-0.938,1.401-5.961,1.401-5.961s-0.355-0.72-0.355-1.776c0-1.668,0.967-2.911,2.171-2.911c1.026,0,1.52,0.77,1.52,1.688c0,1.026-0.651,2.566-0.997,3.997c-0.286,1.194,0.602,2.171,1.776,2.171c2.132,0,3.77-2.25,3.77-5.487c0-2.872-2.062-4.875-5.013-4.875c-3.414,0-5.418,2.556-5.418,5.201c0,1.026,0.395,2.132,0.888,2.734C7.52,14.615,7.53,14.724,7.5,14.842c-0.089,0.375-0.296,1.194-0.336,1.362c-0.049,0.217-0.178,0.266-0.405,0.158c-1.5-0.701-2.438-2.882-2.438-4.648c0-3.78,2.743-7.253,7.924-7.253c4.155,0,7.391,2.961,7.391,6.928c0,4.135-2.605,7.461-6.217,7.461c-1.214,0-2.359-0.632-2.743-1.382c0,0-0.602,2.289-0.75,2.852c-0.266,1.046-0.997,2.349-1.49,3.148C9.562,23.812,10.747,24,11.99,24,9.562,23.812,10.747,24,11.99,24c6.622,0,11.99-5.368,11.99-11.99C24,5.368,18.632,0,12.01,0z" fill="currentColor"/>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 InfuseMe. Tutti i diritti riservati.</p>
+            </div>
+
+        </div> <!--fine class container-->
+    </footer>
+
+    <!--in fondo alla pagina perchè così il browser carica prima il contenuto visibile e lo script non blocca il rendering: migliore performance-->
+    <script src="tema.js"></script>
+
+
+<script>
+    // Gestione del sistema di login/registrazione
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginSection = document.getElementById('login-section');
+        const registrazioneSection = document.getElementById('registrazione-section');
+        const areaAccount = document.getElementById('area-account');
+        const linkRegistrati = document.querySelector('a[href="registrazione.html"]');
+        const tornaLogin = document.getElementById('torna-login');
+        const logoutBtn = document.getElementById('logout-btn');
+        
+        // Controlla se l'utente è già loggato (simulazione)
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        
+        if (isLoggedIn) {
+            mostraAreaAccount();
+        } else {
+            mostraLogin();
+        }
+        
+        // Gestione click su "Registrati"
+        if (linkRegistrati) {
+            linkRegistrati.addEventListener('click', function(e) {
+                e.preventDefault();
+                mostraRegistrazione();
+            });
+        }
+        
+        // Gestione click su "Torna al Login"
+        if (tornaLogin) {
+            tornaLogin.addEventListener('click', function(e) {
+                e.preventDefault();
+                mostraLogin();
+            });
+        }
+        
+        // Gestione logout
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', function() {
+                localStorage.setItem('isLoggedIn', 'false');
+                mostraLogin();
+            });
+        }
+        
+        // Gestione submit form login
+        const loginForm = document.getElementById('login-form');
+        if (loginForm) {
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Qui andrebbe la logica di autenticazione con il server
+                localStorage.setItem('isLoggedIn', 'true');
+                mostraAreaAccount();
+            });
+        }
+        
+        // Gestione submit form registrazione
+        const registrazioneForm = document.getElementById('registrazione-form');
+        if (registrazioneForm) {
+            registrazioneForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Qui andrebbe la logica di registrazione con il server
+                localStorage.setItem('isLoggedIn', 'true');
+                mostraAreaAccount();
+            });
+        }
+        
+        function mostraLogin() {
+            loginSection.style.display = 'block';
+            registrazioneSection.style.display = 'none';
+            areaAccount.style.display = 'none';
+        }
+        
+        function mostraRegistrazione() {
+            loginSection.style.display = 'none';
+            registrazioneSection.style.display = 'block';
+            areaAccount.style.display = 'none';
+        }
+        
+        function mostraAreaAccount() {
+            loginSection.style.display = 'none';
+            registrazioneSection.style.display = 'none';
+            areaAccount.style.display = 'block';
+        }
+    });
+</script>
+
+</body>
+</html>
