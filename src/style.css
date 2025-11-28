@@ -312,6 +312,9 @@ body.dark-theme .logo-light { display: none; }
 .icon-button svg {
     width: 28px;
     height: 28px;
+    color: var(--header-text);
+    fill: currentColor;
+    transition: color 0.3s ease;
 }
 
 /* Theme Toggle */
@@ -332,6 +335,8 @@ body.dark-theme .logo-light { display: none; }
     width: 24px;
     height: 24px;
     transition: opacity 0.3s ease;
+    color: var(--header-text);
+    fill: currentColor;
 }
 
 .sun-icon { opacity: 1; }
@@ -370,10 +375,19 @@ body.dark-theme .moon-icon { opacity: 1; }
     color: var(--header-text);
 }
 
+body.dark-theme .btn-primary {
+    color: var(--header-bg);
+}
+
+body.dark-theme .btn-primary:hover,
+body.dark-theme .btn-primary:focus {
+    color: var(--header-bg);
+}
+
 .btn-primary:visited { color: var(--header-text); }
 .btn-primary:hover, .btn-primary:focus {
     background-color: var(--button-hover);
-    color: #FFFFFF;
+    color: var(--header-text);
 }
 
 .btn-secondary {
@@ -388,11 +402,6 @@ body.dark-theme .moon-icon { opacity: 1; }
     color: #FFFFFF;
 }
 
-.btn-small {
-    padding: 0.75em 1.5em;
-    font-size: 1em;
-}
-
 /* ===================================
    MAIN CONTENT E SEZIONI
    =================================== */
@@ -401,7 +410,10 @@ main { min-height: calc(100vh - 400px); }
 
 section { padding: 4em 0; }
 
-/* Hero Section */
+/* ===================================
+   HERO SECTION
+   =================================== */
+
 .hero {
     background: linear-gradient(135deg, var(--header-text) 0%, var(--bg-color) 100%); /*modifica il secondo valore per il colore dello sfondo della foto opacizzato*/
     padding: 6em 2em;
@@ -409,6 +421,11 @@ section { padding: 4em 0; }
     margin-bottom: 3em;
     position: relative;
     overflow: hidden; /* Importante per contenere l'immagine */
+}
+
+/* Per il tema scuro*/
+body.dark-theme .hero {
+    background: linear-gradient(135deg, var(--header-bg) 0%, var(--bg-color) 100%);
 }
 
 .hero-background {
@@ -1171,5 +1188,436 @@ button:focus, a:focus, input:focus, select:focus, textarea:focus {
     img {
         max-width: 100%;
         page-break-inside: avoid;
+    }
+}
+
+/* ===================================
+   CSS AGGIUNTIVO PER CREA BLEND
+   =================================== */
+
+/* Layout container a 2 colonne */
+.blend-container {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 2em;
+    align-items: start;
+}
+
+/* Contenitore principale blend */
+#basi, #ingredienti {
+    padding: 3em 0;
+}
+
+#basi h2, #ingredienti h2 {
+    text-align: center;
+    margin-bottom: 2em;
+    font-size: 2.2em;
+    color: var(--text-color);
+}
+
+#ingredienti h3 {
+    font-size: 1.8em;
+    margin: 2.5em 0 1.5em 0;
+    color: var(--text-color);
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 0.5em;
+}
+
+/* Grid delle basi */
+.basi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2em;
+    margin-bottom: 3em;
+}
+
+/* Card base */
+#basi .base {
+    background-color: transparent;
+    border: 2px solid var(--text-color);
+    border-radius: 12px;
+    padding: 1.5em;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+#basi .base:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    background-color: var(--card-bg);
+}
+
+#basi .base.selected {
+    background-color: var(--accent-color);
+    border-color: var(--button-bg);
+    border-width: 3px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+#basi .base.selected h3 {
+    color: var(--bg-color);
+    font-weight: bold;
+}
+
+#basi .base img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1em;
+}
+
+#basi .base h3 {
+    font-size: 1.4em;
+    margin-bottom: 0.8em;
+    color: var(--text-color);
+}
+
+#basi .base p {
+    font-size: 0.95em;
+    margin-bottom: 0.8em;
+    line-height: 1.5;
+    color: var(--text-color);
+}
+
+#basi .base p strong {
+    color: var(--button-bg);
+}
+
+#basi .base .btn {
+    margin-top: 1em;
+    width: 100%;
+}
+
+#basi .base.selected .btn {
+    background-color: var(--bg-color);
+    color: var(--button-bg);
+}
+
+body.dark-theme #basi .base.selected .btn {
+    background-color: var(--header-text);
+    color: var(--header-bg);
+}
+
+/* Grid ingredienti */
+.ingredienti-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5em;
+    margin-bottom: 2em;
+}
+
+/* Card ingrediente */
+.ingrediente-item {
+    background-color: transparent;
+    border: 2px solid var(--text-color);
+    border-radius: 12px;
+    padding: 1.2em;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.ingrediente-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    background-color: var(--card-bg);
+}
+
+.ingrediente-item.selected {
+    background-color: var(--accent-color);
+    border-color: var(--button-bg);
+    border-width: 3px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.ingrediente-item.selected dt {
+    color: var(--bg-color);
+    font-weight: bold;
+}
+
+.ingrediente-item.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.ingrediente-item.disabled:hover {
+    transform: none;
+    box-shadow: none;
+    background-color: transparent;
+}
+
+.ingrediente-item img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 0.8em 0;
+}
+
+.ingrediente-item dt {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-bottom: 0.5em;
+    color: var(--text-color);
+}
+
+.ingrediente-item dd {
+    font-size: 0.9em;
+    margin: 0;
+    line-height: 1.4;
+    color: var(--text-color);
+}
+
+.ingrediente-item .btn {
+    margin-top: 1em;
+    width: 100%;
+    font-size: 0.95em;
+    padding: 0.8em 1.5em;
+}
+
+.ingrediente-item.selected .btn {
+    background-color: var(--bg-color);
+    color: var(--button-bg);
+}
+
+body.dark-theme .ingrediente-item.selected .btn {
+    background-color: var(--header-text);
+    color: var(--header-bg);
+}
+
+/* Badge selezione */
+.selection-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--button-bg);
+    color: var(--header-text);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.9em;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.ingrediente-item.selected .selection-badge,
+#basi .base.selected .selection-badge {
+    opacity: 1;
+}
+
+/* Riepilogo selezione — VERSIONE STICKY */
+.riepilogo-blend {
+    position: sticky;
+    top: 100px;
+    width: 350px;
+    background-color: var(--card-bg);
+    border: 3px solid var(--button-bg);
+    border-radius: 12px;
+    padding: 2em;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.riepilogo-blend h3 {
+    margin-bottom: 1.5em;
+    color: var(--button-bg);
+    font-size: 1.8em;
+    text-align: center;
+}
+
+/* Info riepilogo */
+.selezione-info {
+    margin-bottom: 1.5em;
+    padding: 1em;
+    background-color: var(--section-bg);
+    border-radius: 8px;
+}
+
+.selezione-info p {
+    margin-bottom: 0.5em;
+    font-size: 1.05em;
+}
+
+.selezione-info strong {
+    color: var(--button-bg);
+}
+
+.lista-selezioni {
+    list-style: none;
+    padding: 0;
+    margin: 1em 0;
+}
+
+.lista-selezioni li {
+    padding: 0.8em;
+    background-color: var(--section-bg);
+    border-radius: 6px;
+    margin-bottom: 0.5em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lista-selezioni li strong {
+    color: var(--button-bg);
+}
+
+.btn-rimuovi {
+    background: none;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 0.2em 0.5em;
+    transition: transform 0.2s ease;
+}
+
+.btn-rimuovi:hover {
+    transform: scale(1.2);
+    color: #c82333;
+}
+
+.btn-conferma-blend {
+    width: 100%;
+    margin-top: 1.5em;
+    font-size: 1.2em;
+    padding: 1.2em;
+}
+
+.btn-conferma-blend:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--accent-color);
+}
+
+/* Avviso */
+.avviso-selezione {
+    background-color: #fff3cd;
+    border: 2px solid #ffc107;
+    border-radius: 8px;
+    padding: 1em;
+    margin: 1em 0;
+    text-align: center;
+    color: #856404;
+    font-weight: 500;
+}
+
+body.dark-theme .avviso-selezione {
+    background-color: #3d3520;
+    border-color: #ffc107;
+    color: #ffc107;
+}
+
+/* Scrollbar */
+.riepilogo-blend::-webkit-scrollbar {
+    width: 8px;
+}
+
+.riepilogo-blend::-webkit-scrollbar-track {
+    background: var(--section-bg);
+    border-radius: 4px;
+}
+
+.riepilogo-blend::-webkit-scrollbar-thumb {
+    background: var(--button-bg);
+    border-radius: 4px;
+}
+
+.riepilogo-blend::-webkit-scrollbar-thumb:hover {
+    background: var(--button-hover);
+}
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+
+@media screen and (max-width: 1200px) {
+    .blend-container {
+        grid-template-columns: 1fr;
+    }
+
+    .riepilogo-blend {
+        position: relative;
+        top: 0;
+        max-height: none;
+        margin: 3em auto;
+        max-width: 600px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .basi-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .ingredienti-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .riepilogo-blend {
+        position: relative;
+        top: 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .basi-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.5em;
+    }
+
+    .ingredienti-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1em;
+    }
+
+    #basi .base img {
+        height: 180px;
+    }
+
+    .ingrediente-item img {
+        height: 130px;
+    }
+
+    .riepilogo-blend {
+        padding: 1.5em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .basi-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ingredienti-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #basi h2, #ingredienti h2 {
+        font-size: 1.8em;
+    }
+
+    #ingredienti h3 {
+        font-size: 1.5em;
+    }
+
+    .riepilogo-blend {
+        padding: 1.2em;
+    }
+
+    .riepilogo-blend h3 {
+        font-size: 1.5em;
     }
 }

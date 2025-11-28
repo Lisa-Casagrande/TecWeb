@@ -58,15 +58,14 @@
                 </a>
 
                 <!-- icone per modalità chiara/scura -->
-                <button class="icon-button theme-toggle">
+                <button class="icon-button theme-toggle" aria-label="Cambia tema">
                     <!-- Icona sole -->
-                     <svg class="icon-svg" class="theme-icon sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                    <svg class="theme-icon sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M12,17c-2.76,0-5-2.24-5-5s2.24-5,5-5,5,2.24,5,5-2.24,5-5,5Zm0-8c-1.65,0-3,1.35-3,3s1.35,3,3,3,3-1.35,3-3-1.35-3-3-3Zm1-5V1c0-.55-.45-1-1-1s-1,.45-1,1v3c0,.55,.45,1,1,1s1-.45,1-1Zm0,19v-3c0-.55-.45-1-1-1s-1,.45-1,1v3c0,.55,.45,1,1,1s1-.45,1-1ZM5,12c0-.55-.45-1-1-1H1c-.55,0-1,.45-1,1s.45,1,1,1h3c.55,0,1-.45,1-1Zm19,0c0-.55-.45-1-1-1h-3c-.55,0-1,.45-1,1s.45,1,1,1h3c.55,0,1-.45,1-1ZM6.71,6.71c.39-.39,.39-1.02,0-1.41l-2-2c-.39-.39-1.02-.39-1.41,0s-.39,1.02,0,1.41l2,2c.2,.2,.45,.29,.71,.29s.51-.1,.71-.29Zm14,14c.39-.39,.39-1.02,0-1.41l-2-2c-.39-.39-1.02-.39-1.41,0s-.39,1.02,0,1.41l2,2c.2,.2,.45,.29,.71,.29s.51-.1,.71-.29Zm-16,0l2-2c.39-.39,.39-1.02,0-1.41s-1.02-.39-1.41,0l-2,2c-.39,.39-.39,1.02,0,1.41,.2,.2,.45,.29,.71,.29s.51-.1,.71-.29ZM18.71,6.71l2-2c.39-.39,.39-1.02,0-1.41s-1.02-.39-1.41,0l-2,2c-.39,.39-.39,1.02,0,1.41,.2,.2,.45,.29,.71,.29s.51-.1,.71-.29Z"/>
                     </svg>
 
-                    
                     <!-- Icona luna -->
-                     <svg class="icon-svg" class="theme-icon moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                    <svg class="theme-icon moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M22.386,12.003c-.402-.167-.871-.056-1.151,.28-.928,1.105-2.506,1.62-4.968,1.62-3.814,0-6.179-1.03-6.179-6.158,0-2.397,.532-4.019,1.626-4.957,.33-.283,.439-.749,.269-1.149-.17-.401-.571-.655-1.015-.604C5.285,1.573,1,6.277,1,11.978c0,6.062,4.944,10.993,11.022,10.993,5.72,0,10.438-4.278,10.973-9.951,.042-.436-.205-.848-.609-1.017Z"/>
                     </svg>
                 </button>
@@ -81,7 +80,9 @@
     <main id="main-content" role="main">
 
         <!-- Hero Section con sfondo -->
-        <section class="hero" aria-labelledby="hero-title" style="background-image: linear-gradient(rgba(78, 54, 46, 0.6), rgba(78, 54, 46, 0.6)), url('Images/Home/copertina8.jpg'); background-size: cover; background-position: center;">
+        <!-- Hero Section con sfondo -->
+        <section class="hero" aria-labelledby="hero-title">
+            <img src="Images/Home/copertina8.jpg" alt="" class="hero-background">
             <div class="hero-content">
                 <h1 id="hero-title">InfuseMe: Tè e infusi artigianali nati tra le montagne della Val d'Ossola</h1>
                 <p class="hero-subtitle">La qualità è una tradizione che coltiviamo dal 1975</p>
@@ -117,7 +118,7 @@
                         <h3>Tè Verde al Matcha</h3>
                         <p class="product-description">Il più alto grado di tè verde, coltivato all'ombra e macinato a pietra. Il tè perfetto per un buon risveglio.</p>
                         <p class="product-price">€6,50</p>
-                        <a href="prodotto.html?id=1" class="btn btn-small">Scopri di più</a>
+                        <a href="prodotto.html?id=1" class="btn btn-primary">Scopri di più</a>
                     </article>
 
                     <article class="product-card">
@@ -127,7 +128,7 @@
                         <h3>Tè Giallo alla Vaniglia e Pera</h3>
                         <p class="product-description">Tè giallo arricchito con aroma di vaniglia e pera, per la tua dolce merenda.</p>
                         <p class="product-price">€5,00</p>
-                        <a href="prodotto.html?id=2" class="btn btn-small">Scopri di più</a>
+                        <a href="prodotto.html?id=2" class="btn btn-primary">Scopri di più</a>
                     </article>
 
                     <article class="product-card">
@@ -137,7 +138,7 @@
                         <h3>Infuso Alpino - Edizione 50° Anniversario</h3>
                         <p class="product-description">Assapora il gusto della tradizione con l'infuso originario della nostra famiglia, il primo prodotto nel 1975.</p>
                         <p class="product-price">€7,00</p>
-                        <a href="prodotto.html?id=3" class="btn btn-small">Scopri di più</a>
+                        <a href="prodotto.html?id=3" class="btn btn-primary">Scopri di più</a>
                     </article>
                 </div>
                 <div class="section-cta">
