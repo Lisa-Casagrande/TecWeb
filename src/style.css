@@ -2,6 +2,8 @@
    RESET E VARIABILI
    =================================== */
 
+/*reset universale per consistenza cross browser: azzera margini e padding predefiniti da browser
+padding e border inclusi nella larghezza totale */
 * {
     margin: 0;
     padding: 0;
@@ -16,7 +18,7 @@
     --header-text-light: #FFFBE9;
     --link-light: #6B4532;
     --link-visited-light: #5A3A28;
-    --link-hover-light: #8B5A3C;
+    --link-hover-light: #FEBA17; /*solo skip link ?  -> prima era marroncino chiaro*/
     --button-bg-light: #6B4532;
     --button-hover-light: #5A3A28;
     --accent-light: #A67C52;
@@ -77,8 +79,8 @@ body.dark-theme {
 
 body {
     font-family: 'Georgia', 'Times New Roman', serif;
-    font-size: 100%;
-    line-height: 1.6;
+    font-size: 100%; /*rispetta preferenze utente*/
+    line-height: 1.6; /*ampio x accessibilità (> 1.5)*/
     color: var(--text-color);
     background-color: var(--bg-color);
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -92,7 +94,7 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--text-color);
 }
 
-h1 { font-size: 2.5em; }
+h1 { font-size: 2.5em; font-weight: bold;}
 h2 { font-size: 2em; }
 h3 { font-size: 1.5em; }
 
@@ -100,41 +102,61 @@ p {
     margin-bottom: 1em;
 }
 
+/*link*/
 a {
     color: var(--link-color);
-    text-decoration: none;
+    text-decoration: none; /*rimuove sottolineatura predefinita per i link*/
     transition: color 0.2s ease;
 }
 
+/*link visitato appare sottolineato*/
 a:visited { color: var(--link-visited); }
-a:hover, a:focus { color: var(--link-hover); text-decoration: underline; }
+a:hover { color: var(--link-hover); text-decoration: underline; }
 
+/*focus indicatore visibile x accessibilità: bordo colorato quando il link ha focus (da tastiera)
 a:focus {
     outline: 2px solid var(--accent-color);
     outline-offset: 2px;
+}*/
+
+/*versione più moderna: focus visibile solo con TAB e non anche con mouse o touch
+focus sui link che vengono sottolineati + bordatura */
+a:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    color: var(--link-hover);
+    text-decoration: underline;
+}
+/*fallback per browser che non supportano focus-visible (pochi casi)*/
+a:focus:not(:focus-visible) {
+    outline: none;
 }
 
+/*immagine responsive che mantiene proporzioni*/
 img {
     max-width: 100%;
     height: auto;
     display: block;
 }
 
+/*rimuove corsivo per indirizzi*/
 address { font-style: normal; }
 
-/* Utility classes */
+/*navigazione solo per screen reader*/
 .sr-only {
    position: absolute;
    width: 1px;
    height: 1px;
    padding: 0;
    margin: -1px;
-   overflow: hidden;
+   overflow: hidden; /*appare nascosto all'utente*/
    clip-path: inset(50%);
    white-space: nowrap;
    border-width: 0;
 }
 
+/* skip link: appare solo quando riceve focus, premendo tasto TAB
+-> salta al contenuto principale del main se premuto con INVIO */
 .skip-link {
    position: fixed;
    top: -50px;
@@ -162,14 +184,16 @@ address { font-style: normal; }
   LAYOUT E CONTAINER
   =================================== */
 
+/*container responsive con padding laterale - layout mobile first: usa tutta larghezza disponibile*/
 .container, .header-container {
    width: 100%;
    max-width: 100%;
-   margin: 0 auto;
+   margin: 0 auto; /*centra orizzontalmente*/
    padding: 0 1em;
 }
 
-/* Breakpoints */
+/* BREAKPOINTS: x responsive design*/
+/* tablet */
 @media screen and (min-width: 768px) {
     .container, .header-container {
         max-width: 720px;
@@ -177,6 +201,7 @@ address { font-style: normal; }
     }
 }
 
+/*desktop piccolo*/
 @media screen and (min-width: 1024px) {
     .container, .header-container {
         max-width: 960px;
@@ -184,19 +209,20 @@ address { font-style: normal; }
     }
 }
 
+/*desktop grande*/
 @media screen and (min-width: 1200px) {
     .container, .header-container {
         max-width: 1140px;
     }
 }
 
-/* Header specific layout */
+/* FLEXBOX x layout header: abilita flexbox (CSS3)*/
 .header-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /*logo sinistra, menu centro, icone destra*/
     align-items: center;
-    flex-wrap: wrap;
-    gap: 2em;
+    flex-wrap: wrap; /*elementi vanno a capo su mobile*/
+    gap: 2em; /*spazio tra elementi*/
 }
 
 /* ===================================
@@ -207,9 +233,8 @@ header {
     background-color: var(--header-bg);
     color: var(--header-text);
     padding: 1em 0;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    position: relative; /*sticky = l'header rimane fisso durante lo scroll + top: 0;*/
+    z-index: 1000; /*sopra contenuto ma sotto modali (best practice)*/
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
@@ -572,11 +597,11 @@ body.dark-theme .hero {
 }
 
 /* ===================================
-   VALUES SECTION - PULITA
+   VALUES SECTION
    =================================== */
 
 .values-section {
-    background-color: var(--bg-color); /* Usa lo sfondo principale */
+    background-color: var(--bg-color); /*usa lo sfondo principale*/
     padding: 4em 0;
 }
 
@@ -589,15 +614,15 @@ body.dark-theme .hero {
 
 .value-item {
     text-align: center;
-    padding: 0; /* Rimossa padding */
+    padding: 0; /*rimosso padding*/
     position: relative;
-    background: none; /* Rimossa sfondo */
-    border: none; /* Rimossi bordi */
-    box-shadow: none; /* Rimossa ombra */
-    transition: none; /* Rimossa transizione */
+    background: none; /*rimosso sfondo*/
+    border: none; /*rimossi bordi*/
+    box-shadow: none; /*rimossa ombra*/
+    transition: none; /*rimossa transizione*/
 }
 
-/* Rimuovi anche gli effetti hover */
+/*rimossi effetti hover*/
 .value-item:hover {
     transform: none;
     box-shadow: none;
@@ -611,9 +636,11 @@ body.dark-theme .hero {
     align-items: center;
 }
 
+/*dimensione e colore icone nel css: separazione contenuto presentazione*/
 .value-icon svg {
     width: 60px;
     height: 60px;
+    fill: currentColor; /*colore ereditato da parent*/
 }
 
 .value-item h3 {
@@ -653,6 +680,8 @@ body.dark-theme .hero {
         display: none;
     }
 }
+
+
 
 /* ===================================
    FOOTER MOLTO COMPATTO
@@ -727,7 +756,8 @@ footer {
 /* Titolo della sezione social */
 .footer-social h3 {
     margin-bottom: 0; 
-    font-size: 1em; 
+    font-size: 1.2em;
+    color: var(--header-text);
 }
 
 /* Contenitore delle icone social */
@@ -744,18 +774,27 @@ footer {
     display: inline-flex; 
     align-items: center; 
     justify-content: center; 
-    width: 40px; /* Larghezza icona  */
-    height: 40px; /* Altezza icona  */
-    border-radius: 50%; /* Forma circolare */
-    background-color: rgba(255, 255, 255, 0.1); /* Sfondo semi-trasparente */
-    color: var(--header-text); /* Colore dell'icona */
+    width: 40px; /*larghezza icona*/
+    height: 40px; /*altezza icona*/
+    border-radius: 50%; /*forma circolare*/
+    background-color: rgba(255, 255, 255, 0.1); /*sfondo semi-trasparente*/
+    color: var(--header-text); /*colore dell'icona */
 }
+
+/* SVG icons */
+.social-icon svg {
+    width: 24px;  /*dimensioni icona*/
+    height: 24px;
+    fill: currentColor;
+    transition: fill 0.3s ease;
+}
+
 
 /* ===================================
    FOOTER BOTTOM
    =================================== */
 
-/* Sezione inferiore del footer */
+/*sezione inferiore del footer */
 .footer-bottom {
     grid-column: 1 / -1; 
     border-top: 1px solid rgba(255, 255, 255, 0.2); 
@@ -764,11 +803,206 @@ footer {
     text-align: center; 
 }
 
-/* Paragrafo nella sezione inferiore */
+/*paragrafo nella sezione inferiore */
 .footer-bottom p {
     margin: 0; 
     font-size: 0.8em; 
 }
+
+
+/* ===================================
+   PULSANTE TORNA SU
+   + backToTop.js per farlo apparire allo scroll
+   =================================== */
+.back-to-top {
+    position: fixed;
+    bottom: 2em;
+    right: 2em;
+    z-index: 999;
+    width: 3.5em;
+    height: 3.5em;
+    background-color: var(--button-bg);
+    border: none;
+    border-radius: 50%; /*icona a cerchio*/
+    color: var(--header-text);
+    
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    
+    /*all'inizio è nascosto*/
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.8);
+    
+    /*transizioni fluide*/
+    transition: opacity 0.3s ease, 
+                visibility 0.3s ease, 
+                transform 0.3s ease,
+                background-color 0.3s ease,
+                box-shadow 0.3s ease;
+    
+    /*layout interno*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*mostra quando visibile*/
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+}
+
+/* Hover e Focus */
+.back-to-top:hover,
+.back-to-top:focus {
+    background-color: var(--button-hover);
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+/*focus visibile solo tastiera (accessibilità)*/
+.back-to-top:focus-visible {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 3px;
+}
+
+/*rimuovi outline su click mouse*/
+.back-to-top:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/*icona freccia (svg)*/
+.back-to-top svg {
+    width: 2em;
+    height: 2em;
+    fill: currentColor;
+}
+
+/* Tema scuro */
+body.dark-theme .back-to-top {
+    color: var(--header-bg);
+}
+
+/* ===================================
+   TOOLTIP PERSONALIZZATO
+   =================================== */
+.back-to-top::before {
+    content: "Torna all'inizio";
+    
+    /*posizionamento sopra il pulsante*/
+    position: absolute;
+    bottom: calc(100% + 0.8em);
+    right: 0;
+    
+    background-color: var(--header-bg);
+    color: var(--header-text);
+    padding: 0.6em 1em;
+    border-radius: 6px;
+    font-size: 0.9em;
+    font-weight: 500;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    
+    /*nascosto all'inizio*/
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(5px);
+    
+    transition: opacity 0.3s ease, 
+                visibility 0.3s ease, 
+                transform 0.3s ease;
+    
+    /*non interferisce con hover (WCAG 1.4.13)*/
+    pointer-events: none;
+    
+    z-index: 1000; /*sopra tutto*/
+}
+
+/* Mostra tooltip su hover e focus (accessibilità tastiera) */
+.back-to-top:hover::before,
+.back-to-top:focus::before{
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* ===================================
+   RESPONSIVE - TABLET
+   =================================== */
+
+@media screen and (max-width: 768px) {
+    .back-to-top {
+        bottom: 1.5em;
+        right: 1.5em;
+        width: 3em;
+        height: 3em;
+    }
+    
+    .back-to-top svg {
+        width: 1.7em;
+        height: 1.7em;
+    }
+    
+    /* Tooltip più piccolo */
+    .back-to-top::before {
+        font-size: 0.85em;
+        padding: 0.5em 0.8em;
+    }
+    
+    .back-to-top::after {
+        right: 1em;
+    }
+}
+
+/* ===================================
+   RESPONSIVE - MOBILE
+   =================================== */
+
+@media screen and (max-width: 480px) {
+    .back-to-top {
+        bottom: 1em;
+        right: 1em;
+        width: 2.8em;
+        height: 2.8em;
+    }
+    
+    .back-to-top svg {
+        width: 1.6em;
+        height: 1.6em;
+    }
+    
+    /* Tooltip mobile */
+    .back-to-top::before {
+        font-size: 0.8em;
+        padding: 0.4em 0.7em;
+        bottom: calc(100% + 0.6em);
+    }
+    
+    .back-to-top::after {
+        bottom: calc(100% + 0.1em);
+        right: 0.8em;
+        border-width: 0.4em;
+    }
+}
+
+/* ===================================
+   ACCESSIBILITÀ - MOVIMENTO RIDOTTO
+   =================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .back-to-top,
+    .back-to-top::before,
+    .back-to-top::after {
+        transition-duration: 0.01ms !important;
+    }
+}
+
+
+
+
+
 
 /* ===================================
    PAGINE LOGIN, REGISTRAZIONE E UTENTE
@@ -1619,5 +1853,246 @@ body.dark-theme .avviso-selezione {
 
     .riepilogo-blend h3 {
         font-size: 1.5em;
+    }
+}
+
+
+
+/* ===========================
+   PAGINA CHI SIAMO
+   =========================== */
+
+/*titoli dei paragrafi */
+.p-title {
+    font-size: 2em;
+    color: var(--button-bg);
+    margin-bottom: 1.5em;
+    font-weight: 600;
+    line-height: 1.3;
+    position: relative;
+    padding-bottom: 0.5em;
+}
+
+.p-title::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: var(--accent-color);
+    border-radius: 2px;
+}
+
+/*immagini nelle sezioni */
+.content-text img {
+    width: 20%;
+    max-height: 500px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin: 1.5em 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.content-text img:hover {
+    transform: scale(1.02);
+}
+
+/* Elenco puntato con icona a foglia */
+.leaf-icon {
+    list-style: none;
+    padding-left: 0;
+    margin: 1.5em 0;
+}
+
+.leaf-icon li {
+    position: relative;
+    padding-left: 2.5em;
+    margin-bottom: 1em;
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+/* Icona foglia SVG - colore marrone dell'header */
+.leaf-icon li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.2em;
+    width: 18px;
+    height: 18px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234E362E'%3E%3Cpath d='M23,.988A3.385,3.385,0,0,0,20.275.016C17.577.277,8.493,1.406,4.92,4.979a10,10,0,0,0-.973,12.953L.439,21.439a1.5,1.5,0,0,0,2.122,2.122l3.507-3.508a10,10,0,0,0,12.953-.973C22.644,15.457,23.737,6.4,23.985,3.709A3.388,3.388,0,0,0,23,.988Zm-6.1,15.97A6.991,6.991,0,0,1,8.22,17.9l8.341-8.34a1.5,1.5,0,0,0-2.122-2.122L6.1,15.78A6.991,6.991,0,0,1,7.042,7.1C9.322,4.82,15.751,3.468,20.565,3a.391.391,0,0,1,.319.113A.385.385,0,0,1,21,3.433C20.555,8.225,19.216,14.642,16.9,16.958Z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* Tema scuro - icona più chiara */
+body.dark-theme .leaf-icon li::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239BB59B'%3E%3Cpath d='M23,.988A3.385,3.385,0,0,0,20.275.016C17.577.277,8.493,1.406,4.92,4.979a10,10,0,0,0-.973,12.953L.439,21.439a1.5,1.5,0,0,0,2.122,2.122l3.507-3.508a10,10,0,0,0,12.953-.973C22.644,15.457,23.737,6.4,23.985,3.709A3.388,3.388,0,0,0,23,.988Zm-6.1,15.97A6.991,6.991,0,0,1,8.22,17.9l8.341-8.34a1.5,1.5,0,0,0-2.122-2.122L6.1,15.78A6.991,6.991,0,0,1,7.042,7.1C9.322,4.82,15.751,3.468,20.565,3a.391.391,0,0,1,.319.113A.385.385,0,0,1,21,3.433C20.555,8.225,19.216,14.642,16.9,16.958Z'/%3E%3C/svg%3E");
+}
+
+/* Sezione Dove Trovarci */
+#DoveTrovarci {
+    max-width: 900px;
+    margin: 3em auto;
+    padding: 2.5em;
+    background: linear-gradient(135deg, var(--card-bg) 0%, var(--section-bg) 100%);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--button-bg);
+}
+
+#DoveTrovarci h2 {
+    font-size: 2.2em;
+    color: var(--button-bg);
+    margin-bottom: 1.5em;
+    text-align: center;
+}
+
+#DoveTrovarci img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 12px;
+    margin: 1.5em auto;
+    display: block;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+#DoveTrovarci p {
+    font-size: 1.1em;
+    line-height: 1.8;
+    color: var(--text-color);
+    text-align: center;
+}
+
+#DoveTrovarci ul {
+    list-style: none;
+    padding: 0;
+    margin: 1.5em auto;
+    max-width: 400px;
+}
+
+#DoveTrovarci ul li {
+    padding: 0.8em 1.5em;
+    margin-bottom: 0.8em;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    border-left: 4px solid var(--button-bg);
+    font-size: 1.05em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+#DoveTrovarci ul li:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+#DoveTrovarci ul li strong {
+    color: var(--button-bg);
+    font-weight: 600;
+}
+
+/* Sezioni speciali con ID */
+#crescita {
+    background: linear-gradient(to right, var(--card-bg), var(--section-bg));
+}
+
+#innovazione {
+    background: linear-gradient(to left, var(--card-bg), var(--section-bg));
+}
+
+#nipoti {
+    border-left-color: var(--accent-color);
+    background-color: var(--section-bg);
+}
+
+#50anni {
+    background: linear-gradient(135deg, var(--card-bg) 0%, var(--accent-color) 100%);
+    border-left-color: var(--button-bg);
+}
+
+#impegnoFuturo {
+    background-color: var(--section-bg);
+}
+
+#etica {
+    border-left-color: var(--accent-color);
+}
+
+
+/* ===========================
+   RESPONSIVE (da vedere)
+   =========================== */
+
+@media screen and (max-width: 1200px) { 
+    .p-title {
+        font-size: 1.8em;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .p-title {
+        font-size: 1.6em;
+    }
+    
+    .content-text p {
+        font-size: 1em;
+        text-align: left;
+    }
+    
+    .content-text img {
+        max-height: 350px;
+    }
+    
+    .leaf-icon li {
+        font-size: 1em;
+        padding-left: 2em;
+    }
+    
+    #DoveTrovarci {
+        padding: 1.5em;
+        margin: 2em 1em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .p-title {
+        font-size: 1.4em;
+    }
+    
+    .content-text p {
+        font-size: 0.95em;
+    }
+    
+    .content-text img {
+        max-height: 250px;
+        margin: 1em 0;
+    }
+    
+    .leaf-icon li {
+        padding-left: 1.8em;
+        font-size: 0.95em;
+    }
+    
+    .leaf-icon li::before {
+        width: 16px;
+        height: 16px;
+    }
+    
+    #DoveTrovarci {
+        padding: 1.2em;
+    }
+    
+    #DoveTrovarci h2 {
+        font-size: 1.8em;
+    }
+    
+    #DoveTrovarci ul li {
+        font-size: 0.95em;
+        padding: 0.6em 1em;
     }
 }
