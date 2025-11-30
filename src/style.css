@@ -428,6 +428,284 @@ body.dark-theme .btn-primary:focus {
 }
 
 /* ===================================
+   HAMBURGER - javaScript/hamburger.js
+   =================================== */
+
+/* Desktop - tutto visibile normalmente */
+.hamburger {
+    display: none;
+}
+
+/* Mobile Menu Wrapper - NASCOSTO di default */
+.mobile-menu-wrapper {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--header-bg);
+    z-index: 1001;
+    overflow-y: auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 80px 20px 40px 20px;
+}
+
+/* Pulsante di chiusura (X) nel menu mobile */
+.mobile-close-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: none;
+    border: none;
+    color: var(--header-text);
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    z-index: 1003;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-close-btn:hover,
+.mobile-close-btn:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.mobile-close-btn svg {
+    width: 28px;
+    height: 28px;
+    fill: currentColor;
+}
+
+/* FIX per icone circolari nel menu mobile */
+.mobile-menu-wrapper .header-utilities .icon-button {
+    border-radius: 50% !important;
+}
+
+.mobile-menu-wrapper .header-utilities .icon-button:hover,
+.mobile-menu-wrapper .header-utilities .icon-button:focus {
+    border-radius: 50% !important;
+}
+
+/* ========== MOBILE (max 900px) ========== */
+@media (max-width: 900px) {
+    
+    /* Header su mobile - MODIFICATO */
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1em;
+        position: relative;
+        min-height: 60px; /* Altezza minima per allineamento */
+    }
+    
+    /* Logo centrato e allineato verticalmente */
+    .logo {
+        order: 2;
+        flex-shrink: 0;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    /* NASCONDI menu e utilities originali su mobile */
+    nav,
+    .header-utilities {
+        display: none !important;
+    }
+    
+    /* Mostra hamburger A SINISTRA - MODIFICATO */
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 6px;
+        z-index: 1002;
+        padding: 10px;
+        background: none;
+        border: none;
+        order: 1;
+        margin-right: auto;
+        align-self: center; /* Allinea verticalmente */
+    }
+    
+    .hamburger span {
+        width: 30px;
+        height: 3px;
+        background: var(--header-text);
+        border-radius: 3px;
+        transition: all 0.3s ease;
+        display: block;
+    }
+    
+    /* Animazione hamburger -> X */
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+    }
+    
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(8px, -8px);
+    }
+    
+    /* Menu wrapper quando aperto */
+    .mobile-menu-wrapper {
+        /* Il display: flex viene gestito da JavaScript */
+    }
+    
+    /* Navigation dentro il wrapper mobile */
+    .mobile-menu-wrapper nav {
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        flex: 1;
+        width: 100%;
+        margin-top: 1em;
+    }
+    
+    .mobile-menu-wrapper nav ul {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+        max-width: 400px;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+    
+    .mobile-menu-wrapper nav li {
+        width: 100%;
+        margin: 0;
+    }
+    
+    .mobile-menu-wrapper nav a {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 1.2em;
+        font-size: 1.3em;
+        color: var(--header-text);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        transition: background-color 0.3s ease;
+    }
+    
+    .mobile-menu-wrapper nav a:hover,
+    .mobile-menu-wrapper nav a:focus {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Utilities dentro il wrapper mobile - SENZA CERCHIO OPACO */
+    .mobile-menu-wrapper .header-utilities {
+        display: flex !important;
+        flex-direction: row;
+        justify-content: center;
+        gap: 2em;
+        padding: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        margin-top: auto;
+    }
+    
+    .mobile-menu-wrapper .header-utilities .icon-button {
+        background-color: transparent !important;
+        padding: 0.5em;
+        border-radius: 0;
+    }
+    
+    .mobile-menu-wrapper .header-utilities .icon-button:hover,
+    .mobile-menu-wrapper .header-utilities .icon-button:focus {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        transform: scale(1.1);
+    }
+    
+    .mobile-menu-wrapper .header-utilities .icon-button svg {
+        width: 32px;
+        height: 32px;
+    }
+    
+    /* Tema scuro per il menu mobile */
+    body.dark-theme .mobile-menu-wrapper {
+        background-color: var(--header-bg);
+    }
+    
+    body.dark-theme .mobile-menu-wrapper nav a {
+        color: var(--header-text);
+    }
+    
+    body.dark-theme .mobile-menu-wrapper .header-utilities .icon-button {
+        color: var(--header-text);
+    }
+    
+    body.dark-theme .mobile-close-btn {
+        color: var(--header-text);
+    }
+}
+
+/* ========== MOBILE PICCOLO (max 480px) ========== */
+@media (max-width: 480px) {
+    .mobile-close-btn {
+        top: 15px;
+        left: 15px;
+        padding: 8px;
+    }
+    
+    .mobile-close-btn svg {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .mobile-menu-wrapper nav a {
+        font-size: 1.1em;
+        padding: 1em;
+    }
+    
+    .mobile-menu-wrapper .header-utilities {
+        gap: 1.5em;
+    }
+    
+    .mobile-menu-wrapper .header-utilities .icon-button svg {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* ========== TRANSIZIONE (901px - 1024px) ========== */
+@media (min-width: 901px) and (max-width: 1024px) {
+    /* Nascondi gradualmente gli elementi prima di arrivare a mobile */
+    .header-utilities {
+        gap: 1em; /* Riduci lo spazio tra gli elementi */
+    }
+    
+    nav ul {
+        gap: 1em; /* Riduci lo spazio tra i link */
+    }
+    
+    /* Se gli elementi vanno ancora a capo, riduci il padding */
+    .header-container {
+        padding: 0.5em 1em;
+    }
+}
+
+/* ========== BREAKPOINT CRITICO - attiva hamburger ========== */
+@media (max-width: 900px) {
+    /* Il CSS che hai già */
+}
+
+/* ===================================
    MAIN CONTENT E SEZIONI
    =================================== */
 
@@ -594,6 +872,31 @@ body.dark-theme .hero {
     max-width: 800px;
     margin: 0 auto;
     line-height: 1.4;
+}
+
+/* ===================================
+   HOME - LA NOSTRA FILOSOFIA - SOLO TITOLO
+   =================================== */
+
+/* TITOLO A SINISTRA SOLO NELLA HOME */
+.about-preview .container #about-content {
+    text-align: left;
+    margin-top: 0em;
+    margin-bottom: 0.8em;
+    padding-left: 0;
+    margin-left: 0;
+    width: 100%;
+    display: block;
+}
+
+@media screen and (max-width: 768px) {
+    .about-preview .container #about-content {
+        text-align: left;
+        margin-top: 0.3em;
+        margin-bottom: 0.6em;
+        padding-left: 0;
+        margin-left: 0;
+    }
 }
 
 /* ===================================
@@ -1857,40 +2160,79 @@ body.dark-theme .avviso-selezione {
 }
 
 
-
 /* ===========================
    PAGINA CHI SIAMO
    =========================== */
+
+/* Titolo principale centrato */
+#about-content {
+    text-align: center;
+    margin: 1.5em auto 2em auto;
+    padding: 0 1em;
+}
+
+/* Sezioni content con layout alternato */
+.content-text {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3em;
+    align-items: start;
+    margin-bottom: 4em;
+    padding: 2em 1em;
+}
+
+/* Alterna l'ordine: sezioni pari hanno immagine a sinistra */
+.content-text:nth-child(even) {
+    direction: rtl;
+}
+
+.content-text:nth-child(even) > * {
+    direction: ltr;
+}
+
+/* Contenitore testo */
+.content-text-wrapper {
+    display: flex;
+    flex-direction: column;
+}
 
 /*titoli dei paragrafi */
 .p-title {
     font-size: 2em;
     color: var(--button-bg);
-    margin-bottom: 1.5em;
+    margin-bottom: 0.3em;
+    margin-top: 0;
     font-weight: 600;
     line-height: 1.3;
     position: relative;
-    padding-bottom: 0.5em;
+    padding-bottom: 0.3em;
+    text-align: center;
 }
 
 .p-title::after {
     content: "";
     position: absolute;
     bottom: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 60px;
     height: 3px;
     background-color: var(--accent-color);
     border-radius: 2px;
 }
 
+/* Paragrafi subito sotto il titolo */
+.content-text-wrapper p {
+    margin-top: 0;
+}
+
 /*immagini nelle sezioni */
 .content-text img {
-    width: 20%;
+    width: 100%;
+    height: 100%;
     max-height: 500px;
     object-fit: cover;
     border-radius: 12px;
-    margin: 1.5em 0;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
 }
@@ -2023,18 +2365,33 @@ body.dark-theme .leaf-icon li::before {
     border-left-color: var(--accent-color);
 }
 
-
 /* ===========================
-   RESPONSIVE (da vedere)
+   RESPONSIVE
    =========================== */
 
 @media screen and (max-width: 1200px) { 
     .p-title {
         font-size: 1.8em;
     }
+    
+    .content-text {
+        gap: 2em;
+        padding: 3em 1em;
+    }
 }
 
 @media screen and (max-width: 768px) {
+    .content-text {
+        grid-template-columns: 1fr;
+        gap: 1.5em;
+        padding: 2em 1em;
+    }
+    
+    /* Rimuovi l'alternanza su mobile */
+    .content-text:nth-child(even) {
+        direction: ltr;
+    }
+    
     .p-title {
         font-size: 1.6em;
     }
@@ -2060,6 +2417,10 @@ body.dark-theme .leaf-icon li::before {
 }
 
 @media screen and (max-width: 480px) {
+    .content-text {
+        padding: 2em 0.5em;
+    }
+    
     .p-title {
         font-size: 1.4em;
     }

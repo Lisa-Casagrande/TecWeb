@@ -19,6 +19,13 @@
                 <img src="Images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
                 <img src="Images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
             </div>
+
+            <!-- Pulsante hamburger -->
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
             
             <!-- Navigation (menù)-->
             <nav aria-label="Menu principale" role="navigation">
@@ -225,6 +232,11 @@
 
         </div> <!--fine class container-->
     </footer>
+
+    <!--in fondo alla pagina perchè così il browser carica prima il contenuto visibile e lo script non blocca il rendering: migliore performance-->
+    <script src="javaScript/tema.js"></script>
+    <script src="javaScript/backToTop.js"></script>
+    <script src="javaScript/hamburger.js"></script>
 
 </body>
 </html>
