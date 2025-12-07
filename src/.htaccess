@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# Se l'utente scrive /pagina.html, fai un redirect esterno a /pagina
+RewriteCond %{THE_REQUEST} /([^.]+)\.html [NC]
+RewriteRule ^([^.]+)\.html$ /$1 [R=301,L]
+
+# Se l'utente scrive /pagina senza .html, servi il file .html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1.html [L]
