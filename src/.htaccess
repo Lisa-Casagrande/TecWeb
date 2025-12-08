@@ -1,10 +1,31 @@
+# Abilita Rewrite
 RewriteEngine On
 
-# Se l'utente scrive /pagina.html, fai un redirect esterno a /pagina
-RewriteCond %{THE_REQUEST} /([^.]+)\.html [NC]
-RewriteRule ^([^.]+)\.html$ /$1 [R=301,L]
-
-# Se l'utente scrive /pagina senza .html, servi il file .html
+# ---------------------------
+# Mappa URL senza estensione
+# /pagina -> /pagina.html o /pagina.php se esiste
+# ---------------------------
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME}.html -f
-RewriteRule ^(.*)$ $1.html [L]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f [OR]
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^\.]+)$ $1.html [NC,L]   # default a .html se entrambi esistono? Sceglie .html
+
+# Se vuoi preferire PHP se esiste, usa questa versione invece:
+# RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+# ---------------------------
+# Redirect esterno da .html o .php a versione pulita
+# ---------------------------
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.(html|php)[\s?] [NC]
+RewriteRule ^ /%1 [R=301,NE,L]
+
+# ---------------------------
+# Protezione file sensibili
+# ---------------------------
+RewriteRule ^\.env$ - [F,L]
+
+# ---------------------------
+# Custom 404
+# ---------------------------
+ErrorDocument 404 /errore/404.html
