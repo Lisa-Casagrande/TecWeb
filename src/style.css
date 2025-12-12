@@ -98,9 +98,13 @@ h1 { font-size: 2.5em; font-weight: bold;}
 h2 { font-size: 2em; }
 h3 { font-size: 1.5em; }
 
+/*per paragrafi semplici (es: home: la nostra filosofia, descrizione prodotti)*/
 p {
+    font-size: 1.2em;
     margin-bottom: 1em;
+    line-height: 1.5;
 }
+
 
 /*link*/
 a {
@@ -159,7 +163,7 @@ address { font-style: normal; }
 -> salta al contenuto principale del main se premuto con INVIO */
 .skip-link {
    position: fixed;
-   top: -50px;
+   top: -50px; /*posizionato fuori dallo schermo in alto */
    left: 10px;
    background: var(--button-bg);
    color: var(--header-text);
@@ -173,11 +177,24 @@ address { font-style: normal; }
    white-space: nowrap;
 }
 
+/* Stato VISITATO: Sfondo rimane Marrone, Scritta diventa Gialla */
+.skip-link:visited {
+    background-color: var(--header-bg); /* Mantiene lo sfondo marrone */
+    color: var(--link-hover);
+    text-decoration: underline;
+}
+
+/* Stato FOCUS (Attivato con TAB): Scende e cambia stile */
 .skip-link:focus {
+   /* Fa scendere il link dall'alto */ 
    top: 10px;
-   outline: 3px solid var(--accent-color);
+   outline: 3px solid var(--header-text);
    outline-offset: 3px;
    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+   text-decoration: underline;
+   
+   /* Bordatura visibile in contrasto */
+   border-color: var(--link-hover);
 }
 
 /* ===================================
@@ -840,12 +857,6 @@ body.dark-theme .hero {
     margin-bottom: 1em;
 }
 
-.product-description {
-    font-size: 1em;
-    margin-bottom: 1.5em;
-    min-height: 3em;
-    line-height: 1.5;
-}
 
 .product-price {
     font-size: 1.6em;
@@ -879,7 +890,7 @@ body.dark-theme .hero {
    =================================== */
 
 /* TITOLO A SINISTRA SOLO NELLA HOME */
-.about-preview .container #about-content {
+.about-preview .container #about-title {
     text-align: left;
     margin-top: 0em;
     margin-bottom: 0.8em;
@@ -890,7 +901,7 @@ body.dark-theme .hero {
 }
 
 @media screen and (max-width: 768px) {
-    .about-preview .container #about-content {
+    .about-preview .container #about-title {
         text-align: left;
         margin-top: 0.3em;
         margin-bottom: 0.6em;
@@ -931,20 +942,15 @@ body.dark-theme .hero {
     box-shadow: none;
 }
 
-.value-icon {
-    color: var(--button-bg);
-    margin: 0 auto 1.5em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 /*dimensione e colore icone nel css: separazione contenuto presentazione*/
-.value-icon svg {
+.value-item svg {
     width: 60px;
     height: 60px;
-    fill: currentColor; /*colore ereditato da parent*/
+    margin: 0 auto 1.5em;
+    fill: currentColor; /*colore ereditato da parent: marrone*/
 }
+
+
 
 .value-item h3 {
     font-size: 1.3em;
@@ -1010,6 +1016,7 @@ footer {
     gap: 0.2em; 
 }
 
+/*InfuseMe*/
 .brand-name {
     font-size: 1.6em;
     font-weight: 700;
@@ -1019,7 +1026,8 @@ footer {
     line-height: 1; /* Altezza di linea normale */
 }
 
-.brand-tagline {
+/*Taste Tradition*/
+.motto-brand {
     font-size: 1em; 
     color: var(--header-text);
     opacity: 0.8;
@@ -1027,6 +1035,7 @@ footer {
     letter-spacing: 1.8px; /* Spaziatura tra lettere aumentata */
 }
 
+/*titoli delle varie micro sezioni del footer*/
 .footer-section h3 {
     color: var(--header-text); 
     margin: 1.5em 0 0.5em 0; /* Spazio tra righe */
@@ -1035,9 +1044,10 @@ footer {
     font-weight: 600; 
 }
 
+/*informazioni nel footer*/
 .contact, .location-item, .hours, .work-item {
     margin-bottom: 0em; /* Margine inferiore */
-    font-size: 0.85em; 
+    font-size: 1em; 
 }
 
 /* ===================================
@@ -1072,7 +1082,7 @@ footer {
     flex-wrap: wrap; 
 }
 
-/* Stile delle singole icone social */
+/* Stile delle singole icone social: per fare cerchio semi trasparente intorno*/
 .social-icon {
     display: inline-flex; 
     align-items: center; 
@@ -1084,7 +1094,7 @@ footer {
     color: var(--header-text); /*colore dell'icona */
 }
 
-/* SVG icons */
+/*icona vera e propria (dentro il cerchio)*/
 .social-icon svg {
     width: 24px;  /*dimensioni icona*/
     height: 24px;
@@ -1099,17 +1109,12 @@ footer {
 
 /*sezione inferiore del footer */
 .footer-bottom {
-    grid-column: 1 / -1; 
+    grid-column: 1 / -1;
+    font-size: 0.8em; 
     border-top: 1px solid rgba(255, 255, 255, 0.2); 
     padding-top: 0.2em; 
     margin-top: 0.2em; 
     text-align: center; 
-}
-
-/*paragrafo nella sezione inferiore */
-.footer-bottom p {
-    margin: 0; 
-    font-size: 0.8em; 
 }
 
 
@@ -2165,7 +2170,7 @@ body.dark-theme .avviso-selezione {
    =========================== */
 
 /* Titolo principale centrato */
-#about-content {
+#about-title {
     text-align: center;
     margin: 1em auto 1.5em auto;
     padding: 0 1em;
@@ -2273,6 +2278,7 @@ body.dark-theme .avviso-selezione {
 
 /* Paragrafi subito sotto il titolo */
 .content-text-wrapper p {
+    font-size: 1.2em;
     margin-top: 0;
     line-height: 1.6;
 }
@@ -2296,16 +2302,20 @@ body.dark-theme .avviso-selezione {
 .leaf-icon {
     list-style: none;
     padding-left: 0;
-    margin: 1em 0;
+    margin: 0.5em 0 0.5em 0;
 }
 
 .leaf-icon li {
     position: relative;
     padding-left: 2em;
-    margin-bottom: 0.8em;
-    font-size: 1em;
-    line-height: 1.5;
+    margin-bottom: 0.5em;
+    font-size: 1.2em;
+    line-height: 1.4;
     color: var(--text-color);
+}
+
+#impegnoFuturo .p-title {
+    margin-bottom: 0.3em; /*meno spazio tra titolo e paragrafo per questa sezione*/
 }
 
 /* Icona foglia SVG - colore marrone dell'header */
@@ -2328,28 +2338,28 @@ body.dark-theme .leaf-icon li::before {
 
 /* Sezione Dove Trovarci */
 #DoveTrovarci {
-    max-width: 700px; 
+    max-width: 600px; 
     margin: 1.5em auto; 
     padding: 1.5em; 
     background: rgba(255, 255, 255, 0.6);
-    border-radius: 16px;
+    border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     border: 2px solid var(--button-bg);
     text-align: center;
 }
 
 #DoveTrovarci h2 {
-    font-size: 1.8em; 
+    font-size: 1.5em; 
     color: var(--button-bg);
-    margin-bottom: 1em;
+    margin-bottom: 0.8em;
 }
 
 #DoveTrovarci img {
-    width: 50%; 
-    max-width: 300px;
+    width: 40%; 
+    max-width: 200px;
     height: auto;
-    border-radius: 12px;
-    margin: 0.8em auto;
+    border-radius: 8px;
+    margin: 0.5em auto;
     display: block;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
@@ -2373,13 +2383,13 @@ body.dark-theme .leaf-icon li::before {
     background-color: var(--section-bg);
     border-radius: 8px;
     border-left: 4px solid var(--button-bg);
-    font-size: 0.95em; 
+    font-size: 1em; 
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
 }
 
 #DoveTrovarci ul li:hover {
-    transform: translateX(5px);
+    transform: translateX(4px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
@@ -2428,18 +2438,28 @@ body.dark-theme .leaf-icon li::before {
         text-align: left;
     }
     
-    /* Ripristina la sottolineatura centrata su mobile */
+    /* Ripristina la sottolineatura centrata su mobile - viene sbagliato: 
+    una viene a destra e una centrata (giusto lo stile sottostante)
     .p-title::after {
         left: 50%;
         transform: translateX(-50%);
     }
-    
+
     .content-text:nth-child(even) .p-title::after {
         left: 50%;
         right: auto;
         transform: translateX(-50%);
     }
-    
+    */
+
+/*forza tutte le sottolineature a sinistra su mobile*/
+    .p-title::after {
+        left: 0 !important;
+        right: auto !important;
+        transform: none !important;
+    }
+
+
     .p-title {
         font-size: 1.5em;
     }
@@ -2475,7 +2495,7 @@ body.dark-theme .leaf-icon li::before {
     }
     
     .content-text p {
-        font-size: 0.95em;
+        font-size: 1.2em;
     }
     
     .content-text img {
@@ -2485,7 +2505,7 @@ body.dark-theme .leaf-icon li::before {
     
     .leaf-icon li {
         padding-left: 1.8em;
-        font-size: 0.95em;
+        font-size: 1em;
     }
     
     .leaf-icon li::before {
@@ -2502,7 +2522,7 @@ body.dark-theme .leaf-icon li::before {
     }
     
     #DoveTrovarci ul li {
-        font-size: 0.95em;
+        font-size: 1em;
         padding: 0.5em 1em;
     }
 }

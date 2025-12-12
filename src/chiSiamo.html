@@ -3,15 +3,12 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <title>InfuseMe - Chi Siamo</title>
-    <meta name="description" content="Scopri la storia di InfuseMe dalle sue origini al suo impegno per il futuro." />
-    <meta name="keywords" content="InfuseMe, tè, tisana, infusi, chi siamo, storia, origini, futuro, sostenibilità" />
-    
-    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <meta name="description" content="InfuseMe - Tè e infusi artigianali dal 1975. Qualità, tradizione e sostenibilità dalla Val d'Ossola." />
+    <meta name="keywords" content="tè, infusi, tisane, biologico, artigianale, Val d'Ossola, blend" />
+    <title><span lang="en">InfuseMe</span>, Infusi, tè e tisane artigianali dal 1975</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
-
 <body>
-
     <!-- Skip link per accessibilità -->
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
 
@@ -24,8 +21,8 @@
                 <img src="images/logo/logoScuro1.webp" alt="InfuseMe" class="logo-image logo-dark">
             </div>
 
-            <!-- Pulsante hamburger -->
-            <div class="hamburger" id="hamburger">
+            <!-- Pulsante hamburger: forse da mettere come button -->
+            <div class="hamburger" id="hamburger" aria-label="Apri il menu navigazione">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -36,12 +33,12 @@
                 <ul class="main-nav">
                     <li><a href="home.html">Home</a></li>
                     <li><a href="catalogo.html">Catalogo</a></li>
-                    <li><a href="creaBlend.html">Crea il tuo Blend</a></li>
+                    <li><a href="creaBlend.html">Crea il tuo <span lang="en">Blend</span></a></li>
                     <li><a href="chiSiamo.html" class="current-page" aria-current="page">Chi Siamo</a></li>
                 </ul>
             </nav>
 
-             <!-- Utility Icons -->
+            <!-- Utility Icons -->
             <div class="header-utilities">
                 <button class="icon-button" aria-label="Cerca prodotti">
                 <!--icona di ricerca-->
@@ -89,7 +86,7 @@
 
     <main id="main-content">
 
-        <h1 id="about-content">La nostra storia</h1>
+        <h1 id="about-title">La nostra storia</h1>
 
         <div class="content-text">
             <div class="content-text-wrapper">
@@ -102,24 +99,25 @@
                     di un marchio destinato a diventare simbolo di autenticità e qualità.
                 </p>
             </div>
-            <img src="images/storia/paesaggio.jpg" alt="Montagne della Val D'Ossola">
+            <img src="images/storia/Paesaggio.jpg" alt="Montagne della Val D'Ossola">
         </div>
 
+        <!-- id messi se dovessero servire ma per ora lo stile viene dato da .content-text -->
         <div id="crescita" class="content-text">
             <div class="content-text-wrapper">
                 <h2 class="p-title">Dalle radici artigianali alla crescita nazionale</h2>
                 <p>
-                    Tra gli anni '80 e '90 InfuseMe cresce, mantenendo però intatto il legame con la natura e con la
+                    Tra gli anni '80 e '90 <span lang="en">InfuseMe</span> cresce, mantenendo però intatto il legame con la natura e con la
                     <strong>tradizione</strong> erboristica di montagna. Il laboratorio si amplia, nascono collaborazioni
                     con coltivatori locali, e
                     l'azienda introduce le prime selezioni di <strong>tè</strong> provenienti da India, Cina e Giappone,
                     miscelati internamente con
                     cura.
-                    La trasparenza nella filiera e l'attenzione ai dettagli trasformano InfuseMe in un punto di riferimento
+                    La trasparenza nella filiera e l'attenzione ai dettagli trasformano <span lang="en">InfuseMe</span> in un punto di riferimento
                     per gli appassionati di <strong>infusi</strong>.
                 </p>
             </div>
-            <img src="images/storia/coppia2.jpg" alt="Coppia in montagna che raccoglie fiori e verbe aromatiche">
+            <img src="images/storia/Coppia2.jpg" alt="Coppia in montagna che raccoglie fiori e verbe aromatiche">
         </div>
 
         <div id="nipoti" class="content-text">
@@ -132,7 +130,7 @@
                     La loro visione condivide un unico obiettivo: custodire l'eredità dei fondatori, innovando senza mai tradire le radici.
                 </p>
             </div>
-            <img src="images/storia/famigliaBW.jpg" alt="Marito e moglie e i quattro figli">
+            <img src="images/storia/FamigliaBW.jpg" alt="Marito e moglie e i quattro figli">
         </div>
 
         <div id="innovazione" class="content-text">
@@ -140,7 +138,7 @@
                 <h2 class="p-title">Innovazione, sostenibilità e ricerca</h2>
                 <p>Con l'arrivo del nuovo millennio, la seconda generazione della famiglia Ferrrero porta con sé un
                     importante impulso innovativo: nascono le linee biologiche, il packaging compostabile e lo shop online,
-                    che permette a InfuseMe di raggiungere clienti da tutta Europa.
+                    che permette a <span lang="en">InfuseMe</span> di raggiungere clienti da tutta Europa.
                 </p>
             </div>
             <img src="images/storia/laboratorio.jpg" alt="Antico tavolo da erboristeria con barattoli di erbe e fogli di carta con illustrazioni botaniche">
@@ -159,15 +157,14 @@
         <div id="etica" class="content-text">
             <div class="content-text-wrapper">
                 <h2 class="p-title">Etica e sostenibilità</h2>
-                <p>
-                    L'azienda seleziona materie prime provenienti da coltivazioni <strong>biologiche</strong> di montagna,
+                <p> L'azienda seleziona materie prime provenienti da coltivazioni <strong>biologiche</strong> di montagna,
                     privilegia piccoli produttori del territorio e utilizza metodi di raccolta a basso impatto ambientale.
                     Il confezionamento avviene con materiali riciclabili o compostabili, mentre l'intera filiera è orientata
                     alla riduzione degli sprechi e delle emissioni. Ogni tazza di tè e tisana riflette così un impegno
                     autentico verso un futuro più sostenibile.
                 </p>
             </div>
-            <img src="images/storia/coppia.jpg" alt="Marito e moglie che raccolgono erbe aromatiche e fiori">
+            <img src="images/storia/Coppia.jpg" alt="Marito e moglie che raccolgono erbe aromatiche e fiori">
         </div>
 
         <div id="impegnoFuturo" class="content-text">
@@ -207,8 +204,8 @@
                <!-- Colonna 1: Brand -->
                 <div class="footer-section">
                     <div class="footer-brand">
-                        <div class="brand-name">InfuseMe</div>
-                        <div class="brand-tagline">Taste Tradition</div>
+                        <div class="brand-name"><span lang="en">InfuseMe</span></div>
+                        <div class="motto-brand">Taste Tradition</div>
                     </div>
                 </div>
 
@@ -217,7 +214,7 @@
                     <h3>Contatti</h3>
                     <address>
                         <div class="contact">
-                            <strong>Centralino:</strong> +39 000 111 abcd
+                            <strong>Centralino:</strong> +39 000 111 abcd 
                         </div>
                         <div class="contact">
                             <strong>Customer Care:</strong> +39 111 222 efgh
@@ -227,39 +224,32 @@
                         </div>
                     </address>
 
-                    <h3 class="work-with-us-title">Lavora con Noi</h3>
-                    <div class="work-with-us">
-                        <div class="work-item">
-                            <strong>Carriere:</strong> hr@infuseme.com
-                        </div>
-                        <div class="work-item">
-                            <strong>Collaborazioni:</strong> procurement@infuseme.com
-                        </div>
+                    <h3>Lavora con Noi</h3>
+                    <div class="work-item">
+                        <strong>Carriere:</strong> hr@infuseme.com
                     </div>
-
+                    <div class="work-item">
+                        <strong>Collaborazioni:</strong> procurement@infuseme.com
+                    </div>
                 </div>
 
                 <!-- Colonna 3: Orari Sedi -->
                 <div class="footer-section">
                     <h3>Orari Ufficio</h3>
-                    <div class="office-hours">
-                        <div class="hours">
-                            <strong>Lunedì - Venerdì:</strong> 9:00 - 18:00
-                        </div>
-                        <div class="hours">
-                            <strong>Sabato:</strong> 9:00 - 13:00
-                        </div>
-                        <div class="hours">
-                            <strong>Domenica:</strong> Chiuso
-                        </div>
+                    <div class="hours">
+                        <strong>Lunedì - Venerdì:</strong> 9:00 - 18:00
+                    </div>
+                    <div class="hours">
+                        <strong>Sabato:</strong> 9:00 - 13:00
+                    </div>
+                    <div class="hours">
+                        <strong>Domenica:</strong> Chiuso
                     </div>
 
                     <h3>Le Nostre Sedi</h3>
-                    <div class="locations">
-                        <div class="location-item">Val d'Ossola (Piemonte)</div>
-                        <div class="location-item">Biella</div>
-                    </div>
-                    
+                    <div class="location-item">Val d'Ossola (Piemonte)</div>
+                    <div class="location-item">Biella</div>
+
                 </div> <!--fine footer content-->
 
 
@@ -308,7 +298,7 @@
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2025 InfuseMe. Tutti i diritti riservati.</p>
+                <p>&copy; 2025 <span lang="en">InfuseMe</span>. Tutti i diritti riservati.</p>
             </div>
 
         </div> <!--fine class container-->
