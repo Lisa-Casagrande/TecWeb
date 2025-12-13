@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>Catalogo - InfuseMe, Infusi, tè e tisane artigianali dal 1975</title>
     <meta name="description" content="InfuseMe - Catalogo completo di tè e infusi artigianali. Scopri la nostra selezione di tè neri, verdi, bianchi, tisane e infusi." />
     <meta name="keywords" content="tè, infusi, tisane, catalogo, prodotti, acquista, blend" />
-    <title>Catalogo - InfuseMe, Infusi, tè e tisane artigianali dal 1975</title>
     <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
+
 <body>
     <!-- Skip link per accessibilità -->
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
 
-    <!-- Header -->
+    <!-- HEADER -->
     <header>
         <!--logo Infuse Me in alto a sinistra-->
         <div class="header-container">
@@ -20,7 +21,14 @@
                 <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
                 <img src="images/logo/logoScuro1.webp" alt="InfuseMe" class="logo-image logo-dark">
             </div>
-            
+
+            <!-- Pulsante hamburger -->
+            <button class="hamburger" id="hamburger" aria-label="Apri il menu navigazione">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
             <!-- Navigation (menù)-->
             <nav aria-label="Menu principale" role="navigation">
                 <ul class="main-nav">
@@ -31,7 +39,7 @@
                 </ul>
             </nav>
 
-             <!-- Utility Icons -->
+            <!-- Utility Icons -->
             <div class="header-utilities">
                 <button class="icon-button" aria-label="Cerca prodotti">
                 <!--icona di ricerca-->
@@ -397,8 +405,8 @@
                <!-- Colonna 1: Brand -->
                 <div class="footer-section">
                     <div class="footer-brand">
-                        <div class="brand-name">InfuseMe</div>
-                        <div class="brand-tagline">Taste Tradition</div>
+                        <div class="brand-name"><span lang="en">InfuseMe</span></div>
+                        <div class="motto-brand">Taste Tradition</div>
                     </div>
                 </div>
 
@@ -407,7 +415,7 @@
                     <h3>Contatti</h3>
                     <address>
                         <div class="contact">
-                            <strong>Centralino:</strong> +39 000 111 abcd
+                            <strong>Centralino:</strong> +39 000 111 abcd 
                         </div>
                         <div class="contact">
                             <strong>Customer Care:</strong> +39 111 222 efgh
@@ -417,39 +425,32 @@
                         </div>
                     </address>
 
-                    <h3 class="work-with-us-title">Lavora con Noi</h3>
-                    <div class="work-with-us">
-                        <div class="work-item">
-                            <strong>Carriere:</strong> hr@infuseme.com
-                        </div>
-                        <div class="work-item">
-                            <strong>Collaborazioni:</strong> procurement@infuseme.com
-                        </div>
+                    <h3>Lavora con Noi</h3>
+                    <div class="work-item">
+                        <strong>Carriere:</strong> hr@infuseme.com
                     </div>
-
+                    <div class="work-item">
+                        <strong>Collaborazioni:</strong> procurement@infuseme.com
+                    </div>
                 </div>
 
                 <!-- Colonna 3: Orari Sedi -->
                 <div class="footer-section">
                     <h3>Orari Ufficio</h3>
-                    <div class="office-hours">
-                        <div class="hours">
-                            <strong>Lunedì - Venerdì:</strong> 9:00 - 18:00
-                        </div>
-                        <div class="hours">
-                            <strong>Sabato:</strong> 9:00 - 13:00
-                        </div>
-                        <div class="hours">
-                            <strong>Domenica:</strong> Chiuso
-                        </div>
+                    <div class="hours">
+                        <strong>Lunedì - Venerdì:</strong> 9:00 - 18:00
+                    </div>
+                    <div class="hours">
+                        <strong>Sabato:</strong> 9:00 - 13:00
+                    </div>
+                    <div class="hours">
+                        <strong>Domenica:</strong> Chiuso
                     </div>
 
                     <h3>Le Nostre Sedi</h3>
-                    <div class="locations">
-                        <div class="location-item">Val d'Ossola (Piemonte)</div>
-                        <div class="location-item">Biella</div>
-                    </div>
-                    
+                    <div class="location-item">Val d'Ossola (Piemonte)</div>
+                    <div class="location-item">Biella</div>
+
                 </div> <!--fine footer content-->
 
 
@@ -498,7 +499,7 @@
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2025 InfuseMe. Tutti i diritti riservati.</p>
+                <p>&copy; 2025 <span lang="en">InfuseMe</span>. Tutti i diritti riservati.</p>
             </div>
 
         </div> <!--fine class container-->
@@ -514,7 +515,7 @@
     <!--in fondo alla pagina perchè così il browser carica prima il contenuto visibile e lo script non blocca il rendering: migliore performance-->
     <script src="javaScript/tema.js"></script>
     <script src="javaScript/backToTop.js"></script>
-    <script src="javaScript/filtriCatalogo.js"></script>
+    <script src="javaScript/hamburger.js"></script>
 
 </body>
 </html>
