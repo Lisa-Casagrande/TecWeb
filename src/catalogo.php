@@ -1,21 +1,20 @@
+<?php require_once 'php/connessione.php'; ?>
+
 <!DOCTYPE html>
 <html lang="it" xml:lang="it" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <title>Accedi - InfuseMe</title>
-    <meta name="description" content="Accedi al sito InfuseMe" />
-    <meta name="keywords" content="login, accedi, InfuseMe, acquisto, area personale, tè, infusi, tisane, biologico, artigianale, blend"/>
+    <title>Catalogo - InfuseMe</title>
+    <meta name="description" content="Catalogo completo di tè e infusi artigianali InfuseMe. Scopri la nostra selezione di tè, infusi e tisane."/>
+    <meta name="keywords" content="tè, infusi, tisane, catalogo, prodotti, acquista, blend" />
     <link rel="stylesheet" href="style.css" type="text/css"/>
 </head>
 
 <body>
-    <header><h1>InfuseMe – Accedi</h1></header>
-
-    <!-- Skip link per accessibilità -->
+   <!-- Skip link per accessibilità -->
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
 
-    <!-- Header -->
     <header>
         <!--logo Infuse Me in alto a sinistra-->
         <div class="header-container">
@@ -24,19 +23,19 @@
                 <img src="images/logo/logoScuro1.webp" alt="InfuseMe" class="logo-image logo-dark">
             </div>
 
-            <!-- Pulsante hamburger: button così è accessibile da tastiera-->
+            <!-- Pulsante hamburger -->
             <button class="hamburger" id="hamburger" aria-label="Apri il menu navigazione">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
-            
+
             <!-- Navigation (menù)-->
             <nav aria-label="Menu principale" role="navigation">
                 <ul class="main-nav">
                     <li><a href="home.html">Home</a></li>
-                    <li><a href="catalogo.php">Catalogo</a></li>
-                    <li><a href="creaBlend.html">Crea il tuo <span lang="en">Blend</span></a></li>
+                    <li><a href="catalogo.php" class="current-page" aria-current="page">Catalogo</a></li>
+                    <li><a href="creaBlend.html">Crea il tuo Blend</a></li>
                     <li><a href="chiSiamo.html">Chi Siamo</a></li>
                 </ul>
             </nav>
@@ -85,26 +84,111 @@
         </div>
     </header>
 
-    <main>
-        <div class="login-container">
-            <h2>Accedi al tuo account</h2>
 
-            <form action="php/login.php" method="POST">
-                <div class="form-group">
-                    <label for="username">Email o Username:</label>
-                    <input type="text" id="username" name="username" required>
+    <main id="main-content" role="main">
+        <section class="hero" aria-labelledby="catalog-title">
+            <img src="images/hero/heroCatalogo.jpg" alt="" class="hero-background">
+            <div class="hero-content">
+                <h1 id="catalog-title">Catalogo InfuseMe</h1>
+                <p class="hero-subtitle">Scopri la nostra selezione di tè e infusi</p>
+            </div>
+        </section>
+
+        <section class="catalog-section">
+            <div class="container">
+                
+                <div class="catalog-toolbar">
+                    <button class="btn-toggle-filters" id="toggleFilters" aria-expanded="false" aria-controls="filterPanel">
+                        <svg viewBox="0 0 24 24"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
+                        Filtra Prodotti
+                    </button>
+
+                    <div class="sort-wrapper">
+                        <label for="sortOrder" class="sr-only">Ordina per</label>
+                        <select id="sortOrder" class="sort-select">
+                            <option value="default">Rilevanza</option>
+                            <option value="priceAsc">Prezzo: Crescente</option>
+                            <option value="priceDesc">Prezzo: Decrescente</option>
+                            <option value="nameAsc">Nome: A-Z</option>
+                            <option value="nameDesc">Nome: Z-A</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
+                <div id="filterPanel" class="filter-panel">
+                    
+                    <div class="filter-group">
+                        <h4>Categoria</h4>
+                        <label><input type="checkbox" name="category" value="all" checked> Tutte le categorie</label>
+                        <label><input type="checkbox" name="category" value="tè_nero"> Tè Nero</label>
+                        <label><input type="checkbox" name="category" value="tè_verde"> Tè Verde</label>
+                        <label><input type="checkbox" name="category" value="tè_bianco"> Tè Bianco</label>
+                        <label><input type="checkbox" name="category" value="tisana"> Tisane</label>
+                        <label><input type="checkbox" name="category" value="infuso"> Infusi</label>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>Ingredienti Principali</h4>
+                        <label><input type="checkbox" class="ing-filter" value="zenzero"> Zenzero</label>
+                        <label><input type="checkbox" class="ing-filter" value="cannella"> Cannella</label>
+                        <label><input type="checkbox" class="ing-filter" value="limone"> Limone</label>
+                        <label><input type="checkbox" class="ing-filter" value="menta"> Menta</label>
+                        <label><input type="checkbox" class="ing-filter" value="frutti"> Frutti Rossi</label>
+                        <label><input type="checkbox" class="ing-filter" value="vaniglia"> Vaniglia</label>
+                    </div>
                 </div>
+                
+                <div class="products-grid catalog-grid" id="productContainer">
+                    <?php
+                    // QUERY AVANZATA: Prende prodotto + lista ingredienti
+                    $sql = "SELECT p.*, GROUP_CONCAT(i.nome SEPARATOR ', ') as lista_ingredienti
+                            FROM prodotto p
+                            LEFT JOIN prodotto_ingrediente pi ON p.id_prodotto = pi.id_prodotto
+                            LEFT JOIN ingrediente i ON pi.id_ingrediente = i.id_ingrediente
+                            GROUP BY p.id_prodotto";
+                    
+                    $stmt = $pdo->query($sql);
+                    
+                    while ($row = $stmt->fetch()) {
+                        // Pulizia dati per attributi HTML
+                        $cat = strtolower($row['categoria']);
+                        $ingr = strtolower($row['lista_ingredienti'] ?? ''); // lista ingredienti minuscola
+                        $nome = htmlspecialchars($row['nome']);
+                        $prezzo = $row['prezzo'];
+                        $img = htmlspecialchars($row['img_path']);
+                        
+                        // Output Card con DATA ATTRIBUTES per JS
+                        echo "
+                        <article class='product-card' 
+                                 data-category='$cat' 
+                                 data-ingredients='$ingr' 
+                                 data-price='$prezzo' 
+                                 data-name='$nome'>
+                            
+                            <div class='product-image'>
+                                <img src='$img' alt='$nome' loading='lazy' onerror=\"this.src='images/placeholder_tea.jpg'\">
+                            </div>
+                            
+                            <h3>$nome</h3>
+                            
+                            <p class='product-description'>" . htmlspecialchars(substr($row['descrizione'], 0, 90)) . "...</p>
+                            
+                            <p class='product-format'>Confezione da {$row['grammi']}g</p>
+                            
+                            <p class='product-price'>€" . number_format($prezzo, 2, ',', '.') . "</p>
+                            
+                            <a href='prodotto.php?id={$row['id_prodotto']}' class='bottone-primario'>Scopri di più</a>
+                        </article>
+                        ";
+                    }
+                    ?>
+                </div>
+                <p id="noResults" style="display:none; text-align:center; font-size:1.5em; margin-top:2em;">
+                    Nessun prodotto corrisponde ai filtri selezionati.
+                </p>
 
-                <button type="submit" class="btn">Accedi</button>
-            </form>
-
-            <p>Non hai un account? <a href="registrazione.html">Registrati</a></p>
-        </div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
@@ -221,10 +305,118 @@
         </svg>
     </button>
 
-    <!--in fondo alla pagina perchè così il browser carica prima il contenuto visibile e lo script non blocca il rendering: migliore performance-->
+    
     <script src="javaScript/tema.js"></script>
     <script src="javaScript/backToTop.js"></script>
     <script src="javaScript/hamburger.js"></script>
 
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        const toggleBtn = document.getElementById('toggleFilters');
+        const filterPanel = document.getElementById('filterPanel');
+        const container = document.getElementById('productContainer');
+        const cards = Array.from(document.querySelectorAll('.product-card'));
+        const noResults = document.getElementById('noResults');
+        const sortSelect = document.getElementById('sortOrder');
+        
+        // 1. APRI/CHIUDI PANNELLO FILTRI
+        toggleBtn.addEventListener('click', () => {
+            const isOpen = filterPanel.classList.toggle('open');
+            toggleBtn.setAttribute('aria-expanded', isOpen);
+        });
+
+        // 2. LOGICA FILTRAGGIO
+        const categoryInputs = document.querySelectorAll('input[name="category"]');
+        const ingredientInputs = document.querySelectorAll('.ing-filter');
+
+        function filterProducts() {
+            // Ottieni categoria selezionata (checkbox comportati come radio in questo caso per semplicità, o multipli)
+            // Qui gestiamo selezione multipla o singola. Facciamo che se "all" è checkato, ignora gli altri cat.
+            
+            let selectedCats = Array.from(categoryInputs)
+                .filter(i => i.checked && i.value !== 'all')
+                .map(i => i.value);
+            
+            const showAllCats = document.querySelector('input[value="all"]').checked || selectedCats.length === 0;
+
+            // Ottieni ingredienti selezionati
+            let selectedIngs = Array.from(ingredientInputs)
+                .filter(i => i.checked)
+                .map(i => i.value.toLowerCase());
+
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const prodCat = card.getAttribute('data-category');
+                const prodIngs = card.getAttribute('data-ingredients'); // stringa es: "zenzero, cannella, limone"
+
+                // Verifica Categoria
+                let catMatch = showAllCats || selectedCats.includes(prodCat);
+
+                // Verifica Ingredienti (TUTTI quelli selezionati devono essere presenti? O almeno uno? Facciamo ALMENO UNO per ora)
+                let ingMatch = true;
+                if (selectedIngs.length > 0) {
+                    // Controlla se ALMENO UNO degli ingredienti selezionati è nel prodotto
+                    ingMatch = selectedIngs.some(ing => prodIngs.includes(ing));
+                }
+
+                if (catMatch && ingMatch) {
+                    card.style.display = 'flex'; // flex perchè nel css abbiamo messo display:flex per allineare
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Mostra messaggio se 0 risultati
+            noResults.style.display = (visibleCount === 0) ? 'block' : 'none';
+        }
+
+        // Listener sui checkbox
+        categoryInputs.forEach(input => {
+            input.addEventListener('change', (e) => {
+                if(e.target.value === 'all' && e.target.checked) {
+                    // Se clicco "Tutte", deseleziona le altre
+                    categoryInputs.forEach(i => { if(i.value !== 'all') i.checked = false; });
+                } else if (e.target.checked) {
+                    // Se clicco una specifica, togli "Tutte"
+                    document.querySelector('input[value="all"]').checked = false;
+                }
+                // Se deseleziono tutto, rimetti "Tutte"
+                if(!Array.from(categoryInputs).some(i => i.checked)) {
+                    document.querySelector('input[value="all"]').checked = true;
+                }
+                filterProducts();
+            });
+        });
+
+        ingredientInputs.forEach(input => input.addEventListener('change', filterProducts));
+
+
+        // 3. LOGICA ORDINAMENTO
+        sortSelect.addEventListener('change', () => {
+            const sortValue = sortSelect.value;
+            
+            // Creiamo una copia dell'array da ordinare
+            let sortedCards = [...cards];
+
+            if (sortValue === 'priceAsc') {
+                sortedCards.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
+            } else if (sortValue === 'priceDesc') {
+                sortedCards.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
+            } else if (sortValue === 'nameAsc') {
+                sortedCards.sort((a, b) => a.dataset.name.localeCompare(b.dataset.name));
+            } else if (sortValue === 'nameDesc') {
+                sortedCards.sort((a, b) => b.dataset.name.localeCompare(a.dataset.name));
+            }
+            // 'default' non fa nulla (o ricarica ordine originale se salvato, qui lasciamo com'è)
+
+            // Ri-appendiamo le card nell'ordine nuovo
+            sortedCards.forEach(card => container.appendChild(card));
+        });
+
+    });
+    </script>
 </body>
 </html>

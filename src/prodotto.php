@@ -1,41 +1,74 @@
+<?php 
+require_once 'php/connessione.php'; 
+
+// Verifica ID
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    header("Location: catalogo.php"); // Redirect se manca ID
+    exit;
+}
+
+$id = $_GET['id'];
+
+// QUERY 1: Dati Prodotto + Dati Base (Temperatura/Tempo)
+// Usiamo LEFT JOIN perché alcuni prodotti (es. Kit) potrebbero non avere una base
+$sql = "SELECT p.*, b.temperatura_infusione, b.tempo_infusione 
+        FROM prodotto p 
+        LEFT JOIN base b ON p.base = b.id_base 
+        WHERE p.id_prodotto = ?";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$id]);
+$prodotto = $stmt->fetch();
+
+if (!$prodotto) {
+    // Gestione errore (o redirect)
+    header("Location: catalogo.php");
+    exit;
+}
+
+// QUERY 2: Ingredienti collegati al prodotto
+$sql_ing = "SELECT i.nome 
+            FROM ingrediente i
+            JOIN prodotto_ingrediente pi ON i.id_ingrediente = pi.id_ingrediente
+            WHERE pi.id_prodotto = ?";
+$stmt_ing = $pdo->prepare($sql_ing);
+$stmt_ing->execute([$id]);
+$ingredienti = $stmt_ing->fetchAll(PDO::FETCH_COLUMN);
+$lista_ingredienti = implode(", ", $ingredienti);
+?>
+
 <!DOCTYPE html>
 <html lang="it" xml:lang="it" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <title>Accedi - InfuseMe</title>
-    <meta name="description" content="Accedi al sito InfuseMe" />
-    <meta name="keywords" content="login, accedi, InfuseMe, acquisto, area personale, tè, infusi, tisane, biologico, artigianale, blend"/>
+    <title><?php echo htmlspecialchars($prodotto['nome']); ?> - InfuseMe</title>
+    <meta name="description" content="Acquista <?php echo htmlspecialchars($prodotto['nome']); ?> su InfuseMe. Tè e infusi artigianali di alta qualità." />
+    <meta name="keywords" content="InfuseMe, tè, tisana, infusi, tè caldo, tè freddo, tè verde, agrumi, ingredienti, frutta, biologico">
     <link rel="stylesheet" href="style.css" type="text/css"/>
 </head>
 
 <body>
-    <header><h1>InfuseMe – Accedi</h1></header>
-
-    <!-- Skip link per accessibilità -->
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
 
-    <!-- Header -->
     <header>
-        <!--logo Infuse Me in alto a sinistra-->
         <div class="header-container">
             <div class="logo">
-                <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
-                <img src="images/logo/logoScuro1.webp" alt="InfuseMe" class="logo-image logo-dark">
+                <a href="home.html">
+                    <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
+                    <img src="images/logo/logoScuro1.webp" alt="InfuseMe" class="logo-image logo-dark">
+                </a>
             </div>
 
-            <!-- Pulsante hamburger: button così è accessibile da tastiera-->
             <button class="hamburger" id="hamburger" aria-label="Apri il menu navigazione">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
             
-            <!-- Navigation (menù)-->
             <nav aria-label="Menu principale" role="navigation">
                 <ul class="main-nav">
                     <li><a href="home.html">Home</a></li>
-                    <li><a href="catalogo.php">Catalogo</a></li>
+                    <li><a href="catalogo.php" class="current-page">Catalogo</a></li>
                     <li><a href="creaBlend.html">Crea il tuo <span lang="en">Blend</span></a></li>
                     <li><a href="chiSiamo.html">Chi Siamo</a></li>
                 </ul>
@@ -85,29 +118,85 @@
         </div>
     </header>
 
-    <main>
-        <div class="login-container">
-            <h2>Accedi al tuo account</h2>
+    <main id="main-content" class="container product-detail-page">
+        
+        <div class="product-detail-grid">
+            
+            <div class="detail-image">
+                <img src="<?php echo htmlspecialchars($prodotto['img_path']); ?>" 
+                     alt="<?php echo htmlspecialchars($prodotto['nome']); ?>">
+            </div>
 
-            <form action="php/login.php" method="POST">
-                <div class="form-group">
-                    <label for="username">Email o Username:</label>
-                    <input type="text" id="username" name="username" required>
+            <div class="detail-content">
+                <h1><?php echo htmlspecialchars($prodotto['nome']); ?></h1>
+                
+                <p class="detail-price">€<?php echo number_format($prodotto['prezzo'], 2, ',', '.'); ?></p>
+                <p class="detail-format">
+                    <?php 
+                    if($prodotto['grammi']) {
+                        echo $prodotto['grammi'] . "g - Confezione";
+                    } else {
+                        echo "Confezione Standard";
+                    }
+                    ?>
+                </p>
+
+                <div class="detail-description">
+                    <h2>Descrizione</h2>
+                    <p><?php echo nl2br(htmlspecialchars($prodotto['descrizione'])); ?></p>
                 </div>
 
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
+                <?php if (!empty($lista_ingredienti)): ?>
+                <div class="detail-ingredients">
+                    <h3>Ingredienti</h3>
+                    <p><?php echo htmlspecialchars($lista_ingredienti); ?></p>
+                </div>
+                <?php endif; ?>
+
+                <div id="abbinamenti">
+                    <h3>Abbinamenti Consigliati</h3>
+                    <p>Perfetto per la colazione o accompagnato da biscotti secchi e crostate di frutta.</p>
                 </div>
 
-                <button type="submit" class="btn">Accedi</button>
-            </form>
+                <?php if ($prodotto['temperatura_infusione'] || $prodotto['tempo_infusione']): ?>
+                <div class="brewing-info">
+                    <?php if ($prodotto['temperatura_infusione']): ?>
+                    <div class="brew-item">
+                        <svg class="icon-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9.79 2 8 3.79 8 6v10c0 2.21 1.79 4 4 4s4-1.79 4-4V6c0-2.21-1.79-4-4-4zm0 16c-1.1 0-2-.9-2-2v-3.5c-.55-.31-1-1.16-1-2.5 0-1.66 1.34-3 3-3s3 1.34 3 3c0 1.34-.45 2.19-1 2.5V16c0 1.1-.9 2-2 2z"/></svg>
+                        <span>Temperatura: <?php echo htmlspecialchars($prodotto['temperatura_infusione']); ?> °C</span>
+                    </div>
+                    <?php endif; ?>
+                    
+                    <?php if ($prodotto['tempo_infusione']): ?>
+                    <div class="brew-item">
+                        <svg class="icon-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                        <span>Tempo: <?php echo htmlspecialchars($prodotto['tempo_infusione']); ?> min</span>
+                    </div>
+                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
 
-            <p>Non hai un account? <a href="registrazione.html">Registrati</a></p>
+                <div class="add-to-cart-box" id="carrello">
+                    <form action="php/aggiungi_carrello.php" method="POST">
+                        <input type="hidden" name="id" value="<?php echo $prodotto['id_prodotto']; ?>">
+                        
+                        <label for="quantita">Quantità:</label>
+                        <select id="quantita" name="quantita">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <button type="submit" class="bottone-primario">Aggiungi al Carrello</button>
+                    </form>
+                </div>
+            </div>
         </div>
+
     </main>
 
-    <!-- Footer -->
+        <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
