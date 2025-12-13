@@ -13,21 +13,33 @@ padding e border inclusi nella larghezza totale */
 :root {
     /* Tema Chiaro */
     --bg-light: #FFFBE9;
-    --text-light: #4E362E;
+    --text-brown: #4E362E; /*testo principale, Header, Bottoni */
+    --accent-yellow: #FEBA17; /*link Visitati */
+    /*colori extra per struttura */
+    --white: #FFFFFF; /*sfondo Card */
+    --section-bg: #F5F0D7; /*sfondo sezioni alternate */
+
+/*
     --header-bg-light: #4E362E;
     --header-text-light: #FFFBE9;
     --link-light: #6B4532;
     --link-visited-light: #5A3A28;
-    --link-hover-light: #FEBA17; /*solo skip link ?  -> prima era marroncino chiaro*/
+    --link-hover-light: #FEBA17;
     --button-bg-light: #6B4532;
     --button-hover-light: #5A3A28;
     --accent-light: #A67C52;
     --button-secondary-light: #4E362E;
     --card-bg-light: #FFFFFF;
     --section-bg-light: #F5F0D7;
-    
+*/
     /* Tema Scuro */
     --bg-dark: #3b3f45;
+    --text-green: #CDE0CD;
+    --header-dark: #2a2d32;
+    --card-dark: #454A52;
+    --accent-red: #7C030F; /*rosso in contrasto con verde per link visitati*/
+
+/*
     --text-dark: #CDE0CD;
     --header-bg-dark: #2a2d32;
     --header-text-dark: #CDE0CD;
@@ -40,38 +52,55 @@ padding e border inclusi nella larghezza totale */
     --button-secondary-dark: #CDE0CD;
     --card-bg-dark: #454A52;
     --section-bg-dark: #2A2D32;
+*/
 }
 
 /* Variabili attive */
 body {
+    /* Default (Chiaro) */
     --bg-color: var(--bg-light);
-    --text-color: var(--text-light);
-    --header-bg: var(--header-bg-light);
-    --header-text: var(--header-text-light);
+    --text-color: var(--text-brown);
+    --header-bg: var(--text-brown); /*header marrone*/
+    --header-text: var(--bg-light); /*testo header chiaro*/
+    
+    --button-bg: var(--text-brown); /*bottoni marroni*/
+    --button-text: var(--bg-light);/*testo bottoni chiaro*/
+    
+    --link-visited: var(--accent-yellow); /*giallo x visited in contrasto con marrone*/
+    
+    --card-bg: var(--white);
+    --alt-section-bg: var(--section-bg);
+}
+/*
     --link-color: var(--link-light);
-    --link-visited: var(--link-visited-light);
     --link-hover: var(--link-hover-light);
-    --button-bg: var(--button-bg-light);
     --button-hover: var(--button-hover-light);
     --accent-color: var(--accent-light);
-    --card-bg: var(--card-bg-light);
     --section-bg: var(--section-bg-light);
-}
+*/
 
 body.dark-theme {
     --bg-color: var(--bg-dark);
-    --text-color: var(--text-dark);
-    --header-bg: var(--header-bg-dark);
-    --header-text: var(--header-text-dark);
+    --text-color: var(--text-green);
+    
+    --header-bg: var(--header-dark);
+    --header-text: var(--text-green);
+    
+    --button-bg: var(--text-green); /*bottoni verde chiaro*/
+    --button-text: var(--header-dark);    /*testo bottoni scuro*/
+    
+    --link-visited: var(--accent-red); /*rosso per link visitati*/
+    
+    --card-bg: var(--card-dark);
+    --alt-section-bg: var(--header-dark);
+}
+/*
     --link-color: var(--link-dark);
-    --link-visited: var(--link-visited-dark);
     --link-hover: var(--link-hover-dark);
-    --button-bg: var(--button-bg-dark);
     --button-hover: var(--button-hover-dark);
     --accent-color: var(--accent-dark);
-    --card-bg: var(--card-bg-dark);
     --section-bg: var(--section-bg-dark);
-}
+*/
 
 /* ===================================
    STILI GENERALI
@@ -108,29 +137,27 @@ p {
 
 /*link*/
 a {
-    color: var(--link-color);
+    color: var(--text-color);
     text-decoration: none; /*rimuove sottolineatura predefinita per i link*/
     transition: color 0.2s ease;
+    border: 1px solid transparent; 
+    border-radius: 4px;
+    padding: 0 2px; /* Un po' di spazio per il bordo */
 }
 
-/*link visitato appare sottolineato*/
-a:visited { color: var(--link-visited); }
-a:hover { color: var(--link-hover); text-decoration: underline; }
-
-/*focus indicatore visibile x accessibilità: bordo colorato quando il link ha focus (da tastiera)
-a:focus {
-    outline: 2px solid var(--accent-color);
-    outline-offset: 2px;
-}*/
-
-/*versione più moderna: focus visibile solo con TAB e non anche con mouse o touch
-focus sui link che vengono sottolineati + bordatura */
-a:focus-visible {
-    outline: 2px solid var(--accent-color);
-    outline-offset: 2px;
-    color: var(--link-hover);
+/*link visitato appare giallo e sottolineato*/
+a:visited { 
+    color: var(--link-visited);
     text-decoration: underline;
 }
+
+/*link hover e focus: passaggio sopra link - sottolineato, bordatura visibile*/
+a:hover, a:focus-visible { 
+    outline: 2px solid var(--button-bg);
+    outline-offset: 2px;
+    text-decoration: underline;
+}
+
 /*fallback per browser che non supportano focus-visible (pochi casi)*/
 a:focus:not(:focus-visible) {
     outline: none;
@@ -163,10 +190,11 @@ address { font-style: normal; }
 -> salta al contenuto principale del main se premuto con INVIO */
 .skip-link {
    position: fixed;
-   top: -50px; /*posizionato fuori dallo schermo in alto */
+   top: -100px; /*posizionato fuori dallo schermo in alto */
    left: 10px;
    background: var(--button-bg);
-   color: var(--header-text);
+   color: var(--button-text);
+   border: 2px solid var(--button-bg);
    padding: 12px 20px;
    text-decoration: none;
    z-index: 9999;
@@ -179,22 +207,24 @@ address { font-style: normal; }
 
 /* Stato VISITATO: Sfondo rimane Marrone, Scritta diventa Gialla */
 .skip-link:visited {
-    background-color: var(--header-bg); /* Mantiene lo sfondo marrone */
-    color: var(--link-hover);
+    background-color: var(--button-bg); /* Mantiene lo sfondo marrone */
+    color: var(--link-visited);
     text-decoration: underline;
 }
 
-/* Stato FOCUS (Attivato con TAB): Scende e cambia stile */
+body.dark-theme .skip-link:visited {
+    color: var(--accent-red); /*rosso se visitato su sfondo verde chiaro*/
+}
+
+/* Stato FOCUS (Attivato con TAB): Scende dall'alto e cambia stile */
 .skip-link:focus {
-   /* Fa scendere il link dall'alto */ 
    top: 10px;
-   outline: 3px solid var(--header-text);
+   background-color: var(--button-bg);
+   color: var(--button-text);
+   text-decoration: underline;
+   outline: 3px solid var(--button-text);
    outline-offset: 3px;
    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-   text-decoration: underline;
-   
-   /* Bordatura visibile in contrasto */
-   border-color: var(--link-hover);
 }
 
 /* ===================================
@@ -304,18 +334,31 @@ body.dark-theme .logo-light { display: none; }
     font-weight: 500;
     font-size: 1.1em;
     font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    border: 2px solid transparent;
 }
 
 .main-nav a:visited { color: var(--header-text); }
-.main-nav a:hover, .main-nav a:focus {
-    background-color: rgba(255, 255, 255, 0.15);
-    text-decoration: none;
+
+.main-nav a:hover, .main-nav a:focus, .main-nav a:focus-visible {
+    background-color: transparent;
+    border-color: var(--header-text); /*bordo visibile*/
+    text-decoration: underline; /*sottolineato quando passo sopra o ho focus*/
     transform: translateY(-2px);
+    outline: none !important; 
+    box-shadow: none !important;
 }
 
+body.dark-theme .main-nav a:hover, 
+body.dark-theme .main-nav a:focus {
+    border-color: var(--header-text); /* Verde chiaro */
+    outline: none !important;
+}
+
+/*pagina corrente nel menu evidenziata con bordo e colore chiaro*/
 .main-nav a.current-page {
     background-color: rgba(255, 255, 255, 0.2);
     border: 2px solid var(--header-text);
+    text-decoration: underline;
     border-radius: 8px;
     font-weight: bold;
 }
@@ -387,7 +430,7 @@ body.dark-theme .sun-icon { opacity: 0; }
 body.dark-theme .moon-icon { opacity: 1; }
 
 /* Bottoni */
-.btn {
+.bottone-primario {
     display: inline-block;
     padding: 1em 2em;
     font-size: 1.1em;
@@ -397,52 +440,39 @@ body.dark-theme .moon-icon { opacity: 1; }
     border-radius: 8px;
     transition: all 0.3s ease;
     cursor: pointer;
-    border: none;
+    border: 2px solid var(--button-bg);
     font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    background-color: var(--button-bg);
+    color: var(--button-text);
 }
 
-.btn:focus {
-    outline: 3px solid var(--accent-color);
+.bottone-primario:visited{
+    background-color: var(--button-bg); /*mantiene sfondo marrone */
+    color: var(--link-visited); /*testo giallo in contrasto con marrone*/
+    text-decoration: underline;
+    border-color: var(--button-bg);
+}
+/*visitato - tema scuro*/
+body.dark-theme .bottone-primario:visited {
+    color: var(--accent-red); 
+    border-color: var(--button-bg);
+}
+
+.bottone-primario:focus, .bottone-primario:hover {
+    background-color: var(--button-bg);
+    outline: 3px solid var(--text-color);
     outline-offset: 3px;
-}
-
-.btn:hover {
     transform: translateY(-3px);
-    text-decoration: none;
+    text-decoration: underline;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
-.btn-primary {
-    background-color: var(--button-bg);
-    color: var(--header-text);
+/*tema scuro - l'outline deve essere chiara per vedersi sullo scuro */
+body.dark-theme .bottone-primario:hover,
+body.dark-theme .bottone-primario:focus {
+    outline-color: var(--text-color); /* Verde chiaro */
 }
 
-body.dark-theme .btn-primary {
-    color: var(--header-bg);
-}
-
-body.dark-theme .btn-primary:hover,
-body.dark-theme .btn-primary:focus {
-    color: var(--header-bg);
-}
-
-.btn-primary:visited { color: var(--header-text); }
-.btn-primary:hover, .btn-primary:focus {
-    background-color: var(--button-hover);
-    color: var(--header-text);
-}
-
-.btn-secondary {
-    background-color: transparent;
-    color: var(--button-bg);
-    border: 2px solid var(--button-bg);
-}
-
-.btn-secondary:visited { color: var(--button-bg); }
-.btn-secondary:hover, .btn-secondary:focus {
-    background-color: var(--button-bg);
-    color: #FFFFFF;
-}
 
 /* ===================================
    HAMBURGER - javaScript/hamburger.js
@@ -789,30 +819,6 @@ body.dark-theme .hero {
     flex-wrap: wrap;
 }
 
-/* Link con freccia */
-.btn-link {
-    display: inline-block;
-    margin-top: 1em;
-    font-weight: bold;
-    font-size: 1.1em;
-    color: var(--link-color);
-    text-decoration: none;
-    transition: color 0.2s ease;
-    padding: 0.5em 1em;
-    border-radius: 4px;
-}
-
-.btn-link::after {
-    content: " →";
-    transition: transform 0.2s ease;
-}
-
-.btn-link:hover::after, .btn-link:focus::after { transform: translateX(4px); }
-.btn-link:hover, .btn-link:focus {
-    color: var(--link-hover);
-    text-decoration: underline;
-    background-color: rgba(0, 0, 0, 0.05);
-}
 
 /* Cards e Grids */
 .products-grid, .values-grid {
@@ -843,7 +849,7 @@ body.dark-theme .hero {
 .product-image {
     width: 100%;
     height: 220px;
-    background-color: var(--accent-color);
+    background-color: var(--alt-section-bg);
     border-radius: 8px;
     margin-bottom: 1.5em;
     display: flex;
@@ -867,22 +873,33 @@ body.dark-theme .hero {
 
 /* Sezioni speciali */
 .featured-products, #ordini-recenti {
-    background-color: var(--section-bg);
+    background-color: var(--alt-section-bg);
 }
 
 .slogan-section {
-    background: linear-gradient(135deg, var(--bg-color) 0%, var(--accent-color) 100%);
+    background: linear-gradient(135deg, var(--bg-color) 0%, var(--text-brown) 100%);
     padding: 5em 2em;
     text-align: center;
 }
 
 .slogan {
+    color: var(--text-color);
     font-size: 2.2em;
     font-style: italic;
-    font-weight: 300;
+    font-weight: 400;
     max-width: 800px;
     margin: 0 auto;
     line-height: 1.4;
+}
+
+/*tem scuro sfumatura verde*/
+body.dark-theme .slogan-section {
+    background: linear-gradient(135deg, var(--bg-color) 0%, var(--text-green) 100%);
+}
+
+body.dark-theme .slogan {
+    color: var(--header-dark);
+    font-weight: 400;
 }
 
 /* ===================================
@@ -1130,9 +1147,10 @@ footer {
     width: 3.5em;
     height: 3.5em;
     background-color: var(--button-bg);
-    border: none;
+    color: var(--button-text);
+
+    border: 2px solid var(--button-bg);
     border-radius: 50%; /*icona a cerchio*/
-    color: var(--header-text);
     
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -1165,14 +1183,17 @@ footer {
 /* Hover e Focus */
 .back-to-top:hover,
 .back-to-top:focus {
-    background-color: var(--button-hover);
+    background-color: var(--button-bg);
+    color: var(--button-text);
     transform: scale(1.1);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    outline: 3px solid var(--text-color);
+    outline-offset: 3px;
 }
 
 /*focus visibile solo tastiera (accessibilità)*/
 .back-to-top:focus-visible {
-    outline: 3px solid var(--accent-color);
+    outline: 3px solid var(--text-color);
     outline-offset: 3px;
 }
 
@@ -1185,7 +1206,7 @@ footer {
 .back-to-top svg {
     width: 2em;
     height: 2em;
-    fill: currentColor;
+    fill: currentColor; /*prende colore chiaro*/
 }
 
 /* Tema scuro */
@@ -1193,12 +1214,16 @@ body.dark-theme .back-to-top {
     color: var(--header-bg);
 }
 
+body.dark-theme .back-to-top:hover,
+body.dark-theme .back-to-top:focus {
+    outline-color: var(--text-color); /* Verde chiaro */
+}
+
 /* ===================================
    TOOLTIP PERSONALIZZATO
    =================================== */
 .back-to-top::before {
     content: "Torna all'inizio";
-    
     /*posizionamento sopra il pulsante*/
     position: absolute;
     bottom: calc(100% + 0.8em);
@@ -1224,7 +1249,6 @@ body.dark-theme .back-to-top {
     
     /*non interferisce con hover (WCAG 1.4.13)*/
     pointer-events: none;
-    
     z-index: 1000; /*sopra tutto*/
 }
 
@@ -1306,7 +1330,6 @@ body.dark-theme .back-to-top {
         transition-duration: 0.01ms !important;
     }
 }
-
 
 
 
@@ -2174,9 +2197,10 @@ body.dark-theme .avviso-selezione {
     text-align: center;
     margin: 1em auto 1.5em auto;
     padding: 0 1em;
+    color: var(--text-color);
 }
 
-/* Sezioni content con layout alternato */
+/* Sezioni content con sfondo e layout alternato */
 .content-text {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -2185,7 +2209,9 @@ body.dark-theme .avviso-selezione {
     margin-bottom: 0em; /*spazio margine inferiore sezione*/
     padding: 0.5em 5em; /*spazio margini finestra dx e sx*/
     position: relative;
+    transition: background-color 0.3s ease; /*transizione morbida per cambio tema - da vedere*/
 }
+
 
 /* Linea verticale tra immagine e testo - SOLO per le sezioni che hanno entrambi */
 .content-text:has(img):has(.content-text-wrapper)::before {
@@ -2195,18 +2221,19 @@ body.dark-theme .avviso-selezione {
     bottom: 0;
     left: 50%;
     width: 2px;
-    background-color: var(--accent-color);
+    background-color: var(--text-color);
     transform: translateX(-50%);
     opacity: 0.6;
 }
 
+
 /* Sfondo alternato uniforme (non sfumato) */
 .content-text:nth-child(odd) {
-    background-color: var(--header-text);
+    background-color: var(--bg-color);
 }
 
 .content-text:nth-child(even) {
-    background-color: var(--section-bg);
+    background-color: var(--alt-section-bg);
 }
 
 /* Alterna l'ordine: sezioni pari hanno immagine a sinistra */
@@ -2225,6 +2252,7 @@ body.dark-theme .avviso-selezione {
     padding: 0 1em;
     justify-content: center; /* ← CENTRA VERTICALMENTE */
     height: 100%; /* ← IMPORTANTE: occupa tutta l'altezza */
+    color: var(--text-color);
 }
 
 /* Allineamento testo a sinistra per sezioni dispari (immagine a destra) */
@@ -2240,7 +2268,7 @@ body.dark-theme .avviso-selezione {
 /*titoli dei paragrafi */
 .p-title {
     font-size: 1.8em;
-    color: var(--button-bg);
+    color: var(--text-color); /*colore del testo principale*/
     margin-bottom: 0.5em;
     margin-top: 0;
     font-weight: 600;
@@ -2249,7 +2277,7 @@ body.dark-theme .avviso-selezione {
     padding-bottom: 0.3em;
 }
 
-/* Rimuovo il centramento per permettere l'allineamento alternato */
+/* piccola sottolineatura sotto il titolo (alternata) */
 .p-title::after {
     content: "";
     position: absolute;
@@ -2258,7 +2286,7 @@ body.dark-theme .avviso-selezione {
     transform: none;
     width: 60px;
     height: 3px;
-    background-color: var(--accent-color);
+    background-color: var(--text-color);
     border-radius: 2px;
 }
 
@@ -2281,6 +2309,7 @@ body.dark-theme .avviso-selezione {
     font-size: 1.2em;
     margin-top: 0;
     line-height: 1.6;
+    color: var(--text-color);
 }
 
 /*immagini nelle sezioni */
@@ -2336,12 +2365,12 @@ body.dark-theme .leaf-icon li::before {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239BB59B'%3E%3Cpath d='M23,.988A3.385,3.385,0,0,0,20.275.016C17.577.277,8.493,1.406,4.92,4.979a10,10,0,0,0-.973,12.953L.439,21.439a1.5,1.5,0,0,0,2.122,2.122l3.507-3.508a10,10,0,0,0,12.953-.973C22.644,15.457,23.737,6.4,23.985,3.709A3.388,3.388,0,0,0,23,.988Zm-6.1,15.97A6.991,6.991,0,0,1,8.22,17.9l8.341-8.34a1.5,1.5,0,0,0-2.122-2.122L6.1,15.78A6.991,6.991,0,0,1,7.042,7.1C9.322,4.82,15.751,3.468,20.565,3a.391.391,0,0,1,.319.113A.385.385,0,0,1,21,3.433C20.555,8.225,19.216,14.642,16.9,16.958Z'/%3E%3C/svg%3E");
 }
 
-/* Sezione Dove Trovarci */
+/* Sezione Dove Trovarci - viene con sfondo bianco nel tema chiaro*/
 #DoveTrovarci {
     max-width: 600px; 
     margin: 1.5em auto; 
     padding: 1.5em; 
-    background: rgba(255, 255, 255, 0.6);
+    background-color: var(--card-bg);
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     border: 2px solid var(--button-bg);
@@ -2380,9 +2409,10 @@ body.dark-theme .leaf-icon li::before {
 #DoveTrovarci ul li {
     padding: 0.6em 1em;
     margin-bottom: 0.6em; 
-    background-color: var(--section-bg);
+    background-color: var(--alt-section-bg);
     border-radius: 8px;
     border-left: 4px solid var(--button-bg);
+    color: var(--text-color);
     font-size: 1em; 
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
@@ -2438,8 +2468,8 @@ body.dark-theme .leaf-icon li::before {
         text-align: left;
     }
     
-    /* Ripristina la sottolineatura centrata su mobile - viene sbagliato: 
-    una viene a destra e una centrata (giusto lo stile sottostante)
+/* Ripristina la sottolineatura centrata su mobile - viene sbagliato: 
+una viene a destra e una centrata (giusto lo stile sottostante)
     .p-title::after {
         left: 50%;
         transform: translateX(-50%);
@@ -2458,7 +2488,6 @@ body.dark-theme .leaf-icon li::before {
         right: auto !important;
         transform: none !important;
     }
-
 
     .p-title {
         font-size: 1.5em;
