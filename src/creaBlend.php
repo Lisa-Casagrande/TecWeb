@@ -1,4 +1,36 @@
-<?php require_once 'php/connessione.php'; ?>
+<?php 
+session_start();
+require_once 'php/connessione.php';
+
+// Recupera dati per la pagina
+try {
+    // Query per ottenere le basi disponibili
+    $sqlBasi = "SELECT * FROM base ORDER BY nome";
+    $stmtBasi = $pdo->query($sqlBasi);
+    $basi = $stmtBasi->fetchAll();
+    
+    // Query per ottenere gli ingredienti, raggruppati per tipo
+    $sqlIngredienti = "SELECT * FROM ingrediente ORDER BY tipo, nome";
+    $stmtIngredienti = $pdo->query($sqlIngredienti);
+    $ingredientiRaw = $stmtIngredienti->fetchAll();
+    
+    // Raggruppa ingredienti per tipo
+    $ingredientiPerTipo = [];
+    foreach ($ingredientiRaw as $ing) {
+        $tipo = $ing['tipo'];
+        if (!isset($ingredientiPerTipo[$tipo])) {
+            $ingredientiPerTipo[$tipo] = [];
+        }
+        $ingredientiPerTipo[$tipo][] = $ing;
+    }
+    
+} catch (PDOException $e) {
+    // Log dell'errore
+    error_log("Errore creaBlend.php: " . $e->getMessage());
+    $basi = [];
+    $ingredientiPerTipo = [];
+}
+?>
 
 <!DOCTYPE html>
 <html lang="it" xml:lang="it" xmlns="http://www.w3.org/1999/xhtml">
@@ -34,8 +66,8 @@
             <nav aria-label="Menu principale" role="navigation">
                 <ul class="main-nav">
                     <li><a href="home.html">Home</a></li>
-                    <li><a href="catalogo.php" class="current-page" aria-current="page">Catalogo</a></li>
-                    <li><a href="creaBlend.php">Crea il tuo Blend</a></li>
+                    <li><a href="catalogo.php" >Catalogo</a></li>
+                    <li><a href="creaBlend.php" class="current-page" aria-current="page">Crea il tuo Blend</a></li>
                     <li><a href="chiSiamo.html">Chi Siamo</a></li>
                 </ul>
             </nav>
@@ -85,185 +117,148 @@
         </div>
     </header>
 
+<body>
+    <!-- Skip link per accessibilità -->
+    <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
+
+    <!-- Main Content -->
     <main id="main-content" role="main">
-        <section class="hero" aria-labelledby="catalog-title">
-            <img src="images/hero/heroCatalogo.jpg" alt="" class="hero-background">
-            <div class="hero-content">
-                <h1 id="catalog-title">Catalogo InfuseMe</h1>
-                <p class="hero-subtitle">Scopri la nostra selezione di tè e infusi</p>
-            </div>
-        </section>
-
-        <section class="catalog-section">
-            <div class="container">
-                <h2 id="catalog-products" class="sr-only">Tutti i nostri prodotti</h2>
+        <div class="container">
+            <!-- Nuovo Riepilogo Selezione FISSO in alto -->
+            <div class="riepilogo-blend-fisso" id="riepilogoFisso">
+                <div class="riepilogo-header">
+                    <h3>Il Tuo Blend Personalizzato</h3>
+                    <div class="controlli-selezione">
+                        <div class="controllo-base">
+                            <span class="etichetta">Base (obbligatoria):</span>
+                            <span class="contatore" id="contatore-base">0/1</span>
+                        </div>
+                        
+                        <div class="selettore-ingredienti">
+                            <span class="etichetta">Quanti ingredienti vuoi aggiungere?</span>
+                            <div class="radio-gruppo">
+                                <label>
+                                    <input type="radio" name="numIngredienti" value="2" id="radio-2" checked>
+                                    <span class="radio-label">2 ingredienti</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="numIngredienti" value="3" id="radio-3">
+                                    <span class="radio-label">3 ingredienti</span>
+                                </label>
+                            </div>
+                            <span class="contatore" id="contatore-ingredienti">0/2</span>
+                        </div>
+                        
+                        <button class="btn btn-primary btn-reset" id="btn-reset">
+                            Reset Selezione
+                        </button>
+                    </div>
+                </div>
                 
-                <!-- Strumenti per filtri e ordinamento -->
-                <div class="catalog-toolbar">
-                    <!-- Pulsante per aprire/chiudere i filtri avanzati (mobile) -->
-                    <button class="btn-toggle-filters" id="toggleFilters" aria-expanded="false" aria-controls="filterPanel">
-                        <svg viewBox="0 0 24 24"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
-                        Filtra Prodotti
+                <div class="riepilogo-corpo">
+                    <div class="base-selezionata" id="base-selezionata">
+                        <h4>Base:</h4>
+                        <p class="nessuna-selezione">Nessuna base selezionata</p>
+                    </div>
+                    
+                    <div class="ingredienti-selezionati" id="ingredienti-selezionati">
+                        <h4>Ingredienti:</h4>
+                        <p class="nessuna-selezione">Nessun ingrediente selezionato</p>
+                    </div>
+                    
+                    <div class="prezzo-totale" id="prezzo-totale">
+                        <h4>Prezzo stimato:</h4>
+                        <p class="prezzo">€<span id="importo-prezzo">8.99</span></p>
+                    </div>
+                    
+                    <button class="btn btn-primary btn-conferma-blend" id="btn-conferma" disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" style="margin-right: 8px;">
+                            <path d="M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.994,0,0,0,22.713,4.077ZM21.4,6.178l-.786,4.354A3,3,0,0,1,17.657,13H5.419L4.478,5H20.41A1,1,0,0,1,21.4,6.178Z"/>
+                            <circle cx="7" cy="22" r="2"/>
+                            <circle cx="17" cy="22" r="2"/>
+                        </svg>
+                        Aggiungi al Carrello
                     </button>
-
-                    <!-- Ordinamento -->
-                    <div class="sort-wrapper">
-                        <label for="sortOrder" class="sr-only">Ordina per</label>
-                        <select id="sortOrder" class="sort-select">
-                            <option value="default">Rilevanza</option>
-                            <option value="priceAsc">Prezzo: Crescente</option>
-                            <option value="priceDesc">Prezzo: Decrescente</option>
-                            <option value="nameAsc">Nome: A-Z</option>
-                            <option value="nameDesc">Nome: Z-A</option>
-                        </select>
-                    </div>
                 </div>
-
-                <!-- Pannello filtri avanzati (mobile) -->
-                <div id="filterPanel" class="filter-panel">
-                    <div class="filter-group">
-                        <h4>Categoria</h4>
-                        <label><input type="radio" name="category" value="all" checked> Tutte le categorie</label>
-                        <label><input type="radio" name="category" value="tè_nero"> Tè Nero</label>
-                        <label><input type="radio" name="category" value="tè_verde"> Tè Verde</label>
-                        <label><input type="radio" name="category" value="tè_bianco"> Tè Bianco</label>
-                        <label><input type="radio" name="category" value="tè_giallo"> Tè Giallo</label>
-                        <label><input type="radio" name="category" value="tè_oolong"> Tè Oolong</label>
-                        <label><input type="radio" name="category" value="tisana"> Tisane</label>
-                        <label><input type="radio" name="category" value="infuso"> Infusi</label>
-                        <label><input type="radio" name="category" value="kit"> Kit Speciali</label>
-                    </div>
-
-                    <div class="filter-group">
-                        <h4>Filtra per Ingredienti</h4>
-                        <label><input type="checkbox" class="ing-filter" value="zenzero"> Zenzero</label>
-                        <label><input type="checkbox" class="ing-filter" value="cannella"> Cannella</label>
-                        <label><input type="checkbox" class="ing-filter" value="limone"> Limone</label>
-                        <label><input type="checkbox" class="ing-filter" value="menta"> Menta</label>
-                        <label><input type="checkbox" class="ing-filter" value="frutti"> Frutti Rossi</label>
-                        <label><input type="checkbox" class="ing-filter" value="vaniglia"> Vaniglia</label>
-                    </div>
-
-                    <div class="filter-group">
-                        <h4>Filtra per Prezzo</h4>
-                        <label><input type="radio" name="priceRange" value="all" checked> Tutti i prezzi</label>
-                        <label><input type="radio" name="priceRange" value="low"> Fino a €5</label>
-                        <label><input type="radio" name="priceRange" value="medium"> €5 - €10</label>
-                        <label><input type="radio" name="priceRange" value="high"> Oltre €10</label>
-                    </div>
-
-                    <div class="filter-group">
-                        <h4>Filtra per Base</h4>
-                        <label><input type="radio" name="baseFilter" value="all" checked> Tutte le basi</label>
-                        <label><input type="radio" name="baseFilter" value="tè_nero"> Base Tè Nero</label>
-                        <label><input type="radio" name="baseFilter" value="tè_verde"> Base Tè Verde</label>
-                        <label><input type="radio" name="baseFilter" value="tè_bianco"> Base Tè Bianco</label>
-                        <label><input type="radio" name="baseFilter" value="tisana"> Base Tisana</label>
-                        <label><input type="radio" name="baseFilter" value="infuso"> Base Infuso</label>
-                    </div>
-                </div>
-                
-                <!-- Grid prodotti dal database -->
-                <div class="products-grid catalog-grid" id="productContainer">
-                    <?php
-                    try {
-                        // QUERY per prendere prodotto + lista ingredienti + base
-                        $sql = "SELECT p.*, 
-                                       GROUP_CONCAT(DISTINCT i.nome SEPARATOR ', ') as lista_ingredienti,
-                                       b.nome as nome_base,
-                                       b.temperatura_infusione,
-                                       b.tempo_infusione
-                                FROM prodotto p
-                                LEFT JOIN prodotto_ingrediente pi ON p.id_prodotto = pi.id_prodotto
-                                LEFT JOIN ingrediente i ON pi.id_ingrediente = i.id_ingrediente
-                                LEFT JOIN base b ON p.id_base = b.id_base
-                                GROUP BY p.id_prodotto
-                                ORDER BY p.nome";
-                        
-                        $stmt = $pdo->query($sql);
-                        $rowCount = $stmt->rowCount();
-                        
-                        if ($rowCount > 0) {
-                            while ($row = $stmt->fetch()) {
-                                $cat = strtolower($row['categoria']);
-                                $ingr = strtolower($row['lista_ingredienti'] ?? '');
-                                $base = htmlspecialchars($row['nome_base'] ?? 'N/A', ENT_QUOTES, 'UTF-8');
-                                $nome = htmlspecialchars($row['nome'], ENT_QUOTES, 'UTF-8');
-                                $prezzo = number_format($row['prezzo'], 2, ',', '.');
-                                $prezzoRaw = $row['prezzo'];
-                                $img = htmlspecialchars($row['img_path'], ENT_QUOTES, 'UTF-8');
-                                $descrizione = htmlspecialchars(substr($row['descrizione'], 0, 90), ENT_QUOTES, 'UTF-8');
-                                $grammi = $row['grammi'];
-                                $idProdotto = $row['id_prodotto'];
-                                $temperatura = $row['temperatura_infusione'] ?? 'N/A';
-                                $tempo = $row['tempo_infusione'] ?? 'N/A';
-                                
-                                // Mappatura categoria per filtri
-                                $categoriaFiltro = $cat;
-                                
-                                // Output Card con stile HTML originale
-                                echo "
-                                <article class='product-card' 
-                                        data-category='$categoriaFiltro' 
-                                        data-ingredients='$ingr' 
-                                        data-price='$prezzoRaw' 
-                                        data-name='$nome'
-                                        data-base='$base'
-                                        data-temperatura='$temperatura'
-                                        data-tempo='$tempo'
-                                        data-id='$idProdotto'>
-                                    
-                                    <div class='product-image'>
-                                        <img src='$img' alt='$nome' loading='lazy' onerror=\"this.src='images/placeholder_tea.jpg'\">
-                                    </div>
-                                    
-                                    <h3>$nome</h3>
-                                    
-                                    <p class='product-description'>$descrizione...</p>
-                                    
-                                    <p class='product-format'>Confezione da {$grammi}g</p>
-                                    
-                                    <p class='product-price'>€$prezzo</p>
-                                    
-                                    <div class='product-buttons'>
-                                        <a href='prodotto.php?id=$idProdotto' class='bottone-primario'>Scopri di più</a>
-                                        <button class='bottone-primario aggiungi-carrello' 
-                                                data-id='$idProdotto' 
-                                                data-nome='$nome' 
-                                                data-prezzo='$prezzoRaw'
-                                                data-img='$img'>
-                                            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='18' height='18' style='margin-right: 5px;'>
-                                                <path d='M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.994,0,0,0,22.713,4.077ZM21.4,6.178l-.786,4.354A3,3,0,0,1,17.657,13H5.419L4.478,5H20.41A1,1,0,0,1,21.4,6.178Z'/>
-                                                <circle cx='7' cy='22' r='2'/>
-                                                <circle cx='17' cy='22' r='2'/>
-                                            </svg>
-                                            Aggiungi al carrello
-                                        </button>
-                                    </div>
-                                </article>
-                                ";
-                            }
-                        } else {
-                            echo "<div style='text-align:center; padding: 40px;'>
-                                    <h3>Nessun prodotto disponibile</h3>
-                                    <p>Non ci sono prodotti nel database al momento.</p>
-                                  </div>";
-                        }
-                    } catch (PDOException $e) {
-                        echo "<div style='text-align:center; padding: 40px; color: red;'>
-                                <h3>Errore di connessione</h3>
-                                <p>Errore nel caricamento dei prodotti. Riprova più tardi.</p>
-                              </div>";
-                        error_log("Errore catalogo.php: " . $e->getMessage());
-                    }
-                    ?>
-                </div>
-                <p id="noResults" style="display:none; text-align:center; font-size:1.5em; margin-top:2em; padding: 20px;">
-                    Nessun prodotto corrisponde ai filtri selezionati.
-                </p>
-
             </div>
-        </section>
+
+            <!-- Sezione Basi -->
+            <section id="basi">
+                <h2>Scegli la Tua Base (1 obbligatoria)</h2>
+                <p class="descrizione-sezione">Seleziona una base per il tuo blend. Questa sarà la componente principale della tua tisana.</p>
+                
+                <div class="basi-grid">
+                    <?php foreach ($basi as $base): ?>
+                    <article class="base-card" data-id="<?php echo $base['id_base']; ?>" 
+                                           data-nome="<?php echo htmlspecialchars($base['nome']); ?>"
+                                           data-prezzo="3.50"
+                                           data-temperatura="<?php echo htmlspecialchars($base['temperatura_infusione']); ?>"
+                                           data-tempo="<?php echo htmlspecialchars($base['tempo_infusione']); ?>">
+                        <div class="badge-base">Base</div>
+                        <img src="<?php echo $base['img_path'] ?? 'images/ingredienti/placeholder.webp'; ?>" 
+                             alt="<?php echo htmlspecialchars($base['nome']); ?>">
+                        <h3><?php echo htmlspecialchars($base['nome']); ?></h3>
+                        <?php if (!empty($base['descrizione'])): ?>
+                        <p class="descrizione"><?php echo htmlspecialchars($base['descrizione']); ?></p>
+                        <?php endif; ?>
+                        <div class="info-infusione">
+                            <span class="temp">🌡️ <?php echo htmlspecialchars($base['temperatura_infusione']); ?></span>
+                            <span class="time">⏱️ <?php echo htmlspecialchars($base['tempo_infusione']); ?></span>
+                        </div>
+                        <button class="btn btn-seleziona-base" >
+                            Seleziona Base
+                        </button>
+                    </article>
+                    <?php endforeach; ?>
+                </div>
+            </section>
+
+            <!-- Sezione Ingredienti -->
+            <section id="ingredienti">
+                <h2>Aggiungi gli Ingredienti</h2>
+                <p class="descrizione-sezione">Scegli da 2 a 3 ingredienti per personalizzare il tuo blend.</p>
+                
+                <?php foreach ($ingredientiPerTipo as $tipo => $ingredienti): 
+                    $titoloTipo = '';
+                    switch ($tipo) {
+                        case 'frutto': $titoloTipo = 'Frutti e Bacche'; break;
+                        case 'spezia': $titoloTipo = 'Spezie e Radici'; break;
+                        case 'fiore': $titoloTipo = 'Fiori e Erbe'; break;
+                        case 'dolcificante': $titoloTipo = 'Dolcificanti Naturali'; break;
+                        case 'note': $titoloTipo = 'Note Particolari'; break;
+                        default: $titoloTipo = ucfirst($tipo);
+                    }
+                ?>
+                <h3><?php echo $titoloTipo; ?></h3>
+                <div class="ingredienti-grid">
+                    <?php foreach ($ingredienti as $ing): ?>
+                    <div class="ingrediente-card" data-id="<?php echo $ing['id_ingrediente']; ?>" 
+                                                 data-nome="<?php echo htmlspecialchars($ing['nome']); ?>"
+                                                 data-tipo="<?php echo $ing['tipo']; ?>"
+                                                 data-prezzo="1.50">
+                        <img src="<?php echo $ing['img_path'] ?? 'images/ingredienti/placeholder.webp'; ?>" 
+                             alt="<?php echo htmlspecialchars($ing['nome']); ?>">
+                        <h4><?php echo htmlspecialchars($ing['nome']); ?></h4>
+                        <?php if (!empty($ing['descrizione'])): ?>
+                        <p class="descrizione-ingrediente"><?php echo htmlspecialchars(substr($ing['descrizione'], 0, 100)); ?>...</p>
+                        <?php endif; ?>
+                        <button class="btn btn-aggiungi-ingrediente">
+                            Aggiungi Ingrediente
+                        </button>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+                <?php endforeach; ?>
+            </section>
+
+            <!-- Form nascosto per inviare il blend al server -->
+            <form id="form-blend" action="php/aggiungiBlend.php" method="POST" style="display: none;">
+                <input type="hidden" name="id_base" id="input-id-base">
+                <input type="hidden" name="ingredienti" id="input-ingredienti">
+                <input type="hidden" name="nome_blend" id="input-nome-blend">
+                <input type="hidden" name="prezzo" id="input-prezzo">
+            </form>
+        </div>
     </main>
 
     <!-- Footer -->
@@ -381,12 +376,11 @@
         </svg>
     </button>
 
-    
+    <!-- Scripts -->
     <script src="javaScript/tema.js"></script>
     <script src="javaScript/backToTop.js"></script>
     <script src="javaScript/hamburger.js"></script>
-    <!-- <script src="javaScript/filtriCatalogo.js"></script>-->
-    <script src="javaScript/carrelloCatalogo.js"></script>
-
+    <script src="javaScript/creaBlend.js"></script>
+    
 </body>
 </html>

@@ -1330,8 +1330,6 @@ body.dark-theme .back-to-top:focus {
 
 
 
-
-
 /* ===================================
    PAGINE LOGIN, REGISTRAZIONE E UTENTE
    =================================== */
@@ -2464,22 +2462,7 @@ body.dark-theme .leaf-icon li::before {
     .content-text:nth-child(odd) .content-text-wrapper {
         text-align: left;
     }
-    
-/* Ripristina la sottolineatura centrata su mobile - viene sbagliato: 
-una viene a destra e una centrata (giusto lo stile sottostante)
-    .p-title::after {
-        left: 50%;
-        transform: translateX(-50%);
-    }
 
-    .content-text:nth-child(even) .p-title::after {
-        left: 50%;
-        right: auto;
-        transform: translateX(-50%);
-    }
-    */
-
-/*forza tutte le sottolineature a sinistra su mobile*/
     .p-title::after {
         left: 0 !important;
         right: auto !important;
@@ -2552,8 +2535,6 @@ una viene a destra e una centrata (giusto lo stile sottostante)
         padding: 0.5em 1em;
     }
 }
-
-
 
 /* ===================================
    CATALOGO: BARRA STRUMENTI E FILTRI
@@ -2681,16 +2662,6 @@ una viene a destra e una centrata (giusto lo stile sottostante)
 }
 
 
-
-
-
-
-
-
-
-
-
-
 /* ===================================
    ERRORI
    =================================== */
@@ -2744,8 +2715,16 @@ una viene a destra e una centrata (giusto lo stile sottostante)
     margin-top: 1em;
 }
 
+.testo-errore h1 {
+    font-size: 3.2em;  /* Più grande dell'h2 */
+    color: var(--accent-color);
+    margin: 0 0 0.3em 0;
+    line-height: 1.2;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+}
+
 .testo-errore h2 {
-    font-size: 2.8em;
+    font-size: 2.8em;  /* Dimensione esplicita */
     color: var(--accent-color);
     margin: 0 0 0.3em 0;
     line-height: 1.2;
