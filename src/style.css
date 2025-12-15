@@ -2685,16 +2685,19 @@ body.dark-theme .leaf-icon li::before {
     gap: 3em;
     padding: 0 2em;
     margin: 0 auto;
+    position: relative;
 }
 
-/* Immagine a sinistra */
+/* Immagine errore */
 .img-errore {
     flex: 1;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     border-radius: 12px;
     overflow: hidden;
+    margin-left: -2.5em; 
+    width: 115%;
 }
 
 .img-errore img {
@@ -2703,143 +2706,158 @@ body.dark-theme .leaf-icon li::before {
     max-height: 500px;
     object-fit: cover;
     display: block;
+    min-width: 100%;
 }
 
-/* Testo a destra */
+/* Testo errore */
 .testo-errore {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 1em;
-    margin-top: 1em;
+    padding: 1em 0 1em 0.5em; 
+    margin-left: -1.5em; 
+    width: 105%;
 }
 
+/* Titoli */
 .testo-errore h1 {
-    font-size: 3.2em;  /* Più grande dell'h2 */
-    color: var(--accent-color);
-    margin: 0 0 0.3em 0;
+    font-size: 2.8em; 
+    color: var(--text-brown);
+    margin: 0 0 0.4em 0;
     line-height: 1.2;
     font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    font-weight: 700;
+    white-space: nowrap;
 }
 
-.testo-errore h2 {
-    font-size: 2.8em;  /* Dimensione esplicita */
-    color: var(--accent-color);
-    margin: 0 0 0.3em 0;
-    line-height: 1.2;
-    font-family: 'Helvetica Neue', 'Arial', sans-serif;
-}
-
+/* Paragrafi e link */
 .testo-errore p {
     font-size: 1.3em;
     line-height: 1.6;
-    margin-bottom: 1.2em;
+    margin-bottom: 1.1em;
     color: var(--text-color);
 }
 
 .testo-errore a {
-    color: var(--link-color);
+    color: var(--text-brown);
     text-decoration: none;
     font-weight: 600;
     transition: color 0.3s ease;
+    display: inline-block;
+    margin-top: 0.1em;
 }
 
 .testo-errore a:hover,
 .testo-errore a:focus {
-    color: var(--link-hover);
+    color: var(--accent-yellow);
     text-decoration: underline;
 }
 
+/* Linea separatrice */
+.separatore-testo {
+    width: 150px;
+    height: 3px;
+    background-color: var(--text-brown);
+    margin: 1.3em 0 0.8em 0;
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+}
+
+/* Ultima frase */
 .ultima-frase {
     font-size: 1.1em;
     font-style: italic;
-    opacity: 0.8;
-    margin-top: 0.8em;
-    border-left: 2px solid var(--accent-color);
-    padding-left: 0.8em;
-    margin-left: -0.8em;
+    opacity: 1;
+    text-align: left;
+    margin-top: 0.3em;
+    line-height: 1.5;
+}
+
+/* Tema scuro */
+body.dark-theme .separatore-testo {
+    background-color: var(--header-dark);
+}
+
+body.dark-theme .testo-errore h1,
+body.dark-theme .testo-errore a {
+    color: var(--text-green);
+}
+
+body.dark-theme .testo-errore a:hover,
+body.dark-theme .testo-errore a:focus {
+    color: var(--accent-red);
 }
 
 /* ===================================
    RESPONSIVE ERRORI
    =================================== */
+
+/* Tablet - fino a 1024px */
 @media screen and (max-width: 1024px) {
     .errore-content {
-        gap: 2em;
+        gap: 3em;
         padding: 0 1.5em;
     }
 
-    .testo-errore h2 {
-        font-size: 2.4em;
-    }
+    .testo-errore h1 { font-size: 2.2em; }
+    .testo-errore p { font-size: 1.2em; margin-bottom: 1em; }
+    .separatore-testo { width: 120px; margin: 1.2em 0 0.8em 0; }
 
-    .testo-errore p {
-        font-size: 1.2em;
+    /* Reset completo su tablet per immagine e testo */
+    .img-errore {
+        transform: translateX(0);
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .testo-errore {
+        margin-left: 0;
+        width: 100%;
+        padding: 1em;
     }
 }
 
+/* Mobile - fino a 768px */
 @media screen and (max-width: 768px) {
-    #mainErrore {
-        padding: 1.5em 0;
-        min-height: auto;
-    }
+    #mainErrore { padding: 1.5em 0; min-height: auto; }
 
     .errore-content {
         flex-direction: column;
         text-align: center;
         gap: 2em;
+        padding: 0 1em;
     }
 
     .img-errore {
         width: 100%;
         max-width: 400px;
+        margin: 0 auto;
+        justify-content: center;
     }
 
-    .img-errore img {
-        max-height: 300px;
-    }
+    .img-errore img { max-height: 300px; }
 
     .testo-errore {
         padding: 0;
-        margin-top: 0.5em;
-    }
-
-    .testo-errore h2 {
-        font-size: 2em;
-        margin-bottom: 0.2em;
-    }
-
-    .testo-errore p {
-        font-size: 1.1em;
-    }
-
-    .ultima-frase {
-        border-left: none;
-        border-top: 1px solid var(--accent-color);
-        padding-left: 0;
-        padding-top: 0.8em;
-        margin-top: 0.8em;
+        text-align: center;
+        transform: translateX(0);
         margin-left: 0;
+        width: 100%;
     }
+
+    .testo-errore h1 { font-size: 1.8em; margin-bottom: 0.3em; line-height: 1.1; }
+    .testo-errore p { font-size: 1.1em; margin-bottom: 0.9em; line-height: 1.5; }
+    .separatore-testo { width: 100%; margin: 1em auto 0.7em; }
+    .ultima-frase { text-align: center; margin-top: 0.2em; padding: 0 1em; }
 }
 
+/* Mobile piccolo - fino a 480px */
 @media screen and (max-width: 480px) {
-    .errore-content {
-        padding: 0 1em;
-        gap: 1.5em;
-    }
-
-    .testo-errore h2 {
-        font-size: 1.8em;
-        margin-bottom: 0.2em;
-    }
-
-    .testo-errore p {
-        font-size: 1em;
-    }
-
-    .ultima-frase {
-        font-size: 0.95em;
-    }
+    .errore-content { padding: 0 1em; gap: 1.5em; }
+    .testo-errore h1 { font-size: 1.6em; white-space: normal; margin-bottom: 0.2em; }
+    .testo-errore p { font-size: 1em; margin-bottom: 0.8em; }
+    .separatore-testo { height: 2px; margin: 0.8em auto 0.5em; }
+    .ultima-frase { font-size: 0.95em; margin-top: 0.1em; }
 }

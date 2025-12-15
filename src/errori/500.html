@@ -4,31 +4,15 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <title>Errore 500 - InfuseMe</title>
-    <meta name="description" content="Errore interno del server - InfuseMe" />
-    <meta name="keywords" content="errore, server, tè, infusi, problemi tecnici" />
+    <meta name="description" content="Errore interno del server 500 - InfuseMe" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="keywords" content="errore interno, server, tè, infusi, problemi tecnici" />
     <link rel="stylesheet" href="style.css" type="text/css" />
-    <style>
-        /* Stili per le icone nella pagina errore */
-        .error-icon {
-            width: 24px;
-            height: 24px;
-            margin-right: 10px;
-            vertical-align: middle;
-            fill: currentColor;
-        }
-        
-        .action-list li {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-    </style>
 </head>
 <body>
     <!-- Skip link per accessibilità -->
     <a href="#mainErrore" class="skip-link">Salta al contenuto principale</a>
 
-    <!-- Header (UGUALE ALLA 404) -->
     <header>
         <div class="header-container">
             <div class="logo">
@@ -86,51 +70,29 @@
     </header>
 
     <!-- CONTENUTO ERRORE 500 -->
-    <main id="mainErrore">
-        <div class="errore-content">
-            
-            <!-- Immagine a sinistra -->
-            <div class="img-errore">
-                <img src="images/errori/500.jpg" alt="Immagine di una teiera in ebollizione sopra ad un server" loading="lazy">
-            </div>
+   <main id="mainErrore" role="main">
+  <div class="errore-content">
+    
+    <!-- Immagine a sinistra -->
+    <div class="img-errore">
+      <img src="Images/errori/500.jpg" alt="Teiera in ebollizione che scoppietta bagnando il tavolo " loading="lazy">
+    </div>
 
-            <!-- Testo a destra -->
-            <div class="testo-errore">
-                <h1>Infusione al momento in tilt!</h1>
-                <p>Il nostro blend digitale ha avuto un momento di "ebollizione".</p>
-                <p>Stiamo già filtrando il problema, il nostro team tecnico è già al lavoro per sistemare tutto!</p>
-                
-                <div class="error-actions">
-                    <h2>Cosa puoi fare ora:</h2>
-                    <ul class="action-list">
-                        <li>
-                            <svg class="error-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M19.5,3A2.5,2.5,0,0,1,22,5.5v13A2.5,2.5,0,0,1,19.5,21H4.5A2.5,2.5,0,0,1,2,18.5V5.5A2.5,2.5,0,0,1,4.5,3H19.5m0-2H4.5A4.5,4.5,0,0,0,0,5.5v13A4.5,4.5,0,0,0,4.5,23H19.5A4.5,4.5,0,0,0,24,18.5V5.5A4.5,4.5,0,0,0,19.5,1ZM17,16.5a1.5,1.5,0,0,1-1.5,1.5H8.5A1.5,1.5,0,0,1,7,16.5V7.5A1.5,1.5,0,0,1,8.5,6h7A1.5,1.5,0,0,1,17,7.5v9Z"/>
-                            </svg>
-                            Prenditi una pausa tè e riprova tra qualche minuto
-                        </li>
-                        <li>
-                            <svg class="error-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/>
-                            </svg>
-                            <strong><a href="home.html" class="error-link">Torna alla Home</a></strong> per continuare a esplorare
-                        </li>
-                        <li>
-                            <svg class="error-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z"/>
-                            </svg>
-                            <strong><a href="#" onclick="window.location.reload(); return false;" class="error-link">Ricarica la pagina</a></strong> per un nuovo tentativo
-                        </li>
-                    </ul>
-                </div>
-                
-                <p class="ultima-frase">
-                    Se il problema persiste, contatta il nostro supporto tecnico all'indirizzo 
-                    <a href="mailto:assistenza@infuseme.com">assistenza@infuseme.com</a>.
-                </p>
-            </div>
-        </div>
+    <!-- Testo a destra -->
+    <div class="testo-errore">
+    <h1>Il tè è troppo caldo da gestire!</h1>
+    <p>Anche il tè migliore a volte ha bisogno di raffreddarsi...</p> 
+    <p>Il nostro sistema è andato in ebollizione, ma stiamo già lavorando per risolvere il problema.</p>
+    <p>Nel frattempo, puoi tornare alla <a href="/home.html">Home</a></p>
+    <div class="separatore-testo"></div>
+    <p class="ultima-frase">
+        Questo errore indica un problema temporaneo del server. Ci scusiamo per il disagio!
+    </p>
+    </div>
+    </div>
     </main>
+
+
 
     <!-- Footer -->
     <footer>

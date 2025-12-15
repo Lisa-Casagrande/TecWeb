@@ -5,24 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <title>Errore 401 - InfuseMe</title>
     <meta name="description" content="Errore 401 - Accesso non autorizzato" />
-    <meta name="keywords" content="errore, accesso, login, autorizzazione, tè, infusi" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="keywords" content="errore, accesso, login, autorizzazione, credenziali, mancante" />
     <link rel="stylesheet" href="style.css" type="text/css" />
-    <style>
-        /* Stili per le icone nella pagina errore */
-        .error-icon {
-            width: 24px;
-            height: 24px;
-            margin-right: 10px;
-            vertical-align: middle;
-            fill: currentColor;
-        }
-        
-        .action-list li {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-    </style>
 </head>
 <body>
     <!-- Skip link per accessibilità -->
@@ -85,46 +70,31 @@
         </div>
     </header>
 
-    <!-- CONTENUTO ERRORE 401 -->
-    <main id="mainErrore">
-        <div class="errore-content">
-            
-            <!-- Immagine a sinistra -->
-            <div class="img-errore">
-                <img src="Images/errori/401.jpg" alt="Laboratorio segreto con formula chimica - Errore 401 accesso negato" loading="lazy">
-            </div>
+<!-- CONTENUTO ERRORE 401 -->
+<main id="mainErrore" role="main">
+  <div class="errore-content">
+    
+    <!-- Immagine a sinistra -->
+    <div class="img-errore">
+      <img src="Images/errori/401.jpg" alt="Tazza di tè bloccata da un lucchetto. Errore 401 accesso non autorizzato" loading="lazy">
+    </div>
 
-            <!-- Testo a destra -->
-            <div class="testo-errore">
-                <h1>Formula Riservata</h1>
-                <p>Stai tentando di accedere alla ricetta di una delle nostre miscele più segrete.<br>
-                Questa pagina è riservata ai soli registrati e ai mastri miscelatori del nostro laboratorio.</p>
+    <!-- Testo a destra -->
+    <div class="testo-errore">
+      <h1>Qui serve un login!</h1>
+      <p>Sorseggia un tè caldo, accomodati e concediti un momento di relax… Biscotti opzionali, ma consigliati!</p>
+      <p>Se hai già un account puoi <a href="/login.html">accedere qui</a>. Altrimenti puoi <a href="/registrazione.html">registrarti da qui</a>.</p>
+      <p>In alternativa, puoi tornare alla <a href="/home.html">Home</a>.</p>
+      
+      <div class="separatore-testo"></div>
+      <p class="ultima-frase">
+         Questa pagina è protetta e l’accesso è riservato agli utenti registrati.  
+         Se sei arrivato qui per errore, significa che stavi tentando di accedere a contenuti riservati senza effettuare il login.
+      </p>
+    </div>
 
-                <div class="error-actions">
-                    <h2>Suggerimenti per procedere:</h2>
-                    <ul class="action-list">
-                        <li>
-                            <svg class="error-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M12,12A6,6,0,1,0,6,6,6.006,6.006,0,0,0,12,12ZM12,2A4,4,0,1,1,8,6,4,4,0,0,1,12,2Z"/>
-                                <path d="M12,14a9.01,9.01,0,0,0-9,9,1,1,0,0,0,2,0,7,7,0,0,1,14,0,1,1,0,0,0,2,0A9.01,9.01,0,0,0,12,14Z"/>
-                            </svg>
-                            <span>Se sei un membro autorizzato, <strong><a href="paginaUtente.html" class="error-link">presenta le tue credenziali</a></strong> (fai il login)</span>
-                        </li>
-                        <li>
-                            <svg class="error-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/>
-                            </svg>
-                            <strong><a href="home.html" class="error-link">Torna alla Home</a></strong> per continuare a esplorare
-                        </li>
-                    </ul>
-                </div>
-                <p class="ultima-frase">
-                                    Se il problema persiste, contatta il nostro supporto tecnico all'indirizzo 
-                                    <a href="mailto:assistenza@infuseme.com">assistenza@infuseme.com</a>.
-                                </p>
-                            </div>
-                        </div>
-                    </main>
+  </div>
+</main>
 
     <!-- Footer -->
     <footer>
