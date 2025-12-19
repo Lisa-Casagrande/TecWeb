@@ -13,14 +13,16 @@ $options = [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     PDO::ATTR_EMULATE_PREPARES   => false,
+    // forzare UTF-8
+    PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci"
 ];
 
 try {
     // Crea la connessione
     $pdo = new PDO($dsn, $user, $pass, $options);
     
-    // ⭐ IMPORTANTE: Imposta esplicitamente il charset della connessione
-    $pdo->exec("SET NAMES utf8mb4");
+    // Imposta esplicitamente il charset della connessione (ridondante ma sicuro)
+    $pdo->exec("SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci");
     $pdo->exec("SET CHARACTER SET utf8mb4");
     
 } catch (\PDOException $e) {

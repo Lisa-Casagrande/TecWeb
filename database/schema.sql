@@ -1,7 +1,19 @@
 -- ==================================================
 -- DATABASE InfuseMe: E-commerce Tè, Tisane e Infusi
 -- ==================================================
-CREATE DATABASE IF NOT EXISTS db_InfuseMe CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+-- Imposta il charset UTF-8
+SET NAMES utf8mb4;
+SET character_set_client = utf8mb4;
+SET character_set_connection = utf8mb4;
+SET character_set_database = utf8mb4;
+SET character_set_results = utf8mb4;
+SET character_set_server = utf8mb4;
+
+-- Crea il database se non esiste già
+CREATE DATABASE IF NOT EXISTS db_InfuseMe 
+CHARACTER SET utf8mb4 
+COLLATE utf8mb4_unicode_ci;
+
 USE db_InfuseMe;
 
 -- Prima le tabelle che referenziano altre tabelle

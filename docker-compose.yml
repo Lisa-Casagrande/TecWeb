@@ -22,6 +22,14 @@ services:
       MYSQL_DATABASE: db_InfuseMe
       MYSQL_USER: infuseme_user
       MYSQL_PASSWORD: InfuseMe123!
+      # per UTF-8
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_unicode_ci
+    # Comandi forzare utf8mb4
+    command: 
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --skip-character-set-client-handshake
     volumes:
       - mysql_data:/var/lib/mysql
       # Specifica l'ordine di esecuzione degli script SQL
