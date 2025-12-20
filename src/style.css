@@ -3049,7 +3049,6 @@ body.dark-theme .testo-errore a:focus {
 }
 
 
-
 /* validazioneForm.js */
 /* classe per i messaggi di suggerimento che compaiono nella form aggiungiProdotto.php */
 .default-text {
@@ -3094,6 +3093,101 @@ body.dark-theme .testo-errore a:focus {
         padding: 1em;
     }
 }
+
+
+/* dashboardAdmin.php */
+/*uso di bottone-primario + stile per le card: */
+
+/* contenitore principale della dashboard */
+.admin-dashboard {
+    margin: 2em 0;
+    padding: 1em 0;
+}
+
+/*griglia responsive per card admin (prodotti, ordini, dashboard) */
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2em;
+    margin: 2em;
+}
+
+/* CARD ADMIN: Base */
+.admin-card {
+    background-color: var(--white);
+    border: 1px solid var(--text-color);
+    border-radius: 12px;
+    padding: 0; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /*l'immagine rispetta i bordi arrotondati */
+    transition: transform 0.3s ease;
+}
+
+.admin-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+/* CONTENUTO INTERNO CARD (Testo e Bottoni) */
+.card-content {
+    padding: 1.5em; 
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between; /*se il testo è corto i bottoni stanno comunque in fondo*/
+}
+
+.admin-card h3 {
+    color: var(--button-bg);
+    margin-bottom: 0.5em;
+    font-size: 1.3em;
+}
+
+.admin-card p {
+    color: var(--text-color);
+    margin-bottom: 0.5em;
+    line-height: 1.5;
+}
+
+/* Immagine nelle card (prodotti/ingredienti) - DA VEDERE SE METTERLA */
+.admin-card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid #ddd; /*riga sottile per separare immagine da testo*/
+}
+
+/* Azioni e Bottoni Admin */
+.admin-actions {
+    margin-top: 1.5em;
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+}
+
+
+/*gestioneProdotti.php */
+/* stesse classi di dashboardAdmin.php e altri file + queste specifiche: */
+
+/*tutte le informazioni del prodotto*/
+.admin-details p {
+    margin-bottom: 0.3em;
+    font-size: 0.95em;
+}
+
+/*per la descrizione dei prodotti: la mostra tutta perchè admin non vede dettaglio prodotto*/
+.admin-desc {
+    font-size: 0.9em;
+    color: var(--text-color);
+    margin-bottom: 1em;
+    font-style: italic;
+}
+
+
+
+
 
 /* ===================================
    PAGINA PRODOTTO
