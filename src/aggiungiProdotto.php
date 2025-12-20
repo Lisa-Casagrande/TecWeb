@@ -44,7 +44,6 @@ try {
             <!-- Navigation (menù)-->
             <nav aria-label="Menu principale" role="navigation">
                 <ul class="main-nav">
-                    <li><a href="home.html"><span lang="en">Home</span></a></li>
                     <li><a href="dashboardAdmin.php"><span lang="en">Dashboard</span></a></li>
                     <li><a href="gestioneProdotti.php" class="current-page" aria-current="page">Prodotti</a></li>
                     <li><a href="gestioneIngredienti.php">Ingredienti</a></li>
@@ -180,12 +179,8 @@ try {
         </svg>
     </button>
 
-    <!--file js per validazione campi form-->
-    <script src="javaScript/validazioneForm.js"></script>
-
-    <script src="javaScript/tema.js"></script>
-    <script src="javaScript/backToTop.js"></script>
-    <script src="javaScript/hamburger.js"></script>
+    <!--file js unico per tutti gli elementi -->
+    <script src="javaScript/script.js"></script>
 
 </body>
 </html>

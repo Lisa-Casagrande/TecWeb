@@ -32,7 +32,7 @@
             <!-- Navigation (menù)-->
             <nav aria-label="Menu principale" role="navigation">
                 <ul class="main-nav">
-                    <li><a href="home.html">Home</a></li>
+                    <li><a href="home.html"><span lang="en">Home</span></a></li>
                     <li><a href="catalogo.php">Catalogo</a></li>
                     <li><a href="creaBlend.html">Crea il tuo <span lang="en">Blend</span></a></li>
                     <li><a href="chiSiamo.html">Chi Siamo</a></li>
@@ -90,12 +90,12 @@
             <h2>Accedi al tuo account</h2>
             <form id="login-form" action="login.php" method="post">
                 <div class="form-group">
-                    <label for="username">Username o Email:</label>
+                    <label for="username"><span lang="en">Username</span> o Email:</label>
                     <input type="text" id="username" name="username" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="password">Password:</label>
+                    <label for="password"><span lang="en">Password</span>:</label>
                     <input type="password" id="password" name="password" required>
                 </div>
                 
@@ -104,7 +104,7 @@
                 </div>
                 
                 <div class="form-links">
-                    <p><a href="recupera-password.html">Password dimenticata?</a></p>
+                    <p><a href="recupera-password.html"><span lang="en">Password</span> dimenticata?</a></p>
                     <p>Non hai un account? <a href="registrazione.html">Registrati</a></p>
                 </div>
             </form>
@@ -132,17 +132,17 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="username-reg">Username:</label>
+                    <label for="username-reg"><span lang="en">Username</span>:</label>
                     <input type="text" id="username-reg" name="username" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="password-reg">Password:</label>
+                    <label for="password-reg"><span lang="en">Password</span>:</label>
                     <input type="password" id="password-reg" name="password" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="conferma-password">Conferma Password:</label>
+                    <label for="conferma-password">Conferma <span lang="en">Password</span>:</label>
                     <input type="password" id="conferma-password" name="conferma-password" required>
                 </div>
                 
@@ -164,7 +164,7 @@
 
     <!-- Area Account (visibile solo dopo il login) -->
     <section id="area-account" style="display: none;">
-        <h1>Il Mio Account</h1>
+        <h1>Il Mio <span lang="en">Account</span></h1>
         
         <section id="profilo-utente">
             <h2>Il Mio Profilo</h2>
@@ -173,7 +173,7 @@
                 <div class="user-details">
                     <p><strong>Nome:</strong> <span id="user-nome">Maria Rossi</span></p>
                     <p><strong>Email:</strong> <span id="user-email">maria.rossi@example.com</span></p>
-                    <p><strong>Username:</strong> <span id="user-username">maria_tea</span></p>
+                    <p><strong><span lang="en">Username</span>:</strong> <span id="user-username">maria_tea</span></p>
                     <p><strong>Data registrazione:</strong> <time datetime="2023-05-15">15 maggio 2023</time></p>
                     <p><a href="modifica-profilo.html">Modifica profilo</a></p>
                 </div>
@@ -215,7 +215,7 @@
                 <div class="footer-section">
                     <div class="footer-brand">
                         <div class="brand-name"><span lang="en">InfuseMe</span></div>
-                        <div class="motto-brand">Taste Tradition</div>
+                        <div class="motto-brand"><span lang="en">Taste Tradition</span></div>
                     </div>
                 </div>
 
@@ -227,7 +227,7 @@
                             <strong>Centralino:</strong> +39 000 111 abcd 
                         </div>
                         <div class="contact">
-                            <strong>Customer Care:</strong> +39 111 222 efgh
+                            <strong><span lang="en">Customer Care</span>:</strong> +39 111 222 efgh
                         </div>
                         <div class="contact">
                             <strong>Assistenza Clienti:</strong> assistenza@infuseme.com
@@ -416,10 +416,8 @@
     });
 </script>
 
-     <!--in fondo alla pagina perchè così il browser carica prima il contenuto visibile e lo script non blocca il rendering: migliore performance-->
-    <script src="javaScript/tema.js"></script>
-    <script src="javaScript/backToTop.js"></script>
-    <script src="javaScript/hamburger.js"></script>
+    <!--file js unico per tutti gli elementi -->
+    <script src="javaScript/script.js"></script>
 
 </body>
 </html>

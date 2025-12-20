@@ -33,7 +33,7 @@
             <!-- Navigation (menù)-->
             <nav aria-label="Menu principale" role="navigation">
                 <ul class="main-nav">
-                    <li><a href="home.html">Home</a></li>
+                    <li><a href="home.html"><span lang="en">Home</span></a></li>
                     <li><a href="catalogo.php" class="current-page" aria-current="page">Catalogo</a></li>
                     <li><a href="creaBlend.php">Crea il tuo Blend</a></li>
                     <li><a href="chiSiamo.html">Chi Siamo</a></li>
@@ -274,7 +274,7 @@
                 <div class="footer-section">
                     <div class="footer-brand">
                         <div class="brand-name"><span lang="en">InfuseMe</span></div>
-                        <div class="motto-brand">Taste Tradition</div>
+                        <div class="motto-brand"><span lang="en">Taste Tradition</span></div>
                     </div>
                 </div>
 
@@ -286,7 +286,7 @@
                             <strong>Centralino:</strong> +39 000 111 abcd 
                         </div>
                         <div class="contact">
-                            <strong>Customer Care:</strong> +39 111 222 efgh
+                            <strong><span lang="en">Customer Care</span>:</strong> +39 111 222 efgh
                         </div>
                         <div class="contact">
                             <strong>Assistenza Clienti:</strong> assistenza@infuseme.com
@@ -381,12 +381,8 @@
         </svg>
     </button>
 
-    
-    <script src="javaScript/tema.js"></script>
-    <script src="javaScript/backToTop.js"></script>
-    <script src="javaScript/hamburger.js"></script>
-    <!-- <script src="javaScript/filtriCatalogo.js"></script>-->
-    <script src="javaScript/carrelloCatalogo.js"></script>
+    <!--file js unico per tutti gli elementi -->
+    <script src="javaScript/script.js"></script>
 
 </body>
 </html>
