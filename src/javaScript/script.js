@@ -1,18 +1,18 @@
 /**
  * FILE UNICO JAVASCRIPT
- * Contiene tutti i vecchi file javascript, ma mettendoli in unico file rende il caricamento più veloce
+ * tenendo tutto in un unico file il caricamento è più veloce
  -> da aggiornare tutti i file html e php alla fine includendo solo questo file e non tutti gli altri 
 */
 
 /* ==========================================================================
    SEZIONE 1: GESTIONE TEMA (ex tema.js)
-   deve essere eseguito subito per evitare flash di contenuto non stilizzato
-   - Gestione tema chiaro/scuro per InfuseMe
-   - Implementazione accessibile e user-friendly
-   - VERSIONE CORRETTA - Persistenza tema fixata
+   Gestione tema chiaro/scuro per InfuseMe
+   Implementazione accessibile e user-friendly
+   Persistenza tema
    ========================================================================== */
-    // Configurazione
-   const ThemeManager = {
+
+// Configurazione
+const ThemeManager = {
     // Elementi DOM
     elements: {
         body: null,
@@ -30,13 +30,16 @@
     // Inizializzazione
     init() {
         console.log('ThemeManager inizializzato');
+        
         // Riferimenti agli elementi DOM
         this.elements.body = document.body;
         this.elements.themeToggle = document.querySelector('.theme-toggle');
+        
+        // **IMPORTANTE:** Cerca in tutta la pagina, non solo nel header
         this.elements.sunIcon = document.querySelector('.sun-icon');
         this.elements.moonIcon = document.querySelector('.moon-icon');
 
-        // APPLICA IL TEMA SUBITO all'avvio
+        // **APPLICA SUBITO** il tema all'avvio
         this.loadAndApplyTheme();
 
         // Aggiungi event listeners
@@ -44,159 +47,231 @@
 
         // Aggiorna stato iniziale
         this.updateUI();
-
-        // Setup per menu mobile (se presente)
-        this.setupMobileThemeToggle();
     },
 
     // Carica e applica il tema dalle preferenze
     loadAndApplyTheme() {
+        console.log('Caricamento tema in corso...');
+        
         // 1. Controlla preferenza utente salvata
         const savedTheme = localStorage.getItem('infuseme-theme');
+        console.log('Tema salvato in localStorage:', savedTheme);
         
         // 2. Controlla preferenza sistema
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        console.log('Sistema preferisce scuro:', systemPrefersDark);
         
         // 3. Logica di priorità
-        if (savedTheme) {
+        if (savedTheme === 'light' || savedTheme === 'dark') {
+            // Utente ha scelto esplicitamente
             this.states.userPreference = savedTheme;
             this.states.isDark = savedTheme === 'dark';
+            console.log('Usando preferenza utente:', savedTheme);
         } else {
+            // Usa preferenza sistema (o default chiaro)
             this.states.userPreference = 'system';
             this.states.isDark = systemPrefersDark;
+            console.log('Usando preferenza sistema:', systemPrefersDark ? 'dark' : 'light');
         }
+        
         // 4. APPLICA IMMEDIATAMENTE il tema al DOM
         this.applyTheme();
-
-        console.log(`Tema caricato: ${this.states.userPreference} (dark: ${this.states.isDark})`);
-    },
-
-    // Alterna tra tema chiaro e scuro
-    toggleTheme() {
-        this.states.isDark = !this.states.isDark; //inverte lo stato
-        this.states.userPreference = this.states.isDark ? 'dark' : 'light'; //salva come preferenza utente esplicita
         
-        this.applyTheme();
-        this.savePreference();
-        this.updateUI();
-
-        console.log(`Tema cambiato a: ${this.states.isDark ? 'scuro' : 'chiaro'}`);
+        console.log(`Tema applicato: ${this.states.isDark ? 'scuro' : 'chiaro'}`);
     },
 
     // Applica il tema al DOM
     applyTheme() {
+        console.log('Applicazione tema al DOM...');
+        
         if (this.states.isDark) {
+            // Tema scuro
             this.elements.body.classList.add('dark-theme');
+            this.elements.body.classList.remove('light-theme');
             document.documentElement.setAttribute('data-theme', 'dark');
+            
+            // **AGGIUNTO:** Imposta anche un attributo custom per CSS
+            document.documentElement.classList.add('dark-theme');
+            document.documentElement.classList.remove('light-theme');
+            
+            console.log('Tema scuro applicato');
         } else {
+            // Tema chiaro
+            this.elements.body.classList.add('light-theme');
             this.elements.body.classList.remove('dark-theme');
             document.documentElement.setAttribute('data-theme', 'light');
+            
+            // **AGGIUNTO:** Imposta anche un attributo custom per CSS
+            document.documentElement.classList.add('light-theme');
+            document.documentElement.classList.remove('dark-theme');
+            
+            console.log('Tema chiaro applicato');
         }
+    },
+
+    // Alterna tra tema chiaro e scuro
+    toggleTheme() {
+        console.log('Toggle tema cliccato');
+        
+        this.states.isDark = !this.states.isDark;
+        this.states.userPreference = this.states.isDark ? 'dark' : 'light';
+        
+        console.log('Nuovo stato:', this.states.isDark ? 'scuro' : 'chiaro');
+        
+        this.applyTheme();
+        this.savePreference();
+        this.updateUI();
     },
 
     // Salva le preferenze
     savePreference() {
         localStorage.setItem('infuseme-theme', this.states.userPreference);
+        console.log('Preferenza salvata:', this.states.userPreference);
     },
 
-// Aggiorna l'interfaccia utente
+    // Aggiorna l'interfaccia utente
     updateUI() {
-        if (!this.elements.themeToggle) return;
-        //testi dinamici basati sullo stato corrente
+        if (!this.elements.themeToggle) {
+            console.warn('theme-toggle non trovato');
+            return;
+        }
+        
+        // Testi dinamici basati sullo stato corrente
         const label = this.states.isDark ? 'Attiva tema chiaro' : 'Attiva tema scuro';
-        const title = this.states.isDark ? 'Passa al tema chiaro' :'Passa al tema scuro';
-
-        //aggiorna attributi dinamicamente
-        this.elements.themeToggle.setAttribute('aria-label', label); //per screen reader
-        this.elements.themeToggle.setAttribute('title', title);
-
-        console.log(`UI aggiornata: ${label}`);
-    },
-
-// Setup per tema nel menu mobile
-    setupMobileThemeToggle() {
-        const setupMobile = () => {
-            const mobileThemeToggle = document.querySelector('.mobile-menu-wrapper .theme-toggle');
-            if (mobileThemeToggle) {
-                const newToggle = mobileThemeToggle.cloneNode(true);
-                mobileThemeToggle.parentNode.replaceChild(newToggle, mobileThemeToggle);
-                
-                newToggle.addEventListener('click', () => {
-                    console.log('Toggle tema mobile cliccato');
-                    this.toggleTheme();
-                });
+        
+        // Aggiorna attributi dinamicamente
+        this.elements.themeToggle.setAttribute('aria-label', label);
+        this.elements.themeToggle.setAttribute('title', label);
+        
+        // **AGGIUNTO:** Aggiorna icone se presenti
+        if (this.elements.sunIcon && this.elements.moonIcon) {
+            if (this.states.isDark) {
+                this.elements.sunIcon.style.display = 'none';
+                this.elements.moonIcon.style.display = 'block';
+            } else {
+                this.elements.sunIcon.style.display = 'block';
+                this.elements.moonIcon.style.display = 'none';
             }
-        };
-        //setup immediato e anche quando il menu mobile viene aperto
-        setTimeout(setupMobile, 100);
-        //riascolta periodicamente per menu mobile dinamico
-        setInterval(setupMobile, 1000);
+        }
+        
+        console.log(`UI aggiornata: ${label}`);
     },
 
     // Aggiungi tutti gli event listeners
     addEventListeners() {
-        if (this.elements.themeToggle) {
-            this.elements.themeToggle.addEventListener('click', () => {
+        console.log('Aggiunta event listeners...');
+        
+        // **IMPORTANTE:** Aggiungi listener a TUTTI i toggle
+        const allThemeToggles = document.querySelectorAll('.theme-toggle');
+        
+        allThemeToggles.forEach(toggle => {
+            // Rimuovi listener esistenti per evitare duplicati
+            const newToggle = toggle.cloneNode(true);
+            toggle.parentNode.replaceChild(newToggle, toggle);
+            
+            newToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 this.toggleTheme();
             });
 
-            this.elements.themeToggle.addEventListener('keydown', (e) => {
+            newToggle.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     this.toggleTheme();
                 }
             });
-        }
-
+        });
+        
+        console.log(`Aggiunti ${allThemeToggles.length} toggle listeners`);
+        
+        // Listener per cambio preferenza sistema
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
             if (this.states.userPreference === 'system') {
                 this.states.isDark = e.matches;
                 this.applyTheme();
                 this.updateUI();
-                console.log('Tema sistema cambiato');
+                console.log('Tema sistema cambiato:', e.matches ? 'dark' : 'light');
             }
         });
     }
-
-    // Metodo per ottenere stato corrente (utile per debug)
-    getStatus() {
-        return {
-            isDark: this.states.isDark,
-            userPreference: this.states.userPreference,
-            systemPrefersDark: window.matchMedia('(prefers-color-scheme: dark)').matches
-        };
-    }
 };
 
-
-// INIZIALIZZAZIONE IMMEDIATA TEMA
+// **FUNZIONE DI INIZIALIZZAZIONE CORRETTA**
 function initializeTheme() {
+    console.log('=== INIZIALIZZAZIONE TEMA ===');
+    
+    // 1. APPLICA SUBITO senza aspettare DOMContentLoaded
     const savedTheme = localStorage.getItem('infuseme-theme');
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const isDark = savedTheme ? savedTheme === 'dark' : systemPrefersDark;
     
+    console.log('Stato iniziale - salvato:', savedTheme, 'sistema:', systemPrefersDark);
+    
+    // Applica immediatamente al body
     if (isDark) {
         document.body.classList.add('dark-theme');
+        document.body.classList.remove('light-theme');
         document.documentElement.setAttribute('data-theme', 'dark');
     } else {
+        document.body.classList.add('light-theme');
         document.body.classList.remove('dark-theme');
         document.documentElement.setAttribute('data-theme', 'light');
     }
-
+    
+    // 2. Inizializza il manager quando il DOM è pronto
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => ThemeManager.init());
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOMContentLoaded - inizializzo ThemeManager');
+            ThemeManager.init();
+        });
     } else {
+        console.log('DOM già pronto - inizializzo ThemeManager immediatamente');
         ThemeManager.init();
     }
 }
 
-
-// Avvia l'inizializzazione
+// **ESECUZIONE IMMEDIATA**
+// Questo viene eseguito non appena il file JS viene caricato
+console.log('tema.js caricato - avvio inizializzazione...');
 initializeTheme();
+
+// **AGGIUNTO:** Funzione per forzare il tema su tutte le pagine
+function forceThemeRefresh() {
+    console.log('Forzando refresh tema...');
+    ThemeManager.loadAndApplyTheme();
+}
+
+// **AGGIUNTO:** Salvataggio aggiuntivo quando l'utente lascia la pagina
+window.addEventListener('beforeunload', () => {
+    if (ThemeManager.states.userPreference) {
+        localStorage.setItem('infuseme-theme', ThemeManager.states.userPreference);
+        console.log('Tema salvato prima di lasciare la pagina');
+    }
+});
+
+// **AGGIUNTO:** Controllo se il tema è stato applicato
+window.addEventListener('load', () => {
+    const currentTheme = localStorage.getItem('infuseme-theme');
+    const bodyTheme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
+    
+    console.log('=== VERIFICA TEMA ===');
+    console.log('localStorage:', currentTheme);
+    console.log('Body class:', bodyTheme);
+    console.log('data-theme:', document.documentElement.getAttribute('data-theme'));
+    
+    // Se c'è incongruenza, forza il refresh
+    if ((currentTheme === 'dark' && bodyTheme !== 'dark') || 
+        (currentTheme === 'light' && bodyTheme !== 'light')) {
+        console.log('Incosistenza rilevata, forzo correzione...');
+        forceThemeRefresh();
+    }
+});
 
 // Esporta per debug (solo in sviluppo)
 if (typeof window !== 'undefined') {
     window.ThemeManager = ThemeManager;
+    window.forceThemeRefresh = forceThemeRefresh;
 }
 
 // Fallback per browser molto vecchi
@@ -204,11 +279,11 @@ if (!window.localStorage) {
     console.warn('localStorage non supportato - le preferenze tema non verranno salvate');
 }
 
-console.log('tema.js caricato correttamente');
+console.log('tema.js completamente caricato e inizializzato');
 
 
 /* ==========================================================================
-   SEZIONE 2: MENU HAMBURGER (ex hamburger.js)
+   SEZIONE 2: MENU HAMBURGER
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', function() {
     
@@ -346,7 +421,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 /* ==========================================================================
-   SEZIONE 3: PULSANTE TORNA SU (ex backToTop.js)
+   SEZIONE 3: PULSANTE TORNA SU 
    ========================================================================== */
 (function() {
     'use strict';
@@ -400,7 +475,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 /* ==========================================================================
-   SEZIONE 4: VALIDAZIONE FORM (ex validazioneForm.js)
+   SEZIONE 4: VALIDAZIONE FORM 
    ========================================================================== */
 /** ARRAY ASSOCIATIVO PER CAMPI DELLA FORM
 * chiave: nome dell'input che cerco
@@ -545,7 +620,7 @@ window.addEventListener("load", caricamentoForm);
 
 
 /* ==========================================================================
-   SEZIONE 5: CARRELLO CATALOGO (ex carrelloCatalogo.js)
+   SEZIONE 5: CARRELLO CATALOGO 
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', function() {
     const cartButtons = document.querySelectorAll('.aggiungi-carrello');
@@ -618,178 +693,125 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
-
 /* ==========================================================================
-   SEZIONE 6: FILTRI CATALOGO (ex filtriCatalogo.js)
+   SEZIONE 6.1: CONTROLLO QUANTITÀ PRODOTTO
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', function() {
-    // Elementi DOM
-    const toggleBtn = document.getElementById('toggleFilters');
-    const filterPanel = document.getElementById('filterPanel');
-    const cards = Array.from(document.querySelectorAll('.product-card'));
-    const noResults = document.getElementById('noResults');
-    const sortSelect = document.getElementById('sortOrder');
-    
-    console.log('Prodotti caricati:', cards.length);
-    
-    // 1. APRI/CHIUDI PANNELLO FILTRI (MOBILE)
-    if (toggleBtn && filterPanel) {
-        toggleBtn.addEventListener('click', () => {
-            const isOpen = filterPanel.classList.toggle('open');
-            toggleBtn.setAttribute('aria-expanded', isOpen);
-        });
-    }
-    
-    // 2. LOGICA FILTRAGGIO
-    const categoryInputs = document.querySelectorAll('input[name="category"]');
-    const ingredientInputs = document.querySelectorAll('.ing-filter');
-    const priceInputs = document.querySelectorAll('input[name="priceRange"]');
-    const baseInputs = document.querySelectorAll('input[name="baseFilter"]');
-    
-    function filterProducts() {
-        // Categoria selezionata
-        const selectedCategory = document.querySelector('input[name="category"]:checked')?.value || 'all';
+    // Funzione per il controllo quantità
+    function initQuantityControls() {
+        const minusBtn = document.querySelector('.quantity-btn.minus');
+        const plusBtn = document.querySelector('.quantity-btn.plus');
+        const input = document.querySelector('#quantita');
         
-        // Ingredienti selezionati
-        const selectedIngredients = Array.from(ingredientInputs)
-            .filter(i => i.checked)
-            .map(i => i.value.toLowerCase());
-        
-        // Prezzo selezionato
-        const selectedPrice = document.querySelector('input[name="priceRange"]:checked')?.value || 'all';
-        
-        // Base selezionata
-        const selectedBase = document.querySelector('input[name="baseFilter"]:checked')?.value || 'all';
-        
-        let visibleCount = 0;
-        
-        cards.forEach(card => {
-            const prodCat = card.dataset.category;
-            const prodIngs = card.dataset.ingredients || '';
-            const prodPrice = parseFloat(card.dataset.price) || 0;
-            const prodBase = card.dataset.base || '';
+        if (minusBtn && plusBtn && input) {
+            minusBtn.addEventListener('click', () => {
+                let value = parseInt(input.value);
+                if (value > parseInt(input.min)) {
+                    input.value = value - 1;
+                    toggleButtonsState(input, minusBtn, plusBtn);
+                }
+            });
             
-            // Verifica Categoria
-            const catMatch = selectedCategory === 'all' || selectedCategory === prodCat;
+            plusBtn.addEventListener('click', () => {
+                let value = parseInt(input.value);
+                if (value < parseInt(input.max)) {
+                    input.value = value + 1;
+                    toggleButtonsState(input, minusBtn, plusBtn);
+                }
+            });
             
-            // Verifica Ingredienti
-            let ingMatch = true;
-            if (selectedIngredients.length > 0) {
-                ingMatch = selectedIngredients.some(ing => 
-                    prodIngs.toLowerCase().includes(ing.toLowerCase())
-                );
-            }
-            
-            // Verifica Prezzo
-            let priceMatch = true;
-            if (selectedPrice !== 'all') {
-                if (selectedPrice === 'low') priceMatch = prodPrice <= 5;
-                else if (selectedPrice === 'medium') priceMatch = prodPrice > 5 && prodPrice <= 10;
-                else if (selectedPrice === 'high') priceMatch = prodPrice > 10;
-            }
-            
-            // Verifica Base
-            let baseMatch = true;
-            if (selectedBase !== 'all') {
-                baseMatch = prodBase.toLowerCase().includes(selectedBase.toLowerCase());
-            }
-            
-            // Mostra/Nascondi
-            if (catMatch && ingMatch && priceMatch && baseMatch) {
-                card.style.display = 'flex';
-                visibleCount++;
-            } else {
-                card.style.display = 'none';
-            }
-        });
-        
-        // Mostra messaggio se 0 risultati
-        if (noResults) {
-            noResults.style.display = (visibleCount === 0) ? 'block' : 'none';
+            // Disabilita pulsanti all'inizio se necessario
+            toggleButtonsState(input, minusBtn, plusBtn);
         }
-        // Aggiorna pulsanti filtri desktop
-        updateDesktopFilters(selectedCategory);
     }
-    
-    function updateDesktopFilters(selectedCategory) {
-        const desktopFilterBtns = document.querySelectorAll('.catalog-filters .filter-btn');
-        desktopFilterBtns.forEach(btn => {
-            btn.classList.remove('active');
-            if (btn.dataset.filter === selectedCategory || 
-                (selectedCategory === 'all' && btn.dataset.filter === 'all')) {
-                btn.classList.add('active');
-            }
-        });
+
+    function toggleButtonsState(input, minusBtn, plusBtn) {
+        minusBtn.disabled = parseInt(input.value) <= parseInt(input.min);
+        plusBtn.disabled = parseInt(input.value) >= parseInt(input.max);
     }
-    
-    // Listener per filtri
-    categoryInputs.forEach(input => input.addEventListener('change', filterProducts));
-    ingredientInputs.forEach(input => input.addEventListener('change', filterProducts));
-    priceInputs.forEach(input => input.addEventListener('change', filterProducts));
-    baseInputs.forEach(input => input.addEventListener('change', filterProducts));
-    
-    document.querySelectorAll('.catalog-filters .filter-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const filter = this.dataset.filter;
-            const radio = document.querySelector(`input[name="category"][value="${filter}"]`);
-            if (radio) {
-                radio.checked = true;
-                categoryInputs.forEach(input => {
-                    if (input !== radio) {
-                        input.checked = false;
-                    }
-                });
-                filterProducts();
-            }
-        });
-    });
-    
-    // 3. ORDINAMENTO
-    if (sortSelect) {
-        sortSelect.addEventListener('change', () => {
-            const sortValue = sortSelect.value;
-            // Ottieni le card visibili
-            const visibleCards = cards.filter(card => card.style.display !== 'none');
-            // Ordina virtualmente senza modificare il DOM
-            let sortedCards = [...visibleCards];
-            
-            if (sortValue === 'priceAsc') {
-                sortedCards.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
-            } else if (sortValue === 'priceDesc') {
-                sortedCards.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
-            } else if (sortValue === 'nameAsc') {
-                sortedCards.sort((a, b) => a.dataset.name.localeCompare(b.dataset.name));
-            } else if (sortValue === 'nameDesc') {
-                sortedCards.sort((a, b) => b.dataset.name.localeCompare(a.dataset.name));
-            } else {
-                return; //rilevanza
-            }
-            
-            const container = document.querySelector('.products-grid.catalog-grid');
-            if (!container) return;
-            
-            const allCards = [...cards];
-            allCards.forEach(card => card.style.display = 'none');
-            
-            sortedCards.forEach(card => {
-                card.style.display = 'flex';
-                container.appendChild(card);
-            });
-            
-            allCards.filter(card => !visibleCards.includes(card)).forEach(card => {
-                container.appendChild(card);
-            });
-        });
-    }
-    //applica filtri iniziali
-    filterProducts();
+
+    // Inizializza i controlli quantità quando il DOM è caricato
+    initQuantityControls();
 });
 
+// Gestione Aggiunta al Carrello con quantità
+document.addEventListener('DOMContentLoaded', function() {
+    const aggiungiCarrelloBtn = document.getElementById('aggiungiCarrello');
+    
+    if (aggiungiCarrelloBtn) {
+        aggiungiCarrelloBtn.addEventListener('click', function() {
+            const idProdotto = this.getAttribute('data-id');
+            const nome = this.getAttribute('data-nome');
+            const prezzo = parseFloat(this.getAttribute('data-prezzo'));
+            const img = this.getAttribute('data-img');
+            const disponibilita = parseInt(this.getAttribute('data-disponibilita'));
+            const quantitaInput = document.getElementById('quantita');
+            const quantita = quantitaInput ? parseInt(quantitaInput.value) : 1;
+            
+            // Verifica disponibilità
+            if (quantita > disponibilita) {
+                alert('Quantità non disponibile! Disponibilità attuale: ' + disponibilita);
+                return;
+            }
+            
+            // Aggiungi al carrello
+            addToCartWithQuantity(idProdotto, nome, prezzo, img, quantita);
+            
+            // Feedback visivo
+            const originalText = this.innerHTML;
+            this.innerHTML = "<span style='color:white'>✓ Aggiunto!</span>";
+            this.classList.add('aggiunto');
+            
+            // Ripristina dopo 2 secondi
+            setTimeout(() => {
+                this.innerHTML = originalText;
+                this.classList.remove('aggiunto');
+            }, 2000);
+            
+            // Aggiorna contatore carrello
+            updateCartCounter();
+        });
+    }
+});
+
+// Funzione per aggiungere al carrello con quantità
+function addToCartWithQuantity(id, name, price, img, quantity) {
+    let cart = JSON.parse(localStorage.getItem('carrello')) || [];
+
+    // Controlla se il prodotto è già nel carrello
+    const existingItem = cart.find(item => item.id === id);
+    
+    if (existingItem) {
+        existingItem.quantity += quantity;
+    } else {
+        cart.push({
+            id: id,
+            name: name,
+            price: parseFloat(price),
+            img: img,
+            quantity: quantity
+        });
+    }
+    localStorage.setItem('carrello', JSON.stringify(cart));
+    console.log('Carrello aggiornato:', cart);
+}
+
+// Funzione per aggiornare contatore carrello
+function updateCartCounter() {
+    const cart = JSON.parse(localStorage.getItem('carrello')) || [];
+    const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+    
+    // Se hai un contatore nel carrello nell'header, aggiornalo
+    const cartCounter = document.querySelector('.cart-counter');
+    if (cartCounter) {
+        cartCounter.textContent = totalItems;
+        cartCounter.style.display = totalItems > 0 ? 'inline' : 'none';
+    }
+}
 
 
 /* ==========================================================================
-   SEZIONE 7: CREA BLEND (ex creaBlend.js)
+   SEZIONE 7: CREA BLEND 
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', function() {
     // Stato della selezione
@@ -797,8 +819,8 @@ document.addEventListener('DOMContentLoaded', function() {
         base: null,
         ingredienti: [],
         maxIngredienti: 2, // Default
-        prezzoBase: 3.50,
-        prezzoIngrediente: 1.50
+        prezzoBase: 2.50,
+        prezzoIngrediente: 1.00
     };
     
     // Elementi DOM
