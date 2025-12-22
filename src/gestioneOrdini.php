@@ -1,13 +1,18 @@
 <?php
+//connessione al DB
 require_once 'php/connessione.php';
 require_once 'php/verificaSessioneAdmin.php';
 
-//RECUPERA LE BASI DAL DATABASE: campo nella form che mostra le basi presenti (hanno una loro tabella nel db)
+//QUERY che recupera ordini e nome utente, ordinati per data decrescente (dal più recente)
+$sql = "SELECT ordine.*, utente.nome, utente.cognome 
+        FROM ordine 
+        JOIN utente ON ordine.id_utente = utente.id_utente 
+        ORDER BY data_ordine DESC";
+
 try {
-    $stmt = $pdo->query("SELECT id_base, nome FROM base ORDER BY nome ASC");
-    $basi = $stmt->fetchAll();
+    $ordini = $pdo->query($sql)->fetchAll();
 } catch (PDOException $e) {
-    die("Errore nel recupero delle basi: " . $e->getMessage());
+    die("Errore recupero ordini: " . $e->getMessage());
 }
 ?>
 
@@ -17,15 +22,11 @@ try {
     <meta charset="UTF-8">
     <meta lang="it" xml:lang="it" xmlns="http://www.w3.org/1999/xhtml">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"/>
-
-    <title>Aggiungi Nuovo Prodotto - Admin</title>
-    <meta name="description" content="Pagina dedicata ai prodotti del catalogo InfuseMe: tè, infusi e tisane." >
-	<meta name="keywords" content="InfuseMe, tè, infuso, tisana, biologico, ingredienti, artigianale" >
+    <title>Ordini dei Clienti - Admin</title>
     <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 
 <body>
-<!-- <body onload="caricamento();"> DA VEDERE-->
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
 
     <header>
@@ -45,9 +46,9 @@ try {
             <nav aria-label="Menu principale" role="navigation">
                 <ul class="main-nav">
                     <li><a href="dashboardAdmin.php"><span lang="en">Dashboard</span></a></li>
-                    <li><a href="gestioneProdotti.php" class="current-page" aria-current="page">Prodotti</a></li>
+                    <li><a href="gestioneProdotti.php">Prodotti</a></li>
                     <li><a href="gestioneIngredienti.php">Ingredienti</a></li>
-                    <li><a href="gestioneOrdini.php">Ordini</a></li>
+                    <li><a href="gestioneOrdini.php" class="current-page" aria-current="page">Ordini</a></li>
                 </ul>
             </nav>
 
@@ -74,89 +75,60 @@ try {
                     </svg>
                 </button>
             </div><!--fine header utilities icons-->
-
-        </div> <!--fine header container-->
+        </div>
     </header>
 
-<!-- main content: form per inserire attributi Prodotto -->
+<!-- Main Content -->
     <main id="main-content" role="main">
-        <h1>Inserisci un Nuovo Prodotto</h1>
 
-        <!--collegamento a file php per salvare il prodotto nuovo-->
-        <!--da vedere se mettere id al posto di class-->
-        <!--enctype serve per trasmettere l'immagine, altrimenti non si può caricare-->
-        <form id="form" class="form-container" method="post" action="php/salvaProdotto.php" enctype="multipart/form-data">
-            
-            <fieldset>
-                <legend>Informazioni Principali</legend> <!--obbligatori-->
+        <h1>Gestione Ordini Clienti</h1>
+        <p>Visualizza lo storico degli ordini, monitora lo stato delle spedizioni e accedi ai dettagli.</p>
+
+        <div class="order-list">
+            <?php foreach ($ordini as $ordine): 
+                $stato = $ordine['stato_ord'];
                 
-                <div class="input-group">
-                    <label for="nome">Nome del prodotto *:</label>
-                    <input type="text" id="nome" name="nome">
-                </div>
+                // Mappa Stati -> Classi CSS
+                $mappaStati = [
+                    'annullato' => 'stato-rosso',
+                    'in_attesa' => 'stato-giallo',
+                    'in_preparazione' => 'stato-giallo',
+                    'pagato' => 'stato-verde',
+                    'spedito' => 'stato-verde',
+                    'consegnato' => 'stato-blu'
+                ];
 
-                <div class="input-group">
-                    <label for="descrizione">Descrizione *:</label>
-                    <textarea id="descrizione" name="descrizione"></textarea> 
-                </div>
+                // Se lo stato non è nella mappa, usa giallo come fallback
+                $classStato = isset($mappaStati[$stato]) ? $mappaStati[$stato] : 'stato-giallo';
 
-                <div class="input-group">
-                    <label for="categoria">Categoria *:</label>
-                    <select id="categoria" name="categoria">
-                        <option value="tè_verde">Tè Verde</option>
-                        <option value="tè_nero">Tè Nero</option>
-                        <option value="tè_bianco">Tè Bianco</option>
-                        <option value="tè_giallo">Tè Giallo</option>
-                        <option value="tè_oolong">Tè Oolong</option>
-                        <option value="tisana">Tisana</option>
-                        <option value="infuso">Infuso</option>
-                        <option value="altro">altro</option>
-                    </select>
-                </div>
-
-                <div class="input-group">
-                    <label for="prezzo">Prezzo (€) *:</label>
-                    <input type="number" id="prezzo" name="prezzo" step="0.01" min="0">
-                </div>
-
-                <div class="input-group">
-                    <label for="disponibilita">Disponibilità *:</label>
-                    <input type="number" id="disponibilita" name="disponibilita" min="0">
-                </div>
-            </fieldset>
-
-            <fieldset>
-                <legend>Altre infromazioni</legend>
-                <div class="input-group">
-                    <label for="id_base">Base del prodotto:</label>
-                    <select id="id_base" name="id_base">
-                        <option value="">-- Seleziona una Base --</option>
-                        <?php foreach ($basi as $base): ?>
-                            <option value="<?php echo $base['id_base']; ?>">
-                                <?php echo htmlspecialchars($base['nome']); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-
-                <div class="input-group">
-                    <label for="grammi">Grammi:</label>
-                    <input type="number" id="grammi" name="grammi" min="1">
-                </div>
+                // Formattazione stringa stato (toglie trattino basso e mette maiuscola iniziale)
+                $statoFormattato = ucfirst(str_replace('_', ' ', $stato));
+            ?>
             
-                <div class="input-group">
-                    <label for="img_path">Immagine Prodotto:</label>
-                    <input type="file" id="img_path" name="img_path">
+            <article class="order-card">
+                <div class="order-info">
+                    <h3 class="order-number">Ordine #<?php echo $ordine['id_ordine']; ?></h3>
+                    <div class="order-meta">
+                        <p><strong>Data:</strong> <?php echo date("d/m/Y H:i", strtotime($ordine['data_ordine'])); ?></p>
+                        <p><strong>Cliente:</strong> <?php echo htmlspecialchars($ordine['nome'] . " " . $ordine['cognome']); ?></p>
+                    </div>
                 </div>
-            </fieldset>
 
-            <fieldset>
-		    <legend>Bottoni</legend>
-		        <input type="submit" id="submit" name="submit" class="bottone-primario" value="Inserisci prodotto" >
-		        <input type="reset" id="reset" class="bottone-primario" value="Cancella tutto" >
-	        </fieldset>
+                <div class="order-price">
+                    <p>Totale</p>
+                    <p>€ <?php echo number_format($ordine['totale'], 2); ?></p>
+                </div>
 
-        </form>
+                <div class="order-status-action">
+                    <div class="status-wrapper">
+                        <span class="<?php echo $classStato; ?>"></span>
+                        <span><?php echo $statoFormattato; ?></span>
+                    </div>
+                    <a href="dettaglioOrdineAdmin.php?id=<?php echo $ordine['id_ordine']; ?>" class="bottone-primario">Vedi dettaglio</a>
+                </div>
+            </article>
+            <?php endforeach; ?>
+        </div>
     </main>
 
 
@@ -169,7 +141,7 @@ try {
                     <div class="motto-brand"><span lang="en">Taste Tradition</span></div>
                 </div>
             </div>
-        </div> <!--fine class container-->
+        </div>
     </footer>
 
     <!-- Pulsante Torna Su (no title perchè c'è nel css)-->

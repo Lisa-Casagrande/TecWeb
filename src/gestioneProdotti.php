@@ -1,14 +1,17 @@
 <?php
+//connessione al database
 require_once 'php/connessione.php';
 require_once 'php/verificaSessioneAdmin.php';
 
-//RECUPERA LE BASI DAL DATABASE: campo nella form che mostra le basi presenti (hanno una loro tabella nel db)
-try {
-    $stmt = $pdo->query("SELECT id_base, nome FROM base ORDER BY nome ASC");
-    $basi = $stmt->fetchAll();
-} catch (PDOException $e) {
-    die("Errore nel recupero delle basi: " . $e->getMessage());
-}
+// QUERY: prodotto + JOIN per recuperare il nome della base
+// recupera tutto dal prodotto (p.*) e il nome della base (b.nome)
+$sql = "SELECT p.*, b.nome as nome_base 
+        FROM prodotto p 
+        LEFT JOIN base b ON p.id_base = b.id_base 
+        ORDER BY p.id_prodotto DESC";
+
+$stmt = $pdo->query($sql);
+$prodotti = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -17,15 +20,11 @@ try {
     <meta charset="UTF-8">
     <meta lang="it" xml:lang="it" xmlns="http://www.w3.org/1999/xhtml">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"/>
-
-    <title>Aggiungi Nuovo Prodotto - Admin</title>
-    <meta name="description" content="Pagina dedicata ai prodotti del catalogo InfuseMe: tè, infusi e tisane." >
-	<meta name="keywords" content="InfuseMe, tè, infuso, tisana, biologico, ingredienti, artigianale" >
+    <title>Gestione Prodotti - Admin</title>
     <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 
 <body>
-<!-- <body onload="caricamento();"> DA VEDERE-->
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
 
     <header>
@@ -52,7 +51,14 @@ try {
             </nav>
 
             <!-- Utility Icons per l'admin: no carrello e ricerca-->
+            <!--AGGIUNTA ICONA PER AGGIUNGERE UN NUOVO PRODOTTO-->
             <div class="header-utilities">
+                <a href="formProdotto.php" class="icon-button" aria-label="Aggiungi nuovo prodotto">
+                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M17,12c0,.553-.448,1-1,1h-3v3c0,.553-.448,1-1,1s-1-.447-1-1v-3h-3c-.552,0-1-.447-1-1s.448-1,1-1h3v-3c0-.553,.448-1,1-1s1,.447,1,1v3h3c.552,0,1,.447,1,1Zm7-7v14c0,2.757-2.243,5-5,5H5c-2.757,0-5-2.243-5-5V5C0,2.243,2.243,0,5,0h14c2.757,0,5,2.243,5,5Zm-2,0c0-1.654-1.346-3-3-3H5c-1.654,0-3,1.346-3,3v14c0,1.654,1.346,3,3,3h14c1.654,0,3-1.346,3-3V5Z"/>
+                    </svg>
+                </a>
+
                 <a href="paginaUtente.html" class="icon-button" aria-label="Accedi all'area personale">
                     <!--icona dell'user per area personale, login, registrazione-->
                     <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
@@ -78,87 +84,55 @@ try {
         </div> <!--fine header container-->
     </header>
 
-<!-- main content: form per inserire attributi Prodotto -->
+    <!-- Main Content -->
     <main id="main-content" role="main">
-        <h1>Inserisci un Nuovo Prodotto</h1>
 
-        <!--collegamento a file php per salvare il prodotto nuovo-->
-        <!--da vedere se mettere id al posto di class-->
-        <!--enctype serve per trasmettere l'immagine, altrimenti non si può caricare-->
-        <form id="form" class="form-container" method="post" action="php/salvaProdotto.php" enctype="multipart/form-data">
+        <h1>Gestione dei Prodotti del Catalogo</h1>
+        <div>
+            <a href="aggiungiProdotto.php" class="bottone-primario">Aggiungi Nuovo Prodotto</a>
+        </div>
+
+        <!--mostra tutti i prodotti come catalogo ma per interfaccia admin: più informazioni perchè admin non accede al dettaglio prodotti-->
+        <div class="admin-grid">
+            <?php foreach ($prodotti as $prodotto): 
+                // Preparazione dati
+                $nomeBase = !empty($prodotto['nome_base']) ? htmlspecialchars($prodotto['nome_base']) : 'Nessuna / Standard';
+                // Formattiamo la categoria (sostituisci _ con spazi e metti maiuscola)
+                $catFormattata = ucfirst(str_replace('_', ' ', $prodotto['categoria']));
+            ?>
             
-            <fieldset>
-                <legend>Informazioni Principali</legend> <!--obbligatori-->
+            <article class="admin-card">
+                <?php if ($prodotto['img_path']): ?>
+                    <img src="<?php echo htmlspecialchars($prodotto['img_path']); ?>" alt="<?php echo htmlspecialchars($prodotto['nome']); ?>" class="admin-card-img">
+                <?php endif; ?>
                 
-                <div class="input-group">
-                    <label for="nome">Nome del prodotto *:</label>
-                    <input type="text" id="nome" name="nome">
-                </div>
+                <div class="card-content">
+                    <h3><?php echo htmlspecialchars($prodotto['nome']); ?></h3>
+                    
+                    <div class="admin-desc">
+                        <?php echo htmlspecialchars($prodotto['descrizione']); ?>
+                    </div>
 
-                <div class="input-group">
-                    <label for="descrizione">Descrizione *:</label>
-                    <textarea id="descrizione" name="descrizione"></textarea> 
+                    <div class="admin-details">
+                        <p><strong>Prezzo:</strong> € <?php echo number_format($prodotto['prezzo'], 2); ?></p>
+                        <p><strong>Formato:</strong> <?php echo $prodotto['grammi']; ?>g</p>
+                        <p><strong>Disponibilità:</strong> <?php echo $prodotto['disponibilita']; ?> pz</p>
+                        <p><strong>Categoria:</strong> <?php echo $catFormattata; ?></p>
+                        <p><strong>Base:</strong> <?php echo $nomeBase; ?></p>
+                    </div>
+                    
+                    <div class="admin-actions">
+                        <form action="php/eliminaProdotto.php" method="POST" onsubmit="return confirm('Sei sicuro di voler eliminare <?php echo htmlspecialchars($prodotto['nome']); ?>? Questa azione è irreversibile.');">
+                            <input type="hidden" name="id_prodotto" value="<?php echo $prodotto['id_prodotto']; ?>">
+                            <button type="submit" class="bottone-primario">Elimina</button>
+                        </form>
+                    </div>
                 </div>
+            </article>
+            <?php endforeach; ?>
+        </div>
 
-                <div class="input-group">
-                    <label for="categoria">Categoria *:</label>
-                    <select id="categoria" name="categoria">
-                        <option value="tè_verde">Tè Verde</option>
-                        <option value="tè_nero">Tè Nero</option>
-                        <option value="tè_bianco">Tè Bianco</option>
-                        <option value="tè_giallo">Tè Giallo</option>
-                        <option value="tè_oolong">Tè Oolong</option>
-                        <option value="tisana">Tisana</option>
-                        <option value="infuso">Infuso</option>
-                        <option value="altro">altro</option>
-                    </select>
-                </div>
-
-                <div class="input-group">
-                    <label for="prezzo">Prezzo (€) *:</label>
-                    <input type="number" id="prezzo" name="prezzo" step="0.01" min="0">
-                </div>
-
-                <div class="input-group">
-                    <label for="disponibilita">Disponibilità *:</label>
-                    <input type="number" id="disponibilita" name="disponibilita" min="0">
-                </div>
-            </fieldset>
-
-            <fieldset>
-                <legend>Altre infromazioni</legend>
-                <div class="input-group">
-                    <label for="id_base">Base del prodotto:</label>
-                    <select id="id_base" name="id_base">
-                        <option value="">-- Seleziona una Base --</option>
-                        <?php foreach ($basi as $base): ?>
-                            <option value="<?php echo $base['id_base']; ?>">
-                                <?php echo htmlspecialchars($base['nome']); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-
-                <div class="input-group">
-                    <label for="grammi">Grammi:</label>
-                    <input type="number" id="grammi" name="grammi" min="1">
-                </div>
-            
-                <div class="input-group">
-                    <label for="img_path">Immagine Prodotto:</label>
-                    <input type="file" id="img_path" name="img_path">
-                </div>
-            </fieldset>
-
-            <fieldset>
-		    <legend>Bottoni</legend>
-		        <input type="submit" id="submit" name="submit" class="bottone-primario" value="Inserisci prodotto" >
-		        <input type="reset" id="reset" class="bottone-primario" value="Cancella tutto" >
-	        </fieldset>
-
-        </form>
     </main>
-
 
     <!-- Footer ridotto-->
     <footer>

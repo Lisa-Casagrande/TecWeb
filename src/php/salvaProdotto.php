@@ -1,6 +1,5 @@
 <?php
 // collegamento al DB per salvare il nuovo prodotto creato con la form aggiungiProdotto.php
-
 require_once 'connessione.php';
 require_once 'verificaSessioneAdmin.php';
 
@@ -15,7 +14,7 @@ function pulisciInput($data) {
 //CONTROLLA CHE LA PAGINA SIA CHIAMATA TRAMITE METODO POST DA CLICK SUL BOTTONE "Inserisci Prodotto"
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // 1. recupera i dati dal form (usando name) e chiama pulisciInput
+    // 1. Recupera i dati dal form (usando name) e chiama pulisciInput
     $nome = pulisciInput($_POST['nome']);
     $descrizione = pulisciInput($_POST['descrizione']);
     $categoria = $_POST['categoria']; //no pulisci input perchè sono opzioni date
@@ -28,25 +27,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //2. Gestione immagine
     $img_path_db = null; //default: nessun percorso
     // controlla se è stato inviato un file per l'immagine (isset) e se non ci sono stati errori
-    if (isset($_FILES['img_path']) && $_FILES['img_path']['error'] === 0) {
-        $fileName = basename($_FILES["img_path"]["name"]); //pulisce nome file per evitare caricamenti file malevoli
-    
+    if (isset($_FILES['img_path']) && $_FILES['img_path']['error'] === 0 && $_FILES['img_path']['size'] > 0) {
+
+        // SICUREZZA 1: CONTROLLO DIMENSIONI (Max 2MB = 2 * 1024 * 1024 bytes)
+        if ($_FILES['img_path']['size'] > 2097152) {
+            header("Location: ../aggiungiProdotto.php?error=Il file non è troppo grande"); //mostra messaggio errore
+            exit;
+        }
+        // SICUREZZA 2: CONTROLLO SE È VERA IMMAGINE (getimagesize: legge dimensioni)
+        $check = getimagesize($_FILES["img_path"]["tmp_name"]);
+        if ($check === false) {
+            header("Location: ../aggiungiProdotto.php?error=Il file non è una immagine valida");
+            exit;
+        }
+        // SICUREZZA 3: CONTROLLO MIME TYPE REALE: controlla il contenuto del file
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $realMimeType = finfo_file($finfo, $_FILES['img_path']['tmp_name']);
+        finfo_close($finfo);
+
+        // controllo formati accettati
+        $allowedMimeTypes = [
+            'image/jpeg' => 'jpg',
+            'image/webp' => 'webp'
+        ];
+        if (!array_key_exists($realMimeType, $allowedMimeTypes)) {
+            header("Location: ../aggiungiProdotto.php?error=Formato non consentito.");
+            exit;
+        }
+
+        // Salvataggio
+        $fileName = basename($_FILES["img_path"]["name"]); //pulisce nome file
         $target_dir = "../images/prodotti/"; //cartella di destinazione
         $img_path_db = "images/prodotti/" . $fileName; //percorso dal salvare nel DB
         $target_file = $target_dir . $fileName;
 
+        // Ultimo controllo estensione (per coerenza col nome file)
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-        // controlla estensione: errore se estensione non ammessa
-        $allowed = ['jpg', 'jpeg', 'webp'];
-        if (!in_array($imageFileType, $allowed)) {
-            header("Location: ../aggiungiProdotto.php?error=Solo file JPG, JPEG, WEBP ammessi");
-            exit;
+        $allowedExtensions = ['jpg', 'jpeg', 'webp']; 
+        if (!in_array($imageFileType, $allowedExtensions)) {
+             header("Location: ../aggiungiProdotto.php?error=Estensione non valida (solo JPG, WEBP)");
+             exit;
         }
 
-        // spostamento file nella cartella destinazione
+        // Spostamento file
         if (!move_uploaded_file($_FILES["img_path"]["tmp_name"], $target_file)) {
-            header("Location: ../aggiungiProdotto.php?error=Errore durante il caricamento dell'immagine");
+            header("Location: ../aggiungiProdotto.php?error=Errore tecnico nel caricamento immagine");
             exit;
         }
     }
