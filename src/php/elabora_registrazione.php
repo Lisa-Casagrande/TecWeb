@@ -27,6 +27,13 @@ function validaMaggiorenne($data) {
     return $oggi->diff($nascita)->y >= 18;
 }
 
+function validaEmailAvanzata($email) {
+    return preg_match(
+        '/^[a-zA-Z0-9._%+-]{2,}@[a-zA-Z0-9.-]{2,}\.[a-zA-Z]{2,}$/',
+        $email
+    );
+}
+
 // --- RECUPERO DATI ---
 $errors = [];
 $old = $_POST;
@@ -46,7 +53,7 @@ if (!validaTesto($cognome))   $errors['cognome'] = "Errore: Cognome non valido."
 if (!validaMaggiorenne($dataNasc)) $errors['data-nascita'] = "Errore: Devi essere maggiorenne.";
 if (!validaTesto($citta))     $errors['citta'] = "Errore: Città non valida.";
 if (!validaIndirizzo($indirizzo)) $errors['indirizzo'] = "Errore: Indirizzo non valido.";
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors['email'] = "Errore: Email non valida.";
+if (!validaEmailAvanzata($email)) {$errors['email'] = "Errore: Email non valida.";}
 if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/", $password)) {
     $errors['password'] = "Errore: Password non sicura.";
 }

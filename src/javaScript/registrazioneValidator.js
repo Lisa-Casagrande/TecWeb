@@ -4,7 +4,7 @@ const dettagli_form = {
     "data-nascita": [/^\d{4}-\d{2}-\d{2}$/, "Errore: Devi essere maggiorenne."],
     "citta": [/^[A-Za-z\sÀ-ÿ'’]{2,50}$/, "Errore: Città non valida."],
     "indirizzo": [/^[A-Za-z0-9\sÀ-ÿ'’.,-]{5,100}$/, "Errore: Indirizzo non valido."],
-    "email": [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Errore: Email non valida."],
+    "email": [/^[a-zA-Z0-9._%+-]{2,}@[a-zA-Z0-9.-]{2,}\.[a-zA-Z]{2,}$/, "Errore: Email non valida."],
     "password": [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/, "Errore: Password non sicura."],
     "conferma-password": [null, "Errore: Le password non coincidono."]
 };

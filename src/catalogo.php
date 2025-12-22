@@ -33,7 +33,7 @@
             <!-- Navigation (menù)-->
             <nav aria-label="Menu principale" role="navigation">
                 <ul class="main-nav">
-                    <li><a href="home.html">Home</a></li>
+                    <li><a href="home.php"><span lang="en">Home</span></a></li>
                     <li><a href="catalogo.php" class="current-page" aria-current="page">Catalogo</a></li>
                     <li><a href="creaBlend.php">Crea il tuo Blend</a></li>
                     <li><a href="chiSiamo.html">Chi Siamo</a></li>
@@ -215,6 +215,20 @@
                                     
                                     <div class='product-image'>
                                         <img src='$img' alt='$nome' loading='lazy' onerror=\"this.src='images/placeholder_tea.jpg'\">
+                                        <!-- Icona carrello sopra l'immagine -->
+                                        <button class='add-to-cart-icon' 
+                                                data-id='$idProdotto' 
+                                                data-nome='$nome' 
+                                                data-prezzo='$prezzoRaw'
+                                                data-img='$img'
+                                                aria-label='Aggiungi $nome al carrello'
+                                                title='Aggiungi al carrello'>
+                                            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+                                                <path d='M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.994,0,0,0,22.713,4.077ZM21.4,6.178l-.786,4.354A3,3,0,0,1,17.657,13H5.419L4.478,5H20.41A1,1,0,0,1,21.4,6.178Z'/>
+                                                <circle cx='7' cy='22' r='2'/>
+                                                <circle cx='17' cy='22' r='2'/>
+                                            </svg>
+                                        </button>
                                     </div>
                                     
                                     <h3>$nome</h3>
@@ -227,18 +241,6 @@
                                     
                                     <div class='product-buttons'>
                                         <a href='prodotto.php?id=$idProdotto' class='bottone-primario'>Scopri di più</a>
-                                        <button class='bottone-primario aggiungi-carrello' 
-                                                data-id='$idProdotto' 
-                                                data-nome='$nome' 
-                                                data-prezzo='$prezzoRaw'
-                                                data-img='$img'>
-                                            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='18' height='18' style='margin-right: 5px;'>
-                                                <path d='M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.994,0,0,0,22.713,4.077ZM21.4,6.178l-.786,4.354A3,3,0,0,1,17.657,13H5.419L4.478,5H20.41A1,1,0,0,1,21.4,6.178Z'/>
-                                                <circle cx='7' cy='22' r='2'/>
-                                                <circle cx='17' cy='22' r='2'/>
-                                            </svg>
-                                            Aggiungi al carrello
-                                        </button>
                                     </div>
                                 </article>
                                 ";
@@ -274,7 +276,7 @@
                 <div class="footer-section">
                     <div class="footer-brand">
                         <div class="brand-name"><span lang="en">InfuseMe</span></div>
-                        <div class="motto-brand">Taste Tradition</div>
+                        <div class="motto-brand"><span lang="en">Taste Tradition</span></div>
                     </div>
                 </div>
 
@@ -286,7 +288,7 @@
                             <strong>Centralino:</strong> +39 000 111 abcd 
                         </div>
                         <div class="contact">
-                            <strong>Customer Care:</strong> +39 111 222 efgh
+                            <strong><span lang="en">Customer Care</span>:</strong> +39 111 222 efgh
                         </div>
                         <div class="contact">
                             <strong>Assistenza Clienti:</strong> assistenza@infuseme.com
@@ -381,12 +383,8 @@
         </svg>
     </button>
 
-    
-    <script src="javaScript/tema.js"></script>
-    <script src="javaScript/backToTop.js"></script>
-    <script src="javaScript/hamburger.js"></script>
-    <!-- <script src="javaScript/filtriCatalogo.js"></script>-->
-    <script src="javaScript/carrelloCatalogo.js"></script>
+    <!--file js unico per tutti gli elementi -->
+    <script src="javaScript/script.js"></script>
 
 </body>
 </html>

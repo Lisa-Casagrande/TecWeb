@@ -1,14 +1,7 @@
 <?php
-require_once 'php/connessione.php';
-require_once 'php/verificaSessioneAdmin.php';
-
-//RECUPERA LE BASI DAL DATABASE: campo nella form che mostra le basi presenti (hanno una loro tabella nel db)
-try {
-    $stmt = $pdo->query("SELECT id_base, nome FROM base ORDER BY nome ASC");
-    $basi = $stmt->fetchAll();
-} catch (PDOException $e) {
-    die("Errore nel recupero delle basi: " . $e->getMessage());
-}
+//connesione al php e controllo sicurezza x sessione admin
+    require_once 'php/connessione.php';
+    require_once 'php/verificaSessioneAdmin.php';
 ?>
 
 <!DOCTYPE html>
@@ -17,15 +10,10 @@ try {
     <meta charset="UTF-8">
     <meta lang="it" xml:lang="it" xmlns="http://www.w3.org/1999/xhtml">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"/>
-
-    <title>Aggiungi Nuovo Prodotto - Admin</title>
-    <meta name="description" content="Pagina dedicata ai prodotti del catalogo InfuseMe: tè, infusi e tisane." >
-	<meta name="keywords" content="InfuseMe, tè, infuso, tisana, biologico, ingredienti, artigianale" >
+    <title>Dashboard Amministratore - InfuseMe</title>
     <link rel="stylesheet" href="style.css" type="text/css">
 </head>
-
 <body>
-<!-- <body onload="caricamento();"> DA VEDERE-->
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
 
     <header>
@@ -44,8 +32,9 @@ try {
             <!-- Navigation (menù)-->
             <nav aria-label="Menu principale" role="navigation">
                 <ul class="main-nav">
-                    <li><a href="dashboardAdmin.php"><span lang="en">Dashboard</span></a></li>
-                    <li><a href="gestioneProdotti.php" class="current-page" aria-current="page">Prodotti</a></li>
+                <!-- pagine di gestione solo per l'admin-->
+                    <li><a href="dashboardAdmin.php" class="current-page" aria-current="page"><span lang="en">Dashboard</span></a></li>
+                    <li><a href="gestioneProdotti.php">Prodotti</a></li>
                     <li><a href="gestioneIngredienti.php">Ingredienti</a></li>
                     <li><a href="gestioneOrdini.php">Ordini</a></li>
                 </ul>
@@ -78,87 +67,46 @@ try {
         </div> <!--fine header container-->
     </header>
 
-<!-- main content: form per inserire attributi Prodotto -->
+<!-- Main Content -->
     <main id="main-content" role="main">
-        <h1>Inserisci un Nuovo Prodotto</h1>
+        <section class="admin-dashboard">
+            <h1>Pannella dell'Amministratore</h1>
+            <h2>Seleziona un'area operativa:</h2>
 
-        <!--collegamento a file php per salvare il prodotto nuovo-->
-        <!--da vedere se mettere id al posto di class-->
-        <!--enctype serve per trasmettere l'immagine, altrimenti non si può caricare-->
-        <form id="form" class="form-container" method="post" action="php/salvaProdotto.php" enctype="multipart/form-data">
-            
-            <fieldset>
-                <legend>Informazioni Principali</legend> <!--obbligatori-->
-                
-                <div class="input-group">
-                    <label for="nome">Nome del prodotto *:</label>
-                    <input type="text" id="nome" name="nome">
-                </div>
+            <div class="admin-grid">
+                <article class="admin-card">
+                    <div class="card-content">
+                        <h3>Gestione Prodotti</h3>
+                        <p>Inserisci nuovi prodotti, modifica prezzi o elimina articoli dal catalogo.</p>
+                        <div class="admin-actions">
+                            <a href="gestioneProdotti.php" class="bottone-primario">Visualizza Prodotti</a>
+                            <a href="aggiungiProdotto.php" class="bottone-primario">Aggiungi Nuovo</a>
+                        </div>
+                    </div>
+                </article>
 
-                <div class="input-group">
-                    <label for="descrizione">Descrizione *:</label>
-                    <textarea id="descrizione" name="descrizione"></textarea> 
-                </div>
+                <article class="admin-card">
+                    <div class="card-content">
+                        <h3>Gestione Magazzino</h3>
+                        <p>Controlla le scorte degli ingredienti e delle basi per i blend custom.</p>
+                        <div class="admin-actions">
+                            <a href="gestioneIngredienti.php" class="bottone-primario">Gestisci Scorte</a>
+                        </div>
+                    </div>
+                </article>
 
-                <div class="input-group">
-                    <label for="categoria">Categoria *:</label>
-                    <select id="categoria" name="categoria">
-                        <option value="tè_verde">Tè Verde</option>
-                        <option value="tè_nero">Tè Nero</option>
-                        <option value="tè_bianco">Tè Bianco</option>
-                        <option value="tè_giallo">Tè Giallo</option>
-                        <option value="tè_oolong">Tè Oolong</option>
-                        <option value="tisana">Tisana</option>
-                        <option value="infuso">Infuso</option>
-                        <option value="altro">altro</option>
-                    </select>
-                </div>
-
-                <div class="input-group">
-                    <label for="prezzo">Prezzo (€) *:</label>
-                    <input type="number" id="prezzo" name="prezzo" step="0.01" min="0">
-                </div>
-
-                <div class="input-group">
-                    <label for="disponibilita">Disponibilità *:</label>
-                    <input type="number" id="disponibilita" name="disponibilita" min="0">
-                </div>
-            </fieldset>
-
-            <fieldset>
-                <legend>Altre infromazioni</legend>
-                <div class="input-group">
-                    <label for="id_base">Base del prodotto:</label>
-                    <select id="id_base" name="id_base">
-                        <option value="">-- Seleziona una Base --</option>
-                        <?php foreach ($basi as $base): ?>
-                            <option value="<?php echo $base['id_base']; ?>">
-                                <?php echo htmlspecialchars($base['nome']); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-
-                <div class="input-group">
-                    <label for="grammi">Grammi:</label>
-                    <input type="number" id="grammi" name="grammi" min="1">
-                </div>
-            
-                <div class="input-group">
-                    <label for="img_path">Immagine Prodotto:</label>
-                    <input type="file" id="img_path" name="img_path">
-                </div>
-            </fieldset>
-
-            <fieldset>
-		    <legend>Bottoni</legend>
-		        <input type="submit" id="submit" name="submit" class="bottone-primario" value="Inserisci prodotto" >
-		        <input type="reset" id="reset" class="bottone-primario" value="Cancella tutto" >
-	        </fieldset>
-
-        </form>
+                <article class="admin-card">
+                    <div class="card-content">
+                        <h3>Gestione Ordini</h3>
+                        <p>Visualizza lo storico ordini e aggiorna lo stato delle spedizioni.</p>
+                        <div class="admin-actions">
+                            <a href="gestioneOrdini.php" class="bottone-primario">Vai agli Ordini</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
     </main>
-
 
     <!-- Footer ridotto-->
     <footer>
