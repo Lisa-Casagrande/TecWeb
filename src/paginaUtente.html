@@ -130,6 +130,50 @@
         
         <button id="logout-btn" class="btn btn-logout">Esci</button>
     </section>
+
+    <!-- Area Account (visibile solo dopo il login) -->
+    <section id="area-account" style="display: none;">
+        <h1>Il Mio <span lang="en">Account</span></h1>
+        
+        <section id="profilo-utente">
+            <h2>Il Mio Profilo</h2>
+            <div class="user-info">
+                <img src="images/avatar-utente.jpg" alt="Immagine profilo utente">
+                <div class="user-details">
+                    <p><strong>Nome:</strong> <span id="user-nome">Maria Rossi</span></p>
+                    <p><strong>Email:</strong> <span id="user-email">maria.rossi@example.com</span></p>
+                    <p><strong><span lang="en">Username</span>:</strong> <span id="user-username">maria_tea</span></p>
+                    <p><strong>Data registrazione:</strong> <time datetime="2023-05-15">15 maggio 2023</time></p>
+                    <p><a href="modifica-profilo.html">Modifica profilo</a></p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Resto del contenuto dell'account... -->
+        <section id="ordini-recenti">
+            <h2>I Miei Ordini Recenti</h2>
+            
+            <article class="ordine">
+                <h3>Ordine #TEA-2024-0012</h3>
+                <p><strong>Data:</strong> <time datetime="2024-01-15">15 gennaio 2024</time></p>
+                <p><strong>Stato:</strong> Consegnato</p>
+                <p><strong>Totale:</strong> €42,50</p>
+                
+                <h4>Prodotti acquistati:</h4>
+                <ul>
+                    <li>Tè Verde Giapponese - 100g</li>
+                    <li>Tisana Relax - 80g</li>
+                    <li>Infusore in metallo</li>
+                </ul>
+                
+                <p><a href="dettaglio-ordine.html">Visualizza dettagli ordine</a></p>
+            </article>
+            
+            <!-- Altri ordini... -->
+        </section>
+        
+        <button id="logout-btn" class="btn btn-logout">Esci</button>
+    </section>
 </main>
 
 

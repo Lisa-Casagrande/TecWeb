@@ -513,7 +513,7 @@ var dettagli_form = {
     ],
     /*nel db il campo id_base può essere NULL (anche grammi e img_path)
     Se l'utente lascia la tendina su "-- Seleziona --", il valore inviato è vuoto (va bene perchè accetta NULL)*/
-    "id_base": [
+    /*"id_base": [
         "Base del blend",
         /^(\d*)$/, /*accetta un numero intero o una stringa vuota
         "Selezionare una base valida."
@@ -532,7 +532,7 @@ var dettagli_form = {
 
 function caricamentoForm() {
     /*per ogni key nell'array associativo: */
-    for (var key in dettagli_form) {
+   /* for (var key in dettagli_form) {
         var input = document.getElementById(key);
         if (input) { //controllo in più per campi obbligatori
             messaggio(input, 0); /*scrive suggerimento iniziale
