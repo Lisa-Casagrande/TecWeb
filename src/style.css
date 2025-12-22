@@ -19,40 +19,12 @@ padding e border inclusi nella larghezza totale */
     --white: #FFFFFF; /*sfondo Card */
     --section-bg: #F5F0D7; /*sfondo sezioni alternate */
 
-/*
-    --header-bg-light: #4E362E;
-    --header-text-light: #FFFBE9;
-    --link-light: #6B4532;
-    --link-visited-light: #5A3A28;
-    --link-hover-light: #FEBA17;
-    --button-bg-light: #6B4532;
-    --button-hover-light: #5A3A28;
-    --accent-light: #A67C52;
-    --button-secondary-light: #4E362E;
-    --card-bg-light: #FFFFFF;
-    --section-bg-light: #F5F0D7;
-*/
     /* Tema Scuro */
     --bg-dark: #3b3f45;
     --text-green: #CDE0CD;
     --header-dark: #2a2d32;
     --card-dark: #454A52;
     --accent-red: #7C030F; /*rosso in contrasto con verde per link visitati*/
-
-/*
-    --text-dark: #CDE0CD;
-    --header-bg-dark: #2a2d32;
-    --header-text-dark: #CDE0CD;
-    --link-dark: #B8D0B8;
-    --link-visited-dark: #A8C5A8;
-    --link-hover-dark: #E0F0E0;
-    --button-bg-dark: #8FAF8F;
-    --button-hover-dark: #7A9F7A;
-    --accent-dark: #9BB59B;
-    --button-secondary-dark: #CDE0CD;
-    --card-bg-dark: #454A52;
-    --section-bg-dark: #2A2D32;
-*/
 }
 
 /* Variabili attive */
@@ -71,13 +43,6 @@ body {
     --card-bg: var(--white);
     --alt-section-bg: var(--section-bg);
 }
-/*
-    --link-color: var(--link-light);
-    --link-hover: var(--link-hover-light);
-    --button-hover: var(--button-hover-light);
-    --accent-color: var(--accent-light);
-    --section-bg: var(--section-bg-light);
-*/
 
 body.dark-theme {
     --bg-color: var(--bg-dark);
@@ -94,13 +59,6 @@ body.dark-theme {
     --card-bg: var(--card-dark);
     --alt-section-bg: var(--header-dark);
 }
-/*
-    --link-color: var(--link-dark);
-    --link-hover: var(--link-hover-dark);
-    --button-hover: var(--button-hover-dark);
-    --accent-color: var(--accent-dark);
-    --section-bg: var(--section-bg-dark);
-*/
 
 /* ===================================
    STILI GENERALI
@@ -3228,9 +3186,274 @@ body.dark-theme .testo-errore a:focus {
 
 
 
-/* gestioneOrdini.php e dettaglioOrdine.php */
+/* gestioneOrdini.php */
+/* GESTIONE ORDINI - Lista Orizzontale */
+
+/* contenitore della lista */
+.order-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em; /*spazio verticale tra le card*/
+    margin: 2em 0;
+}
+
+/*card di anteprima degli ordini*/
+.order-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--text-color);
+    border-radius: 12px;
+    padding: 1.5em;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    /*layout flex orizzontale*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /*importante per mobile*/
+    gap: 1.5em;
+    transition: transform 0.3s ease;
+}
+
+.order-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+/* Parte sinistra: info ordine (più spaziosa)*/
+.order-info {
+    flex: 2;
+    min-width: 250px;
+}
+
+.order-number {
+    color: var(--text-color);
+    font-size: 1.4em;
+    margin-bottom: 0.5em;
+}
+
+.order-meta p {
+    color: var(--text-color);
+    margin-bottom: 0.2em;
+    font-size: 0.95em;
+}
+
+/* Parte centrale: prezzo */
+.order-price {
+    flex: 1;
+    text-align: center;
+    min-width: 120px;
+    border-left: 1px solid rgba(0,0,0,0.1);
+    border-right: 1px solid rgba(0,0,0,0.1);
+    padding: 0 1em;
+}
+
+.order-price p:first-child { /*label "Totale" */
+    font-size: 0.85em;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 0.2em;
+}
+
+.order-price p:last-child { /* importo */
+    font-size: 1.3em;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+/* Parte Destra: Stato e Azione */
+.order-status-action {
+    flex: 1;
+    display: flex;
+    flex-direction: column; /* Stato sopra, bottone sotto */
+    align-items: flex-end; /* Allinea a destra */
+    gap: 1em;
+    min-width: 180px;
+}
+
+.status-wrapper {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+}
+
+/* PALLINI STATO */
+.stato-rosso, .stato-giallo, .stato-verde, .stato-blu {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.stato-rosso { background-color: #d9534f; }   /* Annullato */
+.stato-giallo { background-color: #ffc107; }  /* In attesa / In Preparazione */
+.stato-verde { background-color: #28a745; }   /* Spedito / Pagato */
+.stato-blu { background-color: #17a2b8; }     /* Consegnato */
+
+/* RESPONSIVE: Card diventa verticale su mobile */
+@media screen and (max-width: 768px) {
+    .order-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1em;
+    }
+    
+    .order-info, .order-price, .order-status-action {
+        width: 100%;
+        border: none; /* Toglie i bordi laterali */
+        padding: 0;
+        text-align: left;
+        align-items: flex-start;
+    }
+    
+    .order-price {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        border-top: 1px solid #eee;
+        padding-top: 1em;
+    }
+    
+    .order-status-action {
+        flex-direction: row; /* Stato e bottone sulla stessa riga su mobile */
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid #eee;
+        padding-top: 1em;
+    }
+}
 
 
+/* gestioneOrdini.php */
+/*Dettaglio degli ordini (visualizzazione per l'admin, diversa sa utente): permette di cambiare lo stato degli ordini*/
+/* intestazione pagina dettaglio ordine admin */
+.admin-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 2em;
+    gap: 1em;
+}
+
+.header-title-group {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    flex-wrap: wrap;
+}
+
+/* badge per stato dell'ordinec*/
+.order-status-badge {
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    background-color: var(--white);
+    padding: 0.4em 0.8em;
+    border-radius: 20px;
+    border: 1px solid var(--text-color);
+}
+
+/* messaggio di feedback positivo (verde) se cambio ordine ha successo*/
+.messaggio-successo {
+    color: #28a745;
+    background-color: transparent; 
+    border: none;               
+    padding: 1em 0;
+    margin-bottom: 1em;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+/*card a larghezza intera (tutta la pagina) - per la lista prodotti acquistati*/
+/* .admin-card card-full-width */
+.card-full-width {
+    grid-column: 1 / -1;
+}
+
+/* LISTA PRODOTTI */
+.product-list {
+    list-style: none;
+    padding: 0;
+    margin: 1em 0;
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.product-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em 0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Parte sinistra: nome e tipo*/
+.product-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-type {
+    font-size: 0.85em;
+    color: #666;
+    margin-top: 0.2em;
+}
+
+/* Parte destra: quantità e prezzo */
+.product-pricing {
+    display: flex;
+    align-items: center;
+    gap: 1.5em;
+    text-align: right;
+}
+
+.qty-badge {
+    background-color: var(--alt-section-bg); /* Colore sfondo leggero */
+    padding: 0.3em 0.6em;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.price {
+    font-weight: bold;
+    min-width: 80px;
+}
+
+/* RIEPILOGO TOTALI */
+.order-summary {
+    margin-top: 1.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    align-items: flex-end; /* Spinge tutto a destra */
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    width: 250px; /* Larghezza fissa per allineare i numeri */
+    font-size: 0.95em;
+}
+
+/* .summary-row total-row */
+.total-row {
+    margin-top: 0.5em;
+    padding-top: 0.5em;
+    border-top: 2px solid var(--button-bg);
+    font-size: 1.2em;
+    color: var(--button-bg);
+}
+
+/* NOTE CLIENTE */
+.order-notes {
+    margin-top: 2em;
+    background-color: var(--section-bg); /* Sfondo leggero del tema */
+    padding: 1em;
+    border-radius: 6px;
+    font-size: 0.95em;
+}
 
 
 
