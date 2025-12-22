@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="it" xml:lang="it" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <title>Accedi - InfuseMe</title>
-    <meta name="description" content="Accedi al sito InfuseMe" />
-    <meta name="keywords" content="login, accedi, InfuseMe, acquisto, area personale, tè, infusi, tisane, biologico, artigianale, blend"/>
-    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <meta name="description" content="Accedi al tuo account InfuseMe per gestire ordini, preferenze e scoprire le nostre tisane e tè biologici." />
+    <meta name="keywords" content="login InfuseMe, accesso account, tè biologico, tisane, gestione account, area personale" />
+    <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
 <body>
-    <header><h1>InfuseMe – Accedi</h1></header>
-
     <!-- Skip link per accessibilità -->
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
 
@@ -24,7 +22,7 @@
                 <img src="images/logo/logoScuro1.webp" alt="InfuseMe" class="logo-image logo-dark">
             </div>
 
-            <!-- Pulsante hamburger: button così è accessibile da tastiera-->
+            <!-- Pulsante hamburger: button così è accessibile da tastiera -->
             <button class="hamburger" id="hamburger" aria-label="Apri il menu navigazione">
                 <span></span>
                 <span></span>
@@ -36,8 +34,8 @@
                 <ul class="main-nav">
                     <li><a href="home.html">Home</a></li>
                     <li><a href="catalogo.php">Catalogo</a></li>
-                    <li><a href="creaBlend.html">Crea il tuo <span lang="en">Blend</span></a></li>
-                    <li><a href="chiSiamo.html">Chi Siamo</a></li>
+                    <li><a href="creaBlend.php">Crea il tuo <span lang="en">Blend</span></a></li>
+                    <li><a href="chiSiamo.html" class="current-page" aria-current="page">Chi Siamo</a></li>
                 </ul>
             </nav>
 
@@ -85,27 +83,82 @@
         </div>
     </header>
 
-    <main>
+<main id="content">
+    <section id="login-section">
         <div class="login-container">
-            <h2>Accedi al tuo account</h2>
+            <h1>Accedi al tuo <span lang="en">account</span></h1>
 
-            <form action="php/login.php" method="POST">
-                <div class="form-group">
-                    <label for="username">Email o Username:</label>
-                    <input type="text" id="username" name="username" required>
-                </div>
+            <div class="form-links">
+                <p>
+                    Non hai un <span lang="en">account</span>?
+                    <a href="registrazione.php">Registrati</a>
+                </p>
+            </div>
 
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
+            <!-- Errore generale lato server -->
+            <div class="display-error" role="alert" aria-live="polite">
+                [erroreGenerale]
+            </div>
 
-                <button type="submit" class="btn">Accedi</button>
+            <form id="login-form" action="login" method="post" novalidate>
+                <fieldset class="form-data">
+                    <legend class="sr-only">
+                        Inserisci le credenziali per il <span lang="en">login</span>
+                    </legend>
+
+                    <!-- EMAIL -->
+                    <div class="form-group">
+                        <label for="email">
+                            Email
+                            <span class="required" aria-hidden="true">(Obbligatorio*)</span>
+                        </label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            autocomplete="email"
+                            required
+                            aria-required="true"
+                            aria-describedby="email-hint email-error"
+                            value="[valoreEmail]"
+                            class="[classeEmail]"
+                        >
+                        <span id="email-error" class="error-message" role="alert">[erroreEmail]</span>
+                        <small id="email-hint" class="form-hint">
+                            Inserisci l'email associata al tuo <span lang="en">account</span>
+                        </small>
+                    </div>
+
+                    <!-- PASSWORD -->
+                    <div class="form-group">
+                        <label for="password">
+                            Password
+                            <span class="required" aria-hidden="true">(Obbligatorio*)</span>
+                        </label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            autocomplete="current-password"
+                            required
+                            aria-describedby="password-hint password-error"
+                            class="[classePassword]"
+                        >
+                        <span id="password-error" class="error-message" role="alert">[errorePassword]</span>
+                        <small id="password-hint" class="form-hint">
+                            Inserisci la password associata al tuo <span lang="en">account</span>
+                        </small>
+                    </div>
+
+                    <!-- SUBMIT -->
+                    <div class="form-group">
+                        <button type="submit" class="btn-login">Accedi</button>
+                    </div>
+                </fieldset>
             </form>
-
-            <p>Non hai un account? <a href="registrazione.html">Registrati</a></p>
         </div>
-    </main>
+    </section>
+</main>
 
     <!-- Footer -->
     <footer>
@@ -225,6 +278,7 @@
     <script src="javaScript/tema.js"></script>
     <script src="javaScript/backToTop.js"></script>
     <script src="javaScript/hamburger.js"></script>
+    <script src="javaScript/loginValidator.js"></script>
 
 </body>
 </html>

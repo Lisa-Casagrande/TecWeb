@@ -1,30 +1,42 @@
-# Abilita Rewrite
 RewriteEngine On
+# =========================
+# 1. PROTEZIONE
+# =========================
+RewriteRule ^\.env$ - [F,L]
 
-# Eccezione per file di test/debug (permetti accesso diretto con estensione)
 RewriteCond %{REQUEST_URI} ^/test.*\.php$ [NC]
 RewriteRule ^ - [L]
 
-# Mappa URL senza estensione - PRIMA prova .php, poi .html
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule ^([^\.]+)$ $1.php [NC,L]
+# =========================
+# 2. REDIRECT ESTERNO
+# Togli .html e .php dall'URL
+# (solo GET, non POST)
+# =========================
+RewriteCond %{REQUEST_METHOD} !POST [NC]
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.(html|php)[\s?] [NC]
+RewriteRule ^ /%1 [R=301,NE,L]
 
+# =========================
+# 3. REWRITE INTERNO HTML
+# /pagina → pagina.html
+# =========================
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^([^\.]+)$ $1.html [NC,L]
 
-# Redirect esterno da .html o .php a versione pulita (ECCETTO file test)
-RewriteCond %{THE_REQUEST} \s/+(.+?)\.(html|php)[\s?] [NC]
-RewriteCond %{REQUEST_URI} !^/test.*\.php$ [NC]
-RewriteRule ^ /%1 [R=301,NE,L]
+# =========================
+# 4. REWRITE INTERNO PHP
+# /azione → azione.php
+# =========================
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
 
-# Protezione file sensibili
-RewriteRule ^\.env$ - [F,L]
-
-# Custom pagine di errore
+# =========================
+# 5. PAGINE DI ERRORE
+# =========================
 ErrorDocument 404 /errori/404.html
 ErrorDocument 401 /errori/401.html
 ErrorDocument 500 /errori/500.html

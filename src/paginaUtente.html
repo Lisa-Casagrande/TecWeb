@@ -83,129 +83,83 @@
         </div>
     </header>
 
-    <main id="content">
-    <!-- Sistema di Login -->
+
+
+
+
+<main id="content">
     <section id="login-section">
         <div class="login-container">
-            <h2>Accedi al tuo account</h2>
-            <form id="login-form" action="login.php" method="post">
-                <div class="form-group">
-                    <label for="username">Username o Email:</label>
-                    <input type="text" id="username" name="username" required>
-                </div>
+            <h1>Accedi al tuo <span lang="en">account</span></h1>
                 
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                
-                <div class="form-group">
-                    <button type="submit" class="btn btn-login">Accedi</button>
-                </div>
-                
-                <div class="form-links">
-                    <p><a href="recupera-password.html">Password dimenticata?</a></p>
-                    <p>Non hai un account? <a href="registrazione.html">Registrati</a></p>
-                </div>
-            </form>
-        </div>
-    </section>
-
-    <!-- Sezione Registrazione (nascosta di default) -->
-    <section id="registrazione-section" style="display: none;">
-        <div class="login-container">
-            <h2>Crea un account</h2>
-            <form id="registrazione-form" action="registrazione.php" method="post">
-                <div class="form-group">
-                    <label for="nome">Nome:</label>
-                    <input type="text" id="nome" name="nome" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="cognome">Cognome:</label>
-                    <input type="text" id="cognome" name="cognome" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="username-reg">Username:</label>
-                    <input type="text" id="username-reg" name="username" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="password-reg">Password:</label>
-                    <input type="password" id="password-reg" name="password" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="conferma-password">Conferma Password:</label>
-                    <input type="password" id="conferma-password" name="conferma-password" required>
-                </div>
-                
-                <div class="form-group">
-                    <input type="checkbox" id="accetta-termini" name="accetta-termini" required>
-                    <label for="accetta-termini">Accetto i <a href="termini.html">termini e condizioni</a></label>
-                </div>
-                
-                <div class="form-group">
-                    <button type="submit" class="btn btn-registrati">Registrati</button>
-                </div>
-                
-                <div class="form-links">
-                    <p>Hai già un account? <a href="#" id="torna-login">Accedi</a></p>
-                </div>
-            </form>
-        </div>
-    </section>
-
-    <!-- Area Account (visibile solo dopo il login) -->
-    <section id="area-account" style="display: none;">
-        <h1>Il Mio Account</h1>
-        
-        <section id="profilo-utente">
-            <h2>Il Mio Profilo</h2>
-            <div class="user-info">
-                <img src="images/avatar-utente.jpg" alt="Immagine profilo utente">
-                <div class="user-details">
-                    <p><strong>Nome:</strong> <span id="user-nome">Maria Rossi</span></p>
-                    <p><strong>Email:</strong> <span id="user-email">maria.rossi@example.com</span></p>
-                    <p><strong>Username:</strong> <span id="user-username">maria_tea</span></p>
-                    <p><strong>Data registrazione:</strong> <time datetime="2023-05-15">15 maggio 2023</time></p>
-                    <p><a href="modifica-profilo.html">Modifica profilo</a></p>
-                </div>
+            <div class="form-links">
+                <p>
+                    Non hai un <span lang="en">account</span>?
+                    <a href="registrazione.html">Registrati</a>
+                </p>
             </div>
-        </section>
-        
-        <!-- Resto del contenuto dell'account... -->
-        <section id="ordini-recenti">
-            <h2>I Miei Ordini Recenti</h2>
-            
-            <article class="ordine">
-                <h3>Ordine #TEA-2024-0012</h3>
-                <p><strong>Data:</strong> <time datetime="2024-01-15">15 gennaio 2024</time></p>
-                <p><strong>Stato:</strong> Consegnato</p>
-                <p><strong>Totale:</strong> €42,50</p>
-                
-                <h4>Prodotti acquistati:</h4>
-                <ul>
-                    <li>Tè Verde Giapponese - 100g</li>
-                    <li>Tisana Relax - 80g</li>
-                    <li>Infusore in metallo</li>
-                </ul>
-                
-                <p><a href="dettaglio-ordine.html">Visualizza dettagli ordine</a></p>
-            </article>
-            
-            <!-- Altri ordini... -->
-        </section>
-        
-        <button id="logout-btn" class="btn btn-logout">Esci</button>
+
+            <div class="display-error" role="alert" aria-live="polite">
+                <!-- Messaggi di errore -->
+            </div>
+
+            <form id="login-form" action="login.php" method="post" novalidate>
+                <!-- Aggiunto novalidate per gestire validazione custom -->
+
+                <fieldset class="form-data">
+                    <legend class="sr-only">
+                        Inserisci le credenziali per il <span lang="en">login</span>
+                    </legend>
+
+                    <div class="form-group">
+                        <label for="identifier">
+                            <span lang="en">Username</span> o <span lang="en">Email</span>
+                            <span class="required" aria-hidden="true">(Obbligatorio*)</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="identifier"
+                            name="identifier"
+                            autocomplete="username"
+                            required
+                            aria-required="true"
+                            aria-describedby="identifier-hint"
+                        >
+                        <small id="identifier-hint" class="form-hint">
+                            Puoi usare il tuo <span lang="en">username</span> oppure l'email di registrazione
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">
+                            Password
+                            <span class="required" aria-hidden="true">(Obbligatorio*)</span>
+                        </label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            autocomplete="current-password"
+                            required
+                            aria-required="true"
+                            aria-describedby="password-hint"
+                        >
+                        <small id="password-hint" class="form-hint">
+                            Inserisci la password associata al tuo <span lang="en">account</span>
+                        </small>
+
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-login">Accedi</button>
+                    </div>
+
+                </fieldset>
+            </form>
+
+        </div>
     </section>
 </main>
+
 
     <!-- Footer -->
     <footer>
