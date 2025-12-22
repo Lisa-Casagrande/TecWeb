@@ -3187,6 +3187,51 @@ body.dark-theme .testo-errore a:focus {
 
 
 
+/* gestioneIngredienti.php */
+
+.admin-card fieldset {
+    border: 1px solid var(--text-color);
+    border-radius: 6px;
+    padding: 0.8em;
+    margin-top: 1em;
+    margin-bottom: 0;
+}
+
+.admin-card legend {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: var(--button-bg);
+    padding: 0 0.3em;
+}
+
+/* classi per definire lo stato di basi e ingredienti: disponibile (qta>0) e non disponibile */
+/* pallino verde o rosso a seconda dello stato */
+.stato-disponibile {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: #28a745; /*verde*/
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle; /*allinea il pallino al testo*/
+}
+
+.stato-non-disponibile {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: #d9534f; /*rosso*/
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+
+
+/* gestioneOrdini.php e dettaglioOrdine.php */
+
+
+
 
 
 /* ===================================
