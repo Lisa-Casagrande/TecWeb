@@ -53,7 +53,7 @@ if (!validaTesto($cognome))   $errors['cognome'] = "Errore: Cognome non valido."
 if (!validaMaggiorenne($dataNasc)) $errors['data-nascita'] = "Errore: Devi essere maggiorenne.";
 if (!validaTesto($citta))     $errors['citta'] = "Errore: Città non valida.";
 if (!validaIndirizzo($indirizzo)) $errors['indirizzo'] = "Errore: Indirizzo non valido.";
-if (!validaEmailAvanzata($email)) {$errors['email'] = "Errore: Email non valida.";}
+if (!validaEmailAvanzata($email)) $errors['email'] = "Errore: Email non valida.";
 if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/", $password)) {
     $errors['password'] = "Errore: Password non sicura.";
 }
@@ -66,7 +66,6 @@ if (!empty($errors)) {
     $_SESSION['errors'] = $errors;
     $_SESSION['errors']['generale'] = "Attenzione: correggi gli errori evidenziati.";
     $_SESSION['old'] = $_POST;
-
     header('Location: ../registrazione.php');
     exit;
 }
@@ -94,26 +93,49 @@ try {
     die("Errore connessione DB: " . $e->getMessage());
 }
 
-// --- INSERIMENTO NEL DATABASE ---
+// --- CONTROLLO EMAIL GIA' ESISTENTE ---
 try {
-    $stmt = $db->prepare("INSERT INTO utente (nome, cognome, data_nascita, citta, indirizzo, email, password_hash) 
-                          VALUES (:nome, :cognome, :data_nascita, :citta, :indirizzo, :email, :password_hash)");
+    $checkEmail = $db->prepare("SELECT id_utente FROM utente WHERE email = :email LIMIT 1");
+    $checkEmail->execute([':email' => $email]);
+
+    if ($checkEmail->fetch()) {
+        $_SESSION['errors'] = [
+            'email' => "Errore: Email già esistente, scegline un'altra.",
+            'generale' => "Attenzione: correggi gli errori evidenziati."
+        ];
+        $_SESSION['old'] = $_POST;
+        header('Location: ../registrazione.php');
+        exit;
+    }
+} catch (PDOException $e) {
+    $_SESSION['errors'] = ['generale' => "Errore durante il controllo email."];
+    $_SESSION['old'] = $_POST;
+    header('Location: ../registrazione.php');
+    exit;
+}
+
+// --- INSERIMENTO NEL DATABASE (ordine corretto) ---
+try {
+    $stmt = $db->prepare("INSERT INTO utente (email, password_hash, nome, cognome, data_nascita, indirizzo, citta) 
+                          VALUES (:email, :password_hash, :nome, :cognome, :data_nascita, :indirizzo, :citta)");
     $stmt->execute([
+        ':email'         => $email,
+        ':password_hash' => $hashPassword,
         ':nome'          => $nome,
         ':cognome'       => $cognome,
         ':data_nascita'  => $dataNasc,
-        ':citta'         => $citta,
         ':indirizzo'     => $indirizzo,
-        ':email'         => $email,
-        ':password_hash' => $hashPassword
+        ':citta'         => $citta
     ]);
 } catch (PDOException $e) {
-    $_SESSION['errors'] = ['generale' => 'Errore durante la registrazione, riprova più tardi.'];
+    $_SESSION['errors'] = ['generale' => "Errore durante la registrazione, riprova più tardi."];
     $_SESSION['old'] = $_POST;
     header('Location: ../registrazione.php');
     exit;
 }
 
 // --- SUCCESSO ---
-echo "<h1>Registrazione riuscita!</h1>";
-echo "<p>Benvenuto, $nome.</p>";
+echo "<h1>Registrazione completata con successo!</h1>";
+echo "<p>La tua registrazione è stata effettuata correttamente. Ora puoi accedere al tuo account.</p>";
+
+?>
