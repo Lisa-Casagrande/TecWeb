@@ -13,13 +13,13 @@ USE db_InfuseMe;
 -- 1. ADMIN
 -- ================================================================
 INSERT INTO admin (nome, cognome, email, password_hash) VALUES
-('admin', 'admin', 'admin@infuseme.com', 'admin');
+('admin', 'admin', 'admin', '$2y$10$JvlWI2oZtRGXfKndZ9llvutnj65ctbCdZFrP370L7vRucl5Aa3i5W');
 
 -- ================================================================
 -- 2. UTENTE
 -- ================================================================
 INSERT INTO utente (email, password_hash, nome, cognome, data_nascita, indirizzo, citta) VALUES
-('utente@utente.com', 'password', 'utente', 'utente', '1975-01-02', 'Via Luzzati', 'Padova');
+('utente', '$2y$10$9CPSl7SPwSoyYAjk8jtOFu.GkXlxUzFekLF2RUNZC0b/C/yA9Or2G', 'utente', 'utente', '1975-01-02', 'Via Luzzati', 'Padova');
 
 -- ================================================================
 -- 3. BASI
