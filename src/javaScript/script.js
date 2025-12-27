@@ -418,8 +418,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-
-
 /* ==========================================================================
    SEZIONE 3: PULSANTE TORNA SU 
    ========================================================================== */
@@ -484,7 +482,6 @@ document.addEventListener('DOMContentLoaded', function() {
 * [2]: Hint nel caso in cui input fornito sia sbagliato
 */
 
-/*
 var dettagli_form = {
     "nome": [
         "Inserisci il nome del prodotto",
@@ -493,7 +490,7 @@ var dettagli_form = {
     ],
     "descrizione": [
         "Descrivi il sapore e le caratteristiche",
-        /^[\s\S]{10,2000}$/, /* \s\S accetta tutto inclusi a capo 
+        /^[\s\S]{10,2000}$/, /* \s\S accetta tutto inclusi a capo */
         "La descrizione deve essere lunga almeno 10 caratteri."
     ],
     "categoria": [
@@ -513,9 +510,9 @@ var dettagli_form = {
     ],
     /*nel db il campo id_base può essere NULL (anche grammi e img_path)
     Se l'utente lascia la tendina su "-- Seleziona --", il valore inviato è vuoto (va bene perchè accetta NULL)*/
-    /*"id_base": [
+    "id_base": [
         "Base del blend",
-        /^(\d*)$/, /*accetta un numero intero o una stringa vuota
+        /^(\d*)$/, /*accetta un numero intero o una stringa vuota*/
         "Selezionare una base valida."
     ],
     "grammi": [
@@ -532,11 +529,11 @@ var dettagli_form = {
 
 function caricamentoForm() {
     /*per ogni key nell'array associativo: */
-   /* for (var key in dettagli_form) {
+    for (var key in dettagli_form) {
         var input = document.getElementById(key);
         if (input) { //controllo in più per campi obbligatori
-            messaggio(input, 0); /*scrive suggerimento iniziale
-            input.onblur = function() { /*evento che funziona sia con mouse, che con tab che con touch
+            messaggio(input, 0); /*scrive suggerimento iniziale*/
+            input.onblur = function() { /*evento che funziona sia con mouse, che con tab che con touch*/
                 validazioneCampo(this);
             };
         }
@@ -544,7 +541,7 @@ function caricamentoForm() {
 
     var formNode = document.getElementById("form");
     if (formNode) {
-        formNode.onsubmit = function() { /*per validare la form prima di inviare risposte
+        formNode.onsubmit = function() { /*per validare la form prima di inviare risposte*/
             return validazioneForm();
         };
     }
@@ -555,7 +552,7 @@ function validazioneCampo(input) {
     //ignora campi del form che non sono presenti nell'array
     if (!dettagli_form[input.id]) return true;
 
-    var regex = dettagli_form[input.id][1]; /*espressione regolare
+    var regex = dettagli_form[input.id][1]; /*espressione regolare*/
     var text = input.value;
 
     //recupera nome reale dll'immagine
@@ -567,9 +564,9 @@ function validazioneCampo(input) {
         }
     }
 
-    /*controllo quanti figli ha il padre per evitare che il messaggio di errore compaia tre volte (=3 campi array)
+    /*controllo quanti figli ha il padre per evitare che il messaggio di errore compaia tre volte (=3 campi array)*/
     var p = input.parentNode;
-    if(p.children[2]){ /*se c'é giá testo errore rimuovo (basta mettere anche l'istruzione senza if)
+    if(p.children[2]){ /*se c'é giá testo errore rimuovo (basta mettere anche l'istruzione senza if)*/
 		p.removeChild(p.children[2]);
 	}
 
@@ -586,7 +583,7 @@ function validazioneForm() {
     
     for (var key in dettagli_form) {
         var input = document.getElementById(key);
-        tuttoCorretto = validazioneCampo(input) && tuttoCorretto; /*prima mettere validazioneCampo sempre
+        tuttoCorretto = validazioneCampo(input) && tuttoCorretto; /*prima mettere validazioneCampo sempre*/
     }
     return tuttoCorretto;
 }
@@ -599,10 +596,10 @@ function messaggio(input, mode) {
 
     if (mode) { /*mode=1 (true) = modalità errore*/
         node = document.createElement("strong");
-        node.className = "errorSuggestion"; /*classi definite nel css
+        node.className = "errorSuggestion"; /*classi definite nel css*/
         node.appendChild(document.createTextNode(dettagli_form[input.id][2]));
     
-    } else { /*input=0 = Modalità Suggerimento (suggerimento che compare nei campi all'inizio
+    } else { /*input=0 = Modalità Suggerimento (suggerimento che compare nei campi all'inizio*/
 
             node = document.createElement("span");
             node.className = "default-text";
@@ -619,7 +616,7 @@ function messaggio(input, mode) {
 window.addEventListener("load", caricamentoForm);
 
 
-/*
+
 /* ==========================================================================
    SEZIONE 5: CARRELLO CATALOGO 
    ========================================================================== */

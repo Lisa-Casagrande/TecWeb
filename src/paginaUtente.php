@@ -28,10 +28,6 @@ try {
 }
 ?>
 
-
-
-
-
 <!DOCTYPE html>
 <html lang="it" xml:lang="it" xmlns="http://www.w3.org/1999/xhtml">
 
@@ -54,8 +50,10 @@ try {
         <!--logo Infuse Me in alto a sinistra-->
         <div class="header-container">
             <div class="logo">
-                <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
-                <img src="images/logo/logoScuro1.webp" alt="InfuseMe" class="logo-image logo-dark">
+                <a href="home.php" aria-label="Torna alla home" class="logo-button">
+                    <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
+                    <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
+                </a>
             </div>
 
             <!-- Pulsante hamburger: button così è accessibile da tastiera-->

@@ -243,27 +243,72 @@ header {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+
+/* ===================================
+   LOGO - DIMENSIONI E TEMI
+   =================================== */
 .logo {
     font-size: 2em;
     font-weight: bold;
     flex-shrink: 0;
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 230px;
+    height: 65px;
+    overflow: visible;
+    color: var(--header-text);
+}
+
+.logo a {
+    display: block;
+    height: 100%;
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+    transform: scale(1.1);
+    transform-origin: center;
+    color: inherit; /* eredita il colore dalla .logo */
+}
+
+/* Focus accessibile e coerente */
+.logo a:focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 6px;
+    transform: scale(1.15);
+    opacity: 0.9;
+}
+
+/* Hover leggero */
+.logo a:hover {
+    opacity: 0.85;
+    transform: scale(1.12);
 }
 
 .logo-image {
-    height: 3em;
     width: auto;
     max-width: 15em;
     display: block;
     object-fit: contain;
+    height: 100%;
 }
 
-/* Logo dinamico per tema */
 .logo-dark { display: none; }
 .logo-light { display: block; }
 body.dark-theme .logo-dark { display: block; }
 body.dark-theme .logo-light { display: none; }
+
+/* Sostituisci con un outline personalizzato quando in focus */
+.logo a:focus {
+    outline: 2px solid #4a90e2; /* Colore a tua scelta */
+    outline-offset: 4px; /* Distanza dal bordo */
+    border-radius: 4px; /* Angoli arrotondati */
+}
+
+/* Oppure usa box-shadow per un effetto più soft */
+.logo a:focus {
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.5);
+}
 
 /* Navigazione */
 .main-nav {

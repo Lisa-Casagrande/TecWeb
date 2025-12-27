@@ -19,8 +19,10 @@
         <!--logo Infuse Me in alto a sinistra-->
         <div class="header-container">
             <div class="logo">
-                <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
-                <img src="images/logo/logoScuro1.webp" alt="InfuseMe" class="logo-image logo-dark">
+                <a href="home.php" aria-label="Torna alla home" class="logo-button">
+                    <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
+                    <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
+                </a>
             </div>
 
             <!-- Pulsante hamburger -->
@@ -384,7 +386,7 @@
     </button>
 
     <!--file js unico per tutti gli elementi -->
-    <script src="javaScript/script.js"></script>
+    <script src="./javaScript/script.js"></script>
 
 </body>
 </html>
