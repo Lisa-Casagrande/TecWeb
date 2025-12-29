@@ -1150,3 +1150,249 @@ document.addEventListener('DOMContentLoaded', function() {
     inizializza();
     window.statoBlend = statoBlend;
 });
+
+// ===================================
+// GESTIONE FILTRI E ORDINAMENTO CATALOGO
+// ===================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // TOGGLE FILTRI MOBILE
+    const toggleFiltersBtn = document.getElementById('toggleFilters');
+    const filterPanel = document.getElementById('filterPanel');
+    
+    if (toggleFiltersBtn && filterPanel) {
+        toggleFiltersBtn.addEventListener('click', function() {
+            const isOpen = filterPanel.classList.contains('open');
+            
+            if (isOpen) {
+                filterPanel.classList.remove('open');
+                toggleFiltersBtn.setAttribute('aria-expanded', 'false');
+            } else {
+                filterPanel.classList.add('open');
+                toggleFiltersBtn.setAttribute('aria-expanded', 'true');
+            }
+        });
+    }
+    
+    // ELEMENTI DOM
+    const productContainer = document.getElementById('productContainer');
+    const noResultsMsg = document.getElementById('noResults');
+    const allProducts = document.querySelectorAll('.product-card');
+    
+    // Radio buttons categorie
+    const categoryRadios = document.querySelectorAll('input[name="category"]');
+    
+    // Checkbox ingredienti
+    const ingredientCheckboxes = document.querySelectorAll('.ing-filter');
+    
+    // Radio buttons prezzo
+    const priceRadios = document.querySelectorAll('input[name="priceRange"]');
+    
+    // Radio buttons base
+    const baseRadios = document.querySelectorAll('input[name="baseFilter"]');
+    
+    // Radio buttons ordinamento
+    const sortRadios = document.querySelectorAll('input[name="sortOrder"]');
+    
+    // FUNZIONE PRINCIPALE FILTRAGGIO
+    function filterProducts() {
+        // Ottieni filtri selezionati
+        const selectedCategory = document.querySelector('input[name="category"]:checked')?.value || 'all';
+        const selectedPriceRange = document.querySelector('input[name="priceRange"]:checked')?.value || 'all';
+        const selectedBase = document.querySelector('input[name="baseFilter"]:checked')?.value || 'all';
+        
+        // Ottieni ingredienti selezionati
+        const selectedIngredients = Array.from(ingredientCheckboxes)
+            .filter(cb => cb.checked)
+            .map(cb => cb.value.toLowerCase());
+        
+        let visibleCount = 0;
+        
+        // Filtra ogni prodotto
+        allProducts.forEach(product => {
+            let shouldShow = true;
+            
+            // FILTRO CATEGORIA
+            if (selectedCategory !== 'all') {
+                const productCategory = product.dataset.category?.toLowerCase() || '';
+                if (productCategory !== selectedCategory) {
+                    shouldShow = false;
+                }
+            }
+            
+            // FILTRO PREZZO
+            if (selectedPriceRange !== 'all') {
+                const price = parseFloat(product.dataset.price) || 0;
+                
+                if (selectedPriceRange === 'low' && price > 5) {
+                    shouldShow = false;
+                } else if (selectedPriceRange === 'medium' && (price <= 5 || price > 10)) {
+                    shouldShow = false;
+                } else if (selectedPriceRange === 'high' && price <= 10) {
+                    shouldShow = false;
+                }
+            }
+            
+            // FILTRO BASE
+            if (selectedBase !== 'all') {
+                const productBase = product.dataset.base?.toLowerCase() || '';
+                if (!productBase.includes(selectedBase)) {
+                    shouldShow = false;
+                }
+            }
+            
+            // FILTRO INGREDIENTI
+            if (selectedIngredients.length > 0) {
+                const productIngredients = product.dataset.ingredients?.toLowerCase() || '';
+                
+                // Il prodotto deve contenere TUTTI gli ingredienti selezionati
+                const hasAllIngredients = selectedIngredients.every(ing => 
+                    productIngredients.includes(ing)
+                );
+                
+                if (!hasAllIngredients) {
+                    shouldShow = false;
+                }
+            }
+            
+            // Mostra/nascondi prodotto
+            if (shouldShow) {
+                product.style.display = '';
+                visibleCount++;
+            } else {
+                product.style.display = 'none';
+            }
+        });
+        
+        // Mostra messaggio "nessun risultato"
+        if (visibleCount === 0) {
+            noResultsMsg.style.display = 'block';
+        } else {
+            noResultsMsg.style.display = 'none';
+        }
+        
+        // Dopo il filtraggio, applica l'ordinamento
+        const selectedSort = document.querySelector('input[name="sortOrder"]:checked')?.value || 'default';
+        sortProducts(selectedSort);
+    }
+    
+    // FUNZIONE ORDINAMENTO
+    function sortProducts(sortType) {
+        // Converti NodeList in Array
+        const productsArray = Array.from(allProducts);
+        
+        // Filtra solo i prodotti visibili
+        const visibleProducts = productsArray.filter(p => p.style.display !== 'none');
+        
+        // Ordina in base al tipo
+        visibleProducts.sort((a, b) => {
+            switch(sortType) {
+                case 'priceAsc':
+                    return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+                
+                case 'priceDesc':
+                    return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+                
+                case 'nameAsc':
+                    return a.dataset.name.localeCompare(b.dataset.name, 'it');
+                
+                case 'nameDesc':
+                    return b.dataset.name.localeCompare(a.dataset.name, 'it');
+                
+                case 'default':
+                default:
+                    // Ordine originale (non fare nulla)
+                    return 0;
+            }
+        });
+        
+        // Riordina nel DOM solo i prodotti visibili
+        visibleProducts.forEach(product => {
+            productContainer.appendChild(product);
+        });
+    }
+    
+    // EVENT LISTENERS
+    // Filtro Categoria
+    categoryRadios.forEach(radio => {
+        radio.addEventListener('change', filterProducts);
+    });
+    
+    // Filtro Ingredienti
+    ingredientCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', filterProducts);
+    });
+    
+    // Filtro Prezzo
+    priceRadios.forEach(radio => {
+        radio.addEventListener('change', filterProducts);
+    });
+    
+    // Filtro Base
+    baseRadios.forEach(radio => {
+        radio.addEventListener('change', filterProducts);
+    });
+    
+    // Ordinamento
+    sortRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            sortProducts(this.value);
+        });
+    });
+    
+    // RESET FILTRI (opzionale)
+    // Puoi aggiungere un pulsante "Reset Filtri" nell'HTML
+    const resetBtn = document.getElementById('resetFilters');
+    if (resetBtn) {
+        resetBtn.addEventListener('click', function() {
+            // Reset categoria
+            document.querySelector('input[name="category"][value="all"]').checked = true;
+            
+            // Reset prezzo
+            document.querySelector('input[name="priceRange"][value="all"]').checked = true;
+            
+            // Reset base
+            document.querySelector('input[name="baseFilter"][value="all"]').checked = true;
+            
+            // Reset ingredienti
+            ingredientCheckboxes.forEach(cb => cb.checked = false);
+            
+            // Reset ordinamento
+            document.querySelector('input[name="sortOrder"][value="default"]').checked = true;
+            
+            // Riapplica filtri (mostra tutto)
+            filterProducts();
+        });
+    }
+    
+    // INIZIALIZZAZIONE
+    // Applica filtri all'avvio (per sicurezza)
+    filterProducts();
+    
+    console.log('Sistema filtri e ordinamento catalogo caricato');
+});
+
+// FUNZIONI HELPER AGGIUNTIVE
+
+// Conta prodotti visibili
+function countVisibleProducts() {
+    const visible = document.querySelectorAll('.product-card:not([style*="display: none"])');
+    return visible.length;
+}
+
+// Debug: mostra stato filtri corrente
+function debugFilters() {
+    console.log('=== STATO FILTRI ===');
+    console.log('Categoria:', document.querySelector('input[name="category"]:checked')?.value);
+    console.log('Prezzo:', document.querySelector('input[name="priceRange"]:checked')?.value);
+    console.log('Base:', document.querySelector('input[name="baseFilter"]:checked')?.value);
+    
+    const selectedIngs = Array.from(document.querySelectorAll('.ing-filter:checked'))
+        .map(cb => cb.value);
+    console.log('Ingredienti:', selectedIngs);
+    
+    console.log('Ordinamento:', document.querySelector('input[name="sortOrder"]:checked')?.value);
+    console.log('Prodotti visibili:', countVisibleProducts());
+    console.log('===================');
+}

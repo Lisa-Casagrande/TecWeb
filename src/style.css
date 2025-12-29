@@ -266,7 +266,7 @@ header {
     text-decoration: none;
     cursor: pointer;
     outline: none;
-    transform: scale(1.1);
+    transform: scale(1.23);
     transform-origin: center;
     color: inherit; /* eredita il colore dalla .logo */
 }
@@ -298,16 +298,9 @@ header {
 body.dark-theme .logo-dark { display: block; }
 body.dark-theme .logo-light { display: none; }
 
-/* Sostituisci con un outline personalizzato quando in focus */
-.logo a:focus {
-    outline: 2px solid #4a90e2; /* Colore a tua scelta */
-    outline-offset: 4px; /* Distanza dal bordo */
-    border-radius: 4px; /* Angoli arrotondati */
-}
 
-/* Oppure usa box-shadow per un effetto più soft */
 .logo a:focus {
-    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.5);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--bg-light) 40%, transparent);
 }
 
 /* Navigazione */
@@ -2590,85 +2583,539 @@ body.dark-theme .leaf-icon li::before {
    CATALOGO: BARRA STRUMENTI E FILTRI
 =================================== */
 
-/* Barra superiore con pulsante Filtri e Ordinamento */
+/* Sezione catalogo - riduce padding superiore */
+.catalog-section {
+    padding: 1.5em 0;
+}
+
+/* Layout principale: sidebar + prodotti */
+.catalog-section .container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 1.5em;
+    align-items: start;
+    padding: 0 1em;
+}
+
+/* ===================================
+   TOOLBAR ORDINAMENTO
+=================================== */
+
+/* Barra ordinamento con radio buttons */
 .catalog-toolbar {
+    grid-column: 2 / 3;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
     padding: 1em;
-    background-color: var(--alt-section-bg); /* Sfondo leggero per la barra */
-    border-radius: 8px;
-    border: 1px solid var(--text-color);
+    background-color: var(--alt-section-bg);
+    border-radius: 12px;
+    border: 2px solid var(--text-color);
 }
 
-/* Bottone Toggle Filtri (con icona) */
+/* Nascondi bottone toggle filtri su desktop */
 .btn-toggle-filters {
-    background: transparent;
+    display: none;
+}
+
+.sort-fieldset {
     border: none;
-    color: var(--text-color);
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.sort-fieldset legend {
+    font-weight: 600;
     font-size: 1.1em;
-    font-weight: bold;
-    cursor: pointer;
+    color: var(--text-color);
+    margin-bottom: 0.8em;
+    text-align: center;
+    width: 100%;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+}
+
+.sort-options {
+    display: flex;
+    gap: 0.8em;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.sort-options label {
     display: flex;
     align-items: center;
-    gap: 0.5em;
-    font-family: 'Helvetica Neue', 'Arial', sans-serif;
-}
-
-.btn-toggle-filters svg {
-    width: 24px;
-    height: 24px;
-    fill: currentColor;
-}
-
-/* Select per Ordinamento */
-.sort-select {
+    gap: 0.4em;
     padding: 0.5em 1em;
-    border-radius: 6px;
-    border: 2px solid var(--button-bg);
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-family: 'Helvetica Neue', 'Arial', sans-serif;
-    font-size: 1em;
+    background-color: var(--card-bg);
+    border: 2px solid var(--text-color);
+    border-radius: 8px;
     cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95em;
+    font-weight: 500;
 }
 
-/* Pannello Filtri (Nascosto di default) */
+.sort-options label:hover {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border-color: var(--button-bg);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.sort-options input[type="radio"] {
+    accent-color: var(--button-bg);
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+.sort-options input[type="radio"]:checked + span {
+    font-weight: bold;
+}
+
+.sort-options label:has(input:checked) {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border-color: var(--button-bg);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* ===================================
+   SIDEBAR FILTRI
+=================================== */
+
+/* Sidebar filtri sempre visibile */
 .filter-panel {
-    display: none; /* Nascosto */
+    grid-column: 1 / 2;
+    grid-row: 1 / 4;
+    display: flex !important;
+    flex-direction: column;
+    gap: 1.2em;
     background-color: var(--card-bg);
     border: 2px solid var(--button-bg);
     border-radius: 12px;
-    padding: 2em;
-    margin-bottom: 3em;
+    padding: 1.2em;
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2em;
 }
 
-.filter-panel.open {
-    display: grid; /* Visibile quando aperto */
-}
-
-/* Colonne dentro il pannello filtri */
-.filter-group h4 {
+/* Titolo sidebar */
+.filter-panel::before {
+    content: "Filtra Prodotti";
+    font-size: 1.2em;
+    font-weight: bold;
     color: var(--button-bg);
-    margin-bottom: 1em;
-    border-bottom: 2px solid var(--accent-color);
-    padding-bottom: 0.5em;
+    padding-bottom: 0.6em;
+    border-bottom: 2px solid var(--button-bg);
+    margin-bottom: 0.3em;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+}
+
+/* Gruppi filtri */
+.filter-group {
+    padding-bottom: 1em;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.filter-group:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.filter-group h4 {
+    color: var(--text-color);
+    margin-bottom: 0.6em;
+    font-size: 1.05em;
+    font-weight: 600;
 }
 
 .filter-group label {
-    display: block;
+    display: flex;
+    align-items: center;
     margin-bottom: 0.5em;
     cursor: pointer;
-    font-size: 1em;
+    font-size: 0.9em;
+    color: var(--text-color);
+    transition: color 0.2s ease;
 }
 
-.filter-group input[type="checkbox"] {
+.filter-group label:hover {
+    color: var(--button-bg);
+}
+
+.filter-group input[type="checkbox"],
+.filter-group input[type="radio"] {
     margin-right: 0.5em;
     accent-color: var(--button-bg);
+    cursor: pointer;
+}
+
+/* Scrollbar personalizzata per sidebar */
+.filter-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.filter-panel::-webkit-scrollbar-track {
+    background: var(--alt-section-bg);
+    border-radius: 4px;
+}
+
+.filter-panel::-webkit-scrollbar-thumb {
+    background: var(--button-bg);
+    border-radius: 4px;
+}
+
+.filter-panel::-webkit-scrollbar-thumb:hover {
+    background: var(--text-color);
+}
+
+/* ===================================
+   GRID PRODOTTI
+=================================== */
+
+/* Grid prodotti */
+.catalog-grid {
+    grid-column: 2 / 3;
+}
+
+/* ===================================
+   BOTTONI E IMMAGINI CARD
+=================================== */
+
+/* Forza l'altezza delle immagini per uniformità */
+.product-card .product-image {
+    width: 100%;
+    height: 250px;
+    background-color: white;
+    border-radius: 8px;
+    margin-bottom: 1em;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.product-card .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.05);
+}
+
+/* Fix Font e Stile Bottone "Scopri di più" */
+.product-card .bottone-primario {
+    font-family: 'Helvetica Neue', 'Arial', sans-serif !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 1px;
+    width: 100%;
+    margin-top: auto;
+}
+
+/* Stile per l'icona carrello sopra l'immagine */
+.product-image {
+    position: relative;
+    overflow: hidden;
+}
+
+.add-to-cart-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--white);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.add-to-cart-icon:hover {
+    background: var(--white);
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.add-to-cart-icon svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--text-color);
+}
+
+.add-to-cart-icon:hover svg {
+    fill: var(--link-visited);
+}
+
+body.dark-theme .add-to-cart-icon {
+    background: var(--card-bg);
+}
+
+body.dark-theme .add-to-cart-icon svg {
+    fill: var(--text-color);
+}
+
+body.dark-theme .add-to-cart-icon:hover svg {
+    fill: var(--link-visited);
+}
+
+.add-to-cart-icon.added {
+    background: var(--link-visited);
+}
+
+.add-to-cart-icon.added svg {
+    fill: var(--white);
+}
+
+body.dark-theme .add-to-cart-icon.added {
+    background: var(--link-visited);
+}
+
+body.dark-theme .add-to-cart-icon.added svg {
+    fill: var(--white);
+}
+
+/* ===================================
+   RESPONSIVE DESIGN - BREAKPOINT CRITICO
+   I filtri collassano quando la larghezza non basta
+=================================== */
+
+/* Quando lo spazio è stretto (1200px) riduci larghezza sidebar */
+@media screen and (max-width: 1200px) {
+    .catalog-section .container {
+        grid-template-columns: 250px 1fr;
+        gap: 1.2em;
+    }
+    
+    .filter-panel {
+        padding: 1em;
+    }
+}
+
+/* A 1024px la sidebar diventa ancora più stretta */
+@media screen and (max-width: 1024px) {
+    .catalog-section .container {
+        grid-template-columns: 220px 1fr;
+        gap: 1em;
+        padding: 0 0.8em;
+    }
+    
+    .filter-panel {
+        padding: 1em;
+        top: 80px;
+        font-size: 0.95em;
+    }
+    
+    .filter-group h4 {
+        font-size: 1em;
+    }
+    
+    .filter-group label {
+        font-size: 0.85em;
+    }
+}
+
+/* ===================================
+   RESPONSIVE DESIGN - COLLASSO FILTRI
+   A 900px i filtri vanno a tendina
+=================================== */
+
+@media screen and (max-width: 900px) {
+    /* Sezione catalogo su tablet/mobile */
+    .catalog-section {
+        padding: 1em 0;
+    }
+    
+    /* Layout mobile a singola colonna */
+    .catalog-section .container {
+        grid-template-columns: 1fr;
+        padding: 0 0.5em;
+    }
+    
+    /* Mostra bottone toggle filtri */
+    .btn-toggle-filters {
+        display: flex;
+        background: transparent;
+        border: none;
+        color: var(--text-color);
+        font-size: 1.1em;
+        font-weight: bold;
+        cursor: pointer;
+        align-items: center;
+        gap: 0.5em;
+        font-family: 'Helvetica Neue', 'Arial', sans-serif;
+        padding: 0.5em;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-toggle-filters:hover {
+        color: var(--button-bg);
+    }
+    
+    .btn-toggle-filters svg {
+        width: 24px;
+        height: 24px;
+        fill: currentColor;
+    }
+    
+    /* Toolbar su mobile - mostra filtri e ordinamento */
+    .catalog-toolbar {
+        grid-column: 1 / 2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.8em;
+        margin-bottom: 0.8em;
+    }
+    
+    /* Ordinamento compatto su mobile */
+    .sort-fieldset {
+        flex: 1;
+        margin-left: 1em;
+    }
+    
+    .sort-fieldset legend {
+        font-size: 0.95em;
+        margin-bottom: 0.5em;
+        text-align: left;
+    }
+    
+    .sort-options {
+        gap: 0.5em;
+    }
+    
+    .sort-options label {
+        padding: 0.4em 0.8em;
+        font-size: 0.85em;
+    }
+    
+    /* Sidebar diventa tendina su mobile */
+    .filter-panel {
+        display: none !important;
+        grid-column: 1 / 2;
+        grid-row: auto;
+        position: relative;
+        top: 0;
+        max-height: none;
+        margin-bottom: 1em;
+        padding: 1em;
+    }
+    
+    .filter-panel.open {
+        display: flex !important;
+        animation: slideDown 0.3s ease;
+    }
+    
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Grid prodotti su mobile */
+    .catalog-grid {
+        grid-column: 1 / 2;
+    }
+}
+
+/* ===================================
+   RESPONSIVE DESIGN - MOBILE PICCOLO
+=================================== */
+
+@media screen and (max-width: 768px) {
+    .catalog-section {
+        padding: 0.8em 0;
+    }
+    
+    .catalog-section .container {
+        padding: 0 0.3em;
+    }
+    
+    /* Toolbar verticale su mobile piccolo */
+    .catalog-toolbar {
+        flex-direction: column;
+        gap: 1em;
+        align-items: stretch;
+    }
+    
+    .btn-toggle-filters {
+        width: 100%;
+        justify-content: center;
+        padding: 0.8em;
+        border: 2px solid var(--text-color);
+        border-radius: 8px;
+    }
+    
+    .sort-fieldset {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    .sort-fieldset legend {
+        text-align: center;
+        font-size: 1em;
+    }
+    
+    /* Ordinamento verticale su mobile */
+    .sort-options {
+        flex-direction: column;
+        gap: 0.5em;
+    }
+    
+    .sort-options label {
+        width: 100%;
+        justify-content: flex-start;
+        padding: 0.6em 1em;
+        font-size: 0.9em;
+    }
+    
+    .filter-panel {
+        padding: 0.8em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .catalog-section {
+        padding: 0.5em 0;
+    }
+    
+    .btn-toggle-filters {
+        font-size: 1em;
+        padding: 0.7em;
+    }
+    
+    .sort-fieldset legend {
+        font-size: 0.95em;
+        margin-bottom: 0.6em;
+    }
+    
+    .sort-options label {
+        padding: 0.5em 0.8em;
+        font-size: 0.85em;
+    }
 }
 
 /* ===================================
@@ -2978,9 +3425,6 @@ body.dark-theme .testo-errore a:focus {
     .separatore-testo { height: 2px; margin: 0.8em auto 0.5em; }
     .ultima-frase { font-size: 0.95em; margin-top: 0.1em; }
 }
-
-
-
 
 
 /* ===================================

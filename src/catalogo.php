@@ -102,27 +102,43 @@
                 
                 <!-- Strumenti per filtri e ordinamento -->
                 <div class="catalog-toolbar">
-                    <!-- Pulsante per aprire/chiudere i filtri avanzati (mobile) -->
+                    <!-- Pulsante toggle filtri (visibile solo su mobile) -->
                     <button class="btn-toggle-filters" id="toggleFilters" aria-expanded="false" aria-controls="filterPanel">
                         <svg viewBox="0 0 24 24"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
-                        Filtra Prodotti
+                        Filtri
                     </button>
 
-                    <!-- Ordinamento -->
-                    <div class="sort-wrapper">
-                        <label for="sortOrder" class="sr-only">Ordina per</label>
-                        <select id="sortOrder" class="sort-select">
-                            <option value="default">Rilevanza</option>
-                            <option value="priceAsc">Prezzo: Crescente</option>
-                            <option value="priceDesc">Prezzo: Decrescente</option>
-                            <option value="nameAsc">Nome: A-Z</option>
-                            <option value="nameDesc">Nome: Z-A</option>
-                        </select>
-                    </div>
+                    <!-- Ordinamento con radio buttons -->
+                    <fieldset class="sort-fieldset">
+                        <legend>Ordina per:</legend>
+                        <div class="sort-options">
+                            <label>
+                                <input type="radio" name="sortOrder" value="default" checked>
+                                <span>Rilevanza</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="sortOrder" value="priceAsc">
+                                <span>Prezzo ↑</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="sortOrder" value="priceDesc">
+                                <span>Prezzo ↓</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="sortOrder" value="nameAsc">
+                                <span>Nome A-Z</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="sortOrder" value="nameDesc">
+                                <span>Nome Z-A</span>
+                            </label>
+                        </div>
+                    </fieldset>
                 </div>
 
-                <!-- Pannello filtri avanzati (mobile) -->
+                <!-- Pannello filtri (sidebar desktop, tendina mobile) -->
                 <div id="filterPanel" class="filter-panel">
+                    <!-- I filtri rimangono identici a prima -->
                     <div class="filter-group">
                         <h4>Categoria</h4>
                         <label><input type="radio" name="category" value="all" checked> Tutte le categorie</label>
