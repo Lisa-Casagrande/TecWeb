@@ -1,6 +1,12 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) { 
     session_start(); 
+ 
+/* Se qualcuno è già loggato → logout automatico */
+if (isset($_SESSION['id_utente'])) {
+    session_unset();
+    session_destroy();
+}
 }
 
 // Carica il template HTML

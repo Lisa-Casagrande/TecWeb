@@ -1,16 +1,19 @@
 <?php
-//quando admin si logga in login.php si salva informazione nel server
 session_start();
 
-//verifica se la variabile di sessione 'admin_logged_in' è settata e vera (per sicurezza)
-// se un utente normale scrive nella barra "../dashboardAdmin.php" non avrà la variabile impostata e quindi non può entrare
-if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-    header("Location: ../login.html");
+// Controlla se l'utente è loggato e se è admin
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    // Non loggato → redirect al login
+    header("Location: ../login.php");
     exit;
 }
-//se l'utente non è un admin loggato, è rimandato alla pagina di login (exit ferma il codice dopo x sicurezza)
 
+// Controlla se l'utente non è admin → 403 Forbidden
+if ($_SESSION['user_tipo'] !== 'admin') {
+    header('HTTP/1.1 403 Forbidden');
+    include $_SERVER['DOCUMENT_ROOT'].'/errori/403.php';
+    exit();
+}
 
-// da usare ../ perché questo file va dentro php/ (mentre login.html è nella root)
-// file da inserire all'inizio di ogni file x admin per garantire sicurezza
+// Da usare all'inizio di ogni file admin per garantire sicurezza
 ?>

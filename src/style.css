@@ -351,12 +351,12 @@ body.dark-theme .main-nav a:focus {
 }
 
 /*pagina corrente nel menu evidenziata con bordo e colore chiaro*/
-.main-nav a.current-page {
+.main-nav li.current-page a {
     background-color: rgba(255, 255, 255, 0.2);
     border: 2px solid var(--header-text);
-    text-decoration: underline;
     border-radius: 8px;
     font-weight: bold;
+    text-decoration: underline;
 }
 
 /* Header Utilities */
@@ -397,6 +397,7 @@ body.dark-theme .main-nav a:focus {
     fill: currentColor;
     transition: color 0.3s ease;
 }
+
 
 /* Theme Toggle */
 .theme-toggle {

@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once 'php/verificaSessione.php';
 
 // --- Connessione al database ---
 $dbHost = getenv('DB_HOST') ?: 'localhost';
@@ -45,10 +45,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (!$erroreEmail && !$errorePassword) {
-        // Controlla utente nel DB
-        $stmt = $db->prepare("SELECT email, password_hash FROM utente WHERE email = :email LIMIT 1");
+        $utente = null;
+        $tipoUtente = null;
+
+        // --- Controlla prima nella tabella amministratore ---
+        $stmt = $db->prepare("SELECT id_admin as id, nome, cognome, email, password_hash FROM admin WHERE email = :email LIMIT 1");
         $stmt->execute([':email' => $valoreEmail]);
-        $utente = $stmt->fetch();
+        $admin = $stmt->fetch();
+
+        if ($admin) {
+            $utente = $admin;
+            $tipoUtente = 'admin';
+        } else {
+            // --- Controlla nella tabella utente ---
+            $stmt = $db->prepare("SELECT id_utente as id, nome, cognome, email, password_hash FROM utente WHERE email = :email LIMIT 1");
+            $stmt->execute([':email' => $valoreEmail]);
+            $user = $stmt->fetch();
+
+            if ($user) {
+                $utente = $user;
+                $tipoUtente = 'utente';
+            }
+        }
 
         if (!$utente) {
             $erroreEmail = "Errore: Utente non trovato.";
@@ -59,9 +77,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $errorePassword = "Errore: Password non corretta.";
                 $classePassword = "input-error";
             } else {
-                // Login riuscito, memorizza email in sessione
+                // --- LOGIN RIUSCITO: CREA SESSIONE ---
+                $_SESSION['user_id'] = $utente['id'];        // ID utente o admin
                 $_SESSION['user_email'] = $utente['email'];
-                header("Location: dashboard.php");
+                $_SESSION['user_nome'] = $utente['nome'];
+                $_SESSION['user_tipo'] = $tipoUtente;       // 'admin' o 'utente'
+                $_SESSION['logged_in'] = true;              // flag universale di login
+
+                // --- Reindirizza in base al tipo ---
+                if ($tipoUtente === 'admin') {
+                    header("Location: dashboardAdmin.php");
+                } else {
+                    header("Location: paginaUtente.php");
+                }
                 exit;
             }
         }

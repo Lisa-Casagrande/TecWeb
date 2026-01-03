@@ -1,6 +1,6 @@
 <?php
-include_once 'verificaSessione.php';
-include_once 'connessione.php';
+require_once 'php/connessione.php';       // Connessione PDO
+require_once 'php/verificaSessione.php';  // Verifica login utente
 
 // Controllo se è stato passato l'id ordine
 if (!isset($_GET['id'])) {
@@ -10,47 +10,47 @@ if (!isset($_GET['id'])) {
 $id_ordine = intval($_GET['id']);
 
 try {
-    // Recupero informazioni ordine + utente per sicurezza
-    $id_utente_sessione = $_SESSION['username']; // email in sessione
+    // --- Recupera ID utente dalla sessione ---
+    $userId = $_SESSION['user_id'] ?? null;
+    if (!$userId) {
+        die("Errore: utente non loggato.");
+    }
 
-    // Recupero id_utente reale dal DB
-    $sql_utente = "SELECT id_utente FROM utente WHERE email = ?";
-    $stmt_utente = mysqli_prepare($conn, $sql_utente);
-    mysqli_stmt_bind_param($stmt_utente, "s", $id_utente_sessione);
-    mysqli_stmt_execute($stmt_utente);
-    $result_utente = mysqli_stmt_get_result($stmt_utente);
-    $utente = mysqli_fetch_assoc($result_utente);
-    $id_utente = $utente['id_utente'];
+    // --- Recupera dati ordine solo se appartiene all'utente ---
+    $stmt_ordine = $pdo->prepare("
+        SELECT o.id_ordine, o.data_ordine, o.stato_ord, o.totale,
+               u.nome, u.cognome, u.email
+        FROM ordine o
+        INNER JOIN utente u ON o.id_utente = u.id_utente
+        WHERE o.id_ordine = :id_ordine AND o.id_utente = :id_utente
+        LIMIT 1
+    ");
+    $stmt_ordine->execute([
+        ':id_ordine' => $id_ordine,
+        ':id_utente' => $userId
+    ]);
+    $ordine = $stmt_ordine->fetch();
 
-    // Recupero ordine solo se appartiene all'utente
-    $sql_ordine = "SELECT * FROM ordine WHERE id_ordine = ? AND id_utente = ?";
-    $stmt_ordine = mysqli_prepare($conn, $sql_ordine);
-    mysqli_stmt_bind_param($stmt_ordine, "ii", $id_ordine, $id_utente);
-    mysqli_stmt_execute($stmt_ordine);
-    $result_ordine = mysqli_stmt_get_result($stmt_ordine);
-
-    if (mysqli_num_rows($result_ordine) === 0) {
+    if (!$ordine) {
         die("Ordine non trovato o non accessibile.");
     }
 
-    $ordine = mysqli_fetch_assoc($result_ordine);
-
-    // Recupero dettagli prodotti
-    $sql_dettagli = " SELECT d.id_dettaglio, d.quantita, d.prezzo_unit, d.totale_riga, 
-        p.nome AS prodotto_nome, pc.nome AS custom_nome
+    // --- Recupero dettagli prodotti ---
+    $stmt_dettagli = $pdo->prepare("
+        SELECT d.id_dettaglio, d.quantita, d.prezzo_unit, d.totale_riga, 
+               p.nome AS prodotto_nome, pc.nome AS custom_nome
         FROM dettaglio_ordine d
-    LEFT JOIN prodotto p ON d.id_prodotto = p.id_prodotto
-    LEFT JOIN prodotto_custom pc ON d.id_custom = pc.id_custom
-    WHERE d.id_ordine = ?";
-    $stmt_dettagli = mysqli_prepare($conn, $sql_dettagli);
-    mysqli_stmt_bind_param($stmt_dettagli, "i", $id_ordine);
-    mysqli_stmt_execute($stmt_dettagli);
-    $result_dettagli = mysqli_stmt_get_result($stmt_dettagli);
+        LEFT JOIN prodotto p ON d.id_prodotto = p.id_prodotto
+        LEFT JOIN prodotto_custom pc ON d.id_custom = pc.id_custom
+        WHERE d.id_ordine = :id_ordine
+    ");
+    $stmt_dettagli->execute([':id_ordine' => $id_ordine]);
+    $dettagli = $stmt_dettagli->fetchAll();  // array vuoto se non ci sono prodotti
+
 } catch (PDOException $e) {
     die("Errore caricamento dati: " . $e->getMessage());
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="it" xml:lang="it" xmlns="http://www.w3.org/1999/xhtml">
 

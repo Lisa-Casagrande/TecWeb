@@ -1,4 +1,7 @@
-<?php require_once 'php/connessione.php'; ?>
+<?php
+// Includi la connessione al database
+require_once 'php/connessione.php';?>
+
 
 <!DOCTYPE html>
 <html lang="it" xml:lang="it" xmlns="http://www.w3.org/1999/xhtml">
@@ -15,32 +18,7 @@
    <!-- Skip link per accessibilità -->
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
 
-    <header>
-        <!--logo Infuse Me in alto a sinistra-->
-        <div class="header-container">
-            <div class="logo">
-                <a href="home.php" aria-label="Torna alla home" class="logo-button">
-                    <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
-                    <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
-                </a>
-            </div>
-
-            <!-- Pulsante hamburger -->
-            <button class="hamburger" id="hamburger" aria-label="Apri il menu navigazione">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-
-            <!-- Navigation (menù)-->
-            <nav aria-label="Menu principale" role="navigation">
-                <ul class="main-nav">
-                    <li><a href="home.php"><span lang="en">Home</span></a></li>
-                    <li><a href="catalogo.php" class="current-page" aria-current="page">Catalogo</a></li>
-                    <li><a href="creaBlend.php">Crea il tuo Blend</a></li>
-                    <li><a href="chiSiamo.html">Chi Siamo</a></li>
-                </ul>
-            </nav>
+     <?php include 'navbar.php'; ?>
 
             <!-- Utility Icons -->
             <div class="header-utilities">
@@ -402,7 +380,7 @@
     </button>
 
     <!--file js unico per tutti gli elementi -->
-    <script src="./javaScript/script.js"></script>
+  c
 
 </body>
 </html>

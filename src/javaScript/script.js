@@ -1396,3 +1396,5 @@ function debugFilters() {
     console.log('Prodotti visibili:', countVisibleProducts());
     console.log('===================');
 }
+
+

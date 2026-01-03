@@ -59,7 +59,7 @@
                     </svg>
                 </a>
                 
-                <a href="paginaUtente.html" class="icon-button" aria-label="Accedi all'area personale">
+                <a href="paginaUtente.html" class="icon-button" class="current-page" aria-label="Accedi all'area personale">
                     <!--icona dell'user per area personale, login, registrazione-->
                     <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M12,12A6,6,0,1,0,6,6,6.006,6.006,0,0,0,12,12ZM12,2A4,4,0,1,1,8,6,4,4,0,0,1,12,2Z"/>
@@ -102,79 +102,82 @@
 
                     <!-- NOME -->
                     <div class="form-group">
-                        <label for="nome">Nome <span class="required">(Obbligatorio*)</span></label>
-                        <input type="text" id="nome" name="nome" autocomplete="given-name" required aria-required="true" aria-describedby="nome-help nome-error" value="[valoreNome]" class="[classeNome]">
-                        <span id="nome-error" class="error-message" role="alert">[erroreNome]</span>
-                        <small id="nome-help" class="form-hint">Inserisci il tuo nome, minimo 2 caratteri, senza numeri o caratteri speciali.</small>
+                        <label for="reg_nome">Nome <span class="required">(Obbligatorio*)</span></label>
+                        <input type="text" id="reg_nome" name="reg_nome" autocomplete="given-name" required aria-required="true" aria-describedby="reg_nome-help reg_nome-error" value="[valoreNome]" class="[classeNome]">
+                        <span id="reg_nome-error" class="error-message" role="alert">[erroreNome]</span>
+                        <small id="reg_nome-help" class="form-hint">Inserisci il tuo nome, minimo 2 caratteri, senza numeri o caratteri speciali.</small>
                     </div>
 
                     <!-- COGNOME -->
                     <div class="form-group">
-                        <label for="cognome">Cognome <span class="required">(Obbligatorio*)</span></label>
-                        <input type="text" id="cognome" name="cognome" autocomplete="family-name" required aria-required="true" aria-describedby="cognome-help cognome-error" value="[valoreCognome]" class="[classeCognome]">
-                        <span id="cognome-error" class="error-message" role="alert">[erroreCognome]</span>
-                        <small id="cognome-help" class="form-hint">Inserisci il tuo cognome, minimo 2 caratteri, senza numeri o caratteri speciali.</small>
+                        <label for="reg_cognome">Cognome <span class="required">(Obbligatorio*)</span></label>
+                        <input type="text" id="reg_cognome" name="reg_cognome" autocomplete="family-name" required aria-required="true" aria-describedby="reg_cognome-help reg_cognome-error" value="[valoreCognome]" class="[classeCognome]">
+                        <span id="reg_cognome-error" class="error-message" role="alert">[erroreCognome]</span>
+                        <small id="reg_cognome-help" class="form-hint">Inserisci il tuo cognome, minimo 2 caratteri, senza numeri o caratteri speciali.</small>
                     </div>
 
                     <!-- DATA DI NASCITA -->
                     <div class="form-group">
-                        <label for="data-nascita">Data di nascita <span class="required">(Obbligatorio*)</span></label>
-                        <input type="date" id="data-nascita" name="data-nascita" required aria-required="true" aria-describedby="data-nascita-help data-nascita-error" value="[valoreData]" max="[maxDataNascita]" class="[classeData]">
-                        <span id="data-nascita-error" class="error-message" role="alert">[erroreNascita]</span>
-                        <small id="data-nascita-help" class="form-hint">La vendita è dedicata esclusivamente ai maggiorenni. In caso contrario è necessaria la supervisione di un adulto.</small>
+                        <label for="reg_data-nascita">Data di nascita <span class="required">(Obbligatorio*)</span></label>
+                        <input type="date" id="reg_data-nascita" name="reg_data-nascita" required aria-required="true" aria-describedby="reg_data-nascita-help reg_data-nascita-error" value="[valoreData]" max="[maxDataNascita]" class="[classeData]">
+                        <span id="reg_data-nascita-error" class="error-message" role="alert">[erroreNascita]</span>
+                        <small id="reg_data-nascita-help" class="form-hint">La vendita è dedicata esclusivamente ai maggiorenni. In caso contrario è necessaria la supervisione di un adulto.</small>
                     </div>
 
                     <!-- CITTÀ -->
                     <div class="form-group">
-                        <label for="citta">Città <span class="required">(Obbligatorio*)</span></label>
-                        <input type="text" id="citta" name="citta" required aria-required="true" aria-describedby="citta-help citta-error" value="[valoreCitta]" class="[classeCitta]">
-                        <span id="citta-error" class="error-message" role="alert">[erroreCitta]</span>
-                        <small id="citta-help" class="form-hint">Inserisci la tua città (<abbr title="Esempio">es.</abbr> Roma). Usata solo per spedizione.</small>
+                        <label for="reg_citta">Città <span class="required">(Obbligatorio*)</span></label>
+                        <input type="text" id="reg_citta" name="reg_citta" required aria-required="true" aria-describedby="reg_citta-help reg_citta-error" value="[valoreCitta]" class="[classeCitta]">
+                        <span id="reg_citta-error" class="error-message" role="alert">[erroreCitta]</span>
+                        <small id="reg_citta-help" class="form-hint">Inserisci la tua città (<abbr title="Esempio">es.</abbr> Roma). Usata solo per spedizione.</small>
                     </div>
 
                     <!-- INDIRIZZO -->
                     <div class="form-group">
-                        <label for="indirizzo">Indirizzo <span class="required">(Obbligatorio*)</span></label>
-                        <input type="text" id="indirizzo" name="indirizzo" required aria-required="true" aria-describedby="indirizzo-help indirizzo-error" value="[valoreIndirizzo]" class="[classeIndirizzo]">
-                        <span id="indirizzo-error" class="error-message" role="alert">[erroreIndirizzo]</span>
-                        <small id="indirizzo-help" class="form-hint">Inserisci il tuo indirizzo (<abbr title="Esempio">es.</abbr> Via Turchese 18). Usato solo per spedizione.</small>
+                        <label for="reg_indirizzo">Indirizzo <span class="required">(Obbligatorio*)</span></label>
+                        <input type="text" id="reg_indirizzo" name="reg_indirizzo" required aria-required="true" aria-describedby="reg_indirizzo-help reg_indirizzo-error" value="[valoreIndirizzo]" class="[classeIndirizzo]">
+                        <span id="reg_indirizzo-error" class="error-message" role="alert">[erroreIndirizzo]</span>
+                        <small id="reg_indirizzo-help" class="form-hint">Inserisci il tuo indirizzo (<abbr title="Esempio">es.</abbr> Via Turchese 18). Usato solo per spedizione.</small>
                     </div>
 
                     <!-- EMAIL -->
                     <div class="form-group">
-                        <label for="email">Email <span class="required">(Obbligatorio*)</span></label>
-                        <input type="email" id="email" name="email" autocomplete="email" required aria-required="true" aria-describedby="email-help email-error" value="[valoreEmail]" class="[classeEmail]">
-                        <span id="email-error" class="error-message" role="alert">[erroreEmail]</span>
-                        <small id="email-help" class="form-hint">Inserisci un indirizzo email valido (<abbr title="Esempio">es.</abbr> giulia.bianchi@esempio.it).</small>
+                        <label for="reg_email">Email <span class="required">(Obbligatorio*)</span></label>
+                        <input type="email" id="reg_email" name="reg_email" required aria-describedby="reg_email-help reg_email-error">
+                        <span id="reg_email-error" class="error-message" role="alert"></span>
+                        <small id="reg_email-help" class="form-hint">Inserisci un indirizzo email valido.</small>
                     </div>
 
+
                     <!-- PASSWORD -->
-                    <div class="form-group">
-                        <label for="password">Password <span class="required">(Obbligatorio*)</span></label>
-                        <input type="password" id="password" name="password" autocomplete="new-password" required aria-required="true" aria-describedby="password-help password-error" class="[classePassword]">
-                        <span id="password-error" class="error-message" role="alert">[errorePassword]</span>
-                        <small id="password-help" class="form-hint">
-                            La password deve contenere:
-                            <ul class="password-rules"><li>Almeno 8 caratteri</li><li>Almeno una lettera maiuscola (A-Z)</li><li>Almeno una lettera minuscola (a-z)</li><li>Almeno un numero (0-9)</li><li>Almeno un carattere speciale (@, $, !, %, *, ?, &amp;)</li></ul>
-                        </small>
+                   <div class="form-group">
+                        <label for="reg_password">Password <span class="required">(Obbligatorio*)</span></label>
+                        <input type="password" id="reg_password" name="reg_password" required aria-describedby="reg_password-help reg_password-error">
+                        <span id="reg_password-error" class="error-message" role="alert"></span>
+                        <small id="reg_password-help" class="form-hint">Almeno 8 caratteri, maiuscola, minuscola, numero e simbolo.</small>
                     </div>
 
                     <!-- CONFERMA PASSWORD -->
                     <div class="form-group">
-                        <label for="conferma-password">Conferma Password <span class="required">(Obbligatorio*)</span></label>
-                        <input type="password" id="conferma-password" name="conferma-password" autocomplete="new-password" required aria-required="true" aria-describedby="conf-help conf-error" class="[classeConferma]">
-                        <span id="conf-error" class="error-message" role="alert">[erroreConferma]</span>
-                        <small id="conf-help" class="form-hint">La password deve corrispondere a quella inserita precedentemente.</small>
+                        <label for="reg_conferma-password">Conferma Password <span class="required">(Obbligatorio*)</span></label>
+                        <input type="password" id="reg_conferma-password" name="reg_conferma-password" required aria-describedby="reg_conf-help reg_conf-error">
+                        <span id="reg_conf-error" class="error-message" role="alert"></span>
+                        <small id="reg_conf-help" class="form-hint">La password deve corrispondere a quella inserita precedentemente.</small>
                     </div>
 
                     <!-- SUBMIT -->
-                    <div class="form-group"><button type="submit" class="btn-login">Registrati</button></div>
+                    <div class="form-group">
+                        <button type="submit" class="btn-login">Registrati</button>
+                     <!-- Messaggio per tutti e per screen reader -->
+                        <p id="reg_success-info" class="form-hint" aria-live="polite">
+                           Con una registrazione andata a buon fine verrai reindirizzato al login!
+                        </p>
+                    </div>
                 </fieldset>
             </form>
         </div>
     </section>
 </main>
-
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -291,7 +294,7 @@
 
     <!--file js unico per tutti gli elementi -->
     <script src="javaScript/script.js"></script>
-    <script src="javaScript/registrazioneValidator.js"></script>
+    
 
 </body>
 </html>

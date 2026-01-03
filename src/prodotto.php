@@ -106,31 +106,7 @@ try {
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
 
     <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <a href="home.php" aria-label="Torna alla home" class="logo-button">
-                    <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
-                    <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
-                </a>
-            </div>
-
-            <!-- Pulsante hamburger -->
-            <button class="hamburger" id="hamburger" aria-label="Apri il menu navigazione">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            
-            <!-- Navigation -->
-            <nav aria-label="Menu principale" role="navigation">
-                <ul class="main-nav">
-                    <li><a href="home.html">Home</a></li>
-                    <li><a href="catalogo.php" class="current-page" aria-current="page">Catalogo</a></li>
-                    <li><a href="creaBlend.html">Crea il tuo <span lang="en">Blend</span></a></li>
-                    <li><a href="chiSiamo.html">Chi Siamo</a></li>
-                </ul>
-            </nav>
+     <?php include 'navbar.php'; ?>
 
             <!-- Utility Icons -->
             <div class="header-utilities">

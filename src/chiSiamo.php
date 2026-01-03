@@ -1,109 +1,148 @@
+<?php
+// Includi la connessione al database
+require_once 'php/connessione.php';?>
+
+
 <!DOCTYPE html>
 <html lang="it" xml:lang="it" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <title>Errore 404 - InfuseMe</title>
-    <meta name="description" content="Errore 404 - Pagina non trovata" />
-    <meta name="robots" content="noindex, nofollow" />
-    <meta name="keywords" content="errore 404, pagina non trovata, link rotto, pagina mancante, URL non valido, pagina inesistente" />
+    <title>InfuseMe: Infusi, tè e tisane artigianali dal 1975</title>
+    <meta name="description" content="InfuseMe - Tè e infusi artigianali dal 1975. Qualità, tradizione e sostenibilità dalla Val d'Ossola." />
+    <meta name="keywords" content="tè, infusi, tisane, biologico, artigianale, Val d'Ossola, blend" />
     <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 <body>
     <!-- Skip link per accessibilità -->
-    <a href="#mainErrore" class="skip-link">Salta al contenuto principale</a>
+    <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
 
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
-                <img src="images/logo/logoScuro1.webp" alt="InfuseMe" class="logo-image logo-dark">
+     <?php include 'navbar.php'; ?>
+
+    <!-- Main Content -->
+
+    <main id="main-content">
+
+        <h1 id="about-title">La nostra storia</h1>
+
+        <section class="content-text">
+            <div class="content-text-wrapper">
+                <h2 class="p-title"><span lang="en">InfuseMe</span> - 50 anni di tisane, tè e tradizione alpina</h2>
+                <p><span lang="en">InfuseMe</span> nasce nel 1975 in Val d'Ossola, terra di boschi profumati, erbe
+                    selvatiche e antiche conoscenze erboristiche. È qui che Marco e Paola Ferrero fondano un piccolo laboratorio
+                    artigianale dedicato alla raccolta e alla lavorazione delle erbe officinali locali.
+                    La loro prima <strong>tisana</strong>, l'Ossolana Classica, ottenuta essiccando a mano menta selvatica,
+                    melissa e calendula, conquista presto le botteghe del territorio. Così inizia il viaggio
+                    di un marchio destinato a diventare simbolo di autenticità e qualità.
+                </p>
             </div>
+            <img src="images/storia/Paesaggio.jpg" alt="Montagne della Val D'Ossola">
+        </section>
 
-            <button class="hamburger" id="hamburger" aria-label="Apri il menu navigazione">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            
-            <nav aria-label="Menu principale" role="navigation">
-                <ul class="main-nav">
-                    <li><a href="home.html">Home</a></li>
-                    <li><a href="catalogo.php">Catalogo</a></li>
-                    <li><a href="creaBlend.html">Crea il tuo <span lang="en">Blend</span></a></li>
-                    <li><a href="chiSiamo.html">Chi Siamo</a></li>
+        <!-- id messi se dovessero servire ma per ora lo stile viene dato da .content-text -->
+        <section id="crescita" class="content-text">
+            <div class="content-text-wrapper">
+                <h2 class="p-title">Dalle radici artigianali alla crescita nazionale</h2>
+                <p>
+                    Tra gli anni '80 e '90 <span lang="en">InfuseMe</span> cresce, mantenendo però intatto il legame con la natura e con la
+                    <strong>tradizione</strong> erboristica di montagna. Il laboratorio si amplia, nascono collaborazioni
+                    con coltivatori locali, e
+                    l'azienda introduce le prime selezioni di <strong>tè</strong> provenienti da India, Cina e Giappone,
+                    miscelati internamente con
+                    cura.
+                    La trasparenza nella filiera e l'attenzione ai dettagli trasformano <span lang="en">InfuseMe</span> in un punto di riferimento
+                    per gli appassionati di <strong>infusi</strong>.
+                </p>
+            </div>
+            <img src="images/storia/Coppia2.jpg" alt="Coppia in montagna che raccoglie fiori e verbe aromatiche">
+        </section>
+
+        <section id="nipoti" class="content-text">
+            <div class="content-text-wrapper">
+                <h2 class="p-title">La nuova guida: i quattro nipoti</h2>
+                <p>Oggi, a cinquant'anni dalla fondazione, <span lang="en">InfuseMe</span> è guidata dai quattro nipoti Ana Maria, Giulia, Lisa e Lorenzo
+                    di Marco e Paola, cresciuti tra profumi di erbe essiccate, racconti di montagne e pomeriggi passati nel
+                    laboratorio di famiglia. Ognuno di loro porta una competenza diversa — dalla botanica al marketing, dalla sostenibilità
+                    alla ricerca sensoriale — contribuendo a unire tradizione e modernità.
+                    La loro visione condivide un unico obiettivo: custodire l'eredità dei fondatori, innovando senza mai tradire le radici.
+                </p>
+            </div>
+            <img src="images/storia/FamigliaBW.jpg" alt="Marito e moglie e i quattro figli">
+        </section>
+
+        <section id="innovazione" class="content-text">
+            <div class="content-text-wrapper">
+                <h2 class="p-title">Innovazione, sostenibilità e ricerca</h2>
+                <p>Con l'arrivo del nuovo millennio, la seconda generazione della famiglia Ferrrero porta con sé un
+                    importante impulso innovativo: nascono le linee biologiche, il packaging compostabile e lo shop online,
+                    che permette a <span lang="en">InfuseMe</span> di raggiungere clienti da tutta Europa.
+                </p>
+            </div>
+            <img src="images/storia/laboratorio.jpg" alt="Antico tavolo da erboristeria con barattoli di erbe e fogli di carta con illustrazioni botaniche">
+        </section>
+
+        <section id="50anni" class="content-text">
+            <div class="content-text-wrapper">
+                <h2 class="p-title">2025: celebriamo 50 anni di <span lang="en">InfuseMe</span></h2>
+                <p>Per celebrare questo importante traguardo nasce la collezione "1975 <span lang="en">Heritage</span>",
+                    che reinterpreta le prime ricette storiche con un tocco contemporaneo. Un omaggio alla passione dei fondatori e alla forza delle nuove generazioni.
+                </p>
+            </div>
+            <img src="images/storia/collezione.jpg" alt="Marito e moglie e i quattro figli">
+        </section>
+
+        <section id="etica" class="content-text">
+            <div class="content-text-wrapper">
+                <h2 class="p-title">Etica e sostenibilità</h2>
+                <p> L'azienda seleziona materie prime provenienti da coltivazioni <strong>biologiche</strong> di montagna,
+                    privilegia piccoli produttori del territorio e utilizza metodi di raccolta a basso impatto ambientale.
+                    Il confezionamento avviene con materiali riciclabili o compostabili, mentre l'intera filiera è orientata
+                    alla riduzione degli sprechi e delle emissioni. Ogni tazza di tè e tisana riflette così un impegno
+                    autentico verso un futuro più sostenibile.
+                </p>
+            </div>
+            <img src="images/storia/Coppia.jpg" alt="Marito e moglie che raccolgono erbe aromatiche e fiori">
+        </section>
+
+        <section id="impegnoFuturo" class="content-text">
+            <div class="content-text-wrapper">
+                <h2 class="p-title">Il nostro impegno futuro</h2>
+                <p>Guardiamo ai prossimi anni con entusiasmo, continuando a:</p>
+                <ul class="leaf-icon">
+                    <li>Coltivare e selezionare erbe di alta qualità,</li>
+                    <li>Valorizzare l'agricoltura locale e biologica,</li>
+                    <li>Creare miscele che raccontino il territorio</li>
+                    <li>Promuovere un approccio sostenibile e rispettoso della natura</li>
                 </ul>
-            </nav>
-
-            <div class="header-utilities">
-                <button class="icon-button" aria-label="Cerca prodotti">
-                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 513.749 513.749" aria-hidden="true">
-                        <path d="M504.352,459.061l-99.435-99.477c74.402-99.427,54.115-240.344-45.312-314.746S119.261-9.277,44.859,90.15 S-9.256,330.494,90.171,404.896c79.868,59.766,189.565,59.766,269.434,0l99.477,99.477c12.501,12.501,32.769,12.501,45.269,0 c12.501-12.501,12.501-32.769,0-45.269L504.352,459.061z M225.717,385.696c-88.366,0-160-71.634-160-160s71.634-160,160-160 s160,71.634,160,160C385.623,314.022,314.044,385.602,225.717,385.696z"/>
-                    </svg>
-                </button>
-                
-                <a href="carrello.php" class="icon-button" aria-label="Vai al carrello">
-                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.994,0,0,0,22.713,4.077ZM21.4,6.178l-.786,4.354A3,3,0,0,1,17.657,13H5.419L4.478,5H20.41A1,1,0,0,1,21.4,6.178Z"/>
-                        <circle cx="7" cy="22" r="2"/>
-                        <circle cx="17" cy="22" r="2"/>
-                    </svg>
-                </a>
-                
-                <a href="paginaUtente.html" class="icon-button" aria-label="Accedi all'area personale">
-                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M12,12A6,6,0,1,0,6,6,6.006,6.006,0,0,0,12,12ZM12,2A4,4,0,1,1,8,6,4,4,0,0,1,12,2Z"/>
-                        <path d="M12,14a9.01,9.01,0,0,0-9,9,1,1,0,0,0,2,0,7,7,0,0,1,14,0,1,1,0,0,0,2,0A9.01,9.01,0,0,0,12,14Z"/>
-                    </svg>
-                </a>
-
-                <button class="icon-button theme-toggle" aria-label="Cambia tema">
-                    <svg class="theme-icon sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M12,17c-2.76,0-5-2.24-5-5s2.24-5,5-5,5,2.24,5,5-2.24,5-5,5Zm0-8c-1.65,0-3,1.35-3,3s1.35,3,3,3,3-1.35,3-3-1.35-3-3-3Zm1-5V1c0-.55-.45-1-1-1s-1,.45-1,1v3c0,.55,.45,1,1,1s1-.45,1-1Zm0,19v-3c0-.55-.45-1-1-1s-1,.45-1,1v3c0,.55,.45,1,1,1s1-.45,1-1ZM5,12c0-.55-.45-1-1-1H1c-.55,0-1,.45-1,1s.45,1,1,1h3c.55,0,1-.45,1-1Zm19,0c0-.55-.45-1-1-1h-3c-.55,0-1,.45-1,1s.45,1,1,1h3c.55,0,1-.45,1-1ZM6.71,6.71c.39-.39,.39-1.02,0-1.41l-2-2c-.39-.39-1.02-.39-1.41,0s-.39,1.02,0,1.41l2,2c.2,.2,.45,.29,.71,.29s.51-.1,.71-.29Zm14,14c.39-.39,.39-1.02,0-1.41l-2-2c-.39-.39-1.02-.39-1.41,0s-.39,1.02,0,1.41l2,2c.2,.2,.45,.29,.71,.29s.51-.1,.71-.29Zm-16,0l2-2c.39-.39,.39-1.02,0-1.41s-1.02-.39-1.41,0l-2,2c-.39,.39-.39,1.02,0,1.41,.2,.2,.45,.29,.71,.29s.51-.1,.71-.29ZM18.71,6.71l2-2c.39-.39,.39-1.02,0-1.41s-1.02-.39-1.41,0l-2,2c-.39,.39-.39,1.02,0,1.41,.2,.2,.45,.29,.71,.29s.51-.1,.71-.29Z"/>
-                    </svg>
-                    <svg class="theme-icon moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M22.386,12.003c-.402-.167-.871-.056-1.151,.28-.928,1.105-2.506,1.62-4.968,1.62-3.814,0-6.179-1.03-6.179-6.158,0-2.397,.532-4.019,1.626-4.957,.33-.283,.439-.749,.269-1.149-.17-.401-.571-.655-1.015-.604C5.285,1.573,1,6.277,1,11.978c0,6.062,4.944,10.993,11.022,10.993,5.72,0,10.438-4.278,10.973-9.951,.042-.436-.205-.848-.609-1.017Z"/>
-                    </svg>
-                </button>
+                <p><span lang="en">InfuseMe</span> rimane, da sempre e per sempre, un infuso di natura, persone e tradizioni.</p>
             </div>
-        </div>
-    </header>
+            <img src="images/storia/artigianalita.jpg" alt="Mani di un artigiano che cura le nostre erbe">
+        </section>
 
-  <!-- CONTENUTO ERRORE 404 -->
-<main id="mainErrore" role="main">
-  <div class="errore-content">
-    
-    <!-- Immagine a sinistra -->
-    <div class="img-errore">
-      <img src="Images/errori/404.jpg" alt="Tazza di tè rovesciata che bagna la pagina. Errore 404 pagina non trovata" loading="lazy">
-    </div>
+        <section id="DoveTrovarci">
+            <h2>Dove puoi trovarci</h2>
+            <img src="images/storia/cartinaBiella.jpg" alt="cartina geografica sede uffici InfuseMe">
+            <p>
+                Puoi trovarci in via Torino 3 a Biella (Piemonte) nella sede dei nostri uffici nei seguenti orari:
+            </p>
+            <ul>
+                <li><strong>Lunedì - Venerdì:</strong> 9:00 - 18:00</li>
+                <li><strong>Sabato:</strong> 9:00 - 13:00</li>
+                <li><strong>Domenica:</strong> Chiuso</li>
+            </ul>
+        </section>
 
-    <!-- Testo a destra -->
-    <div class="testo-errore">
-    <h1>Chi ha rovesciato il tè qui?</h1>
-    <p>Sembra che una tazza sia scivolata e abbia bagnato proprio questa pagina. Non preoccuparti, asciughiamo tutto!</p>
-    <p>Intanto, puoi tornare alla <a href="/home.html">Home</a>.</p>
-    <div class="separatore-testo"></div>
-    <p class="ultima-frase">
-        La pagina che stai cercando potrebbe essere stata spostata o non esistere più.
-        Ti invitiamo a controllare il link o a continuare la navigazione dal nostro menu.
-    </p>
-    </div>
-
-    </div>
     </main>
-
 
     <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
-                <!-- Colonna 1: Brand -->
+               <!-- Colonna 1: Brand -->
                 <div class="footer-section">
                     <div class="footer-brand">
                         <div class="brand-name"><span lang="en">InfuseMe</span></div>
-                        <div class="motto-brand">Taste Tradition</div>
+                        <div class="motto-brand"><span lang="en">Taste Tradition</span></div>
                     </div>
                 </div>
 
@@ -115,7 +154,7 @@
                             <strong>Centralino:</strong> +39 000 111 abcd 
                         </div>
                         <div class="contact">
-                            <strong>Customer Care:</strong> +39 111 222 efgh
+                            <strong><span lang="en">Customer Care</span>:</strong> +39 111 222 efgh
                         </div>
                         <div class="contact">
                             <strong>Assistenza Clienti:</strong> assistenza@infuseme.com
@@ -147,10 +186,11 @@
                     <h3>Le Nostre Sedi</h3>
                     <div class="location-item">Val d'Ossola (Piemonte)</div>
                     <div class="location-item">Biella</div>
-                </div>
-            </div>
 
-            <!-- Social Media Icons -->
+                </div> <!--fine footer content-->
+
+
+            <!-- Social Media Icons - solo icoe dei social-->
             <div class="footer-social">
                 <h3>Seguici sui social</h3>
                 <div class="social-icons">
@@ -197,19 +237,19 @@
             <div class="footer-bottom">
                 <p>&copy; 2025 <span lang="en">InfuseMe</span>. Tutti i diritti riservati.</p>
             </div>
-        </div>
+
+        </div> <!--fine class container-->
     </footer>
 
-    <!-- Pulsante Torna Su -->
-    <button class="back-to-top" id="backToTop" aria-label="Torna all'inizio della pagina">
+    <!-- Pulsante Torna Su (no title perchè c'è nel css)-->
+   <button class="back-to-top" id="backToTop" aria-label="Torna all'inizio della pagina">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M18,15.5a1,1,0,0,1-.71-.29l-4.58-4.59a1,1,0,0,0-1.42,0L6.71,15.21a1,1,0,0,1-1.42-1.42L9.88,9.21a3.06,3.06,0,0,1,4.24,0l4.59,4.58a1,1,0,0,1,0,1.42A1,1,0,0,1,18,15.5Z"/>
         </svg>
     </button>
 
-    <!-- Scripts -->
-    <script src="javaScript/tema.js"></script>
-    <script src="javaScript/backToTop.js"></script>
-    <script src="javaScript/hamburger.js"></script>
+    <!--file js unico per tutti gli elementi -->
+    <script src="javaScript/script.js"></script>
+
 </body>
 </html>
