@@ -16,7 +16,7 @@
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/navbar.php'; ?>
 
     <!-- CONTENUTO ERRORE 403 -->
-    <main id="mainErrore" role="main">
+    <main id="main-content">
       <div class="errore-content">
         
         <!-- Immagine a sinistra -->
@@ -28,7 +28,7 @@
         <div class="testo-errore">
  <h1>Fermati! Accesso negato</h1>
     <p>Ci dispiace, ma sembra che non ti abbiano fornito le chiavi giuste e senza quelle non riuscirai ad aprire questo cancello!</p>
-    <p>Puoi però <a href="/home.html">tornare alla Home</a> o <a href="/login.php">effettuare il login</a> come utente per ottenere l'accesso corretto.</p>
+    <p>Puoi però <a href="/home.html">tornare alla Home</a> o <a href="/login.php">effettuare il login</a> come amministratore per ottenere l'accesso corretto.</p>
     <div class="separatore-testo"></div>
     <p class="ultima-frase">
         Accesso negato: non hai i permessi necessari per visualizzare questa sezione riservata agli utenti autorizzati.

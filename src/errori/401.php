@@ -15,7 +15,7 @@
 
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/navbar.php'; ?>
 <!-- CONTENUTO ERRORE 401 -->
-<main id="mainErrore" role="main">
+<main id="main-content">
   <div class="errore-content">
     
     <!-- Immagine a sinistra -->

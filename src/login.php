@@ -98,9 +98,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // --- Carica HTML e sostituisci placeholder ---
 $html = file_get_contents('login_utente.html'); // Assicurati che il file esista
+//  Genera Navbar
+ob_start();
+require 'navbar.php';
+$navbar = ob_get_clean();
+
 $html = str_replace(
-    ['[valoreEmail]', '[classeEmail]', '[classePassword]', '[erroreEmail]', '[errorePassword]', '[erroreGenerale]'],
-    [$valoreEmail, $classeEmail, $classePassword, $erroreEmail, $errorePassword, $erroreGenerale],
+    ['[PLACEHOLDER_NAVBAR]','[valoreEmail]', '[classeEmail]', '[classePassword]', '[erroreEmail]', '[errorePassword]', '[erroreGenerale]'],
+    [$navbar, $valoreEmail, $classeEmail, $classePassword, $erroreEmail, $errorePassword, $erroreGenerale],
     $html
 );
 

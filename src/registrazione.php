@@ -9,8 +9,13 @@ if (isset($_SESSION['id_utente'])) {
 }
 }
 
-// Carica il template HTML
+/// Carica il template HTML
 $template = file_get_contents('registra_utente.html');
+
+//  Genera Navbar
+ob_start();
+require 'navbar.php';
+$navbar = ob_get_clean();
 
 // Recupera eventuali errori e valori precedenti
 $errors = $_SESSION['errors'] ?? [];
@@ -29,6 +34,8 @@ $maxDataNascita = date('Y-m-d', strtotime('-18 years'));
 
 // Prepara le sostituzioni per i placeholder nel template
 $sostituzioni = [
+    // NAVBAR
+    '[PLACEHOLDER_NAVBAR]' => $navbar,
     // Errore generale
     '[erroreGenerale]' => $errors['generale'] ?? '',
 
