@@ -1,11 +1,11 @@
 const dettagli_form_reg = {
     "reg_nome": [
         /^[A-Za-z\sÀ-ÿ'’]{2,50}$/,
-        "Errore: Nome non valido. Usa solo lettere, minimo 2 caratteri."
+        "Errore: Nome non valido. "
     ],
     "reg_cognome": [
         /^[A-Za-z\sÀ-ÿ'’]{2,50}$/,
-        "Errore: Cognome non valido. Usa solo lettere, minimo 2 caratteri."
+        "Errore: Cognome non valido."
     ],
     "reg_data-nascita": [
         /^\d{4}-\d{2}-\d{2}$/,
@@ -25,7 +25,7 @@ const dettagli_form_reg = {
     ],
     "reg_password": [
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        "Errore: Password non sicura. Deve contenere almeno 8 caratteri, una maiuscola, una minuscola, un numero e un carattere speciale."
+        "Errore: Password non sicura."
     ],
     "reg_conferma-password": [
         null,
