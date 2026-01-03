@@ -1,5 +1,8 @@
 <?php
 // Includi la connessione al database
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once 'php/connessione.php';
 
 $prodottiHtml = '';
