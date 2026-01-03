@@ -113,16 +113,12 @@
                         <legend>Ordina per:</legend>
                         <div class="sort-options">
                             <label>
-                                <input type="radio" name="sortOrder" value="default" checked>
-                                <span>Rilevanza</span>
-                            </label>
-                            <label>
                                 <input type="radio" name="sortOrder" value="priceAsc">
-                                <span>Prezzo ↑</span>
+                                <span>Prezzo crescente</span>
                             </label>
                             <label>
                                 <input type="radio" name="sortOrder" value="priceDesc">
-                                <span>Prezzo ↓</span>
+                                <span>Prezzo decrescente</span>
                             </label>
                             <label>
                                 <input type="radio" name="sortOrder" value="nameAsc">
@@ -138,46 +134,101 @@
 
                 <!-- Pannello filtri (sidebar desktop, tendina mobile) -->
                 <div id="filterPanel" class="filter-panel">
-                    <!-- I filtri rimangono identici a prima -->
+                    <!-- Filtro Categorie - Dinamico dal DB -->
                     <div class="filter-group">
                         <h4>Categoria</h4>
                         <label><input type="radio" name="category" value="all" checked> Tutte le categorie</label>
-                        <label><input type="radio" name="category" value="tè_nero"> Tè Nero</label>
-                        <label><input type="radio" name="category" value="tè_verde"> Tè Verde</label>
-                        <label><input type="radio" name="category" value="tè_bianco"> Tè Bianco</label>
-                        <label><input type="radio" name="category" value="tè_giallo"> Tè Giallo</label>
-                        <label><input type="radio" name="category" value="tè_oolong"> Tè Oolong</label>
-                        <label><input type="radio" name="category" value="tisana"> Tisane</label>
-                        <label><input type="radio" name="category" value="infuso"> Infusi</label>
-                        <label><input type="radio" name="category" value="kit"> Kit Speciali</label>
+                        <?php
+                        try {
+                            // Query per ottenere tutte le categorie uniche dai prodotti
+                            $sqlCategorie = "SELECT DISTINCT categoria FROM prodotto ORDER BY categoria";
+                            $stmtCategorie = $pdo->query($sqlCategorie);
+                            
+                            while ($categoria = $stmtCategorie->fetch()) {
+                                $catNome = htmlspecialchars($categoria['categoria'], ENT_QUOTES, 'UTF-8');
+                                $catLabel = ucfirst(str_replace('_', ' ', $catNome)); // Formatta per visualizzazione
+                                
+                                // Mappatura per visualizzare nomi più leggibili
+                                $labelMappa = [
+                                    'tè_nero' => 'Tè Nero',
+                                    'tè_verde' => 'Tè Verde',
+                                    'tè_bianco' => 'Tè Bianco',
+                                    'tè_giallo' => 'Tè Giallo',
+                                    'tè_oolong' => 'Tè Oolong',
+                                    'tisana' => 'Tisane',
+                                    'infuso' => 'Infusi',
+                                    'altro' => 'Kit Speciali'
+                                ];
+                                
+                                $labelVisual = $labelMappa[$catNome] ?? $catLabel;
+                                echo "<label><input type='radio' name='category' value='$catNome'> $labelVisual</label>";
+                            }
+                        } catch (PDOException $e) {
+                            echo "<p>Errore nel caricamento delle categorie</p>";
+                        }
+                        ?>
                     </div>
 
+                     <!-- Filtro Ingredienti - Dinamico dal DB -->
                     <div class="filter-group">
                         <h4>Filtra per Ingredienti</h4>
-                        <label><input type="checkbox" class="ing-filter" value="zenzero"> Zenzero</label>
-                        <label><input type="checkbox" class="ing-filter" value="cannella"> Cannella</label>
-                        <label><input type="checkbox" class="ing-filter" value="limone"> Limone</label>
-                        <label><input type="checkbox" class="ing-filter" value="menta"> Menta</label>
-                        <label><input type="checkbox" class="ing-filter" value="frutti"> Frutti Rossi</label>
-                        <label><input type="checkbox" class="ing-filter" value="vaniglia"> Vaniglia</label>
-                    </div>
-
-                    <div class="filter-group">
-                        <h4>Filtra per Prezzo</h4>
-                        <label><input type="radio" name="priceRange" value="all" checked> Tutti i prezzi</label>
-                        <label><input type="radio" name="priceRange" value="low"> Fino a €5</label>
-                        <label><input type="radio" name="priceRange" value="medium"> €5 - €10</label>
-                        <label><input type="radio" name="priceRange" value="high"> Oltre €10</label>
-                    </div>
-
-                    <div class="filter-group">
-                        <h4>Filtra per Base</h4>
-                        <label><input type="radio" name="baseFilter" value="all" checked> Tutte le basi</label>
-                        <label><input type="radio" name="baseFilter" value="tè_nero"> Base Tè Nero</label>
-                        <label><input type="radio" name="baseFilter" value="tè_verde"> Base Tè Verde</label>
-                        <label><input type="radio" name="baseFilter" value="tè_bianco"> Base Tè Bianco</label>
-                        <label><input type="radio" name="baseFilter" value="tisana"> Base Tisana</label>
-                        <label><input type="radio" name="baseFilter" value="infuso"> Base Infuso</label>
+                        <?php
+                        try {
+                            // Query per ottenere gli ingredienti più comuni (es. quelli usati in almeno 2 prodotti)
+                            $sqlIngredienti = "SELECT i.id_ingrediente, i.nome, i.tipo, 
+                                                    COUNT(pi.id_prodotto) as conteggio_prodotti
+                                            FROM ingrediente i
+                                            LEFT JOIN prodotto_ingrediente pi ON i.id_ingrediente = pi.id_ingrediente
+                                            WHERE i.tipo IN ('frutto', 'spezia', 'fiore', 'dolcificante', 'note')
+                                            GROUP BY i.id_ingrediente, i.nome, i.tipo
+                                            HAVING conteggio_prodotti > 0
+                                            ORDER BY i.tipo, i.nome";
+                            
+                            $stmtIngredienti = $pdo->query($sqlIngredienti);
+                            
+                            // Raggruppiamo per tipo per una migliore organizzazione
+                            $ingredientiPerTipo = [];
+                            while ($ingrediente = $stmtIngredienti->fetch()) {
+                                $tipo = $ingrediente['tipo'];
+                                $ingredientiPerTipo[$tipo][] = $ingrediente;
+                            }
+                            
+                            // Definisci etichette per i tipi
+                            $tipoLabels = [
+                                'frutto' => 'Frutti e Bacche',
+                                'spezia' => 'Spezie e Radici',
+                                'fiore' => 'Fiori e Erbe',
+                                'dolcificante' => 'Dolcificanti',
+                                'note' => 'Note Particolari'
+                            ];
+                            
+                            // Mostra gli ingredienti raggruppati per tipo
+                            foreach ($tipoLabels as $tipo => $label) {
+                                if (isset($ingredientiPerTipo[$tipo]) && count($ingredientiPerTipo[$tipo]) > 0) {
+                                    echo "<div class='filter-subgroup'>";
+                                    echo "<h5>$label</h5>";
+                                    
+                                    foreach ($ingredientiPerTipo[$tipo] as $ingrediente) {
+                                        $idIng = $ingrediente['id_ingrediente'];
+                                        $nomeIng = htmlspecialchars($ingrediente['nome'], ENT_QUOTES, 'UTF-8');
+                                        $nomeIngLower = strtolower($ingrediente['nome']);
+                                        $conteggio = $ingrediente['conteggio_prodotti'];
+                                        
+                                        echo "<label class='checkbox-label'>";
+                                        echo "<input type='checkbox' class='ing-filter' 
+                                            value='$nomeIngLower' 
+                                            data-id='$idIng'
+                                            data-nome='$nomeIng'>";
+                                        echo "<span>$nomeIng ($conteggio)</span>";
+                                        echo "</label>";
+                                    }
+                                    echo "</div>";
+                                }
+                            }
+                        } catch (PDOException $e) {
+                            echo "<p>Errore nel caricamento degli ingredienti</p>";
+                        }
+                        ?>
                     </div>
                 </div>
                 
@@ -250,8 +301,6 @@
                                     </div>
                                     
                                     <h3>$nome</h3>
-                                    
-                                    <p class='product-description'>$descrizione...</p>
                                     
                                     <p class='product-format'>Confezione da {$grammi}g</p>
                                     

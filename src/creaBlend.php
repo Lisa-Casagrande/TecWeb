@@ -157,59 +157,90 @@ try {
                     </div>
                 </div>
                 
-                <div class="riepilogo-corpo">
-                    <div class="base-selezionata" id="base-selezionata">
-                        <h4>Base:</h4>
-                        <p class="nessuna-selezione">Nessuna base selezionata</p>
+                <aside class="riepilogo-blend-fisso" id="riepilogoFisso">
+                    <h3>Riepilogo</h3>
+                    
+                    <div class="sezione-riepilogo base-sezione">
+                        <div id="base-selezionata">
+                            <p class="nessuna-selezione">Nessuna base selezionata</p>
+                        </div>
                     </div>
                     
-                    <div class="ingredienti-selezionati" id="ingredienti-selezionati">
-                        <h4>Ingredienti:</h4>
-                        <p class="nessuna-selezione">Nessun ingrediente selezionato</p>
+                    <div class="sezione-riepilogo">
+                        <div id="ingredienti-selezionati">
+                            <p class="nessuna-selezione">Nessun ingrediente selezionato</p>
+                        </div>
+                    </div>
+
+                    <div class="prezzo-container">
+                        <span>Prezzo stimato</span>
+                        <span class="importo">€ <span id="importo-prezzo">0.00</span></span>
                     </div>
                     
-                    <div class="prezzo-totale" id="prezzo-totale">
-                        <h4>Prezzo stimato:</h4>
-                        <p class="prezzo">€<span id="importo-prezzo">8.99</span></p>
+                    <div class="sidebar-actions">
+                        <button class="btn btn-primary" id="btn-conferma" disabled>
+                            Aggiungi al Carrello
+                        </button>
                     </div>
-                    
-                    <button class="btn btn-primary btn-conferma-blend" id="btn-conferma" disabled>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" style="margin-right: 8px;">
-                            <path d="M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.994,0,0,0,22.713,4.077ZM21.4,6.178l-.786,4.354A3,3,0,0,1,17.657,13H5.419L4.478,5H20.41A1,1,0,0,1,21.4,6.178Z"/>
-                            <circle cx="7" cy="22" r="2"/>
-                            <circle cx="17" cy="22" r="2"/>
-                        </svg>
-                        Aggiungi al Carrello
-                    </button>
-                </div>
+                </aside>
             </div>
 
             <!-- Sezione Basi -->
             <section id="basi">
                 <h2>Scegli la Tua Base (1 obbligatoria)</h2>
-                <p class="descrizione-sezione">Seleziona una base per il tuo blend. Questa sarà la componente principale della tua tisana.</p>
+                <p class="descrizione-sezione">Seleziona una base per il tuo blend.</p>
                 
                 <div class="basi-grid">
                     <?php foreach ($basi as $base): ?>
                     <article class="base-card" data-id="<?php echo $base['id_base']; ?>" 
-                                           data-nome="<?php echo htmlspecialchars($base['nome']); ?>"
-                                           data-prezzo="3.50"
-                                           data-temperatura="<?php echo htmlspecialchars($base['temperatura_infusione']); ?>"
-                                           data-tempo="<?php echo htmlspecialchars($base['tempo_infusione']); ?>">
-                        <div class="badge-base">Base</div>
-                        <img src="<?php echo $base['img_path'] ?? 'images/ingredienti/placeholder.webp'; ?>" 
-                             alt="<?php echo htmlspecialchars($base['nome']); ?>">
-                        <h3><?php echo htmlspecialchars($base['nome']); ?></h3>
-                        <?php if (!empty($base['descrizione'])): ?>
-                        <p class="descrizione"><?php echo htmlspecialchars($base['descrizione']); ?></p>
-                        <?php endif; ?>
-                        <div class="info-infusione">
-                            <span class="temp">🌡️ <?php echo htmlspecialchars($base['temperatura_infusione']); ?></span>
-                            <span class="time">⏱️ <?php echo htmlspecialchars($base['tempo_infusione']); ?></span>
+                            data-nome="<?php echo htmlspecialchars($base['nome']); ?>"
+                            data-prezzo="3.50"
+                            data-temperatura="<?php echo htmlspecialchars($base['temperatura_infusione']); ?>"
+                            data-tempo="<?php echo htmlspecialchars($base['tempo_infusione']); ?>">
+                        
+                        <h3 class="base-title"><?php echo htmlspecialchars($base['nome']); ?></h3>
+                        
+                        <div class="base-content">
+                            <div class="base-image-standard">
+                                <img src="<?php echo $base['img_path'] ?? 'images/ingredienti/placeholder.webp'; ?>" 
+                                    alt="<?php echo htmlspecialchars($base['nome']); ?>">
+                            </div>
+
+                            <div class="base-info">
+                                <?php if (!empty($base['descrizione'])): ?>
+                                    <p class="descrizione"><?php echo htmlspecialchars($base['descrizione']); ?></p>
+                                <?php endif; ?>
+                                
+                                <div class="info-infusione">
+                                    <span class="temp">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" 
+                                            width="20" height="20" aria-hidden="true" focusable="false">
+                                            <g transform="translate(0,512) scale(0.1,-0.1)" fill="currentColor">
+                                                <path d="M2379 5100 c-413 -87 -701 -415 -739 -840 -6 -67 -10 -482 -10 -989 l0 -873 -81 -85 c-396 -419 -481 -1054 -208 -1572 67 -128 144 -232 248 -335 542 -540 1407 -538 1945 3 524 526 540 1372 37 1904 l-81 85 0 873 c0 507 -4 922 -10 989 -22 242 -115 441 -284 603 -215 206 -531 298 -817 237z m327 -300 c122 -31 198 -74 290 -165 66 -65 89 -96 122 -165 22 -47 45 -109 51 -138 8 -36 11 -371 11 -1055 l0 -1003 94 -87 c111 -102 179 -190 241 -308 164 -316 165 -681 2 -993 -216 -415 -669 -645 -1126 -571 -340 55 -629 265 -788 571 -163 312 -162 677 2 993 62 118 130 206 241 308 l94 87 0 1003 c0 684 3 1019 11 1055 6 29 29 91 51 138 33 69 56 100 122 165 161 159 371 218 582 165z"/>
+                                                <path d="M2130 3885 l0 -175 215 0 215 0 0 -150 0 -150 -215 0 -216 0 3 -132 3 -133 213 -3 212 -2 0 -145 0 -145 -212 -2 -213 -3 -3 -132 -3 -133 216 0 215 0 0 -150 0 -150 -215 0 -215 0 0 -114 0 -113 -39 -27 c-57 -40 -163 -152 -203 -216 -202 -322 -158 -726 109 -993 187 -188 460 -273 711 -221 163 33 302 107 415 221 267 267 311 671 109 993 -40 64 -146 176 -203 216 l-39 27 0 1003 0 1004 -430 0 -430 0 0 -175z"/>
+                                            </g>
+                                        </svg>
+                                        <span class="sr-only">Temperatura: </span>
+                                        <?php echo htmlspecialchars($base['temperatura_infusione']); ?>
+                                    </span>
+                                    
+                                    <span class="time">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                            width="20" height="20" aria-hidden="true" focusable="false">
+                                            <g transform="translate(0,512) scale(0.1,-0.1)" fill="currentColor">
+                                                <path d="M1950 5101 c-51 -26 -80 -74 -80 -130 0 -99 70 -161 182 -161 l58 0 0 -165 0 -165 -27 -6 c-428 -95 -813 -305 -1120 -612 -373 -373 -599 -851 -654 -1381 -14 -140 -7 -426 16 -566 60 -383 221 -751 461 -1058 87 -110 296 -313 415 -402 417 -312 933 -474 1445 -452 587 25 1098 249 1510 661 348 348 564 770 640 1252 22 139 29 425 15 565 -46 441 -214 855 -486 1195 -86 107 -234 257 -328 333 -37 30 -67 57 -67 61 0 4 27 46 61 93 38 55 65 85 72 81 7 -4 45 -30 85 -58 66 -45 78 -50 127 -50 45 0 60 5 92 30 69 56 81 149 27 213 -24 29 -532 384 -583 408 -98 45 -211 -29 -211 -139 0 -70 22 -101 117 -165 l82 -56 -56 -81 c-31 -44 -62 -87 -68 -94 -10 -11 -31 -4 -116 39 -158 79 -340 143 -521 183 l-28 6 0 165 0 165 58 0 c111 0 182 62 182 160 0 32 -7 56 -24 81 -49 71 -28 69 -668 69 -539 0 -575 -1 -608 -19z m750 -436 l0 -145 -140 0 -140 0 0 145 0 145 140 0 140 0 0 -145z m21 -726 c295 -30 576 -135 819 -307 121 -85 305 -270 392 -392 177 -249 286 -553 307 -855 59 -850 -506 -1594 -1349 -1776 -91 -20 -135 -23 -325 -24 -192 0 -234 3 -329 23 -311 66 -592 208 -811 411 -324 301 -514 693 -544 1123 -28 392 80 776 308 1099 85 120 270 305 391 391 335 237 745 348 1141 307z"/>
+                                                <path d="M2280 3611 c-398 -85 -752 -353 -938 -710 -109 -208 -154 -395 -155 -631 -1 -338 100 -624 314 -886 201 -246 518 -428 833 -479 537 -87 1069 144 1371 595 115 173 178 335 219 573 l7 37 -703 0 c-784 0 -747 -3 -795 69 l-23 34 0 708 0 709 -22 -1 c-13 0 -61 -9 -108 -18z"/>
+                                                <path d="M2710 3025 l0 -605 610 0 610 0 -6 33 c-52 312 -167 546 -376 762 -200 208 -454 348 -728 399 -45 9 -88 16 -96 16 -12 0 -14 -95 -14 -605z"/>
+                                            </g>
+                                        </svg>
+                                        <span class="sr-only">Tempo: </span>
+                                        <?php echo htmlspecialchars($base['tempo_infusione']); ?>
+                                    </span>
+                                </div>
+
+                                <button class="btn btn-seleziona-base">Seleziona Base</button>
+                            </div>
                         </div>
-                        <button class="btn btn-seleziona-base" >
-                            Seleziona Base
-                        </button>
                     </article>
                     <?php endforeach; ?>
                 </div>
@@ -218,7 +249,7 @@ try {
             <!-- Sezione Ingredienti -->
             <section id="ingredienti">
                 <h2>Aggiungi gli Ingredienti</h2>
-                <p class="descrizione-sezione">Scegli da 2 a 3 ingredienti per personalizzare il tuo blend.</p>
+                <p class="descrizione-sezione">Seleziona gli ingredienti per personalizzare il tuo blend.</p>
                 
                 <?php foreach ($ingredientiPerTipo as $tipo => $ingredienti): 
                     $titoloTipo = '';
@@ -231,19 +262,25 @@ try {
                         default: $titoloTipo = ucfirst($tipo);
                     }
                 ?>
-                <h3><?php echo $titoloTipo; ?></h3>
+                
+                <h3 class="titolo-categoria"><?php echo $titoloTipo; ?></h3>
+                
                 <div class="ingredienti-grid">
                     <?php foreach ($ingredienti as $ing): ?>
                     <div class="ingrediente-card" data-id="<?php echo $ing['id_ingrediente']; ?>" 
-                                                 data-nome="<?php echo htmlspecialchars($ing['nome']); ?>"
-                                                 data-tipo="<?php echo $ing['tipo']; ?>"
-                                                 data-prezzo="1.50">
+                                                data-nome="<?php echo htmlspecialchars($ing['nome']); ?>"
+                                                data-tipo="<?php echo $ing['tipo']; ?>"
+                                                data-prezzo="1.50">
+                        
                         <img src="<?php echo $ing['img_path'] ?? 'images/ingredienti/placeholder.webp'; ?>" 
-                             alt="<?php echo htmlspecialchars($ing['nome']); ?>">
+                            alt="<?php echo htmlspecialchars($ing['nome']); ?>">
+                        
                         <h4><?php echo htmlspecialchars($ing['nome']); ?></h4>
+                        
                         <?php if (!empty($ing['descrizione'])): ?>
-                        <p class="descrizione-ingrediente"><?php echo htmlspecialchars(substr($ing['descrizione'], 0, 100)); ?>...</p>
+                            <p class="descrizione-ingrediente"><?php echo htmlspecialchars($ing['descrizione'], ENT_QUOTES, 'UTF-8'); ?></p>
                         <?php endif; ?>
+                        
                         <button class="btn btn-aggiungi-ingrediente">
                             Aggiungi Ingrediente
                         </button>

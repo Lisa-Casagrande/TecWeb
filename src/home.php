@@ -72,7 +72,7 @@ if (empty($prodottiHtml)) {
         <!--logo Infuse Me in alto a sinistra-->
         <div class="header-container">
             <div class="logo">
-                <a href="home.php" aria-label="Torna alla home" class="logo-button">
+                <a class="logo-button">
                     <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
                     <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
                 </a>
