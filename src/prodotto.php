@@ -218,11 +218,6 @@ try {
                                 data-prezzo="<?php echo $prezzo_raw; ?>"
                                 data-img="<?php echo $img_path; ?>"
                                 data-disponibilita="<?php echo $disponibilita; ?>">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" style="margin-right: 8px;">
-                                <path d="M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.993,0,0,0,22.713,4.077ZM21.4,6.178l-.786,4.354A3,3,0,0,1,17.657,13H5.419L4.478,5H20.41A1,1,0,0,1,21.4,6.178Z"/>
-                                <circle cx="7" cy="22" r="2"/>
-                                <circle cx="17" cy="22" r="2"/>
-                            </svg>
                             Aggiungi al Carrello
                         </button>
                         <?php else: ?>
@@ -236,7 +231,7 @@ try {
                     <div class="preparation-info">
                         <div class="preparation-item">
                             <div class="preparation-icon">
-                                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512">
+                                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                     <g transform="translate(0,512) scale(0.1,-0.1)" fill="currentColor">
                                         <path d="M2379 5100 c-413 -87 -701 -415 -739 -840 -6 -67 -10 -482 -10 -989 l0 -873 -81 -85 c-396 -419 -481 -1054 -208 -1572 67 -128 144 -232 248 -335 542 -540 1407 -538 1945 3 524 526 540 1372 37 1904 l-81 85 0 873 c0 507 -4 922 -10 989 -22 242 -115 441 -284 603 -215 206 -531 298 -817 237z m327 -300 c122 -31 198 -74 290 -165 66 -65 89 -96 122 -165 22 -47 45 -109 51 -138 8 -36 11 -371 11 -1055 l0 -1003 94 -87 c111 -102 179 -190 241 -308 164 -316 165 -681 2 -993 -216 -415 -669 -645 -1126 -571 -340 55 -629 265 -788 571 -163 312 -162 677 2 993 62 118 130 206 241 308 l94 87 0 1003 c0 684 3 1019 11 1055 6 29 29 91 51 138 33 69 56 100 122 165 161 159 371 218 582 165z"/>
                                         <path d="M2130 3885 l0 -175 215 0 215 0 0 -150 0 -150 -215 0 -216 0 3 -132 3 -133 213 -3 212 -2 0 -145 0 -145 -212 -2 -213 -3 -3 -132 -3 -133 216 0 215 0 0 -150 0 -150 -215 0 -215 0 0 -114 0 -113 -39 -27 c-57 -40 -163 -152 -203 -216 -202 -322 -158 -726 109 -993 187 -188 460 -273 711 -221 163 33 302 107 415 221 267 267 311 671 109 993 -40 64 -146 176 -203 216 l-39 27 0 1003 0 1004 -430 0 -430 0 0 -175z"/>
@@ -251,7 +246,7 @@ try {
                         
                         <div class="preparation-item">
                             <div class="preparation-icon">
-                                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512">
+                                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                     <g transform="translate(0,512) scale(0.1,-0.1)" fill="currentColor">
                                         <path d="M1950 5101 c-51 -26 -80 -74 -80 -130 0 -99 70 -161 182 -161 l58 0 0 -165 0 -165 -27 -6 c-428 -95 -813 -305 -1120 -612 -373 -373 -599 -851 -654 -1381 -14 -140 -7 -426 16 -566 60 -383 221 -751 461 -1058 87 -110 296 -313 415 -402 417 -312 933 -474 1445 -452 587 25 1098 249 1510 661 348 348 564 770 640 1252 22 139 29 425 15 565 -46 441 -214 855 -486 1195 -86 107 -234 257 -328 333 -37 30 -67 57 -67 61 0 4 27 46 61 93 38 55 65 85 72 81 7 -4 45 -30 85 -58 66 -45 78 -50 127 -50 45 0 60 5 92 30 69 56 81 149 27 213 -24 29 -532 384 -583 408 -98 45 -211 -29 -211 -139 0 -70 22 -101 117 -165 l82 -56 -56 -81 c-31 -44 -62 -87 -68 -94 -10 -11 -31 -4 -116 39 -158 79 -340 143 -521 183 l-28 6 0 165 0 165 58 0 c111 0 182 62 182 160 0 32 -7 56 -24 81 -49 71 -28 69 -668 69 -539 0 -575 -1 -608 -19z m750 -436 l0 -145 -140 0 -140 0 0 145 0 145 140 0 140 0 0 -145z m21 -726 c295 -30 576 -135 819 -307 121 -85 305 -270 392 -392 177 -249 286 -553 307 -855 59 -850 -506 -1594 -1349 -1776 -91 -20 -135 -23 -325 -24 -192 0 -234 3 -329 23 -311 66 -592 208 -811 411 -324 301 -514 693 -544 1123 -28 392 80 776 308 1099 85 120 270 305 391 391 335 237 745 348 1141 307z"/>
                                         <path d="M2280 3611 c-398 -85 -752 -353 -938 -710 -109 -208 -154 -395 -155 -631 -1 -338 100 -624 314 -886 201 -246 518 -428 833 -479 537 -87 1069 144 1371 595 115 173 178 335 219 573 l7 37 -703 0 c-784 0 -747 -3 -795 69 l-23 34 0 708 0 709 -22 -1 c-13 0 -61 -9 -108 -18z"/>
@@ -269,107 +264,109 @@ try {
             </div>
         </section>
         
-        <!-- Descrizione e dettagli -->
+        <!-- Descrizione e dettagli - TUTTE LE SEZIONI SEMPRE VISIBILI -->
         <section class="product-details-section">
             <div class="container">
-                <div class="details-tabs">
-                    <button class="tab-button active" data-tab="descrizione">Descrizione</button>
-                    <button class="tab-button" data-tab="ingredienti">Ingredienti</button>
-                    <button class="tab-button" data-tab="preparazione">Preparazione</button>
-                    <?php if (!empty($prodotti_consigliati)): ?>
-                    <button class="tab-button" data-tab="abbinamenti">Abbinamenti Consigliati</button>
-                    <?php endif; ?>
+                
+                <!-- Descrizione -->
+                <div class="product-detail-block">
+                    <h2>Descrizione</h2>
+                    <p><?php echo nl2br(preg_replace('/\.\s+/', ".
+                ", $descrizione)); ?></p>
                 </div>
                 
-                <div class="tab-content">
-                    <!-- Descrizione -->
-                    <div id="descrizione" class="tab-pane active">
-                        <h2>Descrizione</h2>
-                        <p><?php echo nl2br($descrizione); ?></p>
-                    </div>
+                <!-- Ingredienti -->
+                <div class="product-detail-block">
                     
-                    <!-- Ingredienti -->
-                    <div id="ingredienti" class="tab-pane">
-                        <h2>Ingredienti</h2>
+                    <div class="ingredienti-container">
+                        <!-- Solo nome della base, senza immagine -->
+                        <div class="base-ingrediente">
+                            <h3>Base: <?php echo $base_nome; ?></h3>
+                        </div>
                         
-                        <div class="ingredienti-container">
-                            <div class="base-ingrediente">
-                                <h3>Base</h3>
-                                <div class="ingrediente-item">
-                                    <img src="<?php echo $base_img; ?>" 
-                                         alt="<?php echo $base_nome; ?>"
-                                         onerror="this.src='images/ingredienti/default-base.webp'">
-                                    <div class="ingrediente-info">
-                                        <h4><?php echo $base_nome; ?></h4>
-                                    </div>
+                        <?php if (!empty($ingredienti_con_img)): ?>
+                        <div class="altri-ingredienti">
+                            <h3>Ingredienti aggiuntivi</h3>
+                            <div class="ingredienti-grid">
+                                <?php foreach ($ingredienti_con_img as $ingrediente): ?>
+                                <div class="ingrediente-card">
+                                    <img src="<?php echo htmlspecialchars($ingrediente['img_path'], ENT_QUOTES, 'UTF-8'); ?>" 
+                                         alt="<?php echo htmlspecialchars($ingrediente['nome'], ENT_QUOTES, 'UTF-8'); ?>"
+                                         onerror="this.src='images/ingredienti/default-ingrediente.webp'">
+                                    <p class="ingrediente-nome"><?php echo htmlspecialchars($ingrediente['nome'], ENT_QUOTES, 'UTF-8'); ?></p>
                                 </div>
-                            </div>
-                            
-                            <?php if (!empty($ingredienti_con_img)): ?>
-                            <div class="altri-ingredienti">
-                                <h3>Ingredienti aggiuntivi</h3>
-                                <div class="ingredienti-grid">
-                                    <?php foreach ($ingredienti_con_img as $ingrediente): ?>
-                                    <div class="ingrediente-card">
-                                        <img src="<?php echo htmlspecialchars($ingrediente['img_path'], ENT_QUOTES, 'UTF-8'); ?>" 
-                                             alt="<?php echo htmlspecialchars($ingrediente['nome'], ENT_QUOTES, 'UTF-8'); ?>"
-                                             onerror="this.src='images/ingredienti/default-ingrediente.webp'">
-                                        <p class="ingrediente-nome"><?php echo htmlspecialchars($ingrediente['nome'], ENT_QUOTES, 'UTF-8'); ?></p>
-                                    </div>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                    
-                    <!-- Preparazione -->
-                    <div id="preparazione" class="tab-pane">
-                        <h2>Guida alla Preparazione</h2>
-                        <div class="preparation-steps">
-                            <div class="step">
-                                <span class="step-number">1</span>
-                                <p>Porta l'acqua alla temperatura di <strong><?php echo $temperatura; ?></strong></p>
-                            </div>
-                            <div class="step">
-                                <span class="step-number">2</span>
-                                <p>Utilizza 1 cucchiaino (circa 2-3g) di prodotto per ogni 200ml d'acqua</p>
-                            </div>
-                            <div class="step">
-                                <span class="step-number">3</span>
-                                <p>Lascia in infusione per <strong><?php echo $tempo; ?></strong></p>
-                            </div>
-                            <div class="step">
-                                <span class="step-number">4</span>
-                                <p>Rimuovi le foglie e gusta. Puoi aggiungere dolcificante a piacere</p>
+                                <?php endforeach; ?>
                             </div>
                         </div>
+                        <?php endif; ?>
                     </div>
-                    
-                    <!-- Abbinamenti consigliati -->
-                    <?php if (!empty($prodotti_consigliati)): ?>
-                    <div id="abbinamenti" class="tab-pane">
-                        <h2>Abbinamenti Consigliati</h2>
-                        <p>Prodotti che potrebbero piacerti:</p>
-                        <div class="recommended-products">
-                            <?php foreach ($prodotti_consigliati as $consigliato): 
-                                $nome_cons = htmlspecialchars($consigliato['nome'], ENT_QUOTES, 'UTF-8');
-                                $prezzo_cons = number_format($consigliato['prezzo'], 2, ',', '.');
-                                $img_cons = htmlspecialchars($consigliato['img_path'], ENT_QUOTES, 'UTF-8');
-                                $id_cons = $consigliato['id_prodotto'];
-                            ?>
-                            <div class="recommended-product">
-                                <a href="prodotto.php?id=<?php echo $id_cons; ?>">
-                                    <img src="<?php echo $img_cons; ?>" alt="<?php echo $nome_cons; ?>">
-                                    <h4><?php echo $nome_cons; ?></h4>
-                                    <p class="price">€<?php echo $prezzo_cons; ?></p>
-                                </a>
-                            </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                    <?php endif; ?>
                 </div>
+                
+                <!-- Preparazione -->
+                <div class="product-detail-block">
+                    <h2>Guida alla Preparazione</h2>
+                    <div class="preparation-steps">
+                        <div class="step">
+                            <span class="step-number">1</span>
+                            <p>Porta l'acqua alla temperatura di <strong><?php echo $temperatura; ?></strong></p>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            <p>Utilizza 1 cucchiaino (circa 2-3g) di prodotto per ogni 200ml d'acqua</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            <p>Lascia in infusione per <strong><?php echo $tempo; ?></strong></p>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">4</span>
+                            <p>Rimuovi le foglie e gusta. Puoi aggiungere dolcificante a piacere</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Prodotti che potrebbero piacerti -->
+                <?php if (!empty($prodotti_consigliati)): ?>
+                <div class="product-detail-block">
+                    <h2>Prodotti che potrebbero piacerti</h2>
+                    <div class="products-grid catalog-grid recommended-grid">
+                        <?php foreach ($prodotti_consigliati as $consigliato): 
+                            $nome_cons = htmlspecialchars($consigliato['nome'], ENT_QUOTES, 'UTF-8');
+                            $prezzo_cons = number_format($consigliato['prezzo'], 2, ',', '.');
+                            $prezzo_cons_raw = $consigliato['prezzo'];
+                            $img_cons = htmlspecialchars($consigliato['img_path'], ENT_QUOTES, 'UTF-8');
+                            $grammi_cons = htmlspecialchars($consigliato['grammi'], ENT_QUOTES, 'UTF-8');
+                            $id_cons = $consigliato['id_prodotto'];
+                        ?>
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="<?php echo $img_cons; ?>" alt="<?php echo $nome_cons; ?>">
+                                <button class="add-to-cart-icon aggiungiCarrello" 
+                                        data-id="<?php echo $id_cons; ?>"
+                                        data-nome="<?php echo $nome_cons; ?>"
+                                        data-prezzo="<?php echo $prezzo_cons_raw; ?>"
+                                        data-img="<?php echo $img_cons; ?>"
+                                        data-disponibilita="200"
+                                        aria-label="Aggiungi al carrello">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path d="M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.993,0,0,0,22.713,4.077ZM21.4,6.178l-.786,4.354A3,3,0,0,1,17.657,13H5.419L4.478,5H20.41A1,1,0,0,1,21.4,6.178Z"/>
+                                        <circle cx="7" cy="22" r="2"/>
+                                        <circle cx="17" cy="22" r="2"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="product-info">
+                                <h3><?php echo $nome_cons; ?></h3>
+                                <p class="product-weight"><?php echo $grammi_cons; ?>g</p>
+                                <p class="product-price">€<?php echo $prezzo_cons; ?></p>
+                                <a href="prodotto.php?id=<?php echo $id_cons; ?>" class="bottone-primario">Scopri di più</a>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+                
             </div>
         </section>
     </main>

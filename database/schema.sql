@@ -33,7 +33,7 @@ DROP TABLE IF EXISTS utente;
 DROP TABLE IF EXISTS admin;
 
 -- ----------------------------------------------------------------
--- TABELLA ADMIN
+-- TABELLA admin
 -- ----------------------------------------------------------------
 CREATE TABLE admin (
     id_admin INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
