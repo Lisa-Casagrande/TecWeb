@@ -221,7 +221,8 @@ try {
             </section>
 
             <!-- Form nascosto per inviare il blend al server -->
-            <form id="form-blend" action="php/aggiungiBlend.php" method="POST" style="display: none;">
+            <form id="form-blend" action="php/gestioneCarrello.php" method="POST" style="display: none;">
+                <input type="hidden" name="azione" value="aggiungi"> 
                 <input type="hidden" name="id_base" id="input-id-base">
                 <input type="hidden" name="ingredienti" id="input-ingredienti">
                 <input type="hidden" name="nome_blend" id="input-nome-blend">

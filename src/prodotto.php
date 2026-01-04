@@ -1,4 +1,9 @@
 <?php
+//avvia la sessione prima di tutto il resto
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once 'php/connessione.php';
 
 // Verifica se è stato passato un ID prodotto
@@ -158,33 +163,35 @@ try {
                     <!-- Aggiungi al carrello -->
                     <div class="add-to-cart-section">
                         <?php if ($disponibilita > 0): ?>
-                        <div class="quantity-selector">
-                            <label for="quantita">Quantità:</label>
-                            <div class="quantity-controls">
-                                <button type="button" class="quantity-btn minus" aria-label="Riduci quantità">-</button>
-                                <input type="number" 
-                                       id="quantita" 
-                                       name="quantita" 
-                                       value="1" 
-                                       min="1" 
-                                       max="<?php echo $disponibilita; ?>" 
-                                       readonly>
-                                <button type="button" class="quantity-btn plus" aria-label="Aumenta quantità">+</button>
-                            </div>
-                            <span class="available-stock">
-                                Disponibili: <?php echo $disponibilita; ?>
-                            </span>
-                        </div>
-                        
-                        <button class="bottone-primario aggiungiCarrello" 
-                                id="aggiungiCarrello"
-                                data-id="<?php echo $id_prodotto; ?>"
-                                data-nome="<?php echo $nome; ?>"
-                                data-prezzo="<?php echo $prezzo_raw; ?>"
-                                data-img="<?php echo $img_path; ?>"
-                                data-disponibilita="<?php echo $disponibilita; ?>">
-                            Aggiungi al Carrello
-                        </button>
+                            <!--per aggiungere effettivamente il prodotto-->
+                            <form action="php/gestioneCarrello.php" method="POST">
+                                <input type="hidden" name="azione" value="aggiungi">
+                                <input type="hidden" name="tipo" value="standard">
+                                <input type="hidden" name="id_prodotto" value="<?php echo $id_prodotto; ?>">
+
+                                <div class="quantity-selector">
+                                    <label for="quantita">Quantità:</label>
+                                    <div class="quantity-controls">
+                                        <button type="button" class="quantity-btn minus" aria-label="Riduci quantità">-</button>
+                                        <input type="number" 
+                                            id="quantita" 
+                                            name="quantita" 
+                                            value="1" 
+                                            min="1" 
+                                            max="<?php echo $disponibilita; ?>" 
+                                            readonly>
+                                        <button type="button" class="quantity-btn plus" aria-label="Aumenta quantità">+</button>
+                                    </div>
+                                    <span class="available-stock">
+                                        Disponibili: <?php echo $disponibilita; ?>
+                                    </span>
+                                </div>
+                                
+                                <button type="submit" class="bottone-primario aggiungiCarrello" id="aggiungiCarrello">
+                                    Aggiungi al Carrello
+                                </button>
+                        </form>
+
                         <?php else: ?>
                         <button class="bottone-primario" disabled>
                             Prodotto Esaurito
@@ -303,6 +310,7 @@ try {
                             $grammi_cons = htmlspecialchars($consigliato['grammi'], ENT_QUOTES, 'UTF-8');
                             $id_cons = $consigliato['id_prodotto'];
                         ?>
+
                         <div class="product-card">
                             <div class="product-image">
                                 <img src="<?php echo $img_cons; ?>" alt="<?php echo $nome_cons; ?>">

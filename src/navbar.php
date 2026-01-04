@@ -1,7 +1,15 @@
 <?php
-// navbar.php
+
 $loggedIn = $_SESSION['logged_in'] ?? false;
 $currentPage = basename($_SERVER['PHP_SELF']);
+
+// CALCOLO TOTALE ARTICOLI NEL CARRELLO
+$totale_articoli = 0;
+if (isset($_SESSION['carrello'])) {
+    foreach ($_SESSION['carrello'] as $item) {
+        $totale_articoli += $item['quantita'];
+    }
+}
 ?>
 
 <header>
@@ -66,6 +74,10 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <circle cx="7" cy="22" r="2"/>
                     <circle cx="17" cy="22" r="2"/>
                 </svg>
+                <!--numero che indica quanti prodotti ci sono nel carrello-->
+                <?php if ($totale_articoli > 0): ?>
+                    <span class="badge-count"><?= $totale_articoli ?></span>
+                <?php endif; ?>
             </a>
 
             <!-- Area utente / login -->
