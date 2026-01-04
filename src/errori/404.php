@@ -11,12 +11,12 @@
 </head>
 <body>
     <!-- Skip link per accessibilità -->
-    <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
+    <a href="#mainErrore" class="skip-link">Salta al contenuto principale</a>
 
      <?php include $_SERVER['DOCUMENT_ROOT'] . '/navbar.php'; ?>
 
   <!-- CONTENUTO ERRORE 404 -->
-<main id="main-content">
+<main id="mainErrore">
   <div class="errore-content">
     
     <!-- Immagine a sinistra -->
