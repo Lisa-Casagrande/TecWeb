@@ -840,8 +840,8 @@ body.dark-theme .hero {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.product-card:hover, .product-card:focus-within,
-.base:hover, .base:focus-within {
+.product-card:hover,
+.base:hover {
     transform: translateY(-8px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
@@ -2935,66 +2935,88 @@ body.dark-theme .leaf-icon li::before {
     overflow: hidden;
 }
 
+/*icona carrello per aggiunta rapida nelle card*/
 .add-to-cart-icon {
     position: absolute;
     top: 10px;
     right: 10px;
-    background: var(--white);
-    border: none;
-    border-radius: 50%;
+    z-index: 10;
     width: 40px;
     height: 40px;
+    border-radius: 50%;
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    background-color: var(--card-bg);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
-    z-index: 10;
+    color: var(--text-color)
 }
 
-.add-to-cart-icon:hover {
-    background: var(--white);
-    transform: scale(1.1);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.add-to-cart-icon svg {
+.product-image .add-to-cart-icon svg {
     width: 20px;
     height: 20px;
     fill: var(--text-color);
+    transition: fill 0.3s ease;
 }
 
-.add-to-cart-icon:hover svg {
-    fill: var(--link-visited);
+.product-image .add-to-cart-icon:hover,
+.product-image .add-to-cart-icon:focus-visible {
+    background-color: var(--white); 
+    color: var(--text-color);
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    outline: 2px solid var(--text-color); 
+    outline-offset: 2px;
 }
 
-body.dark-theme .add-to-cart-icon {
-    background: var(--card-bg);
+.product-image .add-to-cart-icon:hover svg,
+.product-image .add-to-cart-icon:focus-visible svg {
+    fill: var(--text-color); 
 }
 
-body.dark-theme .add-to-cart-icon svg {
+.product-image .add-to-cart-icon:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* --- TEMA SCURO --- */
+body.dark-theme .product-image .add-to-cart-icon {
+    background-color: var(--card-bg); /*sfondo scuro*/
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+body.dark-theme .product-image .add-to-cart-icon svg {
     fill: var(--text-color);
 }
 
-body.dark-theme .add-to-cart-icon:hover svg {
-    fill: var(--link-visited);
+body.dark-theme .product-image .add-to-cart-icon:hover,
+body.dark-theme .product-image .add-to-cart-icon:focus-visible {
+    background-color: var(--card-bg);
+    transform: scale(1.1);
+    outline-color: var(--card-bg); 
 }
 
-.add-to-cart-icon.added {
-    background: var(--link-visited);
+body.dark-theme .product-image .add-to-cart-icon:hover svg,
+body.dark-theme .product-image .add-to-cart-icon:focus-visible svg {
+    fill: var(--text-color);
 }
 
-.add-to-cart-icon.added svg {
-    fill: var(--white);
+/*STATO "AGGIUNTO" */
+.product-image .add-to-cart-icon.added {
+    background-color: var(--text-color); /* Diventa Marrone (chiaro) / Verde (scuro) */
 }
 
-body.dark-theme .add-to-cart-icon.added {
-    background: var(--link-visited);
+.product-image .add-to-cart-icon.added svg {
+    fill: var(--bg-light);
 }
 
-body.dark-theme .add-to-cart-icon.added svg {
-    fill: var(--white);
+body.dark-theme .product-image .add-to-cart-icon.added {
+    background-color: var(--text-color);
+}
+body.dark-theme .product-image .add-to-cart-icon.added svg {
+    fill: var(--card-bg);
 }
 
 /* ===================================
@@ -3234,8 +3256,6 @@ body.dark-theme .add-to-cart-icon.added svg {
     flex-direction: column;
     justify-content: space-between;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    
-    /* AGGIUNGI QUESTE RIGHE */
     width: 100%;
     max-width: 350px; /* Impedisce alla card di diventare gigante */
     margin: 0 auto;   /* Se è sola, la centra nella pagina */
@@ -3560,6 +3580,18 @@ body.dark-theme .testo-errore a:focus {
 .breadcrumb a:hover {
     color: var(--button-bg);
     text-decoration: underline;
+}
+
+/*focus da tastiera*/
+.breadcrumb a:focus-visible{
+    outline: 3px solid var(--text-color);
+    outline-offset: 3px;
+    transform: translateY(-3px);
+    text-decoration: underline;
+    border-radius: 2px;
+}
+.breadcrumb a:focus:not(:focus-visible) {
+    outline: none;
 }
 
 .breadcrumb span {
@@ -4163,16 +4195,37 @@ section.product-details-section .product-detail-block {
     color: #ccc;
 }
 
-#quantita {
+#quantita,
+.quantity-controls input[type="number"] { /*anche per carrello*/
     width: 50px;
     height: 36px;
     text-align: center;
     border: 2px solid var(--button-bg);
     border-radius: 4px;
-    font-size: 16px;
+    font-size: 1.1em;
     font-weight: bold;
-    background: var(--card-bg);
+    background-color: var(--card-bg);
     color: var(--text-color);
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* FOCUS DA TASTIERA BOTTONI QUANTITÀ (+ e -) */
+.quantity-btn:focus-visible {
+    background-color: var(--button-bg);
+    color: var(--button-text); 
+    border-color: var(--button-bg);
+    outline: 3px solid var(--text-color);
+    outline-offset: 3px;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+}
+
+.quantity-btn:focus:not(:focus-visible) {
+    outline: none;
 }
 
 .available-stock {
@@ -4758,7 +4811,6 @@ section.product-details-section .product-detail-block {
     text-align: center;
     padding: 3rem 1rem;
     background-color: var(--card-bg);
-    /*background-color: var(--text-color);*/
     border-radius: 8px;
     border: 2px solid var(--text-color);
     margin-top: 2rem;
@@ -4849,7 +4901,27 @@ section.product-details-section .product-detail-block {
 
 .checkout {
     text-align: right;
-    margin-top: 1rem;
+    margin-top: 1em;
+}
+
+/*bottoni per checkout e per rimozione articolo*/
+.cart-item-remove .bottone-primario:hover,
+.cart-item-remove .bottone-primario:focus,
+.checkout .bottone-primario:hover,
+.checkout .bottone-primario:focus {
+    color: var(--bg-color);
+    background-color: var(--button-bg);
+    outline: 3px solid var(--text-color);
+    outline-offset: 3px;
+    text-decoration: underline;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/*tema scuro - l'outline deve essere chiara per vedersi sullo scuro */
+body.dark-theme .bottone-primario:hover,
+body.dark-theme .bottone-primario:focus {
+    outline-color: var(--text-color); /* Verde chiaro */
 }
 
 /* Stile per textarea indirizzo */
@@ -4860,6 +4932,27 @@ textarea#indirizzo_spedizione {
     border-radius: 4px;
     font-family: inherit;
     resize: vertical;
+}
+
+textarea#indirizzo_spedizione:focus {
+    border-color: var(--button-bg);
+    outline: 3px solid var(--button-bg);
+    outline-offset: 1px;
+    box-shadow: 0 0 0 4px rgba(78, 54, 46, 0.1); 
+}
+
+/*RIMUOVE FRECCETTE DALLA CASELLA DELLA QUANTITÀ*/
+/* Chrome, Safari, Edge, Opera */
+.quantity-controls input[type="number"]::-webkit-outer-spin-button,
+.quantity-controls input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+.quantity-controls input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield; /* Standard moderno */
 }
 
 /* BADGE CHE INDICA IL NUMERO DI ARTICOLI NEL CARRELLO (nell'icona del carrello) */

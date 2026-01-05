@@ -107,12 +107,8 @@ try {
 </head>
 
 <body>
-    <!-- Skip link per accessibilità -->
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
-
-    <!-- Header -->
      <?php include 'navbar.php'; ?>
-
 
     <main id="main-content" role="main">
         <!-- Breadcrumb -->

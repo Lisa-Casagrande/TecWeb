@@ -119,6 +119,7 @@ if (!$ordine_completato && isset($_SESSION['user_id'])) {
     <?php include 'navbar.php'; ?>
 
     <main id="main-content" role="main">
+    <section class="admin-dashboard">
         <?php if ($ordine_completato): ?>
             <section class="cart-message-container admin-card" role="alert">
                 <h1>Grazie! L'ordine è stato completato.</h1>
@@ -179,9 +180,7 @@ if (!$ordine_completato && isset($_SESSION['user_id'])) {
                                 
                                 <div class="quantity-controls">
                                     <button type="submit" name="nuova_quantita" value="<?php echo $item['quantita'] - 1; ?>" class="quantity-btn" aria-label="Diminuisci">-</button>
-                                    
                                     <input type="number" id="qty-<?php echo $key; ?>" value="<?php echo $item['quantita']; ?>" readonly>
-                                    
                                     <button type="submit" name="nuova_quantita" value="<?php echo $item['quantita'] + 1; ?>" class="quantity-btn" aria-label="Aumenta">+</button>
                                 </div>
                                 </form>
@@ -227,6 +226,7 @@ if (!$ordine_completato && isset($_SESSION['user_id'])) {
 
             </div>
         <?php endif; ?>
+    </section>
     </main>
 
     <footer>
