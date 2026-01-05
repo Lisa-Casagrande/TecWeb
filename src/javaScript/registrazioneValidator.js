@@ -19,6 +19,10 @@ const dettagli_form_reg = {
         /^[A-Za-z0-9\sÀ-ÿ'’.,-]{5,100}$/,
         "Errore: Indirizzo non valido."
     ],
+    "reg_cap": [
+    /^\d{5}$/,
+    "Errore: Il CAP deve contenere esattamente 5 numeri."
+],
     "reg_email": [
         /^(?!.*[.\-_]{2})[A-Za-z0-9][A-Za-z0-9._%+-]{1,62}[A-Za-z0-9]@[A-Za-z0-9][A-Za-z0-9.-]{1,62}[A-Za-z0-9]\.[A-Za-z]{2,}$/,
         "Errore: Email non valida. Controlla formato, caratteri e dominio."

@@ -18,8 +18,8 @@ INSERT INTO admin (nome, cognome, email, password_hash) VALUES
 -- ================================================================
 -- 2. UTENTE
 -- ================================================================
-INSERT INTO utente (email, password_hash, nome, cognome, data_nascita, indirizzo, citta) VALUES
-('utente', '$2y$10$9CPSl7SPwSoyYAjk8jtOFu.GkXlxUzFekLF2RUNZC0b/C/yA9Or2G', 'utente', 'utente', '1975-01-02', 'Via Luzzati', 'Padova');
+INSERT INTO utente (email, password_hash, nome, cognome, data_nascita, indirizzo, citta, CAP) VALUES
+('utente', '$2y$10$9CPSl7SPwSoyYAjk8jtOFu.GkXlxUzFekLF2RUNZC0b/C/yA9Or2G', 'utente', 'utente', '1975-01-02', 'Via Luzzati', 'Padova', '35121');
 
 -- ================================================================
 -- 3. BASI
@@ -198,7 +198,7 @@ INSERT INTO prodotto_ingrediente (id_prodotto, id_ingrediente) VALUES
 -- 7. ORDINI DI ESEMPIO
 -- ================================================================
 INSERT INTO ordine (id_utente, indirizzo_spedizione, stato_ord, conferma_pagamento, sottototale, spese_spedizione, totale, omaggio, descrizione_omaggio) VALUES
-(1, 'Via Roma 123, Milano, 20100', 'consegnato', TRUE, 19.50, 4.99, 24.49, FALSE, NULL);
+(1, 'Via Luzzati, Padova, 35121', 'consegnato', TRUE, 19.50, 4.99, 24.49, FALSE, NULL);
 
 INSERT INTO dettaglio_ordine (id_ordine, id_prodotto, quantita, prezzo_unit) VALUES
 (1, 1, 2, 6.50),

@@ -60,6 +60,7 @@ $indirizzo  = clean($_POST['reg_indirizzo'] ?? '');
 $email      = clean($_POST['reg_email'] ?? '');
 $password   = $_POST['reg_password'] ?? '';
 $confPass   = $_POST['reg_conferma-password'] ?? '';
+$cap        = clean($_POST['reg_cap'] ?? '');
 
 /* =============================
    VALIDAZIONE
@@ -82,6 +83,9 @@ if (!validaTesto($citta)) {
 
 if (!validaIndirizzo($indirizzo)) {
     $errors['indirizzo'] = "Errore: Indirizzo non valido.";
+}
+if (!preg_match('/^\d{5}$/', $cap)) {
+    $errors['cap'] = "Errore: Il CAP deve contenere esattamente 5 numeri.";
 }
 
 if (!validaEmailAvanzata($email)) {
@@ -155,9 +159,9 @@ if ($stmt->fetch()) {
 ============================= */
 $stmt = $db->prepare("
     INSERT INTO utente 
-    (email, password_hash, nome, cognome, data_nascita, indirizzo, citta)
+    (email, password_hash, nome, cognome, data_nascita, indirizzo, cap, citta)
     VALUES
-    (:email, :password, :nome, :cognome, :data, :indirizzo, :citta)
+    (:email, :password, :nome, :cognome, :data, :indirizzo, :cap, :citta)
 ");
 
 $stmt->execute([
@@ -167,6 +171,7 @@ $stmt->execute([
     'cognome'   => $cognome,
     'data'      => $dataNasc,
     'indirizzo' => $indirizzo,
+    'cap'       => $cap,
     'citta'     => $citta
 ]);
 /* =============================

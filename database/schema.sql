@@ -56,7 +56,7 @@ CREATE TABLE utente (
     data_nascita DATE NOT NULL,
     indirizzo VARCHAR(255) NULL,
     citta VARCHAR(100) NULL,
-    cap VARCHAR(20) NULL,
+    cap CHAR(5) NULL,
     paese VARCHAR(100) NULL DEFAULT 'Italia',
     data_registrazione DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     is_active BOOLEAN NOT NULL DEFAULT TRUE

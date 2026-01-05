@@ -45,6 +45,7 @@ $sostituzioni = [
     '[erroreNascita]'    => $errors['data-nascita'] ?? '',
     '[erroreCitta]'      => $errors['citta'] ?? '',
     '[erroreIndirizzo]'  => $errors['indirizzo'] ?? '',
+    '[erroreCap]'        => $errors['cap'] ?? '',
     '[erroreEmail]'      => $errors['email'] ?? '',
     '[errorePassword]'   => $errors['password'] ?? '',
     '[erroreConferma]'   => $errors['conf'] ?? '',
@@ -55,6 +56,7 @@ $sostituzioni = [
     '[valoreData]'       => htmlspecialchars($old['data-nascita'] ?? ''),
     '[valoreCitta]'      => htmlspecialchars($old['citta'] ?? ''),
     '[valoreIndirizzo]'  => htmlspecialchars($old['indirizzo'] ?? ''),
+    '[valoreCap]'        => htmlspecialchars($old['cap'] ?? ''),
     '[valoreEmail]'      => htmlspecialchars($old['email'] ?? ''),
 
     // Classi CSS per input
@@ -63,6 +65,7 @@ $sostituzioni = [
     '[classeData]'       => getClasse('data-nascita', $errors, $old),
     '[classeCitta]'      => getClasse('citta', $errors, $old),
     '[classeIndirizzo]'  => getClasse('indirizzo', $errors, $old),
+    '[classeCap]'        => getClasse('cap', $errors, $old),
     '[classeEmail]'      => getClasse('email', $errors, $old),
     '[classePassword]'   => getClasse('password', $errors, $old),
     '[classeConferma]'   => getClasse('conf', $errors, $old),
