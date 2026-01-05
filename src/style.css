@@ -259,48 +259,56 @@ header {
     color: var(--header-text);
 }
 
-.logo a {
-    display: block;
+.logo-button {
+    display: flex; 
+    align-items: center;
+    justify-content: center;
     height: 100%;
+    width: 100%;
     text-decoration: none;
-    cursor: pointer;
     outline: none;
-    transform: scale(1.23);
+    color: inherit;
     transform-origin: center;
-    color: inherit; /* eredita il colore dalla .logo */
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-/* Focus accessibile e coerente */
-.logo a:focus-visible {
+/* Logo nella HOME (span)*/
+span.logo-button {
+    cursor: default;
+    transform: scale(1.18); 
+}
+
+/* Logo (link)*/
+a.logo-button {
+    cursor: pointer;
+    transform: scale(1.21);
+}
+
+a.logo-button:hover {
+    opacity: 0.85;
+    transform: scale(1.15); 
+}
+
+a.logo-button:focus-visible {
     outline: 3px solid currentColor;
     outline-offset: 6px;
     transform: scale(1.15);
-    opacity: 0.9;
 }
 
-/* Hover leggero */
-.logo a:hover {
-    opacity: 0.85;
-    transform: scale(1.12);
-}
-
+/* Immagine interna */
 .logo-image {
+    height: 100%;
     width: auto;
-    max-width: 15em;
     display: block;
     object-fit: contain;
-    height: 100%;
 }
 
+/* Gestione Temi */
 .logo-dark { display: none; }
 .logo-light { display: block; }
 body.dark-theme .logo-dark { display: block; }
 body.dark-theme .logo-light { display: none; }
 
-
-.logo a:focus {
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--bg-light) 40%, transparent);
-}
 
 /* Navigazione */
 .main-nav {
@@ -476,15 +484,15 @@ body.dark-theme .bottone-primario:focus {
 
 
 /* ===================================
-   HAMBURGER - javaScript/hamburger.js
+    HAMBURGER
    =================================== */
 
-/* Desktop - tutto visibile normalmente */
+/* Desktop - hamburger nascosto di default */
 .hamburger {
     display: none;
 }
 
-/* Mobile Menu Wrapper - NASCOSTO di default */
+/* Mobile Menu Wrapper - nascosto di default */
 .mobile-menu-wrapper {
     display: none;
     position: fixed;
@@ -499,62 +507,60 @@ body.dark-theme .bottone-primario:focus {
     justify-content: flex-start;
     align-items: center;
     padding: 80px 20px 40px 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-menu-wrapper[style*="display: flex"] {
+    opacity: 1;
 }
 
 /* Pulsante di chiusura (X) nel menu mobile */
 .mobile-close-btn {
     position: absolute;
     top: 20px;
-    left: 20px;
-    background: none;
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent;
     border: none;
-    color: var(--header-text);
+    color: var(--header-text); 
     cursor: pointer;
     padding: 10px;
-    border-radius: 50%;
-    transition: all 0.3s ease;
     z-index: 1003;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+/* RIMUOVIAMO OGNI EFFETTO DI SFONDO O OUTLINE PER LA X */
+.mobile-close-btn:focus,
 .mobile-close-btn:hover,
-.mobile-close-btn:focus {
-    background-color: rgba(255, 255, 255, 0.2);
-    transform: scale(1.1);
+.mobile-close-btn:active {
+    outline: none;
+    background: transparent;
+    background-color: transparent;
+    box-shadow: none;
+    color: var(--header-text);
 }
 
 .mobile-close-btn svg {
-    width: 28px;
-    height: 28px;
+    width: 44px;
+    height: 44px;
     fill: currentColor;
-}
-
-/* FIX per icone circolari nel menu mobile */
-.mobile-menu-wrapper .header-utilities .icon-button {
-    border-radius: 50%;
-}
-
-.mobile-menu-wrapper .header-utilities .icon-button:hover,
-.mobile-menu-wrapper .header-utilities .icon-button:focus {
-    border-radius: 50%;
 }
 
 /* ========== MOBILE (max 900px) ========== */
 @media (max-width: 900px) {
     
-    /* Header su mobile - MODIFICATO */
     .header-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 1em;
         position: relative;
-        min-height: 60px; /* Altezza minima per allineamento */
+        min-height: 60px;
     }
     
-    /* Logo centrato e allineato verticalmente */
     .logo {
         order: 2;
         flex-shrink: 0;
@@ -562,15 +568,15 @@ body.dark-theme .bottone-primario:focus {
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
+        z-index: 1;
     }
     
-    /* NASCONDI menu e utilities originali su mobile */
     nav,
     .header-utilities {
         display: none;
     }
     
-    /* Mostra hamburger A SINISTRA - MODIFICATO */
+    /* Mostra hamburger A SINISTRA */
     .hamburger {
         display: flex;
         flex-direction: column;
@@ -578,11 +584,19 @@ body.dark-theme .bottone-primario:focus {
         gap: 6px;
         z-index: 1002;
         padding: 10px;
-        background: none;
+        background: transparent;
         border: none;
         order: 1;
         margin-right: auto;
-        align-self: center; /* Allinea verticalmente */
+        align-self: center;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .hamburger:focus,
+    .hamburger:hover,
+    .hamburger:active {
+        outline: none;
+        background: transparent;
     }
     
     .hamburger span {
@@ -594,7 +608,7 @@ body.dark-theme .bottone-primario:focus {
         display: block;
     }
     
-    /* Animazione hamburger -> X */
+    /* Animazione hamburger → X */
     .hamburger.active span:nth-child(1) {
         transform: rotate(45deg) translate(8px, 8px);
     }
@@ -607,12 +621,6 @@ body.dark-theme .bottone-primario:focus {
         transform: rotate(-45deg) translate(8px, -8px);
     }
     
-    /* Menu wrapper quando aperto */
-    .mobile-menu-wrapper {
-        /* Il display: flex viene gestito da JavaScript */
-    }
-    
-    /* Navigation dentro il wrapper mobile */
     .mobile-menu-wrapper nav {
         display: flex;
         flex-direction: column;
@@ -634,11 +642,6 @@ body.dark-theme .bottone-primario:focus {
         list-style: none;
     }
     
-    .mobile-menu-wrapper nav li {
-        width: 100%;
-        margin: 0;
-    }
-    
     .mobile-menu-wrapper nav a {
         display: block;
         width: 100%;
@@ -648,15 +651,22 @@ body.dark-theme .bottone-primario:focus {
         color: var(--header-text);
         text-decoration: none;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        transition: background-color 0.3s ease;
+        transition: transform 0.2s ease;
     }
     
     .mobile-menu-wrapper nav a:hover,
     .mobile-menu-wrapper nav a:focus {
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: transparent; 
+        outline: none;
+        text-decoration: none;
+    }
+
+    .mobile-menu-wrapper nav a.current-page {
+        font-weight: bold;
+        background-color: rgba(255, 255, 255, 0.05);
     }
     
-    /* Utilities dentro il wrapper mobile - SENZA CERCHIO OPACO */
+    /* SEZIONE UTILITIES MOBILE - REPLICA DESKTOP */
     .mobile-menu-wrapper .header-utilities {
         display: flex;
         flex-direction: row;
@@ -665,91 +675,38 @@ body.dark-theme .bottone-primario:focus {
         padding: 20px;
         border-top: 1px solid rgba(255, 255, 255, 0.2);
         margin-top: auto;
+        width: 100%;
     }
     
     .mobile-menu-wrapper .header-utilities .icon-button {
         background-color: transparent;
-        padding: 0.5em;
-        border-radius: 0;
+        width: 44px; 
+        height: 44px;
+        border-radius: 50%; 
+        border: none;
+        color: var(--header-text);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        transition: all 0.3s ease; /* Transizione come su desktop */
     }
     
+    /* Effetto Hover e Focus replicato dal desktop */
     .mobile-menu-wrapper .header-utilities .icon-button:hover,
     .mobile-menu-wrapper .header-utilities .icon-button:focus {
         background-color: rgba(255, 255, 255, 0.1);
         transform: scale(1.1);
-    }
-    
-    .mobile-menu-wrapper .header-utilities .icon-button svg {
-        width: 32px;
-        height: 32px;
-    }
-    
-    /* Tema scuro per il menu mobile */
-    body.dark-theme .mobile-menu-wrapper {
-        background-color: var(--header-bg);
-    }
-    
-    body.dark-theme .mobile-menu-wrapper nav a {
-        color: var(--header-text);
-    }
-    
-    body.dark-theme .mobile-menu-wrapper .header-utilities .icon-button {
-        color: var(--header-text);
-    }
-    
-    body.dark-theme .mobile-close-btn {
-        color: var(--header-text);
-    }
-}
-
-/* ========== MOBILE PICCOLO (max 480px) ========== */
-@media (max-width: 480px) {
-    .mobile-close-btn {
-        top: 15px;
-        left: 15px;
-        padding: 8px;
-    }
-    
-    .mobile-close-btn svg {
-        width: 24px;
-        height: 24px;
-    }
-    
-    .mobile-menu-wrapper nav a {
-        font-size: 1.1em;
-        padding: 1em;
-    }
-    
-    .mobile-menu-wrapper .header-utilities {
-        gap: 1.5em;
+        outline: 1.5px solid var(--header-text);
+        outline-offset: 1.5px;
     }
     
     .mobile-menu-wrapper .header-utilities .icon-button svg {
         width: 28px;
         height: 28px;
+        fill: currentColor;
     }
-}
-
-/* ========== TRANSIZIONE (901px - 1024px) ========== */
-@media (min-width: 901px) and (max-width: 1024px) {
-    /* Nascondi gradualmente gli elementi prima di arrivare a mobile */
-    .header-utilities {
-        gap: 1em; /* Riduci lo spazio tra gli elementi */
-    }
-    
-    nav ul {
-        gap: 1em; /* Riduci lo spazio tra i link */
-    }
-    
-    /* Se gli elementi vanno ancora a capo, riduci il padding */
-    .header-container {
-        padding: 0.5em 1em;
-    }
-}
-
-/* ========== BREAKPOINT CRITICO - attiva hamburger ========== */
-@media (max-width: 900px) {
-    /* Il CSS che hai già */
 }
 
 /* ===================================

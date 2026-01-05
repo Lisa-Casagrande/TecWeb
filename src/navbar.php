@@ -17,10 +17,19 @@ if (isset($_SESSION['carrello'])) {
 
         <!-- Logo -->
         <div class="logo">
-            <a href="home.php" aria-label="Torna alla home" class="logo-button">
-                <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
-                <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
-            </a>
+            <?php if ($currentPage === 'home.php'): ?>
+                <!-- Logo senza link nella home -->
+                <span class="logo-button" aria-label="Logo InfuseMe">
+                    <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
+                    <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
+                </span>
+            <?php else: ?>
+                <!-- Logo con link nelle altre pagine -->
+                <a href="home.php" aria-label="Torna alla home" class="logo-button">
+                    <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
+                    <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
+                </a>
+            <?php endif; ?>
         </div>
 
         <!-- Hamburger -->
