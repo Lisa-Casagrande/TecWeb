@@ -1,15 +1,13 @@
 <?php
 require_once 'php/verificaSessione.php';
-requireUser(); // blocca subito utenti non loggati
-
 require_once 'php/connessione.php';
 
-try {
-    $userId = userId(); // sicuro, non serve più il die()
+$userId = userId(); // ottieni ID utente loggato
 
-    // Dati utente
+try {
+    // Recupero dati utente
     $stmt = $pdo->prepare("
-        SELECT id_utente, nome, cognome, email, data_registrazione
+        SELECT nome, cognome, email, data_nascita, indirizzo, citta, cap, paese
         FROM utente
         WHERE id_utente = :id
         LIMIT 1
@@ -17,87 +15,122 @@ try {
     $stmt->execute([':id' => $userId]);
     $utente = $stmt->fetch();
 
-    // Ultimi 5 ordini
-    $stmt_ordini = $pdo->prepare("
-        SELECT id_ordine, data_ordine, stato_ord, totale
-        FROM ordine
-        WHERE id_utente = :id
-        ORDER BY data_ordine DESC
-        LIMIT 5
-    ");
-    $stmt_ordini->execute([':id' => $userId]);
-    $ordini = $stmt_ordini->fetchAll();
+    if (!$utente) {
+        die("Utente non trovato.");
+    }
 
+    // Se il form è stato inviato
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Pulizia e validazione minima
+        $nome = trim($_POST['nome']);
+        $cognome = trim($_POST['cognome']);
+        $email = trim($_POST['email']);
+        $data_nascita = trim($_POST['data_nascita']);
+        $indirizzo = trim($_POST['indirizzo']);
+        $citta = trim($_POST['citta']);
+        $cap = trim($_POST['cap']);
+        $paese = trim($_POST['paese']);
+
+        if (empty($nome) || empty($cognome) || empty($email) || empty($data_nascita)) {
+            $error = "Nome, cognome, email e data di nascita sono obbligatori.";
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $error = "Email non valida.";
+        } else {
+            // Aggiorna dati
+            $stmt_update = $pdo->prepare("
+                UPDATE utente
+                SET nome = :nome,
+                    cognome = :cognome,
+                    email = :email,
+                    data_nascita = :data_nascita,
+                    indirizzo = :indirizzo,
+                    citta = :citta,
+                    cap = :cap,
+                    paese = :paese
+                WHERE id_utente = :id
+            ");
+            $stmt_update->execute([
+                ':nome' => $nome,
+                ':cognome' => $cognome,
+                ':email' => $email,
+                ':data_nascita' => $data_nascita,
+                ':indirizzo' => $indirizzo,
+                ':citta' => $citta,
+                ':cap' => $cap,
+                ':paese' => $paese,
+                ':id' => $userId
+            ]);
+
+            $success = "Profilo aggiornato correttamente!";
+            // Aggiorna i dati per mostrare il form con valori nuovi
+            $utente = [
+                'nome' => $nome,
+                'cognome' => $cognome,
+                'email' => $email,
+                'data_nascita' => $data_nascita,
+                'indirizzo' => $indirizzo,
+                'citta' => $citta,
+                'cap' => $cap,
+                'paese' => $paese
+            ];
+        }
+    }
 } catch (PDOException $e) {
-    die("Errore caricamento dati: " . $e->getMessage());
-}
-
+    $error = "Errore database: ";}
 ?>
+
 <!DOCTYPE html>
 <html lang="it" xml:lang="it" xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <title>Il Mio Account - InfuseMe</title>
-    <meta name="description" content="Gestisci il tuo account personale nel nostro negozio di tè, infusi e tisane di qualità" />
-    <meta name="keywords" content="tè, infusi, tisane, account utente, profilo, ordini, preferenze" />
+    <title>Modifica Profilo - InfuseMe</title>
+     <meta name="description" content="Modifica il tuo account personale nel nostro negozio di tè, infusi e tisane di qualità" />
+    <meta name="keywords" content="tè, infusi, tisane, modifca, account utente, profilo, ordini, preferenze" />
     <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
-
 <body>
-    <!-- Skip link per accessibilità -->
-    <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
+<a href="#main-content" class="skip-link">Salta al contenuto principale</a>
+<?php include 'navbar.php'; ?>
 
-    <!-- Header -->
-     <?php include 'navbar.php'; ?>
+<main id="content">
+    <section id="area-account">
+        <h1>Modifica il Mio Profilo</h1>
 
-    <main id="content">
-        <!-- Area Account (visibile solo dopo il login) -->
-        <section id="area-account">
-            <h1>Il Mio <span lang="en">Account</span></h1>
+        <form action="" method="post" class="form-modifica-profilo">
+            <label for="nome">Nome *</label>
+            <input type="text" id="nome" name="nome" value="<?= htmlspecialchars($utente['nome']) ?>" required>
 
-            <!-- Profilo Utente -->
-            <section id="profilo-utente">
-                <h2>Il Mio Profilo</h2>
-                <div class="user-info">
-                    <img src="images/avatar-utente.jpg" alt="Immagine profilo utente">
-                    <div class="user-details">
-                        <p><strong>Nome:</strong> <?= htmlspecialchars($utente['nome'] . ' ' . $utente['cognome']) ?>
-                        </p>
-                        <p><strong>Email:</strong> <?= htmlspecialchars($utente['email']) ?></p>
-                        <p><strong>Data registrazione:</strong>
-                            <?= date("d/m/Y", strtotime($utente['data_registrazione'])) ?></p>
-                        <p><a href="modificaProfilo.php">Modifica profilo</a></p>
-                    </div>
-                </div>
-            </section>
+            <label for="cognome">Cognome *</label>
+            <input type="text" id="cognome" name="cognome" value="<?= htmlspecialchars($utente['cognome']) ?>" required>
 
-            <!-- Ordini Recenti -->
-            <section id="ordini-recenti">
-    <h2>I Miei Ordini Recenti</h2>
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" value="<?= htmlspecialchars($utente['email']) ?>" required>
 
-    <?php if (!empty($ordini)): ?>
-        <?php foreach ($ordini as $ordine): ?>
-            <article class="ordine">
-                <h3>Ordine #<?= $ordine['id_ordine'] ?></h3>
-                <p><strong>Data:</strong> <?= date("d/m/Y", strtotime($ordine['data_ordine'])) ?></p>
-                <p><strong>Stato:</strong> <?= htmlspecialchars($ordine['stato_ord']) ?></p>
-                <p><strong>Totale:</strong> €<?= number_format($ordine['totale'], 2) ?></p>
-                <p><a href="dettaglioOrdine.php?id=<?= $ordine['id_ordine'] ?>">Visualizza dettagli ordine</a></p>
-            </article>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <p>Nessun ordine ancora effettuato.</p>
-    <?php endif; ?>
-</section>
-            <a href="/php/logout.php">Esci</a>
-        </section>
-    </main>
+            <label for="data_nascita">Data di Nascita *</label>
+            <input type="date" id="data_nascita" name="data_nascita" value="<?= htmlspecialchars($utente['data_nascita']) ?>" required>
 
+            <label for="indirizzo">Indirizzo</label>
+            <input type="text" id="indirizzo" name="indirizzo" value="<?= htmlspecialchars($utente['indirizzo']) ?>">
 
-    <!-- Footer -->
-    <footer>
+            <label for="citta">Città</label>
+            <input type="text" id="citta" name="citta" value="<?= htmlspecialchars($utente['citta']) ?>">
+
+            <label for="cap">CAP</label>
+            <input type="text" id="cap" name="cap" value="<?= htmlspecialchars($utente['cap']) ?>">
+
+            <label for="paese">Paese</label>
+            <input type="text" id="paese" name="paese" value="<?= htmlspecialchars($utente['paese']) ?>">
+
+            <div class="form-buttons">
+                <button type="submit">Salva Modifiche</button>
+                <a href="paginautente.php" class="button-secondary">Annulla</a>
+            </div>
+        </form>
+    </section>
+</main>
+
+ <footer>
         <div class="container">
             <div class="footer-content">
                 <!-- Colonna 1: Brand -->
@@ -211,21 +244,8 @@ try {
             </div> <!--fine class container-->
     </footer>
 
-    <!-- Pulsante Torna Su (no title perchè c'è nel css)-->
-    <button class="back-to-top" id="backToTop" aria-label="Torna all'inizio della pagina">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-            <path
-                d="M18,15.5a1,1,0,0,1-.71-.29l-4.58-4.59a1,1,0,0,0-1.42,0L6.71,15.21a1,1,0,0,1-1.42-1.42L9.88,9.21a3.06,3.06,0,0,1,4.24,0l4.59,4.58a1,1,0,0,1,0,1.42A1,1,0,0,1,18,15.5Z" />
-        </svg>
-    </button>
-
-
-
-
-
-    <!--file js unico per tutti gli elementi -->
     <script src="javaScript/script.js"></script>
 
+    
 </body>
-
 </html>

@@ -38,7 +38,7 @@ try {
     // --- Recupero dettagli prodotti ---
     $stmt_dettagli = $pdo->prepare("
         SELECT d.id_dettaglio, d.quantita, d.prezzo_unit, d.totale_riga, 
-               p.nome AS prodotto_nome, pc.nome AS custom_nome
+               p.nome AS prodotto_nome, pc.nome_blend AS custom_nome
         FROM dettaglio_ordine d
         LEFT JOIN prodotto p ON d.id_prodotto = p.id_prodotto
         LEFT JOIN prodotto_custom pc ON d.id_custom = pc.id_custom
@@ -148,7 +148,7 @@ try {
         </div>
     </header>
 
-    <main>
+    <main id="content">
         <h1>Dettaglio Ordine #<?= $ordine['id_ordine'] ?></h1>
         <p><strong>Data Ordine:</strong> <?= date("d/m/Y", strtotime($ordine['data_ordine'])) ?></p>
         <p><strong>Stato Ordine:</strong> <?= htmlspecialchars($ordine['stato_ord']) ?></p>
@@ -157,15 +157,20 @@ try {
 
         <h2>Prodotti acquistati:</h2>
         <div class="lista-prodotti">
-            <?php while ($riga = mysqli_fetch_assoc($result_dettagli)): ?>
+           <?php if (!empty($dettagli)): ?>
+            <?php foreach ($dettagli as $riga): ?>
                 <div class="prodotto-item">
                     <h3><?= htmlspecialchars($riga['prodotto_nome'] ?? $riga['custom_nome']) ?></h3>
                     <p><strong>Quantità:</strong> <?= $riga['quantita'] ?></p>
                     <p><strong>Prezzo Unitario:</strong> €<?= number_format($riga['prezzo_unit'], 2) ?></p>
-                    <p><strong>Totale Riga:</strong> €<?= number_format($riga['totale_riga'], 2) ?></p>
+                    <p><strong>Totale:</strong> €<?= number_format($riga['totale_riga'], 2) ?></p>
                 </div>
                 <hr>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>Nessun prodotto trovato per questo ordine.</p>
+        <?php endif; ?>
+
         </div>
 
         <p><a href="paginaUtente.php">Torna al tuo <span lang="en">account</span></a></p>
