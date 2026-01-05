@@ -299,25 +299,50 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Se non siamo in una pagina con header (es. login standalone), esci
     if (!hamburger || !nav || !headerUtilities) {
+        console.warn('Elementi header mancanti - menu hamburger non inizializzato');
         return;
     }
 
-    // Funzione interna per il toggle tema mobile
-    function setupMobileThemeToggleLogic() {
+    // Funzione per configurare il toggle tema nel menu mobile
+    function setupMobileThemeToggle() {
         const mobileThemeToggle = document.querySelector('.mobile-menu-wrapper .theme-toggle');
-        if (mobileThemeToggle) {
-            // Clona per rimuovere vecchi listener
-            mobileThemeToggle.replaceWith(mobileThemeToggle.cloneNode(true));
-            const newToggle = document.querySelector('.mobile-menu-wrapper .theme-toggle');
-            
-            newToggle.addEventListener('click', function() {
-                // USIAMO IL MANAGER CENTRALE: Molto meglio!
-                // Aggiorna icone, localStorage corretto e classi in un colpo solo.
-                if (typeof ThemeManager !== 'undefined') {
-                    ThemeManager.toggleTheme();
+        if (!mobileThemeToggle) return;
+        
+        // Clona per rimuovere vecchi listener ed evitare duplicati
+        const newToggle = mobileThemeToggle.cloneNode(true);
+        mobileThemeToggle.replaceWith(newToggle);
+        
+        newToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            // Usa il ThemeManager se disponibile, altrimenti fallback
+            if (typeof ThemeManager !== 'undefined') {
+                ThemeManager.toggleTheme();
+            } else {
+                // Fallback se ThemeManager non è caricato
+                body.classList.toggle('dark-theme');
+                const isDark = body.classList.contains('dark-theme');
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                updateThemeIcons();
+            }
+        });
+    }
+
+    // Funzione per aggiornare le icone del tema (fallback)
+    function updateThemeIcons() {
+        const isDark = body.classList.contains('dark-theme');
+        document.querySelectorAll('.theme-toggle').forEach(toggle => {
+            const sunIcon = toggle.querySelector('.sun-icon');
+            const moonIcon = toggle.querySelector('.moon-icon');
+            if (sunIcon && moonIcon) {
+                if (isDark) {
+                    sunIcon.style.display = 'block';
+                    moonIcon.style.display = 'none';
+                } else {
+                    sunIcon.style.display = 'none';
+                    moonIcon.style.display = 'block';
                 }
-            });
-        }
+            }
+        });
     }
 
     // Crea wrapper per menu mobile
@@ -326,6 +351,9 @@ document.addEventListener('DOMContentLoaded', function() {
         mobileMenuWrapper = document.createElement('div');
         mobileMenuWrapper.className = 'mobile-menu-wrapper';
         mobileMenuWrapper.style.display = 'none';
+        mobileMenuWrapper.setAttribute('role', 'dialog');
+        mobileMenuWrapper.setAttribute('aria-modal', 'true');
+        mobileMenuWrapper.setAttribute('aria-label', 'Menu di navigazione mobile');
         
         // Crea il pulsante di chiusura (X)
         const closeButton = document.createElement('button');
@@ -345,31 +373,44 @@ document.addEventListener('DOMContentLoaded', function() {
         mobileMenuWrapper.appendChild(navClone);
         mobileMenuWrapper.appendChild(utilitiesClone);
         
-        body.appendChild(mobileMenuWrapper); //aggiungi al body
-        closeButton.addEventListener('click', closeMenu); //aggiungi event listener al pulsante di chiusura
-        setupMobileThemeToggle(); //setup tema per mobile
+        body.appendChild(mobileMenuWrapper);
+        
+        // Event listener per il pulsante di chiusura
+        closeButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeMenu();
+        });
+        
+        // Setup iniziale del tema mobile
+        setupMobileThemeToggle();
     }
 
     // Toggle menu
     hamburger.addEventListener('click', function(e) {
         e.stopPropagation();
         const isOpen = hamburger.classList.contains('active');
-        if (isOpen) closeMenu();
-        else openMenu();
+        if (isOpen) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
     });
     
     function openMenu() {
         console.log('Apertura menu...');
         hamburger.classList.add('active');
+        hamburger.setAttribute('aria-expanded', 'true');
         mobileMenuWrapper.style.display = 'flex';
+        
+        // Previeni lo scroll del body
         body.style.overflow = 'hidden';
         
-        // Riapplica il setup del tema (importante per quando il menu viene riaperto)
+        // Riapplica il setup del tema quando il menu viene riaperto
         setTimeout(() => {
             setupMobileThemeToggle();
-        }, 100);
+        }, 50);
         
-        // Aggiungi listener per chiudere
+        // Aggiungi listener per chiudere dopo un breve delay
         setTimeout(() => {
             document.addEventListener('click', handleClickOutside);
             mobileMenuWrapper.addEventListener('click', handleMenuClick);
@@ -379,8 +420,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function closeMenu() {
         console.log('Chiusura menu...');
         hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
         mobileMenuWrapper.style.display = 'none';
+        
+        // Ripristina lo scroll del body
         body.style.overflow = '';
+        
+        // Rimuovi i listener
         document.removeEventListener('click', handleClickOutside);
         mobileMenuWrapper.removeEventListener('click', handleMenuClick);
     }
@@ -392,20 +438,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function handleMenuClick(e) {
-        // Chiudi se clicchi su un link o fuori dal contenuto
+        // Chiudi se clicchi su un link o direttamente sul background
         if (e.target.tagName === 'A' || e.target === mobileMenuWrapper) {
             closeMenu();
         }
     }
     
-    // Chiudi con ESC
+    // Chiudi con tasto ESC
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && hamburger.classList.contains('active')) {
             closeMenu();
         }
     });
     
-    // Chiudi se ridimensioni a desktop
+    // Chiudi se si ridimensiona la finestra a desktop
     let resizeTimer;
     window.addEventListener('resize', function() {
         clearTimeout(resizeTimer);
