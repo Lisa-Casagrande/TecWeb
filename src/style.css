@@ -3533,571 +3533,6 @@ body.dark-theme .testo-errore a:focus {
 
 
 /* ===================================
-   PAGINE ADMIN
-=================================== */
-/* aggiungiProdotto.php */
-
-/* container del form */
-.form-container {
-    background-color: var(--card-bg);
-    border: 2px solid var(--text-color);
-    border-radius: 12px;
-    padding: 2em;
-    max-width: 800px; /*più largo del login per gestire meglio i campi*/
-    margin: 2em auto;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* raggruppa le sezioni (fieldset)*/
-.form-container fieldset {
-    border: 1px solid var(--text-color);
-    border-radius: 8px;
-    padding: 1.5em;
-    margin-bottom: 2em;
-    background-color: transparent;
-}
-
-.form-container legend {
-    font-family: 'Helvetica Neue', 'Arial', sans-serif;
-    font-weight: bold;
-    color: var(--text-color);
-    padding: 0 0.5em;
-    font-size: 1.2em;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 0.5em;
-    font-weight: 600;
-    color: var(--text-color);
-    font-size: 1em;
-}
-
-.input-group{
-    margin-bottom: 1.5em; /*spaziatura tra i campi*/
-}
-
-/* Stile Unificato per Input, Textarea e Select */
-.input-group input[type="text"],
-.input-group input[type="number"],
-.input-group input[type="file"],
-.input-group textarea,
-.input-group select {
-    width: 100%;
-    padding: 0.8em;
-    border: 2px solid var(--text-color);
-    border-radius: 6px;
-    font-size: 1em;
-    font-family: inherit;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    transition: all 0.3s ease;
-    box-shadow: none;
-}
-
-/*focus State quando clicca nel campo*/
-.input-group input:focus,
-.input-group textarea:focus,
-.input-group select:focus {
-    outline: none;
-    border-color: var(--button-bg);
-    box-shadow: 0 0 0 3px rgba(107, 69, 50, 0.2);
-}
-
-.input-group textarea {
-    min-height: 120px;
-    resize: vertical; /*permette di allungarla solo in verticale*/
-    line-height: 1.5;
-}
-
-/*cursore Pointer per elementi cliccabili*/
-.input-group select, 
-.input-group input[type="file"] {
-    cursor: pointer;
-}
-
-/*input file = immagine da scegliere*/
-.input-group input[type="file"] {
-    background-color: var(--bg-color);
-    border: 2px solid var(--text-color);
-    border-radius: 6px;
-    padding: 0.5em;
-    color: var(--text-color);
-    cursor: pointer;
-    font-size: 1em;
-    width: 100%;
-}
-
-/*bottone interno "Scegli file"*/
-.input-group input[type="file"]::file-selector-button {
-    background-color: var(--alt-section-bg); /* Sfondo leggero (crema/grigio scuro) */
-    color: var(--text-color);
-    border: 2px solid var(--button-bg); /* Bordo colorato del tema */
-    padding: 0.5em 1em;
-    border-radius: 4px;
-    margin-right: 1em; /* Spazio tra bottone e nome file */
-    cursor: pointer;
-    font-family: inherit;
-    font-weight: bold;
-    transition: all 0.3s ease;
-}
-
-.input-group input[type="file"]:hover::file-selector-button {
-    background-color: var(--button-bg); /*diventa colorato al passaggio*/
-    color: var(--button-text); /*testo chiaro*/
-}
-
-
-/* validazioneForm.js */
-/* classe per i messaggi di suggerimento che compaiono nella form aggiungiProdotto.php */
-.default-text {
-    display: block;
-    font-size: 0.85em;
-    color: var(--text-color);
-    opacity: 0.8;
-    margin-top: 0.4em;
-    font-style: italic;
-}
-
-/* classe per i messaggi di errore della form aggiungiProdotto.php */
-.errorSuggestion {
-    display: block;
-    font-size: 0.9em;
-    color: #d9534f;
-    font-weight: bold;
-    margin-top: 0.4em;
-    padding-left: 1.5em;
-    position: relative;
-}
-
-/* piccola icona di errore prima del testo (x) - opzionale, da vedere*/
-.errorSuggestion::before {
-    content: "✖"; 
-    position: absolute;
-    left: 0;
-    color: #d9534f;
-}
-
-
-/* ===================================
-   RESPONSIVE FORM
-   =================================== */
-@media screen and (max-width: 768px) {
-    .form-container {
-        padding: 1.5em;
-        margin: 2em 1em;
-    }
-    
-    .form-container fieldset {
-        padding: 1em;
-    }
-}
-
-
-/* dashboardAdmin.php */
-/*uso di bottone-primario + stile per le card: */
-
-/* contenitore principale della dashboard */
-.admin-dashboard {
-    margin: 2em 0;
-    padding: 1em 0;
-}
-
-/*griglia responsive per card admin (prodotti, ordini, dashboard) */
-.admin-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2em;
-    margin: 2em;
-}
-
-/* CARD ADMIN: Base */
-.admin-card {
-    background-color: var(--white);
-    border: 1px solid var(--text-color);
-    border-radius: 12px;
-    padding: 0; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden; /*l'immagine rispetta i bordi arrotondati */
-    transition: transform 0.3s ease;
-}
-
-.admin-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-}
-
-/* CONTENUTO INTERNO CARD (Testo e Bottoni) */
-.card-content {
-    padding: 1.5em; 
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    justify-content: space-between; /*se il testo è corto i bottoni stanno comunque in fondo*/
-}
-
-.admin-card h3 {
-    color: var(--button-bg);
-    margin-bottom: 0.5em;
-    font-size: 1.3em;
-}
-
-.admin-card p {
-    color: var(--text-color);
-    margin-bottom: 0.5em;
-    line-height: 1.5;
-}
-
-/* Immagine nelle card (prodotti/ingredienti) */
-.admin-card-img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-bottom: 1px solid #ddd; /*riga sottile per separare immagine da testo*/
-}
-
-/* Azioni e Bottoni Admin */
-.admin-actions {
-    margin-top: 1.5em;
-    display: flex;
-    gap: 1em;
-    flex-wrap: wrap;
-}
-
-
-/*gestioneProdotti.php */
-/* stesse classi di dashboardAdmin.php e altri file + queste specifiche: */
-
-/*tutte le informazioni del prodotto*/
-.admin-details p {
-    margin-bottom: 0.3em;
-    font-size: 0.95em;
-}
-
-/*per la descrizione dei prodotti: la mostra tutta perchè admin non vede dettaglio prodotto*/
-.admin-desc {
-    font-size: 0.9em;
-    color: var(--text-color);
-    margin-bottom: 1em;
-    font-style: italic;
-}
-
-
-
-/* gestioneIngredienti.php */
-
-.admin-card fieldset {
-    border: 1px solid var(--text-color);
-    border-radius: 6px;
-    padding: 0.8em;
-    margin-top: 1em;
-    margin-bottom: 0;
-}
-
-.admin-card legend {
-    font-size: 0.9em;
-    font-weight: bold;
-    color: var(--button-bg);
-    padding: 0 0.3em;
-}
-
-/* classi per definire lo stato di basi e ingredienti: disponibile (qta>0) e non disponibile */
-/* pallino verde o rosso a seconda dello stato */
-.stato-disponibile {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    background-color: #28a745; /*verde*/
-    border-radius: 50%;
-    margin-right: 6px;
-    vertical-align: middle; /*allinea il pallino al testo*/
-}
-
-.stato-non-disponibile {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    background-color: #d9534f; /*rosso*/
-    border-radius: 50%;
-    margin-right: 6px;
-    vertical-align: middle;
-}
-
-
-
-/* gestioneOrdini.php */
-/* GESTIONE ORDINI - Lista Orizzontale */
-
-/* contenitore della lista */
-.order-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5em; /*spazio verticale tra le card*/
-    margin: 2em 0;
-}
-
-/*card di anteprima degli ordini*/
-.order-card {
-    background-color: var(--card-bg);
-    border: 1px solid var(--text-color);
-    border-radius: 12px;
-    padding: 1.5em;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    /*layout flex orizzontale*/
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap; /*importante per mobile*/
-    gap: 1.5em;
-    transition: transform 0.3s ease;
-}
-
-.order-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-}
-
-/* Parte sinistra: info ordine (più spaziosa)*/
-.order-info {
-    flex: 2;
-    min-width: 250px;
-}
-
-.order-number {
-    color: var(--text-color);
-    font-size: 1.4em;
-    margin-bottom: 0.5em;
-}
-
-.order-meta p {
-    color: var(--text-color);
-    margin-bottom: 0.2em;
-    font-size: 0.95em;
-}
-
-/* Parte centrale: prezzo */
-.order-price {
-    flex: 1;
-    text-align: center;
-    min-width: 120px;
-    border-left: 1px solid rgba(0,0,0,0.1);
-    border-right: 1px solid rgba(0,0,0,0.1);
-    padding: 0 1em;
-}
-
-.order-price p:first-child { /*label "Totale" */
-    font-size: 0.85em;
-    text-transform: uppercase;
-    color: #666;
-    margin-bottom: 0.2em;
-}
-
-.order-price p:last-child { /* importo */
-    font-size: 1.3em;
-    font-weight: bold;
-    color: var(--text-color);
-}
-
-/* Parte Destra: Stato e Azione */
-.order-status-action {
-    flex: 1;
-    display: flex;
-    flex-direction: column; /* Stato sopra, bottone sotto */
-    align-items: flex-end; /* Allinea a destra */
-    gap: 1em;
-    min-width: 180px;
-}
-
-.status-wrapper {
-    display: flex;
-    align-items: center;
-    font-weight: 600;
-}
-
-/* PALLINI STATO */
-.stato-rosso, .stato-giallo, .stato-verde, .stato-blu {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    margin-right: 8px;
-    vertical-align: middle;
-}
-
-.stato-rosso { background-color: #d9534f; }   /* Annullato */
-.stato-giallo { background-color: #ffc107; }  /* In attesa / In Preparazione */
-.stato-verde { background-color: #28a745; }   /* Spedito / Pagato */
-.stato-blu { background-color: #17a2b8; }     /* Consegnato */
-
-/* RESPONSIVE: Card diventa verticale su mobile */
-@media screen and (max-width: 768px) {
-    .order-card {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1em;
-    }
-    
-    .order-info, .order-price, .order-status-action {
-        width: 100%;
-        border: none; /* Toglie i bordi laterali */
-        padding: 0;
-        text-align: left;
-        align-items: flex-start;
-    }
-    
-    .order-price {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        border-top: 1px solid #eee;
-        padding-top: 1em;
-    }
-    
-    .order-status-action {
-        flex-direction: row; /* Stato e bottone sulla stessa riga su mobile */
-        justify-content: space-between;
-        align-items: center;
-        border-top: 1px solid #eee;
-        padding-top: 1em;
-    }
-}
-
-
-/* gestioneOrdini.php */
-/*Dettaglio degli ordini (visualizzazione per l'admin, diversa sa utente): permette di cambiare lo stato degli ordini*/
-/* intestazione pagina dettaglio ordine admin */
-.admin-page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: 2em;
-    gap: 1em;
-}
-
-.header-title-group {
-    display: flex;
-    align-items: center;
-    gap: 1em;
-    flex-wrap: wrap;
-}
-
-/* badge per stato dell'ordinec*/
-.order-status-badge {
-    font-size: 1em;
-    display: flex;
-    align-items: center;
-    background-color: var(--white);
-    padding: 0.4em 0.8em;
-    border-radius: 20px;
-    border: 1px solid var(--text-color);
-}
-
-/* messaggio di feedback positivo (verde) se cambio ordine ha successo*/
-.messaggio-successo {
-    color: #28a745;
-    background-color: transparent; 
-    border: none;               
-    padding: 1em 0;
-    margin-bottom: 1em;
-    font-weight: bold;
-    text-align: center;
-    font-size: 1.1em;
-}
-
-/*card a larghezza intera (tutta la pagina) - per la lista prodotti acquistati*/
-/* .admin-card card-full-width */
-.card-full-width {
-    grid-column: 1 / -1;
-}
-
-/* LISTA PRODOTTI */
-.product-list {
-    list-style: none;
-    padding: 0;
-    margin: 1em 0;
-    border-top: 1px solid rgba(0,0,0,0.1);
-}
-
-.product-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1em 0;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-}
-
-/* Parte sinistra: nome e tipo*/
-.product-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.product-type {
-    font-size: 0.85em;
-    color: #666;
-    margin-top: 0.2em;
-}
-
-/* Parte destra: quantità e prezzo */
-.product-pricing {
-    display: flex;
-    align-items: center;
-    gap: 1.5em;
-    text-align: right;
-}
-
-.qty-badge {
-    background-color: var(--alt-section-bg); /* Colore sfondo leggero */
-    padding: 0.3em 0.6em;
-    border-radius: 4px;
-    font-size: 0.9em;
-    font-weight: bold;
-}
-
-.price {
-    font-weight: bold;
-    min-width: 80px;
-}
-
-/* RIEPILOGO TOTALI */
-.order-summary {
-    margin-top: 1.5em;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
-    align-items: flex-end; /* Spinge tutto a destra */
-}
-
-.summary-row {
-    display: flex;
-    justify-content: space-between;
-    width: 250px; /* Larghezza fissa per allineare i numeri */
-    font-size: 0.95em;
-}
-
-/* .summary-row total-row */
-.total-row {
-    margin-top: 0.5em;
-    padding-top: 0.5em;
-    border-top: 2px solid var(--button-bg);
-    font-size: 1.2em;
-    color: var(--button-bg);
-}
-
-/* NOTE CLIENTE */
-.order-notes {
-    margin-top: 2em;
-    background-color: var(--section-bg); /* Sfondo leggero del tema */
-    padding: 1em;
-    border-radius: 6px;
-    font-size: 0.95em;
-}
-
-
-/* ===================================
    PAGINA PRODOTTO
    =================================== */
 
@@ -4748,9 +4183,561 @@ section.product-details-section .product-detail-block {
     opacity: 0.7;
 }
 
+
+/* ===================================
+   PAGINE ADMIN
+=================================== */
+/* dashboardAdmin.php */
+.admin-dashboard {
+    margin: 2em;
+    padding: 1em 0;
+}
+
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 2em;
+    margin: 2em;
+}
+
+/* CARD ADMIN: Base */
+.admin-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--text-color);
+    border-radius: 12px;
+    padding: 0; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: none;
+}
+
+/* CONTENUTO INTERNO CARD (Testo e Bottoni) */
+.card-content {
+    padding: 1.5em; 
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.admin-card h3 {
+    color: var(--button-bg);
+    margin-bottom: 0.8em;
+    font-size: 1.3em;
+}
+
+.admin-card p {
+    color: var(--text-color);
+    margin-bottom: 1em;
+    line-height: 1.5;
+}
+
+/* Immagine nelle card (per pagina prodotti) */
+.admin-card-img {
+    width: 100%;
+    height:300px;
+    object-fit: cover;
+    border-bottom: 1px solid var(--text-color); /*riga sottile per separare immagine da testo*/
+}
+
+/* Azioni e Bottoni Admin */
+.admin-actions {
+    margin-top: auto; /*bottoni in fondo alla card*/
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+}
+
+.footer-section-admin{
+    padding: 1em;
+    margin-bottom: 1em;
+}
+
+/*gestioneProdotti.php */
+/* stesse classi di dashboardAdmin.php e altri file + queste specifiche: */
+.admin-details p {
+    margin-bottom: 0.3em;
+    font-size: 1.1em;
+}
+
+/*per la descrizione dei prodotti: la mostra tutta perchè admin non vede dettaglio prodotto*/
+.admin-desc {
+    font-size: 1em;
+    color: var(--text-color);
+    margin-bottom: 1em;
+}
+
+/* gestioneIngredienti.php */
+.admin-card fieldset {
+    border: 1px solid var(--text-color);
+    border-radius: 6px;
+    padding: 0.8em;
+    margin-top: 1em;
+    margin-bottom: 0;
+}
+
+.admin-card legend {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: var(--button-bg);
+    padding: 0 0.3em;
+}
+
+/* classi per definire lo stato di basi e ingredienti: disponibile (qta>0) e non disponibile */
+/* pallino verde o rosso a seconda dello stato */
+.stato-disponibile {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: #28a745; /*verde*/
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle; /*allinea il pallino al testo*/
+}
+
+.stato-non-disponibile {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: #d9534f; /*rosso*/
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+/* aggiungiProdotto.php */
+.form-container {
+    background-color: var(--card-bg);
+    border: 2px solid var(--text-color);
+    border-radius: 12px;
+    padding: 2em;
+    max-width: 800px;
+    margin: 2em auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* raggruppa le sezioni (fieldset)*/
+.form-container fieldset {
+    border: 1px solid var(--text-color);
+    border-radius: 8px;
+    padding: 1.5em;
+    margin-bottom: 2em;
+    background-color: transparent;
+}
+
+.form-container legend {
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    font-weight: bold;
+    color: var(--text-color);
+    padding: 0 0.5em;
+    font-size: 1.2em;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 1em;
+}
+
+.input-group{
+    margin-bottom: 1.5em; /*spaziatura tra i campi*/
+}
+
+/* Stile Unificato per Input, Textarea e Select */
+.input-group input[type="text"],
+.input-group input[type="number"],
+.input-group input[type="file"],
+.input-group textarea,
+.input-group select {
+    width: 100%;
+    padding: 0.8em;
+    border: 2px solid var(--text-color);
+    border-radius: 6px;
+    font-size: 1em;
+    font-family: inherit;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    box-shadow: none;
+}
+
+/*focus State quando clicca nel campo*/
+.input-group input:focus,
+.input-group textarea:focus,
+.input-group select:focus {
+    outline: none;
+    border-color: var(--button-bg);
+    box-shadow: 0 0 0 3px rgba(107, 69, 50, 0.2);
+}
+
+.input-group textarea {
+    min-height: 120px;
+    resize: vertical; /*permette di allungarla solo in verticale*/
+    line-height: 1.5;
+}
+
+/*cursore Pointer per elementi cliccabili*/
+.input-group select, 
+.input-group input[type="file"] {
+    cursor: pointer;
+}
+
+/*input file = immagine da scegliere*/
+.input-group input[type="file"] {
+    background-color: var(--bg-color);
+    border: 2px solid var(--text-color);
+    border-radius: 6px;
+    padding: 0.5em;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 1em;
+    width: 100%;
+}
+
+/*bottone interno "Scegli file"*/
+.input-group input[type="file"]::file-selector-button {
+    background-color: var(--alt-section-bg); /* Sfondo leggero (crema/grigio scuro) */
+    color: var(--text-color);
+    border: 2px solid var(--button-bg); /* Bordo colorato del tema */
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    margin-right: 1em; /* Spazio tra bottone e nome file */
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.input-group input[type="file"]:hover::file-selector-button {
+    background-color: var(--button-bg); /*diventa colorato al passaggio*/
+    color: var(--button-text); /*testo chiaro*/
+}
+
+
+/* validazioneForm.js */
+/* classe per i messaggi di suggerimento che compaiono nella form aggiungiProdotto.php */
+.default-text {
+    display: block;
+    font-size: 0.85em;
+    color: var(--text-color);
+    opacity: 0.8;
+    margin-top: 0.4em;
+    font-style: italic;
+}
+
+/* classe per i messaggi di errore della form aggiungiProdotto.php */
+.errorSuggestion {
+    display: block;
+    font-size: 0.9em;
+    color: #d9534f;
+    font-weight: bold;
+    margin-top: 0.4em;
+    padding-left: 1.5em;
+    position: relative;
+}
+
+/* piccola icona di errore prima del testo (x) - opzionale, da vedere*/
+.errorSuggestion::before {
+    content: "✖"; 
+    position: absolute;
+    left: 0;
+    color: #d9534f;
+}
+
+/* RESPONSIVE FORM */
+@media screen and (max-width: 768px) {
+    .form-container {
+        padding: 1.5em;
+        margin: 2em 1em;
+    }
+    
+    .form-container fieldset {
+        padding: 1em;
+    }
+}
+
+
+/* gestioneOrdini.php */
+.order-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em; /*spazio verticale tra le card*/
+    margin: 2em 0;
+}
+
+/*card di anteprima degli ordini*/
+.order-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--text-color);
+    border-radius: 12px;
+    padding: 1.5em;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    /*layout flex orizzontale*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /*importante per mobile*/
+    gap: 1.5em;
+    transition: transform 0.3s ease;
+}
+
+.order-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.order-info {
+    flex: 2;
+    min-width: 250px;
+}
+
+.order-number {
+    color: var(--text-color);
+    font-size: 1.4em;
+    margin-bottom: 0.5em;
+}
+
+.order-meta p {
+    color: var(--text-color);
+    margin-bottom: 0.2em;
+    font-size: 0.95em;
+}
+
+/* Parte centrale: prezzo */
+.order-price {
+    flex: 1;
+    text-align: center;
+    min-width: 120px;
+    border-left: 1px solid rgba(0,0,0,0.1);
+    border-right: 1px solid rgba(0,0,0,0.1);
+    padding: 0 1em;
+}
+
+.order-price p:first-child { /*label "Totale" */
+    font-size: 0.85em;
+    text-transform: uppercase;
+    color: var(--text-color);
+    margin-bottom: 0.2em;
+}
+
+.order-price p:last-child { /* importo */
+    font-size: 1.3em;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.order-status-action {
+    flex: 1;
+    display: flex;
+    flex-direction: column; /* Stato sopra, bottone sotto */
+    align-items: flex-end; /* Allinea a destra */
+    gap: 1em;
+    min-width: 180px;
+}
+
+.status-wrapper {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+}
+
+/* PALLINI STATO */
+.stato-rosso, .stato-giallo, .stato-verde, .stato-blu {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.stato-rosso { background-color: #d9534f; }   /* Annullato */
+.stato-giallo { background-color: #ffc107; }  /* In attesa / In Preparazione */
+.stato-verde { background-color: #28a745; }   /* Spedito / Pagato */
+.stato-blu { background-color: #17a2b8; }     /* Consegnato */
+
+/* RESPONSIVE: Card diventa verticale su mobile */
+@media screen and (max-width: 768px) {
+    .order-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1em;
+    }
+    
+    .order-info, .order-price, .order-status-action {
+        width: 100%;
+        border: none; /* Toglie i bordi laterali */
+        padding: 0;
+        text-align: left;
+        align-items: flex-start;
+    }
+    
+    .order-price {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        border-top: 1px solid #eee;
+        padding-top: 1em;
+    }
+    
+    .order-status-action {
+        flex-direction: row; /* Stato e bottone sulla stessa riga su mobile */
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid #eee;
+        padding-top: 1em;
+    }
+}
+
+
+/* gestioneOrdini.php */
+/*Dettaglio degli ordini (visualizzazione per l'admin, diversa sa utente): permette di cambiare lo stato degli ordini*/
+/* intestazione pagina dettaglio ordine admin */
+.admin-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 2em;
+    gap: 1em;
+}
+
+.header-title-group h1{
+    margin-bottom: 0;
+    margin-right: 0.5em; /* Un piccolo spazio extra di sicurezza */
+    line-height: 1.2;
+}
+
+.header-title-group {
+    display: flex;
+    align-items: center;
+    gap: 2em;
+    flex-wrap: wrap;
+}
+
+/* badge per stato dell'ordine in dettaglioOrdineAdmin.php*/
+.order-status-badge {
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    background-color: var(--card-bg);
+    padding: 0.4em 0.8em;
+    border-radius: 20px;
+    border: 1px solid var(--text-color);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* messaggio di feedback positivo (verde) se cambio ordine ha successo*/
+.messaggio-successo {
+    color: #28a745;
+    background-color: transparent; 
+    border: none;               
+    padding: 1em 0;
+    margin-bottom: 1em;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+/*card a larghezza intera (tutta la pagina) - per la lista prodotti acquistati*/
+/* .admin-card card-full-width */
+.card-full-width {
+    grid-column: 1 / -1;
+}
+
+/* LISTA PRODOTTI */
+.product-list {
+    list-style: none;
+    padding: 0;
+    margin: 1em 0;
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.product-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2em 0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    font-size: 1.1em;
+}
+
+/* Parte sinistra: nome e tipo*/
+.product-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-type {
+    font-size: 0.95em;
+    color: var(--text-color);
+    margin-top: 0.2em;
+}
+
+/* Parte destra: quantità e prezzo */
+.product-pricing {
+    display: flex;
+    align-items: center;
+    gap: 1.5em;
+    text-align: right;
+}
+
+.qty-badge {
+    background-color: var(--alt-section-bg); /* Colore sfondo leggero */
+    padding: 0.3em 0.6em;
+    border-radius: 4px;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.price {
+    font-weight: bold;
+    min-width: 80px;
+    font-size: 1.1em;
+}
+
+/* RIEPILOGO TOTALI */
+.order-summary {
+    margin-top: 1.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    align-items: flex-end; /* Spinge tutto a destra */
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    width: 250px; /* Larghezza fissa per allineare i numeri */
+    font-size: 1em;
+}
+
+/* .summary-row total-row */
+.total-row {
+    margin-top: 0.5em;
+    padding-top: 0.5em;
+    border-top: 2px solid var(--button-bg);
+    font-size: 1.2em;
+    color: var(--button-bg);
+}
+
+/* NOTE CLIENTE */
+.order-notes {
+    margin-top: 2em;
+    background-color: var(--section-bg);
+    padding: 1em;
+    border-radius: 6px;
+    font-size: 1em;
+}
+
+
 /* =========================================
    CARRELLO
 ========================================= */
+
 /*layout a griglia per vedere ordini uno sotto l'altro*/
 .cart-layout {
     display: grid;
@@ -4770,17 +4757,18 @@ section.product-details-section .product-detail-block {
 .cart-message-container {
     text-align: center;
     padding: 3rem 1rem;
-    background-color: var(--white, #fff);
+    background-color: var(--card-bg);
+    /*background-color: var(--text-color);*/
     border-radius: 8px;
-    border: 1px solid #eee;
+    border: 2px solid var(--text-color);
     margin-top: 2rem;
 }
 
 .cart-actions {
-    margin-top: 2rem;
+    margin-top: 2em;
     display: flex;
     justify-content: center;
-    gap: 1rem;
+    gap: 1em;
 }
 
 .cart-list {
@@ -4797,15 +4785,15 @@ section.product-details-section .product-detail-block {
     justify-content: space-between;
     gap: 1rem;
     padding: 1.5rem 0;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--text-color);
 }
 
 .cart-item:last-child {
-    border-bottom: none; /* Toglie la linea all'ultimo prodotto */
+    border-bottom: none;
 }
 
 .cart-item-info {
-    flex: 1 1 200px; /* Occupa spazio, minimo 200px */
+    flex: 1 1 200px;
 }
 
 .cart-item-info h2 {
@@ -4834,13 +4822,13 @@ section.product-details-section .product-detail-block {
     justify-content: flex-end;
     align-items: center;
     padding-top: 1.5rem;
-    border-top: 2px solid #eee;
+    border-top: 2px solid var(--text-color);
     gap: 1rem;
     font-size: 1.2rem;
 }
 
 .total-price {
-    font-size: 1.5rem; /* Il totale lo lasciamo grande */
+    font-size: 1.5rem;
     color: var(--text-color);
 }
 
@@ -4868,7 +4856,7 @@ section.product-details-section .product-detail-block {
 textarea#indirizzo_spedizione {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--bg-color);
     border-radius: 4px;
     font-family: inherit;
     resize: vertical;

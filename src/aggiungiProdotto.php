@@ -31,10 +31,8 @@ try {
     <header>
         <div class="header-container">
             <div class="logo">
-                <a href="home.php" aria-label="Torna alla home" class="logo-button">
-                    <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
-                    <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
-                </a>
+                <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
+                <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
             </div>
 
            <button class="hamburger" id="hamburger" aria-label="Apri il menu navigazione">
@@ -82,13 +80,12 @@ try {
 
 <!-- main content: form per inserire attributi Prodotto -->
     <main id="main-content" role="main">
+    <section class="admin-dashboard">
         <h1>Inserisci un Nuovo Prodotto</h1>
 
         <!--collegamento a file php per salvare il prodotto nuovo-->
-        <!--da vedere se mettere id al posto di class-->
         <!--enctype serve per trasmettere l'immagine, altrimenti non si può caricare-->
         <form id="form" class="form-container" method="post" action="php/salvaProdotto.php" enctype="multipart/form-data">
-            
             <fieldset>
                 <legend>Informazioni Principali</legend> <!--obbligatori-->
                 
@@ -153,19 +150,19 @@ try {
             </fieldset>
 
             <fieldset>
-		    <legend>Bottoni</legend>
+		    <legend>Conferma</legend>
 		        <input type="submit" id="submit" name="submit" class="bottone-primario" value="Inserisci prodotto" >
-		        <input type="reset" id="reset" class="bottone-primario" value="Cancella tutto" >
+		        <input type="reset" id="reset" name="reset" class="bottone-primario" value="Cancella tutto" >
 	        </fieldset>
-
         </form>
+    </section>
     </main>
 
 
     <!-- Footer ridotto-->
     <footer>
         <div class="container">
-            <div class="footer-section">
+            <div class="footer-section-admin">
                 <div class="footer-brand">
                     <div class="brand-name"><span lang="en">InfuseMe</span></div>
                     <div class="motto-brand"><span lang="en">Taste Tradition</span></div>

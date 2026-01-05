@@ -32,10 +32,8 @@ try {
     <header>
         <div class="header-container">
             <div class="logo">
-                <a href="home.php" aria-label="Torna alla home" class="logo-button">
-                    <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
-                    <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
-                </a>
+                <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
+                <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
             </div>
 
            <button class="hamburger" id="hamburger" aria-label="Apri il menu navigazione">
@@ -82,7 +80,7 @@ try {
 
 <!-- Main Content -->
     <main id="main-content" role="main">
-
+    <section class="admin-dashboard">
         <h1>Gestione Ordini Clienti</h1>
         <p>Visualizza lo storico degli ordini, monitora lo stato delle spedizioni e accedi ai dettagli.</p>
 
@@ -131,13 +129,14 @@ try {
             </article>
             <?php endforeach; ?>
         </div>
+    </section>
     </main>
 
 
     <!-- Footer ridotto-->
     <footer>
         <div class="container">
-            <div class="footer-section">
+            <div class="footer-section-admin">
                 <div class="footer-brand">
                     <div class="brand-name"><span lang="en">InfuseMe</span></div>
                     <div class="motto-brand"><span lang="en">Taste Tradition</span></div>

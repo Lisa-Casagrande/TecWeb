@@ -19,10 +19,8 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <a href="home.php" aria-label="Torna alla home" class="logo-button">
-                    <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
-                    <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
-                </a>
+                <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
+                <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
             </div>
 
            <button class="hamburger" id="hamburger" aria-label="Apri il menu navigazione">
@@ -72,7 +70,7 @@
 <!-- Main Content -->
     <main id="main-content" role="main">
         <section class="admin-dashboard">
-            <h1>Pannella dell'Amministratore</h1>
+            <h1>Pannello dell'Amministratore</h1>
             <h2>Seleziona un'area operativa:</h2>
 
             <div class="admin-grid">
@@ -82,7 +80,7 @@
                         <p>Inserisci nuovi prodotti, modifica prezzi o elimina articoli dal catalogo.</p>
                         <div class="admin-actions">
                             <a href="gestioneProdotti.php" class="bottone-primario">Visualizza Prodotti</a>
-                            <a href="aggiungiProdotto.php" class="bottone-primario">Aggiungi Nuovo</a>
+                            <a href="aggiungiProdotto.php" class="bottone-primario">Aggiungi Nuovo Prodotto</a>
                         </div>
                     </div>
                 </article>
@@ -113,7 +111,7 @@
     <!-- Footer ridotto-->
     <footer>
         <div class="container">
-            <div class="footer-section">
+            <div class="footer-section-admin">
                 <div class="footer-brand">
                     <div class="brand-name"><span lang="en">InfuseMe</span></div>
                     <div class="motto-brand"><span lang="en">Taste Tradition</span></div>

@@ -76,10 +76,8 @@ $statoFormattato = ucfirst(str_replace('_', ' ', $stato));
     <header>
         <div class="header-container">
             <div class="logo">
-                <a href="home.php" aria-label="Torna alla home" class="logo-button">
-                    <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
-                    <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
-                </a>
+                <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
+                <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
             </div>
 
            <button class="hamburger" id="hamburger" aria-label="Apri il menu navigazione">
@@ -127,7 +125,7 @@ $statoFormattato = ucfirst(str_replace('_', ' ', $stato));
 
 <!-- Main Content -->
     <main id="main-content" role="main">
-
+    <section class="admin-dashboard">
         <div class="admin-page-header">
             <div class="header-title-group">
                 <h1>Dettaglio Ordine #<?php echo $ordine['id_ordine']; ?></h1>
@@ -234,13 +232,14 @@ $statoFormattato = ucfirst(str_replace('_', ' ', $stato));
                 </div>
             </article>
         </div>
+    </section>
     </main>
 
     
     <!-- Footer ridotto-->
     <footer>
         <div class="container">
-            <div class="footer-section">
+            <div class="footer-section-admin">
                 <div class="footer-brand">
                     <div class="brand-name"><span lang="en">InfuseMe</span></div>
                     <div class="motto-brand"><span lang="en">Taste Tradition</span></div>
