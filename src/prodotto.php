@@ -174,8 +174,7 @@ try {
                                             name="quantita" 
                                             value="1" 
                                             min="1" 
-                                            max="<?php echo $disponibilita; ?>" 
-                                            readonly>
+                                            max="<?php echo $disponibilita; ?>">
                                         <button type="button" class="quantity-btn plus" aria-label="Aumenta quantità">+</button>
                                     </div>
                                     <span class="available-stock">
@@ -239,8 +238,7 @@ try {
                 <!-- Descrizione -->
                 <div class="product-detail-block">
                     <h2>Descrizione</h2>
-                    <p><?php echo nl2br(preg_replace('/\.\s+/', ".
-                ", $descrizione)); ?></p>
+                    <p><?php echo nl2br(preg_replace('/\.\s+/', ".\n", $descrizione)); ?></p>
                 </div>
                 
                 <!-- Ingredienti -->
@@ -301,36 +299,46 @@ try {
                         <?php foreach ($prodotti_consigliati as $consigliato): 
                             $nome_cons = htmlspecialchars($consigliato['nome'], ENT_QUOTES, 'UTF-8');
                             $prezzo_cons = number_format($consigliato['prezzo'], 2, ',', '.');
-                            $prezzo_cons_raw = $consigliato['prezzo'];
                             $img_cons = htmlspecialchars($consigliato['img_path'], ENT_QUOTES, 'UTF-8');
                             $grammi_cons = htmlspecialchars($consigliato['grammi'], ENT_QUOTES, 'UTF-8');
                             $id_cons = $consigliato['id_prodotto'];
                         ?>
 
-                        <div class="product-card">
+                        <article class="product-card">
                             <div class="product-image">
-                                <img src="<?php echo $img_cons; ?>" alt="<?php echo $nome_cons; ?>">
-                                <button class="add-to-cart-icon aggiungiCarrello" 
-                                        data-id="<?php echo $id_cons; ?>"
-                                        data-nome="<?php echo $nome_cons; ?>"
-                                        data-prezzo="<?php echo $prezzo_cons_raw; ?>"
-                                        data-img="<?php echo $img_cons; ?>"
-                                        data-disponibilita="200"
-                                        aria-label="Aggiungi al carrello">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                        <path d="M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.993,0,0,0,22.713,4.077ZM21.4,6.178l-.786,4.354A3,3,0,0,1,17.657,13H5.419L4.478,5H20.41A1,1,0,0,1,21.4,6.178Z"/>
-                                        <circle cx="7" cy="22" r="2"/>
-                                        <circle cx="17" cy="22" r="2"/>
-                                    </svg>
-                                </button>
+                                <img src="<?php echo $img_cons; ?>" 
+                                     alt="<?php echo $nome_cons; ?>" 
+                                     loading="lazy" 
+                                     onerror="this.src='images/placeholder_tea.jpg'">
+                                
+                                <form action="php/gestioneCarrello.php" method="POST">
+                                    <input type="hidden" name="azione" value="aggiungi">
+                                    <input type="hidden" name="tipo" value="standard">
+                                    <input type="hidden" name="id_prodotto" value="<?php echo $id_cons; ?>">
+                                    <input type="hidden" name="quantita" value="1">
+                                    
+                                    <button type="submit" class="add-to-cart-icon" 
+                                            aria-label="Aggiungi <?php echo $nome_cons; ?> al carrello"
+                                            title="Aggiungi al carrello">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                            <path d="M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.993,0,0,0,22.713,4.077ZM21.4,6.178l-.786,4.354A3,3,0,0,1,17.657,13H5.419L4.478,5H20.41A1,1,0,0,1,21.4,6.178Z"/>
+                                            <circle cx="7" cy="22" r="2"/>
+                                            <circle cx="17" cy="22" r="2"/>
+                                        </svg>
+                                    </button>
+                                </form>
                             </div>
-                            <div class="product-info">
-                                <h3><?php echo $nome_cons; ?></h3>
-                                <p class="product-weight"><?php echo $grammi_cons; ?>g</p>
-                                <p class="product-price">€<?php echo $prezzo_cons; ?></p>
+                            
+                            <h3><?php echo $nome_cons; ?></h3>
+                            
+                            <p class="product-format">Confezione da <?php echo $grammi_cons; ?>g</p>
+                            
+                            <p class="product-price">€<?php echo $prezzo_cons; ?></p>
+                            
+                            <div class="product-buttons">
                                 <a href="prodotto.php?id=<?php echo $id_cons; ?>" class="bottone-primario">Scopri di più</a>
                             </div>
-                        </div>
+                        </article>
                         <?php endforeach; ?>
                     </div>
                 </div>

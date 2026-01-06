@@ -38,11 +38,6 @@ require_once 'php/connessione.php';?>
                 
                 <!-- Strumenti per filtri e ordinamento -->
                 <div class="catalog-toolbar">
-                    <!-- Pulsante toggle filtri (visibile solo su mobile) -->
-                    <button class="btn-toggle-filters" id="toggleFilters" aria-expanded="false" aria-controls="filterPanel">
-                        <svg viewBox="0 0 24 24"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
-                        Filtri
-                    </button>
 
                     <!-- Ordinamento con radio buttons -->
                     <fieldset class="sort-fieldset">
@@ -65,6 +60,12 @@ require_once 'php/connessione.php';?>
                                 <span>Nome Z-A</span>
                             </label>
                         </div>
+
+                        <!-- Pulsante toggle filtri (visibile solo su mobile) -->
+                        <button class="btn-toggle-filters" id="toggleFilters" aria-expanded="false" aria-controls="filterPanel">
+                            <svg viewBox="0 0 24 24"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
+                            Filtri
+                        </button>
                     </fieldset>
                 </div>
 
