@@ -178,17 +178,19 @@ body.dark-theme .skip-link:visited {
   =================================== */
 
 /*container responsive con padding laterale - layout mobile first: usa tutta larghezza disponibile*/
-.container, .header-container {
-   width: 100%;
-   max-width: 100%;
-   margin: 0 auto; /*centra orizzontalmente*/
-   padding: 0 1em;
+.container,
+.header-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 1em;
 }
 
 /* BREAKPOINTS: x responsive design*/
 /* tablet */
 @media screen and (min-width: 768px) {
-    .container, .header-container {
+    .container,
+    .header-container {
         max-width: 720px;
         padding: 0 1.5em;
     }
@@ -196,7 +198,8 @@ body.dark-theme .skip-link:visited {
 
 /*desktop piccolo*/
 @media screen and (min-width: 1024px) {
-    .container, .header-container {
+    .container,
+    .header-container {
         max-width: 960px;
         padding: 0 2em;
     }
@@ -204,18 +207,18 @@ body.dark-theme .skip-link:visited {
 
 /*desktop grande*/
 @media screen and (min-width: 1200px) {
-    .container, .header-container {
+    .container,
+    .header-container {
         max-width: 1140px;
     }
 }
 
-/* FLEXBOX x layout header: abilita flexbox (CSS3)*/
 .header-container {
     display: flex;
-    justify-content: space-between; /*logo sinistra, menu centro, icone destra*/
+    justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap; /*elementi vanno a capo su mobile*/
-    gap: 2em; /*spazio tra elementi*/
+    flex-wrap: nowrap;          
+    gap: 2em;
 }
 
 /* ===================================
@@ -304,32 +307,34 @@ body.dark-theme .logo-light { display: none; }
     flex: 1;
     display: flex;
     justify-content: center;
+    min-width: 0;
 }
 
 .main-nav li {
     list-style: none;
     display: flex;
-    gap: 2em;
-    flex-wrap: wrap;
+    gap: 1em;
+    flex-wrap: nowrap;
     align-items: center;
     margin: 0;
     padding: 0;
 }
 
 .main-nav a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0.75em 1em; 
     color: var(--header-text);
     text-decoration: none;
-    padding: 0.75em 1.25em;
-    display: block;
-    transition: all 0.3s ease;
-    border-radius: 6px;
-    font-weight: 500;
-    font-size: 1.1em;
     font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    font-size: 1.15em;
+    font-weight: 500;
+    border-radius: 6px;
     border: 2px solid transparent;
+    transition: all 0.3s ease;
+    white-space: nowrap; 
 }
-
-.main-nav a:visited { color: var(--header-text); }
 
 .main-nav a:hover, .main-nav a:focus, .main-nav a:focus-visible {
     background-color: transparent;
@@ -358,7 +363,7 @@ body.dark-theme .main-nav a:focus {
 /* Header Utilities */
 .header-utilities {
     display: flex;
-    gap: 1.5em;
+    gap: 1em;
     align-items: center;
     flex-shrink: 0;
 }
@@ -366,15 +371,6 @@ body.dark-theme .main-nav a:focus {
 /* ===================================
    ICONE E BOTTONI (NAVIGAZIONE)
    =================================== */
-.main-nav a {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    transition: all 0.3s ease;
-    color: var(--header-text);
-    font-size: 1.15em;
-}
-
 .main-nav .nav-leaf-icon {
     width: 20px;
     height: auto;
@@ -405,55 +401,6 @@ body.dark-theme .main-nav a:focus {
 }
 
 /* Nessun effetto hover sulla pagina corrente */
-.main-nav li.current-page a:hover,
-.main-nav li.current-page a:focus {
-    background-color: transparent;
-    border-color: transparent;
-    text-decoration: none;
-    transform: none;
-}
-
-/* ===================================
-   ICONE E BOTTONI (NAVIGAZIONE)
-   =================================== */
-.main-nav a {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    transition: all 0.3s ease;
-    color: var(--header-text);
-    font-size: 1.15em;
-}
-
-.main-nav .nav-leaf-icon {
-    width: 20px;
-    height: auto;
-    fill: var(--header-text);
-    transition: transform 0.3s ease, fill 0.3s ease;
-}
-
-/* Foglia flippata orizzontalmente per pagina attiva */
-.main-nav li.current-page .nav-leaf-icon {
-    transform: rotateY(180deg);
-    fill: var(--header-text);
-}
-
-/* ===================================
-   PAGINA CORRENTE - NON SOTTOLINEATA
-   =================================== */
-.main-nav li.current-page a {
-    color: var(--header-text);
-    text-decoration: none;
-    font-weight: bold;
-    cursor: default;
-    background-color: transparent;
-}
-
-.main-nav li.current-page a:visited {
-    color: var(--header-text);
-    text-decoration: none;
-}
-
 .main-nav li.current-page a:hover,
 .main-nav li.current-page a:focus {
     background-color: transparent;
@@ -1667,6 +1614,7 @@ abbr {
     .form-links { margin-top:1.8em; } .form-links p { font-size:0.95em; margin-bottom:0.4em; } .form-links a{font-size:0.95em;}
     .form-hint { font-size:0.8em; }
 }
+
 @media screen and (max-width:480px){
     .login-container { width:92%; max-width:400px; padding:1.5em; border-width:1px; }
     .login-container h1 { font-size:1.5em; margin-bottom:1em; }
@@ -3188,101 +3136,137 @@ body.dark-theme .product-image .add-to-cart-icon:focus-visible svg {
 }
 
 /* ===================================
-   RESPONSIVE DESIGN - COLLASSO FILTRI
-   A 900px i filtri vanno a tendina
+   RESPONSIVE DESIGN - BREAKPOINT CRITICO
+=================================== */
+
+/* Desktop largo - filtri laterali con card style */
+@media screen and (max-width: 1200px) {
+    .catalog-section .container {
+        grid-template-columns: 280px 1fr;
+        gap: 2em;
+    }
+    
+    .filter-panel {
+        padding: 1.5em;
+        background: var(--card-bg);
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .catalog-section .container {
+        grid-template-columns: 260px 1fr;
+        gap: 1.5em;
+        padding: 0 1em;
+    }
+    
+    .filter-panel {
+        padding: 1.3em;
+        top: 85px;
+        font-size: 0.95em;
+    }
+}
+
+/* ===================================
+   COLLASSO FILTRI A TENDINA
 =================================== */
 
 @media screen and (max-width: 900px) {
-    /* Sezione catalogo su tablet/mobile */
-
     .catalog-section {
-        padding: 1em 0;
+        padding: 1.5em 0;
     }
     
-    /* Layout mobile a singola colonna */
     .catalog-section .container {
         grid-template-columns: 1fr;
-        padding: 0 0.5em;
+        padding: 0 1em;
+        gap: 1.5em;
     }
     
-    /* Mostra bottone toggle filtri */
+    /* Bottone toggle filtri */
     .btn-toggle-filters {
         display: flex;
-        background: transparent;
+        background: var(--button-bg);
         border: none;
-        color: var(--text-color);
-        font-size: 1.1em;
-        font-weight: bold;
+        color: var(--button-text);
+        font-size: 1em;
+        font-weight: 600;
         cursor: pointer;
         align-items: center;
-        gap: 0.5em;
-        font-family: 'Helvetica Neue', 'Arial', sans-serif;
-        padding: 0.5em;
+        gap: 0.6em;
+        padding: 0.9em 1.5em;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         transition: all 0.3s ease;
     }
     
     .btn-toggle-filters:hover {
-        color: var(--button-bg);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        opacity: 0.9;
     }
     
     .btn-toggle-filters svg {
-        width: 24px;
-        height: 24px;
+        width: 22px;
+        height: 22px;
         fill: currentColor;
     }
     
-    /* Toolbar su mobile - mostra filtri e ordinamento */
+    /* Toolbar ordinamento - separata dai filtri */
     .catalog-toolbar {
-        grid-column: 1 / 2;
+        grid-column: 1;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0.8em;
-        margin-bottom: 0.8em;
+        padding: 1em;
+        margin-bottom: 1em;
+        background: var(--card-bg);
+        border-radius: 14px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        gap: 1em;
     }
     
-    /* Ordinamento compatto su mobile */
     .sort-fieldset {
         flex: 1;
-        margin-left: 1em;
     }
     
     .sort-fieldset legend {
         font-size: 0.95em;
         margin-bottom: 0.5em;
-        text-align: left;
-    }
-    
-    .sort-options {
-        gap: 0.5em;
+        font-weight: 600;
     }
     
     .sort-options label {
-        padding: 0.4em 0.8em;
+        padding: 0.5em 1em;
         font-size: 0.85em;
+        border-radius: 8px;
     }
     
-    /* Sidebar diventa tendina su mobile */
+    /* Pannello filtri a tendina - staccato */
     .filter-panel {
         display: none;
-        grid-column: 1 / 2;
-        grid-row: auto;
+        grid-column: 1;
         position: relative;
         top: 0;
         max-height: none;
-        margin-bottom: 1em;
-        padding: 1em;
+        margin-bottom: 1.5em;
+        padding: 1.5em;
+        background: var(--card-bg);
+        border-radius: 16px;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(0, 0, 0, 0.06);
     }
     
     .filter-panel.open {
         display: flex;
-        animation: slideDown 0.3s ease;
+        animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
     
     @keyframes slideDown {
         from {
             opacity: 0;
-            transform: translateY(-10px);
+            transform: translateY(-20px);
         }
         to {
             opacity: 1;
@@ -3290,42 +3274,37 @@ body.dark-theme .product-image .add-to-cart-icon:focus-visible svg {
         }
     }
     
-    /* Grid prodotti su mobile */
     .catalog-grid {
-        grid-column: 1 / 2;
+        grid-column: 1;
     }
 }
 
 /* ===================================
-   RESPONSIVE DESIGN - MOBILE PICCOLO
+   MOBILE PICCOLO
 =================================== */
 
 @media screen and (max-width: 768px) {
     .catalog-section {
-        padding: 0.8em 0;
+        padding: 1.2em 0;
     }
     
     .catalog-section .container {
-        padding: 0 0.3em;
+        padding: 0 0.8em;
     }
     
-    /* Toolbar verticale su mobile piccolo */
     .catalog-toolbar {
         flex-direction: column;
-        gap: 1em;
-        align-items: stretch;
+        gap: 1.2em;
+        padding: 1.2em;
     }
     
     .btn-toggle-filters {
         width: 100%;
         justify-content: center;
-        padding: 0.8em;
-        border: 2px solid var(--text-color);
-        border-radius: 8px;
+        padding: 1em 1.5em;
     }
     
     .sort-fieldset {
-        margin-left: 0;
         width: 100%;
     }
     
@@ -3334,44 +3313,35 @@ body.dark-theme .product-image .add-to-cart-icon:focus-visible svg {
         font-size: 1em;
     }
     
-    /* Ordinamento verticale su mobile */
     .sort-options {
         flex-direction: column;
-        gap: 0.5em;
+        gap: 0.6em;
     }
     
     .sort-options label {
         width: 100%;
-        justify-content: flex-start;
-        padding: 0.6em 1em;
-        font-size: 0.9em;
+        padding: 0.8em 1.2em;
+        font-size: 0.95em;
+        border-radius: 10px;
     }
     
     .filter-panel {
-        padding: 0.8em;
+        padding: 1.3em;
     }
 }
 
 @media screen and (max-width: 480px) {
     .catalog-section .container {
-        grid-template-columns: 220px 1fr;
-        gap: 1em;
-        padding: 0 0.3em;
-    }
-
-    .btn-toggle-filters {
-        font-size: 1em;
-        padding: 0.7em;
+        padding: 0 0.6em;
     }
     
-    .sort-fieldset legend {
-        font-size: 0.95em;
-        margin-bottom: 0.6em;
+    .btn-toggle-filters {
+        padding: 0.9em 1.3em;
     }
     
     .sort-options label {
-        padding: 0.5em 0.8em;
-        font-size: 0.85em;
+        padding: 0.7em 1em;
+        font-size: 0.9em;
     }
 }
 

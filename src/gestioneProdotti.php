@@ -124,7 +124,7 @@ $prodotti = $stmt->fetchAll();
                     <div class="admin-actions">
                         <form action="php/eliminaProdotto.php" method="POST" onsubmit="return confirm('Sei sicuro di voler eliminare <?php echo htmlspecialchars($prodotto['nome']); ?>? Questa azione è irreversibile.');">
                             <input type="hidden" name="id_prodotto" value="<?php echo $prodotto['id_prodotto']; ?>">
-                            <button type="submit" class="bottone-primario">Elimina</button>
+                            <input type="submit" class="bottone-primario" value="Elimina">
                         </form>
                     </div>
                 </div>
