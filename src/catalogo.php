@@ -53,11 +53,11 @@ require_once 'php/connessione.php';?>
                             </label>
                             <label>
                                 <input type="radio" name="sortOrder" value="nameAsc">
-                                <span>Nome A-Z</span>
+                                <span>Nome crescente</span>
                             </label>
                             <label>
                                 <input type="radio" name="sortOrder" value="nameDesc">
-                                <span>Nome Z-A</span>
+                                <span>Nome decrescente</span>
                             </label>
                         </div>
 

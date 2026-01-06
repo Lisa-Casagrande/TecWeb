@@ -37,42 +37,58 @@ if (isset($_SESSION['carrello'])) {
             <span></span><span></span><span></span>
         </button>
 
-        <!-- Menu principale -->
-        <nav aria-label="Menu principale" role="navigation">
-            <ul class="main-nav">
+                <!-- Menu principale -->
+                <nav aria-label="Menu principale" role="navigation">
+                    <ul class="main-nav">
+                        <li class="<?= $currentPage === 'home.php' ? 'current-page' : '' ?>">
+                            <a href="home.php" class="nav-link">
+                                <?php if ($currentPage === 'home.php'): ?>
+                                    <svg class="nav-leaf-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-77 79 100 100" aria-hidden="true">
+                                        <path d="M-2.5,151.2C13,135.8,16.8,83.6,16.8,83.6s-10.7,6.8-27.5,8.2c-15.8,1.4-30.5,3.6-39.1,12.2c-13.3,13.3-16.6,32.1-9,45.5c10.5-17.8,45-33.5,45-33.5C-38.3,133.4-54.4,150-71.2,174l9.3,1.1c0,0,6.1-11.1,11.5-16.4C-37,168.1-16.6,165.3-2.5,151.2z"/>
+                                    </svg>
+                                <?php endif; ?>
+                                <span lang="en">Home</span>
+                            </a>
+                        </li>
 
-                <li class="<?= $currentPage === 'home.php' ? 'current-page' : '' ?>">
-                    <a href="home.php"><span lang="en">Home</span></a>
-                </li>
+                        <li class="<?= $currentPage === 'catalogo.php' ? 'current-page' : '' ?>">
+                            <a href="catalogo.php" class="nav-link">
+                                <?php if ($currentPage === 'catalogo.php'): ?>
+                                    <svg class="nav-leaf-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-77 79 100 100" aria-hidden="true">
+                                        <path d="M-2.5,151.2C13,135.8,16.8,83.6,16.8,83.6s-10.7,6.8-27.5,8.2c-15.8,1.4-30.5,3.6-39.1,12.2c-13.3,13.3-16.6,32.1-9,45.5c10.5-17.8,45-33.5,45-33.5C-38.3,133.4-54.4,150-71.2,174l9.3,1.1c0,0,6.1-11.1,11.5-16.4C-37,168.1-16.6,165.3-2.5,151.2z"/>
+                                    </svg>
+                                <?php endif; ?>
+                                Catalogo
+                            </a>
+                        </li>
 
-                <li class="<?= $currentPage === 'catalogo.php' ? 'current-page' : '' ?>">
-                    <a href="catalogo.php">Catalogo</a>
-                </li>
+                        <li class="<?= $currentPage === 'creaBlend.php' ? 'current-page' : '' ?>">
+                            <a href="creaBlend.php" class="nav-link">
+                                <?php if ($currentPage === 'creaBlend.php'): ?>
+                                    <svg class="nav-leaf-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-77 79 100 100" aria-hidden="true">
+                                        <path d="M-2.5,151.2C13,135.8,16.8,83.6,16.8,83.6s-10.7,6.8-27.5,8.2c-15.8,1.4-30.5,3.6-39.1,12.2c-13.3,13.3-16.6,32.1-9,45.5c10.5-17.8,45-33.5,45-33.5C-38.3,133.4-54.4,150-71.2,174l9.3,1.1c0,0,6.1-11.1,11.5-16.4C-37,168.1-16.6,165.3-2.5,151.2z"/>
+                                    </svg>
+                                <?php endif; ?>
+                                Crea il tuo <span lang="en" xml:lang="en">Blend</span>
+                            </a>
+                        </li>
 
-                <li class="<?= $currentPage === 'creaBlend.php' ? 'current-page' : '' ?>">
-                    <a href="creaBlend.php">Crea il tuo <span lang="en">Blend</span></a>
-                </li>
-
-                <li class="<?= $currentPage === 'chiSiamo.php' ? 'current-page' : '' ?>">
-                    <a href="chiSiamo.php">Chi Siamo</a>
-                </li>
-
-            </ul>
-        </nav>
+                        <li class="<?= $currentPage === 'chiSiamo.php' ? 'current-page' : '' ?>">
+                            <a href="chiSiamo.php" class="nav-link">
+                                <?php if ($currentPage === 'chiSiamo.php'): ?>
+                                    <svg class="nav-leaf-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-77 79 100 100" aria-hidden="true">
+                                        <path d="M-2.5,151.2C13,135.8,16.8,83.6,16.8,83.6s-10.7,6.8-27.5,8.2c-15.8,1.4-30.5,3.6-39.1,12.2c-13.3,13.3-16.6,32.1-9,45.5c10.5-17.8,45-33.5,45-33.5C-38.3,133.4-54.4,150-71.2,174l9.3,1.1c0,0,6.1-11.1,11.5-16.4C-37,168.1-16.6,165.3-2.5,151.2z"/>
+                                    </svg>
+                                <?php endif; ?>
+                                Chi Siamo
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
 
         <!-- Utility icons -->
         <div class="header-utilities">
-            <!-- Ricerca -->
-            <button class="icon-button" aria-label="Cerca prodotti">
-                <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 513.749 513.749" aria-hidden="true">
-                    <path d="M504.352,459.061l-99.435-99.477c74.402-99.427,54.115-240.344-45.312-314.746S119.261-9.277,44.859,90.15
-                             S-9.256,330.494,90.171,404.896c79.868,59.766,189.565,59.766,269.434,0l99.477,99.477c12.501,12.501,32.769,12.501,45.269,0
-                             c12.501-12.501,12.501-32.769,0-45.269L504.352,459.061z M225.717,385.696c-88.366,0-160-71.634-160-160s71.634-160,160-160
-                             s160,71.634,160,160C385.623,314.022,314.044,385.602,225.717,385.696z"/>
-                </svg>
-            </button>
-
-            <!-- Carrello -->
+        <!-- Carrello -->
             <a href="carrello.php"
    class="icon-button <?= $currentPage === 'carrello.php' ? 'current-page' : '' ?>"
    aria-label="Vai al carrello">
@@ -108,6 +124,16 @@ if (isset($_SESSION['carrello'])) {
                     </svg>
                 </a>
             <?php endif; ?>
+
+            <!-- Ricerca -->
+            <button class="icon-button" aria-label="Cerca prodotti">
+                <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 513.749 513.749" aria-hidden="true">
+                    <path d="M504.352,459.061l-99.435-99.477c74.402-99.427,54.115-240.344-45.312-314.746S119.261-9.277,44.859,90.15
+                             S-9.256,330.494,90.171,404.896c79.868,59.766,189.565,59.766,269.434,0l99.477,99.477c12.501,12.501,32.769,12.501,45.269,0
+                             c12.501-12.501,12.501-32.769,0-45.269L504.352,459.061z M225.717,385.696c-88.366,0-160-71.634-160-160s71.634-160,160-160
+                             s160,71.634,160,160C385.623,314.022,314.044,385.602,225.717,385.696z"/>
+                </svg>
+            </button>
 
             <!-- Tema chiaro/scuro -->
             <button class="icon-button theme-toggle" aria-label="Cambia tema">

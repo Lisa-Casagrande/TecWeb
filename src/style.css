@@ -375,7 +375,141 @@ body.dark-theme .main-nav a:focus {
 }
 
 /* ===================================
-   ICONE E BOTTONI
+   ICONE E BOTTONI (NAVIGAZIONE)
+   =================================== */
+.main-nav a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease;
+    color: var(--header-text);
+    font-size: 1.15em;
+}
+
+.main-nav .nav-leaf-icon {
+    width: 20px;
+    height: auto;
+    fill: var(--header-text);
+    transition: transform 0.3s ease, fill 0.3s ease;
+}
+
+/* Foglia flippata (specchiata orizzontalmente) per pagina attiva */
+.main-nav li.current-page .nav-leaf-icon {
+    /*transform: rotateX(180deg);*/ /* Flip orizzontale permanente */
+    fill: var(--header-text);
+}
+
+/* ===================================
+   PAGINA CORRENTE - NON SOTTOLINEATA
+   =================================== */
+
+.main-nav li.current-page a {
+    color: var(--header-text);
+    text-decoration: none;
+    font-weight: bold;
+    cursor: default;
+}
+
+/* Rimuovi sottolineatura anche se visitata */
+.main-nav li.current-page a:visited {
+    color: var(--header-text);
+    text-decoration: none;
+}
+
+/* Nessun effetto hover sulla pagina corrente */
+.main-nav li.current-page a:hover,
+.main-nav li.current-page a:focus {
+    background-color: transparent;
+    border-color: transparent;
+    text-decoration: none;
+    transform: none;
+}
+
+/* ===================================
+   ICONE E BOTTONI (NAVIGAZIONE)
+   =================================== */
+.main-nav a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease;
+    color: var(--header-text);
+    font-size: 1.15em;
+}
+
+.main-nav .nav-leaf-icon {
+    width: 20px;
+    height: auto;
+    fill: var(--header-text);
+    transition: transform 0.3s ease, fill 0.3s ease;
+}
+
+/* Foglia flippata orizzontalmente per pagina attiva */
+.main-nav li.current-page .nav-leaf-icon {
+    transform: rotateY(180deg);
+    fill: var(--header-text);
+}
+
+/* ===================================
+   PAGINA CORRENTE - NON SOTTOLINEATA
+   =================================== */
+.main-nav li.current-page a {
+    color: var(--header-text);
+    text-decoration: none;
+    font-weight: bold;
+    cursor: default;
+    background-color: transparent;
+}
+
+.main-nav li.current-page a:visited {
+    color: var(--header-text);
+    text-decoration: none;
+}
+
+.main-nav li.current-page a:hover,
+.main-nav li.current-page a:focus {
+    background-color: transparent;
+    border-color: transparent;
+    text-decoration: none;
+    transform: none;
+}
+
+/* ===================================
+   LINK VISITATI - SEMPRE SOTTOLINEATI
+   =================================== */
+.main-nav li:not(.current-page) a:visited { 
+    color: var(--link-visited);
+    text-decoration: underline; /* ← Sottolineato PERMANENTE */
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+}
+
+/* Foglia colorata per link visitati */
+.main-nav li:not(.current-page) a:visited .nav-leaf-icon {
+    fill: var(--link-visited);
+}
+
+/* ===================================
+   HOVER E FOCUS - SOLO SU LINK NON CORRENTI
+   =================================== */
+.main-nav li:not(.current-page) a:hover, 
+.main-nav li:not(.current-page) a:focus, 
+.main-nav li:not(.current-page) a:focus-visible {
+    background-color: transparent;
+    border-color: transparent;
+    text-decoration: none; /* NESSUN sottolineato al passaggio */
+    transform: translateY(-2px);
+    outline: none;
+    box-shadow: none;
+}
+
+.main-nav li:not(.current-page) a:hover .nav-leaf-icon,
+.main-nav li:not(.current-page) a:focus .nav-leaf-icon {
+    fill: var(--header-text);
+}
+
+/* ===================================
+   ICONE CARRELLO E UTENTE
    =================================== */
 
 .icon-button {
@@ -392,14 +526,8 @@ body.dark-theme .main-nav a:focus {
     align-items: center;
     justify-content: center;
     text-decoration: none;
-}
-
-/* Modifica questa sezione nel tuo style.css */
-.icon-button:hover, .icon-button:focus {
-    background-color: rgba(255, 255, 255, 0.1);
-    transform: scale(1.1);
-    outline: 1.5px solid var(--header-text);
-    outline-offset: 1.5px;
+    position: relative;
+    font-size: 1.1rem; /* Scritte leggermente più grandi */
 }
 
 .icon-button svg {
@@ -410,8 +538,98 @@ body.dark-theme .main-nav a:focus {
     transition: color 0.3s ease;
 }
 
+/* Hover e Focus - icone */
+.icon-button:hover, 
+.icon-button:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+    outline: 1.5px solid var(--header-text);
+    outline-offset: 1.5px;
+}
 
-/* Theme Toggle */
+/* Stato attivo per icone (carrello/utente quando sono sulla pagina) */
+a.icon-button.current-page {
+    background-color: rgba(255, 255, 255, 0.15);
+    outline: 1.5px solid var(--header-text);
+    outline-offset: 1.5px;
+}
+
+/* Stato attivo per Home (solo foglia senza cerchio) */
+.main-nav li.current-page a:has(.nav-leaf-icon) {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 0;
+}
+
+/* Rimuovi cerchio per Home nella navigazione principale */
+.main-nav li.current-page .icon-button:has(.nav-leaf-icon) {
+    background-color: transparent;
+    outline: none;
+    border: none;
+}
+
+/* ===================================
+   ICONE VISITATI - NO SOTTOLINEATURA
+   =================================== */
+
+a.icon-button:visited {
+    color: var(--link-visited);
+    text-decoration: none;
+}
+
+body.dark-theme a.icon-button:visited {
+    color: var(--link-visited);
+    text-decoration: none;
+}
+
+a.icon-button:visited svg {
+    fill: var(--link-visited);
+}
+
+body.dark-theme a.icon-button:visited svg {
+    fill: var(--link-visited);
+}
+
+/* Pagina corrente per icone */
+a.icon-button.current-page {
+    color: var(--header-text);
+}
+
+a.icon-button.current-page svg {
+    fill: var(--header-text);
+}
+
+a.icon-button.current-page:visited {
+    color: var(--header-text);
+}
+
+a.icon-button.current-page:visited svg {
+    fill: var(--header-text);
+}
+
+/* Forza il colore dei link visitati per le icone */
+.main-nav a:visited:not(.current-page) {
+    color: var(--link-visited);
+}
+
+.main-nav a:visited:not(.current-page) .nav-leaf-icon {
+    filter: none;
+}
+
+/* Per tema chiaro - foglia per link visitati */
+body:not(.dark-theme) .main-nav a:visited:not(.current-page) .nav-leaf-icon {
+    filter: sepia(1) saturate(5) hue-rotate(30deg) brightness(0.8);
+}
+
+/* Per tema scuro - foglia per link visitati */
+body.dark-theme .main-nav a:visited:not(.current-page) .nav-leaf-icon {
+    filter: sepia(1) saturate(3) hue-rotate(330deg) brightness(1.2);
+}
+
+/* ===================================
+Theme Toggle 
+===================================*/
 .theme-toggle {
     position: relative;
     width: 40px;
@@ -895,7 +1113,7 @@ body.dark-theme .slogan {
 }
 
 /* Su schermi piccoli, riduce la dimensione del font */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1110px) {
     .slogan {
         font-size: 1.8em;
         white-space: normal; /* Permette ritorno a capo su mobile */
