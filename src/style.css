@@ -12,19 +12,31 @@ padding e border inclusi nella larghezza totale */
 
 :root {
     /* Tema Chiaro */
+    /*--bg-light: #FFFBE9;*/
+    /*--text-brown: #4E362E;*/ /*testo principale, Header, Bottoni */
+    /*--accent-yellow: #FEBA17;*/ /*link Visitati */
+
     --bg-light: #FFFBE9;
-    --text-brown: #4E362E; /*testo principale, Header, Bottoni */
-    --accent-yellow: #FEBA17; /*link Visitati */
+    --text-brown: #33231C; /*testo principale, Header, Bottoni */
+    --visited: #71957C; /*#71957C*/
+;
+
     /*colori extra per struttura */
     --white: #FFFFFF; /*sfondo Card */
     --section-bg: #F5F0D7; /*sfondo sezioni alternate */
 
     /* Tema Scuro */
-    --bg-dark: #3b3f45;
+    /*--bg-dark: #3b3f45;
     --text-green: #CDE0CD;
-    --header-dark: #2a2d32;
+    --visited-dark: #7C030F
+    --header-dark: #2a2d32;*/
+
+    --text-green: #CFE3FF; /*colore testo*/
+    --visited-dark: #3D5EB3; /*colore visitati NON è in contrasto! DA TROVARE*/
+    --header-dark: #1f1e1e; /*colore nav*/
+    --bg-dark: #2E3238; /*colore 2 per sfondo*/
+
     --card-dark: #454A52;
-    --accent-red: #7C030F; /*rosso in contrasto con verde per link visitati*/
 }
 
 /* Variabili attive */
@@ -38,7 +50,7 @@ body {
     --button-bg: var(--text-brown); /*bottoni marroni*/
     --button-text: var(--bg-light);/*testo bottoni chiaro*/
     
-    --link-visited: var(--accent-yellow); /*giallo x visited in contrasto con marrone*/
+    --link-visited: var(--visited); /*giallo x visited in contrasto con marrone*/
     
     --card-bg: var(--white);
     --alt-section-bg: var(--section-bg);
@@ -54,7 +66,7 @@ body.dark-theme {
     --button-bg: var(--text-green); /*bottoni verde chiaro*/
     --button-text: var(--header-dark);    /*testo bottoni scuro*/
     
-    --link-visited: var(--accent-red); /*rosso per link visitati*/
+    --link-visited: var(--visited-dark); /*rosso per link visitati*/
     
     --card-bg: var(--card-dark);
     --alt-section-bg: var(--header-dark);
@@ -70,7 +82,6 @@ body {
     line-height: 1.6; /*ampio x accessibilità (> 1.5)*/
     color: var(--text-color);
     background-color: var(--bg-color);
-    transition: background-color 0.3s ease, color 0.3s ease;
     min-width: 320px;
 }
 
@@ -95,25 +106,10 @@ p {
 /*link*/
 a {
     color: var(--text-color);
-    text-decoration: none; /*rimuove sottolineatura predefinita per i link*/
     transition: color 0.2s ease;
     border: 1px solid transparent; 
-    border-radius: 4px;
-    padding: 0 2px; /* spazio per il bordo */
 }
 
-/*link visitato appare giallo e sottolineato*/
-a:visited { 
-    color: var(--link-visited);
-    text-decoration: underline;
-}
-
-/*link hover e focus: passaggio sopra link - sottolineato, bordatura visibile*/
-a:hover, a:focus-visible { 
-    outline: 2px solid var(--button-bg);
-    outline-offset: 2px;
-    text-decoration: underline;
-}
 
 /*fallback per browser che non supportano focus-visible (pochi casi)*/
 a:focus:not(:focus-visible) {
@@ -162,15 +158,8 @@ address { font-style: normal; }
    white-space: nowrap;
 }
 
-/* Stato VISITATO: Sfondo rimane Marrone, Scritta diventa Gialla */
-.skip-link:visited {
-    background-color: var(--button-bg); /* Mantiene lo sfondo marrone */
-    color: var(--link-visited);
-    text-decoration: underline;
-}
-
 body.dark-theme .skip-link:visited {
-    color: var(--accent-red); /*rosso se visitato su sfondo verde chiaro*/
+    color: var(--visited-dark); 
 }
 
 /* Stato FOCUS (Attivato con TAB): Scende dall'alto e cambia stile */
@@ -412,7 +401,6 @@ body.dark-theme .main-nav a:focus {
 
 /* Rimuovi sottolineatura anche se visitata */
 .main-nav li.current-page a:visited {
-    color: var(--header-text);
     text-decoration: none;
 }
 
@@ -578,53 +566,8 @@ a.icon-button:visited {
     text-decoration: none;
 }
 
-body.dark-theme a.icon-button:visited {
-    color: var(--link-visited);
-    text-decoration: none;
-}
-
 a.icon-button:visited svg {
     fill: var(--link-visited);
-}
-
-body.dark-theme a.icon-button:visited svg {
-    fill: var(--link-visited);
-}
-
-/* Pagina corrente per icone */
-a.icon-button.current-page {
-    color: var(--header-text);
-}
-
-a.icon-button.current-page svg {
-    fill: var(--header-text);
-}
-
-a.icon-button.current-page:visited {
-    color: var(--header-text);
-}
-
-a.icon-button.current-page:visited svg {
-    fill: var(--header-text);
-}
-
-/* Forza il colore dei link visitati per le icone */
-.main-nav a:visited:not(.current-page) {
-    color: var(--link-visited);
-}
-
-.main-nav a:visited:not(.current-page) .nav-leaf-icon {
-    filter: none;
-}
-
-/* Per tema chiaro - foglia per link visitati */
-body:not(.dark-theme) .main-nav a:visited:not(.current-page) .nav-leaf-icon {
-    filter: sepia(1) saturate(5) hue-rotate(30deg) brightness(0.8);
-}
-
-/* Per tema scuro - foglia per link visitati */
-body.dark-theme .main-nav a:visited:not(.current-page) .nav-leaf-icon {
-    filter: sepia(1) saturate(3) hue-rotate(330deg) brightness(1.2);
 }
 
 /* ===================================
@@ -681,7 +624,7 @@ body.dark-theme .moon-icon { opacity: 1; }
 }
 /*visitato - tema scuro*/
 body.dark-theme .bottone-primario:visited {
-    color: var(--accent-red); 
+    color: var(--visited-dark); 
     border-color: var(--button-bg);
 }
 
@@ -3081,25 +3024,6 @@ body.dark-theme .leaf-icon li::before {
     cursor: pointer;
 }
 
-/* Scrollbar personalizzata per sidebar */
-.filter-panel::-webkit-scrollbar {
-    width: 6px;
-}
-
-.filter-panel::-webkit-scrollbar-track {
-    background: var(--alt-section-bg);
-    border-radius: 4px;
-}
-
-.filter-panel::-webkit-scrollbar-thumb {
-    background: var(--button-bg);
-    border-radius: 4px;
-}
-
-.filter-panel::-webkit-scrollbar-thumb:hover {
-    background: var(--text-color);
-}
-
 /* ===================================
    GRID PRODOTTI
 =================================== */
@@ -3223,22 +3147,6 @@ body.dark-theme .product-image .add-to-cart-icon:focus-visible svg {
     fill: var(--text-color);
 }
 
-/*STATO "AGGIUNTO" */
-.product-image .add-to-cart-icon.added {
-    background-color: var(--text-color); /* Diventa Marrone (chiaro) / Verde (scuro) */
-}
-
-.product-image .add-to-cart-icon.added svg {
-    fill: var(--bg-light);
-}
-
-body.dark-theme .product-image .add-to-cart-icon.added {
-    background-color: var(--text-color);
-}
-body.dark-theme .product-image .add-to-cart-icon.added svg {
-    fill: var(--card-bg);
-}
-
 /* ===================================
    RESPONSIVE DESIGN - BREAKPOINT CRITICO
    I filtri collassano quando la larghezza non basta
@@ -3286,6 +3194,7 @@ body.dark-theme .product-image .add-to-cart-icon.added svg {
 
 @media screen and (max-width: 900px) {
     /* Sezione catalogo su tablet/mobile */
+
     .catalog-section {
         padding: 1em 0;
     }
@@ -3444,10 +3353,12 @@ body.dark-theme .product-image .add-to-cart-icon.added svg {
 }
 
 @media screen and (max-width: 480px) {
-    .catalog-section {
-        padding: 0.5em 0;
+    .catalog-section .container {
+        grid-template-columns: 220px 1fr;
+        gap: 1em;
+        padding: 0 0.3em;
     }
-    
+
     .btn-toggle-filters {
         font-size: 1em;
         padding: 0.7em;
@@ -3659,7 +3570,7 @@ body.dark-theme .add-to-cart-icon.added svg {
 
 .testo-errore a:hover,
 .testo-errore a:focus {
-    color: var(--accent-yellow);
+    color: var(--link-visited);
     text-decoration: underline;
 }
 
@@ -3695,7 +3606,7 @@ body.dark-theme .testo-errore a {
 
 body.dark-theme .testo-errore a:hover,
 body.dark-theme .testo-errore a:focus {
-    color: var(--accent-red);
+    color: var(--visited-dark);
 }
 
 /* ===================================
