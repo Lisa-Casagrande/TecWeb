@@ -16,20 +16,29 @@ $id_ordine_creato = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['conferma_ordine'])) {
     if (!empty($_SESSION['carrello'])) {
         $id_utente = $_SESSION['user_id'];
-        $indirizzo_spedizione = trim($_POST['indirizzo_spedizione']);
-        $totale_ordine = $_POST['totale_calcolato'];
+        //recupera dati da form
+        $indirizzo_spedizione = trim($_POST['indirizzo_spedizione'] ?? '');
+        $sottototale = floatval($_POST['sottototale_calcolato']);
+        //spese di spedizione sempre 4.99, da aggiungere al totale
+        $spese_spedizione = 4.99;
+        // calcolo totale finale
+        $totale_ordine = $sottototale + $spese_spedizione;
         
+        //LOGICA OMAGGIO SOPRA I 50 EURO: calcola se utente ha diritto a omaggio
+        $omaggio = ($totale_ordine >= 50) ? 1 : 0;
+        $descrizione_omaggio = ($omaggio === 1) ? "Infuso Alpino - Edizione 50° Anniversario" : null;
+
         if (empty($indirizzo_spedizione)) {
             $errore_ordine = "L'indirizzo di spedizione è obbligatorio.";
         } else {
             try {
                 // 1. Inserimento Ordine
-                $stmt = $pdo->prepare("INSERT INTO ordine (id_utente, indirizzo_spedizione, totale, stato_ord, data_ordine) VALUES (?, ?, ?, 'in_attesa', NOW())");
-                
-                // Con PDO passiamo i parametri direttamente nell'execute
-                if ($stmt->execute([$id_utente, $indirizzo_spedizione, $totale_ordine])) {
-                    
-                    // Recupero ID ordine
+                $sql = "INSERT INTO ordine (id_utente, indirizzo_spedizione, sottototale, spese_spedizione, totale, stato_ord, data_ordine, omaggio, descrizione_omaggio) 
+                VALUES (?, ?, ?, ?, ?, 'in_attesa', NOW(), ?, ?)";
+                $stmt = $pdo->prepare($sql);
+
+                if ($stmt->execute([$id_utente, $indirizzo_spedizione, $sottototale, $spese_spedizione, $totale_ordine, $omaggio, $descrizione_omaggio])) {
+                    //recupero ID ordine
                     $id_ordine_creato = $pdo->lastInsertId();
                     
                     // 2. Inserimento Dettagli
@@ -65,10 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['conferma_ordine'])) {
                             // Prodotto Standard
                             $id_prodotto_finale = $item['id'];
                         }
-
-                        // Inserimento riga dettaglio
+                        // salva dettaglio ordine
                         $stmt_det = $pdo->prepare("INSERT INTO dettaglio_ordine (id_ordine, id_prodotto, id_custom, quantita, prezzo_unit) VALUES (?, ?, ?, ?, ?)");
-                        // Nota: passiamo NULL se l'ID non c'è
                         $stmt_det->execute([$id_ordine_creato, $id_prodotto_finale, $id_custom_finale, $item['quantita'], $item['prezzo']]);
                     }
                     
@@ -78,8 +85,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['conferma_ordine'])) {
                     $errore_ordine = "Errore durante il salvataggio dell'ordine.";
                 }
             } catch (PDOException $e) {
-                $errore_ordine = "Errore tecnico: Impossibile salvare l'ordine.";
-                error_log("Errore PDO: " . $e->getMessage());
+                $errore_ordine = "Errore nel Database: " . $e->getMessage();
+                error_log("Errore Ordine: " . $e->getMessage());
             }
         }
     }
@@ -91,7 +98,6 @@ if (!$ordine_completato && isset($_SESSION['user_id'])) {
     $stmt = $pdo->prepare("SELECT indirizzo, citta, cap, paese FROM utente WHERE id_utente = ?");
     $stmt->execute([$_SESSION['user_id']]);
     
-    // Fetch con PDO
     if ($r = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $parti = [];
         if (!empty($r['indirizzo'])) $parti[] = $r['indirizzo'];
@@ -152,10 +158,11 @@ if (!$ordine_completato && isset($_SESSION['user_id'])) {
                 <div class="cart-list-container admin-card"> <!--riutilizzo stili da altre pagine-->
                     <ul class="cart-list" aria-label="Elenco prodotti nel carrello">
                         <?php 
-                        $totale = 0;
+                        $sottototale = 0;
+
                         foreach ($_SESSION['carrello'] as $key => $item): 
-                            $subtotale = $item['prezzo'] * $item['quantita'];
-                            $totale += $subtotale;
+                            $importo_riga = $item['prezzo'] * $item['quantita'];
+                            $sottototale += $importo_riga;
                         ?>
                         <li class="cart-item">
                             <div class="cart-item-info">
@@ -187,7 +194,7 @@ if (!$ordine_completato && isset($_SESSION['user_id'])) {
                             </div>
 
                             <div class="product-price cart-price-fix">
-                                € <?php echo number_format($subtotale, 2); ?>
+                                € <?php echo number_format($sottototale, 2); ?>
                             </div>
 
                             <div class="cart-item-remove">
@@ -199,31 +206,70 @@ if (!$ordine_completato && isset($_SESSION['user_id'])) {
                             </div>
                         </li>
                         <?php endforeach; ?>
+
+                        <!--gestione omaggio sopra i 50 euro-->
+                        <?php if ($sottototale >= 50): ?>
+                        <li class="cart-item omaggio-item">
+                            <div class="cart-item-info">
+                                <h2>Prodotto in Omaggio 🎁</h2>
+                                <h3>Infuso Alpino - Edizione <abbr title="cinquantesimo">50°</abbr> Anniversario</h3>
+                            </div>
+                            <div class="product-grams">1 pezzo</div>
+                            <div class="product-price cart-price-fix"> Gratis </div>
+                            <div class="cart-item-remove"></div> </li>
+                        <?php endif; ?>
+                            
+                        <!--calcolo totale con spedizione-->
+                        <?php
+                            $spedizione = 4.99;
+                            $totale_finale = $sottototale + $spedizione;
+                        ?>
+                        <li class="cart-total-row subtotal">
+                            <span>Sottototale:</span>
+                            <span class="total-price">€ <?php echo number_format($sottototale, 2); ?></span>
+                        </li>
+
+                        <li class="cart-total-row subtotal">
+                            <span>Spedizione standard:</span>
+                            <span class="total-price">€ <?php echo number_format($spedizione, 2); ?></span>
+                        </li>
                             
                         <li class="cart-total-row">
                             <span>Totale Ordine:</span>
-                            <strong class="total-price">€ <?php echo number_format($totale, 2); ?></strong>
+                            <strong class="total-price">€ <?php echo number_format($totale_finale, 2); ?></strong>
                         </li>
                     </ul>
                 </div>
 
                 <section class="cart-summary admin-card" aria-labelledby="titolo-spedizione">
-                    <h2>Dati di Spedizione</h2>
-                        
                     <form action="carrello.php" method="POST" class="form-checkout">
-                        <input type="hidden" name="totale_calcolato" value="<?php echo $totale; ?>">
+                        <input type="hidden" name="sottototale_calcolato" value="<?php echo $sottototale; ?>"> <!--form con input nascosto da inviare al database-->
+                        
+                        <input type="hidden" name="indirizzo_spedizione" value="<?php echo htmlspecialchars($indirizzo_precompilato); ?>">
                             
-                        <div class="form-group">
-                            <label for="indirizzo_spedizione">Indirizzo di consegna:</label>
-                            <textarea id="indirizzo_spedizione" name="indirizzo_spedizione" rows="3" required aria-required="true"><?php echo htmlspecialchars($indirizzo_precompilato); ?></textarea>
+                        <div class="indirizzo-container">
+                            <span class="indirizzo_spedizione">Indirizzo di consegna:</span>
+                            
+                            <?php if (!empty($indirizzo_precompilato)): ?>
+                                <p>
+                                    <?php echo htmlspecialchars($indirizzo_precompilato); ?>
+                                </p>
+                                <p class="indirizzo_spedizione">L'indirizzo non è corretto?
+                                    <a href="paginaUtente.php">Modificalo nel profilo</a>
+                                </p>
+                            <?php else: ?>
+                                <p class="errorSuggestion">Non hai impostato un indirizzo nel tuo profilo.</p>
+                                <a href="paginaUtente.php" class="bottone-primario">Vai al Profilo per inserirlo</a>
+                            <?php endif; ?>
                         </div>
-
                         <div class="checkout">
-                            <button type="submit" name="conferma_ordine" class="bottone-primario">Conferma Ordine</button>
+                            <button type="submit" name="conferma_ordine" class="bottone-primario" 
+                                <?php echo empty($indirizzo_precompilato) ? 'disabled' : ''; ?>>
+                                Conferma Ordine
+                            </button>
                         </div>
                     </form>
                 </section>
-
             </div>
         <?php endif; ?>
     </section>
