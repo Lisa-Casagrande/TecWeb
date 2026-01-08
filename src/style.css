@@ -32,7 +32,7 @@ padding e border inclusi nella larghezza totale */
     --header-dark: #2a2d32;*/
 
     --text-green: #CFE3FF; /*colore testo*/
-    --visited-dark: #3D5EB3; /*colore visitati NON è in contrasto! DA TROVARE*/
+    --visited-dark: #3D5EB3; /*colore visitati NON è in contrasto*/
     --header-dark: #1f1e1e; /*colore nav*/
     --bg-dark: #2E3238; /*colore 2 per sfondo*/
 
@@ -50,7 +50,7 @@ body {
     --button-bg: var(--text-brown); /*bottoni marroni*/
     --button-text: var(--bg-light);/*testo bottoni chiaro*/
     
-    --link-visited: var(--visited); /*giallo x visited in contrasto con marrone*/
+    --link-visited: var(--visited);
     
     --card-bg: var(--white);
     --alt-section-bg: var(--section-bg);
@@ -63,10 +63,10 @@ body.dark-theme {
     --header-bg: var(--header-dark);
     --header-text: var(--text-green);
     
-    --button-bg: var(--text-green); /*bottoni verde chiaro*/
-    --button-text: var(--header-dark);    /*testo bottoni scuro*/
+    --button-bg: var(--text-green);
+    --button-text: var(--header-dark);
     
-    --link-visited: var(--visited-dark); /*rosso per link visitati*/
+    --link-visited: var(--visited-dark);
     
     --card-bg: var(--card-dark);
     --alt-section-bg: var(--header-dark);
@@ -75,6 +75,9 @@ body.dark-theme {
 /* ===================================
    STILI GENERALI
    =================================== */
+@view-transition { /*crea uan dissolvenza tra le pagine, non sembra che ci sia uno "scattino" quando si cambia pagina*/
+    navigation: auto;
+}
 
 body {
     font-family: 'Georgia', 'Times New Roman', serif;
@@ -4613,7 +4616,13 @@ section.product-details-section .product-detail-block {
 }
 
 .cart-item-info h2 {
-    font-size: 1.1rem;
+    font-size: 1.1em;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.cart-item-info h3{ /*omaggio*/
+    font-size: 1em;
     margin-bottom: 0.5rem;
     color: var(--text-color);
 }
@@ -4637,15 +4646,27 @@ section.product-details-section .product-detail-block {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding-top: 1.5rem;
+    padding-top: 1.5em;
     border-top: 2px solid var(--text-color);
-    gap: 1rem;
-    font-size: 1.2rem;
+    gap: 1em;
+    font-size: 1.2em;
 }
 
 .total-price {
-    font-size: 1.5rem;
+    font-size: 1.4em;
     color: var(--text-color);
+}
+
+.cart-total-row.subtotal{
+    padding: 0.5em 0;
+    font-size: 1.1em;
+    border: none;
+    font-weight: normal;
+}
+
+.cart-total-row.subtotal .total-price {
+    font-size: 1.2em;
+    font-weight: normal;
 }
 
 /* colonna destra: checkout */
@@ -4688,21 +4709,48 @@ body.dark-theme .bottone-primario:focus {
     outline-color: var(--text-color); /* Verde chiaro */
 }
 
-/* Stile per textarea indirizzo */
-textarea#indirizzo_spedizione {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid var(--bg-color);
-    border-radius: 4px;
-    font-family: inherit;
+/* Box che contiene l'indirizzo */
+.indirizzo-container {
+    background-color: var(--card-bg);
+    padding: 1.5em;
+    border-radius: 1em;
+    border: 1px solid var(--text-color);
+    margin-bottom: 1.5em;
+    text-align: left;
     resize: vertical;
 }
 
-textarea#indirizzo_spedizione:focus {
-    border-color: var(--button-bg);
-    outline: 3px solid var(--button-bg);
-    outline-offset: 1px;
-    box-shadow: 0 0 0 4px rgba(78, 54, 46, 0.1); 
+.indirizzo_spedizione {
+    display: block;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.5em;
+    font-size: 1em;
+    letter-spacing: 0.5px;
+}
+
+/* Link "Modificalo nel profilo" */
+.indirizzo-container a {
+    display: inline-block;
+    font-size: 1em;
+    color: var(--text-color);
+    font-weight: bold;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.indirizzo-container a:hover,
+.indirizzo-container a:focus {
+    transform: translateY(-3px);
+    color: var(--button-bg);
+    text-decoration: underline;
+    background-color: transparent;
+    outline: none;
+}
+
+/* Link Visitato */
+.indirizzo-container a:visited {
+    color: var(--link-visited);
+    text-decoration: underline;
 }
 
 /*RIMUOVE FRECCETTE DALLA CASELLA DELLA QUANTITÀ*/
