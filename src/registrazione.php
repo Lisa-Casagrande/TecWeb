@@ -25,10 +25,10 @@ unset($_SESSION['errors'], $_SESSION['old']);
 // Funzione helper per decidere la classe CSS iniziale
 function getClasse($campo, $errors, $old) {
     if (isset($errors[$campo])) return 'input-error';
-    if (isset($old[$campo]) && !empty($old[$campo])) return 'input-valid';
+    // Solo se il campo ha un valore **non vuoto e non è password** diventa valido
+    if (isset($old[$campo]) && !empty($old[$campo]) && $campo !== 'reg_password' && $campo !== 'reg_conf') return 'input-valid';
     return '';
 }
-
 // Calcola la data massima per essere maggiorenne (18 anni)
 $maxDataNascita = date('Y-m-d', strtotime('-18 years'));
 
@@ -40,35 +40,36 @@ $sostituzioni = [
     '[erroreGenerale]' => $errors['generale'] ?? '',
 
     // Errori specifici per ogni campo
-    '[erroreNome]'       => $errors['nome'] ?? '',
-    '[erroreCognome]'    => $errors['cognome'] ?? '',
-    '[erroreNascita]'    => $errors['data-nascita'] ?? '',
-    '[erroreCitta]'      => $errors['citta'] ?? '',
-    '[erroreIndirizzo]'  => $errors['indirizzo'] ?? '',
-    '[erroreCap]'        => $errors['cap'] ?? '',
-    '[erroreEmail]'      => $errors['email'] ?? '',
-    '[errorePassword]'   => $errors['password'] ?? '',
-    '[erroreConferma]'   => $errors['conf'] ?? '',
+    '[erroreNome]'       => $errors['reg_nome'] ?? '',
+    '[erroreCognome]'    => $errors['reg_cognome'] ?? '',
+    '[erroreNascita]'    => $errors['reg_data-nascita'] ?? '',
+    '[erroreCitta]'      => $errors['reg_citta'] ?? '',
+    '[erroreIndirizzo]'  => $errors['reg_indirizzo'] ?? '',
+    '[erroreCap]'        => $errors['reg_cap'] ?? '',
+    '[erroreEmail]'      => $errors['reg_email'] ?? '',
+    '[errorePassword]'   => $errors['reg_password'] ?? '',
+    '[erroreConferma]'   => $errors['reg_conf'] ?? '',
 
     // Valori precedenti (per ripopolare i campi)
-    '[valoreNome]'       => htmlspecialchars($old['nome'] ?? ''),
-    '[valoreCognome]'    => htmlspecialchars($old['cognome'] ?? ''),
-    '[valoreData]'       => htmlspecialchars($old['data-nascita'] ?? ''),
-    '[valoreCitta]'      => htmlspecialchars($old['citta'] ?? ''),
-    '[valoreIndirizzo]'  => htmlspecialchars($old['indirizzo'] ?? ''),
-    '[valoreCap]'        => htmlspecialchars($old['cap'] ?? ''),
-    '[valoreEmail]'      => htmlspecialchars($old['email'] ?? ''),
-
+    '[valoreNome]'       => htmlspecialchars($old['reg_nome'] ?? ''),
+    '[valoreCognome]'    => htmlspecialchars($old['reg_cognome'] ?? ''),
+    '[valoreData]'       => htmlspecialchars($old['reg_data-nascita'] ?? ''),
+    '[valoreCitta]'      => htmlspecialchars($old['reg_citta'] ?? ''),
+    '[valoreIndirizzo]'  => htmlspecialchars($old['reg_indirizzo'] ?? ''),
+    '[valoreCap]'        => htmlspecialchars($old['reg_cap'] ?? ''),
+    '[valoreEmail]'      => htmlspecialchars($old['reg_email'] ?? ''),
+    '[valorePassword]'  => htmlspecialchars($old['reg_password'] ?? ''),
+    
     // Classi CSS per input
-    '[classeNome]'       => getClasse('nome', $errors, $old),
-    '[classeCognome]'    => getClasse('cognome', $errors, $old),
-    '[classeData]'       => getClasse('data-nascita', $errors, $old),
-    '[classeCitta]'      => getClasse('citta', $errors, $old),
-    '[classeIndirizzo]'  => getClasse('indirizzo', $errors, $old),
-    '[classeCap]'        => getClasse('cap', $errors, $old),
-    '[classeEmail]'      => getClasse('email', $errors, $old),
-    '[classePassword]'   => getClasse('password', $errors, $old),
-    '[classeConferma]'   => getClasse('conf', $errors, $old),
+    '[classeNome]'       => getClasse('reg_nome', $errors, $old),
+    '[classeCognome]'    => getClasse('reg_cognome', $errors, $old),
+    '[classeData]'       => getClasse('reg_data-nascita', $errors, $old),
+    '[classeCitta]'      => getClasse('reg_citta', $errors, $old),
+    '[classeIndirizzo]'  => getClasse('reg_indirizzo', $errors, $old),
+    '[classeCap]'        => getClasse('reg_cap', $errors, $old),
+    '[classeEmail]'      => getClasse('reg_email', $errors, $old),
+    '[classePassword]'   => getClasse('reg_password', $errors, $old),
+    '[classeConferma]'   => getClasse('reg_conf', $errors, $old),
 
     // Data massima per la nascita
     '[maxDataNascita]'   => $maxDataNascita
