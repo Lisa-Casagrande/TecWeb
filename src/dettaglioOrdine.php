@@ -1,25 +1,26 @@
 <?php
-require_once 'php/connessione.php';       // Connessione PDO
-require_once 'php/verificaSessione.php';  // Verifica login utente
+require_once 'php/connessione.php';
+require_once 'php/verificaSessione.php';
 
 // Controllo se è stato passato l'id ordine
 if (!isset($_GET['id'])) {
-    die("Ordine non specificato.");
+    header("Location: paginaUtente.php");
+    exit;
 }
 
 $id_ordine = intval($_GET['id']);
 
 try {
-    // --- Recupera ID utente dalla sessione ---
+    //Recupera ID utente dalla sessione o rimanda a pagina login
     $userId = $_SESSION['user_id'] ?? null;
     if (!$userId) {
-        die("Errore: utente non loggato.");
+        header("Location: login.php");
+        exit;
     }
 
-    // --- Recupera dati ordine solo se appartiene all'utente ---
+    //Recupera dati ordine solo se appartiene all'utente
     $stmt_ordine = $pdo->prepare("
-        SELECT o.id_ordine, o.data_ordine, o.stato_ord, o.totale,
-               u.nome, u.cognome, u.email
+        SELECT o.*, u.nome, u.cognome, u.email
         FROM ordine o
         INNER JOIN utente u ON o.id_utente = u.id_utente
         WHERE o.id_ordine = :id_ordine AND o.id_utente = :id_utente
@@ -35,37 +36,51 @@ try {
         die("Ordine non trovato o non accessibile.");
     }
 
-    // --- Recupero dettagli prodotti ---
-    $stmt_dettagli = $pdo->prepare("
-        SELECT d.id_dettaglio, d.quantita, d.prezzo_unit, d.totale_riga, 
-               p.nome AS prodotto_nome, pc.nome_blend AS custom_nome
+    //Recupero dettagli prodotti
+   $stmt_dettagli = $pdo->prepare("
+        SELECT d.*, 
+               p.nome AS nome_prodotto, p.img_path,
+               pc.nome_blend, pc.grammi AS grammi_custom
         FROM dettaglio_ordine d
         LEFT JOIN prodotto p ON d.id_prodotto = p.id_prodotto
         LEFT JOIN prodotto_custom pc ON d.id_custom = pc.id_custom
         WHERE d.id_ordine = :id_ordine
     ");
+
     $stmt_dettagli->execute([':id_ordine' => $id_ordine]);
-    $dettagli = $stmt_dettagli->fetchAll();  // array vuoto se non ci sono prodotti
+    $dettagli = $stmt_dettagli->fetchAll(); // array vuoto se non ci sono prodotti
+
+    //Logica colori stato (come admin)
+    $stato = $ordine['stato_ord'];
+    $mappaStati = [
+        'annullato'       => 'stato-rosso',
+        'in_attesa'       => 'stato-giallo',
+        'in_preparazione' => 'stato-giallo',
+        'pagato'          => 'stato-verde',
+        'spedito'         => 'stato-verde',
+        'consegnato'      => 'stato-blu'
+    ];
+    $classStato = isset($mappaStati[$stato]) ? $mappaStati[$stato] : 'stato-giallo';
+    $statoFormattato = ucfirst(str_replace('_', ' ', $stato));
 
 } catch (PDOException $e) {
     die("Errore caricamento dati: " . $e->getMessage());
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="it" xml:lang="it" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <title>Dettaglio Ordine - InfuseMe</title>
-    <meta name="description"
-        content="Visualizza i dettagli di un ordine nel nostro negozio di tè, infusi e tisane di qualità" />
-    <meta name="keywords" content="tè, infusi, tisane, account utente, profilo, ordini, preferenze" />
+    <title>Dettaglio Ordine #<?php echo $id_ordine; ?> - InfuseMe</title>
+    <meta name="description" content="Visualizza i dettagli del tuo ordine InfuseMe." />
+    <meta name="keywords" content="tè, infuso, tisana, ordine, dettaglio, utente, profilo, ordini, preferenze" />
     <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
 <body>
-    <!-- Skip link per accessibilità -->
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
 
     <!-- Header -->
@@ -148,32 +163,97 @@ try {
         </div>
     </header>
 
-    <main id="content">
-        <h1>Dettaglio Ordine #<?= $ordine['id_ordine'] ?></h1>
-        <p><strong>Data Ordine:</strong> <?= date("d/m/Y", strtotime($ordine['data_ordine'])) ?></p>
-        <p><strong>Stato Ordine:</strong> <?= htmlspecialchars($ordine['stato_ord']) ?></p>
-        <p><strong>Totale Ordine:</strong> €<?= number_format($ordine['totale'], 2) ?></p>
-        <p><strong>Indirizzo di spedizione:</strong> <?= htmlspecialchars($ordine['indirizzo_spedizione'] ?? '-') ?></p>
-
-        <h2>Prodotti acquistati:</h2>
-        <div class="lista-prodotti">
-           <?php if (!empty($dettagli)): ?>
-            <?php foreach ($dettagli as $riga): ?>
-                <div class="prodotto-item">
-                    <h3><?= htmlspecialchars($riga['prodotto_nome'] ?? $riga['custom_nome']) ?></h3>
-                    <p><strong>Quantità:</strong> <?= $riga['quantita'] ?></p>
-                    <p><strong>Prezzo Unitario:</strong> €<?= number_format($riga['prezzo_unit'], 2) ?></p>
-                    <p><strong>Totale:</strong> €<?= number_format($riga['totale_riga'], 2) ?></p>
+    <main id="main-content" role="main">
+        <section class="admin-dashboard"> <!--stesse classi dettaglioProdottoAdmin.php-->
+            <div class="admin-page-header">
+                <div class="header-title-group">
+                    <h1>Dettaglio Ordine #<?php echo $ordine['id_ordine']; ?></h1>
+                    <div class="order-status-badge">
+                        <span class="<?php echo $classStato; ?>"></span>
+                        <strong><?php echo $statoFormattato; ?></strong>
+                    </div>
                 </div>
-                <hr>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p>Nessun prodotto trovato per questo ordine.</p>
-        <?php endif; ?>
+                
+                <a href="paginaUtente.php" class="bottone-primario">Torna al Profilo</a>
+            </div>
 
-        </div>
+            <div class="admin-grid">
+                <article class="admin-card">
+                    <div class="card-content">
+                        <h3>Dettagli Spedizione</h3>
+                        <div class="admin-details">
+                            <p><strong>Data Ordine:</strong> <?php echo date("d/m/Y H:i", strtotime($ordine['data_ordine'])); ?></p>
+                            <p><strong>Indirizzo di Consegna:</strong> <?php echo htmlspecialchars($ordine['indirizzo_spedizione']); ?></p>
+                        </div>
+                    </div>
+                </article>
 
-        <p><a href="paginaUtente.php">Torna al tuo <span lang="en">account</span></a></p>
+                <article class="admin-card card-full-width">
+                    <div class="card-content">
+                        <h3>Articoli Acquistati</h3>
+                        <ul class="product-list">
+                            <?php if (!empty($dettagli)): ?>
+                                <?php foreach ($dettagli as $item): 
+                                    $nomeItem = !empty($item['nome_prodotto']) ? $item['nome_prodotto'] : $item['nome_blend'];
+                                    $tipoItem = !empty($item['nome_prodotto']) ? "Catalogo" : "Blend Custom";
+                                ?>
+                                <li class="product-item">
+                                    <div class="product-info">
+                                        <strong><?php echo htmlspecialchars($nomeItem); ?></strong>
+                                        <span class="product-type"><?php echo $tipoItem; ?></span>
+                                    </div>
+                                    
+                                    <div class="product-pricing">
+                                        <span class="qty-badge">x<?php echo $item['quantita']; ?></span>
+                                        <span class="price">€ <?php echo number_format($item['totale_riga'], 2); ?></span>
+                                    </div>
+                                </li>
+                                <?php endforeach; ?>
+
+                                <?php if ($ordine['omaggio'] == 1): ?>
+                                <li class="product-item omaggio-admin-row"> <div class="product-info">
+                                        <strong>🎁 Omaggio: <?php echo htmlspecialchars($ordine['descrizione_omaggio']); ?></strong>
+                                        <span class="product-type">Omaggio per ordini sopra i 50 euro</span>
+                                    </div>
+                                    
+                                    <div class="product-pricing">
+                                        <span class="qty-badge">x1</span>
+                                        <span class="price">Gratis</span>
+                                    </div>
+                                </li>
+                                <?php endif; ?>
+
+                            <?php else: ?>
+                                <li class="product-item"><p>Nessun articolo trovato.</p></li>
+                            <?php endif; ?>
+                        </ul>
+
+                        <div class="order-summary">
+                            <div class="summary-row">
+                                <span>Sottototale</span>
+                                <span>€ <?php echo number_format($ordine['sottototale'], 2); ?></span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Spedizione</span>
+                                <span>€ <?php echo number_format($ordine['spese_spedizione'], 2); ?></span>
+                            </div>
+                            <div class="summary-row total-row">
+                                <strong>TOTALE</strong>
+                                <strong>€ <?php echo number_format($ordine['totale'], 2); ?></strong>
+                            </div>
+                        </div>
+
+                        <?php if(!empty($ordine['note'])): ?>
+                            <div class="order-notes">
+                                <strong>Note:</strong>
+                                <p><?php echo htmlspecialchars($ordine['note']); ?></p>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </article>
+
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->

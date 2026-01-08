@@ -1,84 +1,117 @@
 <?php
-// collegamento al DB per salvare il nuovo prodotto creato con la form aggiungiProdotto.php
+// php/salvaProdotto.php
 require_once 'connessione.php';
 require_once 'verificaSessioneAdmin.php';
 
-// Funzione di pulizia base pe input utente
+// Funzione di pulizia base
 function pulisciInput($data) {
-    $data = trim($data); //toglie spazi vuoti
-    $data = stripslashes($data); //rimuove backslash
-    $data = htmlspecialchars($data); //converte caratteri speciali in entità html -> impedisce attacchi che inseriscono codice JS malevolo nel nome prodotto
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
     return $data;
 }
 
-//CONTROLLA CHE LA PAGINA SIA CHIAMATA TRAMITE METODO POST DA CLICK SUL BOTTONE "Inserisci Prodotto"
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // 1. Recupera i dati dal form (usando name) e chiama pulisciInput
-    $nome = pulisciInput($_POST['nome']);
-    $descrizione = pulisciInput($_POST['descrizione']);
-    $categoria = $_POST['categoria']; //no pulisci input perchè sono opzioni date
-    $prezzo = $_POST['prezzo']; //numeri
-    $disponibilita = $_POST['disponibilita'];
-    $grammi = $_POST['grammi'];
-    // Se l'utente lascia "-- Seleziona --", il value è vuoto = nel DB deve diventare NULL
-    $id_base = !empty($_POST['id_base']) ? $_POST['id_base'] : null;
+    // Recupero Dati
+    $nome = pulisciInput($_POST['nome'] ?? '');
+    $descrizione = pulisciInput($_POST['descrizione'] ?? '');
+    $categoria = $_POST['categoria'] ?? '';
+    $prezzo = $_POST['prezzo'] ?? '';
+    $disponibilita = $_POST['disponibilita'] ?? '';
+    
+    // Campi opzionali: usiamo stringa vuota come default per facilitare i controlli dopo
+    $grammi = $_POST['grammi'] ?? ''; 
+    $id_base = $_POST['id_base'] ?? ''; 
 
-    //2. Gestione immagine
-    $img_path_db = null; //default: nessun percorso
-    // controlla se è stato inviato un file per l'immagine (isset) e se non ci sono stati errori
-    if (isset($_FILES['img_path']) && $_FILES['img_path']['error'] === 0 && $_FILES['img_path']['size'] > 0) {
+    // VALIDAZIONE LATO SERVER
+    $errori = [];
 
-        // SICUREZZA 1: CONTROLLO DIMENSIONI (Max 2MB = 2 * 1024 * 1024 bytes)
+    // Validazione Nome
+    if (strlen($nome) < 2 || strlen($nome) > 100) {
+        $errori[] = "Il nome deve avere tra 2 e 100 caratteri.";
+    }
+    // Validazione Descrizione
+    if (strlen($descrizione) < 10) {
+        $errori[] = "La descrizione deve essere lunga almeno 10 caratteri.";
+    }
+    // Validazione Categoria
+    $categorie_valide = ['tè_verde', 'tè_nero', 'tè_bianco', 'tè_giallo', 'tè_oolong', 'tisana', 'infuso', 'altro'];
+    if (!in_array($categoria, $categorie_valide)) {
+        $errori[] = "Selezionare una categoria valida.";
+    }
+    // Validazione Prezzo
+    if (!is_numeric($prezzo) || $prezzo < 0) {
+        $errori[] = "Inserire un prezzo valido (usa il punto per i decimali, es. 10.50).";
+    }
+    // Validazione Disponibilità
+    if (!ctype_digit((string)$disponibilita)) {
+        $errori[] = "Inserire un numero intero positivo per la disponibilità.";
+    }
+    // Validazione ID_BASE
+    if ($id_base !== '' && !ctype_digit((string)$id_base)) {
+        $errori[] = "Selezionare una base valida.";
+    }
+    // Validazione Grammi
+    if ($grammi !== '' && !ctype_digit((string)$grammi)) {
+        $errori[] = "Inserire un numero intero positivo (grammi).";
+    }
+    // Ferma tutto se ci sono errori
+    if (!empty($errori)) {
+        $msg = urlencode(implode(" - ", $errori));
+        header("Location: ../aggiungiProdotto.php?error=" . $msg);
+        exit;
+    }
+
+    // Gestione Immagine
+    $img_path_db = null; 
+
+    if (isset($_FILES['img_path']) && $_FILES['img_path']['error'] === UPLOAD_ERR_OK && $_FILES['img_path']['size'] > 0) {
+
+        // Controllo dimensioni
         if ($_FILES['img_path']['size'] > 2097152) {
-            header("Location: ../aggiungiProdotto.php?error=Il file non è troppo grande"); //mostra messaggio errore
+            header("Location: ../aggiungiProdotto.php?error=Il file non è troppo grande");
             exit;
         }
-        // SICUREZZA 2: CONTROLLO SE È VERA IMMAGINE (getimagesize: legge dimensioni)
+
+        // Controllo che sia una vera immagine
         $check = getimagesize($_FILES["img_path"]["tmp_name"]);
         if ($check === false) {
             header("Location: ../aggiungiProdotto.php?error=Il file non è una immagine valida");
             exit;
         }
-        // SICUREZZA 3: CONTROLLO MIME TYPE REALE: controlla il contenuto del file
+
+        // Controllo MIME Type
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $realMimeType = finfo_file($finfo, $_FILES['img_path']['tmp_name']);
         finfo_close($finfo);
 
-        // controllo formati accettati
-        $allowedMimeTypes = [
-            'image/jpeg' => 'jpg',
-            'image/webp' => 'webp'
-        ];
-        if (!array_key_exists($realMimeType, $allowedMimeTypes)) {
+        $allowedMimeTypes = ['image/jpeg', 'image/jpg', 'image/webp'];
+        if (!in_array($realMimeType, $allowedMimeTypes)) {
             header("Location: ../aggiungiProdotto.php?error=Formato non consentito.");
             exit;
         }
 
-        // Salvataggio
-        $fileName = basename($_FILES["img_path"]["name"]); //pulisce nome file
-        $target_dir = "../images/prodotti/"; //cartella di destinazione
-        $img_path_db = "images/prodotti/" . $fileName; //percorso dal salvare nel DB
-        $target_file = $target_dir . $fileName;
+        // Genera nome file univoco per evitare sovrascritture 
+        $estensione = pathinfo($_FILES["img_path"]["name"], PATHINFO_EXTENSION);
+        $nuovoNomeFile = md5(time() . $_FILES["img_path"]["name"]) . "." . $estensione;
+        
+        $target_dir = "../images/prodotti/";
+        $target_file = $target_dir . $nuovoNomeFile;
+        $img_path_db = "images/prodotti/" . $nuovoNomeFile; // Path per il DB
 
-        // Ultimo controllo estensione (per coerenza col nome file)
-        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-        $allowedExtensions = ['jpg', 'jpeg', 'webp']; 
-        if (!in_array($imageFileType, $allowedExtensions)) {
-             header("Location: ../aggiungiProdotto.php?error=Estensione non valida (solo JPG, WEBP)");
-             exit;
-        }
-
-        // Spostamento file
         if (!move_uploaded_file($_FILES["img_path"]["tmp_name"], $target_file)) {
             header("Location: ../aggiungiProdotto.php?error=Errore tecnico nel caricamento immagine");
             exit;
         }
     }
 
-    // 3. Inserimento nel database
+    // Preparazione Dati per DB (stringhe vuote diventano null per campi opzionali)
+    $grammiFinale = ($grammi === '') ? null : $grammi;
+    $idBaseFinale = ($id_base === '') ? null : $id_base;
+
+    // Inserimento nel database
     try {
-        //punti di domanda invece di mettere direttamente le variabili per sicurezza; dopo vengono inseriti i dati sicuri
         $sql = "INSERT INTO prodotto (nome, descrizione, prezzo, grammi, categoria, img_path, disponibilita, id_base) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         
@@ -88,24 +121,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nome, 
             $descrizione, 
             $prezzo, 
-            $grammi, 
+            $grammiFinale, 
             $categoria, 
             $img_path_db, 
             $disponibilita,
-            $id_base
+            $idBaseFinale
         ]);
 
-        //successo: reindirizza admin alla lista di prodotti
-        header("Location: ../gestioneProdotti.php");
+        header("Location: ../gestioneProdotti.php?msg=success");
         exit;
 
     } catch (PDOException $e) {
-        // gestione errori DB: cattura eccezione e stampa errore
         die("Errore Database: " . $e->getMessage());
     }
 
 } else {
-    //se si tenta di accedere senza POST esce e torna nella pagina della form
     header("Location: ../aggiungiProdotto.php");
     exit;
 }
