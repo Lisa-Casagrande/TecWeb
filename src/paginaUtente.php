@@ -46,55 +46,83 @@ try {
 </head>
 
 <body>
-    <!-- Skip link per accessibilità -->
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
 
-    <!-- Header -->
-     <?php include 'navbar.php'; ?>
+    <?php include 'navbar.php'; ?>
 
-    <main id="content">
-        <!-- Area Account (visibile solo dopo il login) -->
-        <section id="area-account">
-            <h1>Il Mio <span lang="en">Account</span></h1>
-
-            <!-- Profilo Utente -->
-            <section id="profilo-utente">
-                <h2>Il Mio Profilo</h2>
-                <div class="user-info">
-                    <img src="images/avatar-utente.jpg" alt="Immagine profilo utente">
-                    <div class="user-details">
-                        <p><strong>Nome:</strong> <?= htmlspecialchars($utente['nome'] . ' ' . $utente['cognome']) ?>
-                        </p>
-                        <p><strong>Email:</strong> <?= htmlspecialchars($utente['email']) ?></p>
-                        <p><strong>Data registrazione:</strong>
-                            <?= date("d/m/Y", strtotime($utente['data_registrazione'])) ?></p>
-                        <p><a href="modificaProfilo.php">Modifica profilo</a></p>
-                    </div>
+    <main id="main-content" role="main">
+        <section class="admin-dashboard"> <!--usa stesse classi admin-->
+            <div class="admin-page-header">
+                <div class="header-title-group">
+                    <h1>Il Mio <span lang="en">Account</span></h1>
                 </div>
-            </section>
+                <a href="php/logout.php" class="bottone-primario">Esci</a>
+            </div>
 
-            <!-- Ordini Recenti -->
-            <section id="ordini-recenti">
-    <h2>I Miei Ordini Recenti</h2>
+            <div class="admin-grid">
+                <article class="admin-card">
+                    <div class="card-content">
+                        <h3>Dati Personali</h3>
+                        <div class="user-info">
+                            <div class="user-details">
+                                <p><strong>Nome:</strong> <br><?php echo htmlspecialchars($utente['nome'] . ' ' . $utente['cognome']); ?></p>
+                                <p><strong>Email:</strong> <br><?php echo htmlspecialchars($utente['email']); ?></p>
+                                <p><strong>Data registrazione:</strong> <br><?php echo date("d/m/Y", strtotime($utente['data_registrazione'])); ?></p>
+                            </div>
+                        </div>
+                        <div class="admin-actions">
+                            <a href="modificaProfilo.php" class="bottone-primario">Modifica Profilo</a>
+                        </div>
+                    </div>
+                </article>
 
-    <?php if (!empty($ordini)): ?>
-        <?php foreach ($ordini as $ordine): ?>
-            <article class="ordine">
-                <h3>Ordine #<?= $ordine['id_ordine'] ?></h3>
-                <p><strong>Data:</strong> <?= date("d/m/Y", strtotime($ordine['data_ordine'])) ?></p>
-                <p><strong>Stato:</strong> <?= htmlspecialchars($ordine['stato_ord']) ?></p>
-                <p><strong>Totale:</strong> €<?= number_format($ordine['totale'], 2) ?></p>
-                <p><a href="dettaglioOrdine.php?id=<?= $ordine['id_ordine'] ?>">Visualizza dettagli ordine</a></p>
-            </article>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <p>Nessun ordine ancora effettuato.</p>
-    <?php endif; ?>
-</section>
-            <a href="/php/logout.php">Esci</a>
+                <article class="admin-card card-full-width">
+                    <div class="card-content">
+                        <h3>I Miei Ordini Recenti</h3>
+                        <?php if (!empty($ordini)): ?>
+                            <div class="order-list">
+                                <?php foreach ($ordini as $ordine): 
+                                    $stato = $ordine['stato_ord'];
+                                    // Determina colore e formatta testo stato
+                                    $classStato = isset($mappaStati[$stato]) ? $mappaStati[$stato] : 'stato-giallo';
+                                    $statoFormattato = ucfirst(str_replace('_', ' ', $stato));
+                                ?>
+                                
+                                <div class="order-card">
+                                    <div class="order-info">
+                                        <h3 class="order-number">Ordine #<?php echo $ordine['id_ordine']; ?></h3>
+                                        <div class="order-meta">
+                                            <p><strong>Data:</strong> <?php echo date("d/m/Y", strtotime($ordine['data_ordine'])); ?></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="order-price">
+                                        <p>Totale</p>
+                                        <p>€ <?php echo number_format($ordine['totale'], 2); ?></p>
+                                    </div>
+
+                                    <div class="order-status-action">
+                                        <div class="status-wrapper">
+                                            <span class="<?php echo $classStato; ?>"></span>
+                                            <span><?php echo $statoFormattato; ?></span>
+                                        </div>
+                                        <a href="dettaglioOrdine.php?id=<?php echo $ordine['id_ordine']; ?>" class="bottone-primario">Dettagli</a>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php else: ?>
+                            <p>Non hai ancora effettuato ordini.</p>
+                            <div class="admin-actions">
+                                <a href="catalogo.php" class="bottone-primario">Inizia lo <span lang="en">shopping</span></a>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </article>
+
+            </div>
         </section>
     </main>
-
 
     <!-- Footer -->
     <footer>
