@@ -39,7 +39,6 @@ function validaEmailAvanzata($email) {
     if (preg_match('/(\.\.|--|__)/', $email)) return false;
 
     [$locale, $dominio] = explode('@', $email);
-
     if (preg_match('/^[+.\-]|[+.\-]$/', $locale)) return false;
     if (substr($dominio, -1) === '.') return false;
 
@@ -47,7 +46,7 @@ function validaEmailAvanzata($email) {
 }
 
 /* =============================
-   RECUPERO DATI (COERENTI CON HTML)
+   RECUPERO DATI
 ============================= */
 $errors = [];
 $old = $_POST;
@@ -65,40 +64,15 @@ $cap        = clean($_POST['reg_cap'] ?? '');
 /* =============================
    VALIDAZIONE
 ============================= */
-if (!validaTesto($nome)) {
-    $errors['nome'] = "Errore: Nome non valido.";
-}
-
-if (!validaTesto($cognome)) {
-    $errors['cognome'] = "Errore: Cognome non valido.";
-}
-
-if (!validaMaggiorenne($dataNasc)) {
-    $errors['data-nascita'] = "Errore: Devi essere maggiorenne.";
-}
-
-if (!validaTesto($citta)) {
-    $errors['citta'] = "Errore: Città non valida.";
-}
-
-if (!validaIndirizzo($indirizzo)) {
-    $errors['indirizzo'] = "Errore: Indirizzo non valido.";
-}
-if (!preg_match('/^\d{5}$/', $cap)) {
-    $errors['cap'] = "Errore: Il CAP deve contenere esattamente 5 numeri.";
-}
-
-if (!validaEmailAvanzata($email)) {
-    $errors['email'] = "Errore: Email non valida.";
-}
-
-if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/', $password)) {
-    $errors['password'] = "Errore: Password non sicura.";
-}
-
-if ($password !== $confPass) {
-    $errors['conf'] = "Errore: Le password non coincidono.";
-}
+if (!validaTesto($nome))        $errors['reg_nome'] = "Errore: Nome non valido.";
+if (!validaTesto($cognome))     $errors['reg_cognome'] = "Errore: Cognome non valido.";
+if (!validaMaggiorenne($dataNasc)) $errors['reg_data-nascita'] = "Errore: Devi essere maggiorenne.";
+if (!validaTesto($citta))       $errors['reg_citta'] = "Errore: Città non valida.";
+if (!validaIndirizzo($indirizzo)) $errors['reg_indirizzo'] = "Errore: Indirizzo non valido.";
+if (!preg_match('/^\d{5}$/', $cap)) $errors['reg_cap'] = "Errore: Il CAP deve contenere esattamente 5 numeri.";
+if (!validaEmailAvanzata($email)) $errors['reg_email'] = "Errore: Email non valida.";
+if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/', $password)) $errors['reg_password'] = "Errore: Password non sicura.";
+if ($password !== $confPass)     $errors['reg_conf'] = "Errore: Le password non coincidono.";
 
 /* =============================
    ERRORI → RITORNO AL FORM
@@ -143,11 +117,10 @@ try {
 ============================= */
 $stmt = $db->prepare("SELECT id_utente FROM utente WHERE email = :email LIMIT 1");
 $stmt->execute(['email' => $email]);
-
 if ($stmt->fetch()) {
     $_SESSION['errors'] = [
-        'email' => "Errore: Email già registrata.",
-        'generale' => "Attenzione: correggi gli errori evidenziati."
+        'reg_email' => "Errore: Email già registrata.",
+        'generale'  => "Attenzione: correggi gli errori evidenziati."
     ];
     $_SESSION['old'] = $old;
     header('Location: ../registrazione.php');
@@ -161,22 +134,23 @@ $stmt = $db->prepare("
     INSERT INTO utente 
     (email, password_hash, nome, cognome, data_nascita, indirizzo, cap, citta)
     VALUES
-    (:email, :password, :nome, :cognome, :data, :indirizzo, :cap, :citta)
+    (:reg_email, :reg_password, :reg_nome, :reg_cognome, :reg_data_nascita, :reg_indirizzo, :reg_cap, :reg_citta)
 ");
 
 $stmt->execute([
-    'email'     => $email,
-    'password'  => $hashPassword,
-    'nome'      => $nome,
-    'cognome'   => $cognome,
-    'data'      => $dataNasc,
-    'indirizzo' => $indirizzo,
-    'cap'       => $cap,
-    'citta'     => $citta
+    'reg_email'       => $email,
+    'reg_password'    => $hashPassword,
+    'reg_nome'        => $nome,
+    'reg_cognome'     => $cognome,
+    'reg_data_nascita'=> $dataNasc,
+    'reg_indirizzo'   => $indirizzo,
+    'reg_cap'         => $cap,
+    'reg_citta'       => $citta
 ]);
+
 /* =============================
    SUCCESSO → REDIRECT LOGIN
 ============================= */
 unset($_SESSION['old'], $_SESSION['errors']);
-header('Location: ../login.php');  // reindirizza solo al login
+header('Location: ../login.php');
 exit;

@@ -40,22 +40,9 @@
 
                     <!-- EMAIL -->
                     <div class="form-group">
-                        <label for="email">
-                            Email
-                            <span class="required" aria-hidden="true">(Obbligatorio*)</span>
-                        </label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            autocomplete="email"
-                            required
-                            aria-required="true"
-                            aria-describedby="email-hint email-error"
-                            value="[valoreEmail]"
-                            class="[classeEmail]"
-                        >
-                        <span id="email-error" class="error-message" role="alert">[erroreEmail]</span>
+                        <label for="email"> Email *:</label>
+                        <input type="email" id="email" name="email" autocomplete="email" required aria-required="true" aria-describedby="email-hint email-error" value="[valoreEmail]" class="[classeEmail]" >
+                        <span id="email-error" class="errorSuggestion" role="alert">[erroreEmail]</span>
                         <small id="email-hint" class="form-hint">
                             Inserisci l'email associata al tuo <span lang="en">account</span>
                         </small>
@@ -63,20 +50,9 @@
 
                     <!-- PASSWORD -->
                     <div class="form-group">
-                        <label for="password">
-                            Password
-                            <span class="required" aria-hidden="true">(Obbligatorio*)</span>
-                        </label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            autocomplete="current-password"
-                            required
-                            aria-describedby="password-hint password-error"
-                            class="[classePassword]"
-                        >
-                        <span id="password-error" class="error-message" role="alert">[errorePassword]</span>
+                        <label for="password"> Password *: </label>
+                        <input type="password" id="password" name="password" autocomplete="current-password" required aria-describedby="password-hint password-error" class="[classePassword]" >
+                        <span id="password-error" class="errorSuggestion" role="alert">[errorePassword]</span>
                         <small id="password-hint" class="form-hint">
                             Inserisci la password associata al tuo <span lang="en">account</span>
                         </small>
