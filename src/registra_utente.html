@@ -96,54 +96,38 @@
                         <legend class="sr-only">Credenziali di accesso</legend>
 
                        <!-- EMAIL -->
-<div class="form-group">
-    <label for="reg_email">Email *:</label>
-    <input type="email" 
-           id="reg_email" 
-           name="reg_email" 
-           required 
-           aria-describedby="reg_email-help reg_email-error"
-           value="[valoreEmail]"
-           class="[classeEmail]">
-    <span id="reg_email-error" class="errorSuggestion" role="alert">[erroreEmail]</span>
-    <small id="reg_email-help" class="form-hint">
-        Inserisci un indirizzo email valido (<abbr title="Esempio">es.</abbr> giulia.bianchi@esempio.it).
-    </small>
-</div>
+                        <div class="form-group">
+                            <label for="reg_email">Email *:</label>
+                            <input type="email"  id="reg_email" name="reg_email" required aria-describedby="reg_email-help reg_email-error" value="[valoreEmail]" class="[classeEmail]">
+                            <span id="reg_email-error" class="errorSuggestion" role="alert">[erroreEmail]</span> 
+                            <small id="reg_email-help" class="form-hint">
+                            Inserisci un indirizzo email valido (<abbr title="Esempio">es.</abbr> giulia.bianchi@esempio.it).</small>
+                        </div>
                         <!-- PASSWORD -->
-<div class="form-group">
-    <label for="reg_password">Password *:</label>
-    <input type="password" id="reg_password" name="reg_password" required
-           aria-describedby="reg_password-help reg_password-error"
-           class="[classePassword]"
-          >
-    <!-- Mostra l'errore lato server -->
-    <span id="reg_password-error" class="errorSuggestion" role="alert">[errorePassword]</span>
-    <small id="reg_password-help" class="form-hint">La password deve contenere:
-        <ul class="password-rules">
-            <li>Almeno 8 caratteri</li>
-            <li>Almeno una lettera maiuscola (A-Z)</li>
-            <li>Almeno una lettera minuscola (a-z)</li>
-            <li>Almeno un numero (0-9)</li>
-            <li>Almeno un carattere speciale (@, $, !, %, *, ?, &amp;)</li>
-        </ul>
-    </small>
-</div>
+                        <div class="form-group">
+                            <label for="reg_password">Password *:</label>
+                            <input type="password" id="reg_password" name="reg_password" required aria-describedby="reg_password-help reg_password-error" class="[classePassword]" >
+                            <!-- Mostra l'errore lato server -->
+                            <span id="reg_password-error" class="errorSuggestion" role="alert">[errorePassword]</span>
+                            <small id="reg_password-help" class="form-hint">La password deve contenere:
+                                <ul class="password-rules">
+                                    <li>Almeno 8 caratteri</li>
+                                    <li>Almeno una lettera maiuscola (A-Z)</li>
+                                    <li>Almeno una lettera minuscola (a-z)</li>
+                                    <li>Almeno un numero (0-9)</li>
+                                    <li>Almeno un carattere speciale (@, $, !, %, *, ?, &amp;)</li>
+                                </ul>
+                            </small>
+                        </div>
 
-<!-- CONFERMA PASSWORD -->
-<div class="form-group">
-    <label for="reg_conferma-password">Conferma Password *:</label>
-    <input type="password" 
-       id="reg_conferma-password" 
-       name="reg_conferma-password" 
-       required
-       aria-describedby="reg_conf-help reg_conf-error"
-       class="[classeConferma]"
-      >
-    <!-- Mostra l'errore lato server -->
-    <span id="reg_conf-error" class="errorSuggestion" role="alert">[erroreConferma]</span>
-    <small id="reg_conf-help" class="form-hint">La password deve corrispondere a quella inserita precedentemente.</small>
-</div>
+                        <!-- CONFERMA PASSWORD -->
+                        <div class="form-group">
+                            <label for="reg_conferma-password">Conferma Password *:</label>
+                            <input type="password" id="reg_conferma-password" name="reg_conferma-password"  required aria-describedby="reg_conf-help reg_conf-error" class="[classeConferma]">
+                            <!-- Mostra l'errore lato server -->
+                            <span id="reg_conf-error" class="errorSuggestion" role="alert">[erroreConferma]</span>
+                            <small id="reg_conf-help" class="form-hint">La password deve corrispondere a quella inserita precedentemente.</small>
+                        </div>
                     </fieldset>
 
                     <!-- SUBMIT -->
