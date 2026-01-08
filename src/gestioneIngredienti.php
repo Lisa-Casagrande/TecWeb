@@ -76,9 +76,7 @@ try {
 
         <h2>Basi</h2>
         <div class="admin-grid">
-            <?php foreach ($basi as $base): 
-                $quantita = isset($base['disponibile']) ? $base['disponibile'] : 0;
-            ?>
+            <?php foreach ($basi as $base): ?>
             <article class="admin-card">
                 <?php if (!empty($base['img_path'])): ?>
                     <img src="<?php echo htmlspecialchars($base['img_path']); ?>" alt="" class="admin-card-img">
@@ -89,32 +87,13 @@ try {
                     
                     <div class="admin-details">
                         <p><strong>Stato: </strong>
-                            <?php if ($quantita > 0): ?>
-                                <span class="stato-disponibile"></span> Disponibile
-                            <?php else: ?>
-                                <span class="stato-non-disponibile"></span> Non visibile
-                            <?php endif; ?>
+                            <span class="stato-disponibile"></span> Disponibile
                         </p>
+                        <p><strong>Temp. Infusione:</strong> <?php echo htmlspecialchars($base['temperatura_infusione']); ?></p>
+                        <p><strong>Tempo Infusione:</strong> <?php echo htmlspecialchars($base['tempo_infusione']); ?></p>
                     </div>
 
-                    <form method="POST" action="php/aggiornaDisponibilita.php">
-                        <input type="hidden" name="id" value="<?php echo $base['id_base']; ?>">
-                        <input type="hidden" name="tipo" value="base">
-                        
-                        <fieldset>
-                            <legend>Aggiorna scorte</legend>
-                            <div class="input-group">
-                                <label for="qta_base<?php echo $base['id_base']; ?>">Quantità disponibile:</label>
-                                <input type="number" 
-                                       id="qta_base<?php echo $base['id_base']; ?>"
-                                       name="quantita" 
-                                       value="<?php echo $quantita; ?>" 
-                                       min="0">
-                            </div>
-                            <input type="submit" class="bottone-primario" value="Aggiorna">
-                        </fieldset>
-                    </form>
-                </div>
+                    </div>
             </article>
             <?php endforeach; ?>
         </div>
