@@ -116,8 +116,7 @@ if (isset($_SESSION['carrello'])) {
                 </a>
             <?php else: ?>
                 <!-- Utente non loggato -->
-                <a href="login.php"
-       class="icon-button <?= $currentPage === 'login.php' ? 'current-page' : '' ?>" aria-label="Accedi o registrati">
+                <a href="login.php" class="icon-button <?= $currentPage === 'login.php' ? 'current-page' : '' ?>" aria-label="Accedi o registrati">
                     <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M12,12A6,6,0,1,0,6,6,6.006,6.006,0,0,0,12,12ZM12,2A4,4,0,1,1,8,6,4,4,0,0,1,12,2Z"/>
                         <path d="M12,14a9.01,9.01,0,0,0-9,9,1,1,0,0,0,2,0,7,7,0,0,1,14,0,1,1,0,0,0,2,0A9.01,9.01,0,0,0,12,14Z"/>
@@ -127,11 +126,10 @@ if (isset($_SESSION['carrello'])) {
 
             <!-- Ricerca -->
             <button class="icon-button" aria-label="Cerca prodotti">
-                <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 513.749 513.749" aria-hidden="true">
-                    <path d="M504.352,459.061l-99.435-99.477c74.402-99.427,54.115-240.344-45.312-314.746S119.261-9.277,44.859,90.15
-                             S-9.256,330.494,90.171,404.896c79.868,59.766,189.565,59.766,269.434,0l99.477,99.477c12.501,12.501,32.769,12.501,45.269,0
-                             c12.501-12.501,12.501-32.769,0-45.269L504.352,459.061z M225.717,385.696c-88.366,0-160-71.634-160-160s71.634-160,160-160
-                             s160,71.634,160,160C385.623,314.022,314.044,385.602,225.717,385.696z"/>
+                <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M23.55,21.44l-4.64-4.65c3.47-4.64,2.53-11.23-2.12-14.7S5.56-.43,2.09,4.21s-2.53,11.23,2.12,14.7
+                            c3.73,2.79,8.85,2.79,12.58,0l4.65,4.65c0.58,0.58,1.53,0.58,2.11,0s0.58-1.53,0-2.11L23.55,21.44z M10.54,18.01
+                            c-4.13,0-7.47-3.34-7.47-7.47s3.34-7.47,7.47-7.47s7.47,3.34,7.47,7.47C18.00,14.66,14.67,17.99,10.54,18.01z"/>
                 </svg>
             </button>
 

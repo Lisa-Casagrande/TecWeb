@@ -237,8 +237,6 @@ header {
    LOGO - DIMENSIONI E TEMI
    =================================== */
 .logo {
-    font-size: 2em;
-    font-weight: bold;
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -310,7 +308,6 @@ body.dark-theme .logo-light { display: none; }
     list-style: none;
     display: flex;
     gap: 1em;
-    flex-wrap: nowrap;
     align-items: center;
     margin: 0;
     padding: 0;
@@ -322,42 +319,18 @@ body.dark-theme .logo-light { display: none; }
     gap: 5px;
     padding: 0.75em 1em; 
     color: var(--header-text);
-    text-decoration: none;
     font-family: 'Helvetica Neue', 'Arial', sans-serif;
     font-size: 1.15em;
     font-weight: 500;
     border-radius: 6px;
     border: 2px solid transparent;
-    transition: all 0.3s ease;
     white-space: nowrap; 
-}
-
-.main-nav a:hover, .main-nav a:focus, .main-nav a:focus-visible {
-    background-color: transparent;
-    border-color: var(--header-text); /*bordo visibile*/
-    text-decoration: underline; /*sottolineato quando passo sopra o ho focus*/
-    transform: translateY(-2px);
-    outline: none; 
-    box-shadow: none;
-}
-
-.main-nav a:visited {
-    text-decoration: underline;
 }
 
 body.dark-theme .main-nav a:hover, 
 body.dark-theme .main-nav a:focus {
     border-color: var(--header-text); /* Verde chiaro */
     outline: none;
-}
-
-/*pagina corrente nel menu evidenziata con bordo e colore chiaro*/
-.main-nav li.current-page a {
-    background-color: rgba(255, 255, 255, 0.2);
-    border: 2px solid var(--header-text);
-    border-radius: 8px;
-    font-weight: bold;
-    text-decoration: underline;
 }
 
 /* Header Utilities */
@@ -389,15 +362,9 @@ body.dark-theme .main-nav a:focus {
     cursor: default;
 }
 
-/* Rimuovi sottolineatura anche se visitata */
-.main-nav li.current-page a:visited {
-    text-decoration: none;
-}
-
 /* Nessun effetto hover sulla pagina corrente */
 .main-nav li.current-page a:hover,
 .main-nav li.current-page a:focus {
-    text-decoration: none;
     transform: none;
 }
 
@@ -406,16 +373,9 @@ body.dark-theme .main-nav a:focus {
    =================================== */
 .main-nav li:not(.current-page) a:visited { 
     color: var(--link-visited);
-    text-decoration: underline; 
     text-decoration-thickness: 2px;
     text-underline-offset: 3px;
-}
-
-/* Foglia colorata per link visitati */
-.main-nav li:not(.current-page) a:visited .nav-leaf-icon {
-    fill: var(--link-visited);
     text-decoration: underline;
-
 }
 
 /* ===================================
@@ -426,7 +386,6 @@ body.dark-theme .main-nav a:focus {
 .main-nav li:not(.current-page) a:focus-visible {
     background-color: transparent;
     border-color: transparent;
-    text-decoration: none; /* NESSUN sottolineato al passaggio */
     transform: translateY(-4px);
 }
 
@@ -439,45 +398,33 @@ body.dark-theme .main-nav a:focus {
    ICONE CARRELLO E UTENTE
    =================================== */
 
-.icon-button {
+header .icon-button {
     color: var(--header-text);
-    cursor: pointer;
-    padding: 0; 
-    width: 44px; 
-    height: 44px;
-    border-radius: 50%;
+    background-color: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-decoration: none;
-    position: relative;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
 }
 
-.icon-button svg {
-    width: 25px;
-    height: 25px;
-    color: var(--header-text);
-    fill: currentColor;
-    transition: color 0.3s ease;
+header .icon-button svg {
+    width: 27px;
+    height: 27px;
+    fill: var(--header-text);
 }
 
-/* Hover e Focus - icone */
-.icon-button:hover, 
-.icon-button:focus {
-    background-color: transparent;
-    transform: scale(1.1);
+/* Hover: aggiunge l'outline senza riempire lo sfondo */
+header .icon-button:hover,
+header .icon-button:focus {
     outline: 1.5px solid var(--header-text);
+    background-color: transparent;
 }
 
-/* Stato attivo per icone (carrello/utente quando sono sulla pagina) */
 a.icon-button.current-page {
     outline: 1.5px solid var(--header-text);
-}
-
-.main-nav li.current-page a:has(.nav-leaf-icon) {
-    background-color: transparent;
-    border: none;
-    padding: 0;
 }
 
 a.icon-button:visited svg {
@@ -498,14 +445,6 @@ Theme Toggle
 
 .theme-icon {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 25px;
-    height: 25px;
-    transition: opacity 0.3s ease;
-    color: var(--header-text);
-    fill: currentColor;
 }
 
 .sun-icon { opacity: 1; }
@@ -522,40 +461,22 @@ body.dark-theme .moon-icon { opacity: 1; }
     text-align: center;
     text-decoration: none;
     border-radius: 8px;
-    transition: all 0.3s ease;
     cursor: pointer;
-    border: 2px solid var(--button-bg);
     font-family: 'Helvetica Neue', 'Arial', sans-serif;
     background-color: var(--button-bg);
     color: var(--button-text);
 }
 
 .bottone-primario:visited{
-    background-color: var(--button-bg);
     color: var(--link-visited);
     text-decoration: underline;
-    border-color: var(--button-bg);
-}
-/*visitato - tema scuro*/
-body.dark-theme .bottone-primario:visited {
-    color: var(--visited-dark); 
-    border-color: var(--button-bg);
 }
 
 .bottone-primario:focus, .bottone-primario:hover {
-    background-color: var(--button-bg);
     outline: 3px solid var(--text-color);
     outline-offset: 3px;
     transform: translateY(-3px);
-    text-decoration: underline;
 }
-
-/*tema scuro - l'outline deve essere chiara per vedersi sullo scuro */
-body.dark-theme .bottone-primario:hover,
-body.dark-theme .bottone-primario:focus {
-    outline-color: var(--text-color); /* Verde chiaro */
-}
-
 
 /* ===================================
     HAMBURGER
@@ -581,8 +502,6 @@ body.dark-theme .bottone-primario:focus {
     justify-content: flex-start;
     align-items: center;
     padding: 80px 20px 40px 20px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
 }
 
 .mobile-menu-wrapper[style*="display: flex"] {
@@ -592,15 +511,9 @@ body.dark-theme .bottone-primario:focus {
 /* Pulsante di chiusura (X) nel menu mobile */
 .mobile-close-btn {
     position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: transparent;
     border: none;
     color: var(--header-text); 
     cursor: pointer;
-    padding: 10px;
-    z-index: 1003;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -612,7 +525,6 @@ body.dark-theme .bottone-primario:focus {
 .mobile-close-btn:active {
     outline: none;
     background: transparent;
-    background-color: transparent;
     box-shadow: none;
     color: var(--header-text);
 }
@@ -1952,184 +1864,120 @@ button:focus, a:focus, input:focus, select:focus, textarea:focus {
 }
 
 /* ==================================================
-   CREA BLEND
+   LAYOUT GENERALE
    ================================================== */
+.crea-blend-layout {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 120px; 
+}
 
-.container {
+.container-grid {
     display: grid;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 350px 1fr;
     gap: 2em;
-    padding: 0 1em;
+    align-items: flex-start;
 }
-
-@media (max-width: 900px) {
-    .container {
-        grid-template-columns: 1fr;
-    }
-}
-
 
 /* ==================================================
-   SIDEBAR – RIEPILOGO BLEND
+   SIDEBAR & RIEPILOGO (STICKY PC / BOTTOM MOBILE)
    ================================================== */
-
-/* Contenitore degli ingredienti con stile catalogo */
-.ingredienti-scroll-container {
-    border: 2px solid var(--text-color); /* Bordo come i filtri/prodotti */
-    border-radius: 12px;
-    padding: 25px;
-    background-color: var(--card-bg);
-    margin-top: 20px;
-    
-    /* Altezza massima per attivare lo scroll senza soffocare la pagina */
-    max-height: 70vh; 
-    overflow-y: auto;
+.sidebar-config {
+    position: relative;
 }
 
-/* Scrollbar personalizzata (Stile Catalogo) */
-.ingredienti-scroll-container::-webkit-scrollbar {
-    width: 8px;
-}
-
-.ingredienti-scroll-container::-webkit-scrollbar-track {
-    background: var(--section-bg);
-    border-radius: 10px;
-}
-
-.ingredienti-scroll-container::-webkit-scrollbar-thumb {
-    background: var(--text-color);
-    border-radius: 10px;
-}
-
-/* Supporto Firefox */
-.ingredienti-scroll-container {
-    scrollbar-width: thin;
-    scrollbar-color: var(--text-color) var(--section-bg);
-}
-
-.riepilogo-blend-fisso {
+.sticky-sidebar {
     position: sticky;
-    top: 120px;
-    background: var(--card-bg);
-    padding: 20px;
-    border-radius: 15px;
-    border: none;
-    box-shadow: none;
-}
-
-/* Titolo principale sidebar */
-.riepilogo-blend-fisso h3 {
-    margin-bottom: 25px;
-    font-size: 1.4em;
-    border-bottom: 2px solid var(--button-bg);
-    padding-bottom: 10px;
-}
-
-/* Titoli interni (Base, Ingredienti) */
-.sezione-riepilogo h4 {
-    font-size: 1em;
-    margin-bottom: 8px;
-    color: var(--text-color);
-}
-
-.base-sezione {
-    margin-top: 30px; /* Spazio extra sopra Base come richiesto */
-}
-
-/* Scritta "Nessuna selezione" piccola e discreta */
-.nessuna-selezione {
-    font-size: 0.8rem; /* Molto piccolo */
-    color: #999;
-    font-style: italic;
-    margin-bottom: 15px;
-}
-
-/* Elemento selezionato con la X */
-.item-selezionato {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.95em;
-    padding: 5px 0;
-}
-
-.btn-rimuovi-x {
-    background: none;
-    border: none;
-    color: #ff4d4d; /* Rosso */
-    font-size: 1.3em;
-    cursor: pointer;
-    line-height: 1;
-    padding: 0 5px;
-}
-
-/* Prezzo */
-.prezzo-container {
-    margin-top: 25px;
-    padding-top: 15px;
-    border-top: 1px dashed #ddd;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: bold;
-}
-
-/* Bottoni */
-.sidebar-actions {
-    margin-top: 20px;
+    top: 40px; 
     display: flex;
     flex-direction: column;
+    gap: 30px;
+}
+
+/* Card Filtri/Personalizza */
+.card-config {
+    background-color: var(--card-bg);
+    border: 2px solid var(--text-color);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.config-group {
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
     gap: 10px;
 }
 
-.btn-reset-link {
-    background: none;
-    border: none;
-    color: #888;
-    text-decoration: underline;
-    font-size: 0.85em;
-    cursor: pointer;
+.radio-box {
+    display: flex;
+    gap: 10px;
 }
 
-.btn-reset-link:hover { color: #555; }
-
-/* Styling della barra di scorrimento per Chrome, Safari ed Edge */
-.riepilogo-blend-fisso::-webkit-scrollbar {
-    width: 8px; 
+.card-config, .riepilogo-box {
+    background-color: var(--card-bg);
+    border: 2px solid var(--text-color);
+    border-radius: 12px;
+    padding: 25px;
 }
 
-.riepilogo-blend-fisso::-webkit-scrollbar-track {
-    background: var(--alt-section-bg);
-    border-radius: 10px;
-}
-
-.riepilogo-blend-fisso::-webkit-scrollbar-thumb {
-    background: var(--button-bg);
-    border-radius: 10px;
-}
-
-.riepilogo-blend-fisso {
-    scrollbar-width: thin;
-    scrollbar-color: var(--button-bg) var(--alt-section-bg);
-}
-
-/* ==================================================
-   SEZIONI BASI & INGREDIENTI
-   ================================================== */
-
-#basi,
-#ingredienti {
-    padding: 3em 0;
-    scroll-margin-top: 100px;
-}
-
-#basi h2,
-#ingredienti h2 {
-    text-align: center;
+.riepilogo-header h3 {
+    font-size: 1.4em;
+    border-bottom: 2px solid var(--button-bg);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
     color: var(--button-bg);
-    margin-bottom: 1em;
 }
 
+.riepilogo-scroll-area {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 15px;
+    max-height: 400px; /* Limite altezza per mantenere lo scroll */
+}
+
+.riepilogo-scroll-area::-webkit-scrollbar { width: 6px; }
+.riepilogo-scroll-area::-webkit-scrollbar-thumb { background: var(--button-bg); border-radius: 10px; }
+
+.sezione-riepilogo {
+    margin-bottom: 20px;
+}
+
+.sezione-riepilogo h4 {
+    font-size: 0.9em;
+    text-transform: uppercase;
+    color: var(--text-color);
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+.item-selezionato .btn-rimuovi-x {
+    background: transparent;
+    border: none;
+    color: #ff4d4d;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 0 5px;
+    width: auto;
+    transition: transform 0.2s ease;
+}
+
+.btn-rimuovi-x:hover { transform: scale(1.2); }
+
+/* Footer del riepilogo (Prezzo e Bottone) */
+.riepilogo-footer {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed #ccc;
+}
+
+.prezzo-finale {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+}
 
 /* ==================================================
    GRIGLIE
@@ -2146,7 +1994,6 @@ button:focus, a:focus, input:focus, select:focus, textarea:focus {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1.5em;
 }
-
 
 /* ==================================================
    CARD BASE
@@ -2345,7 +2192,6 @@ button:focus, a:focus, input:focus, select:focus, textarea:focus {
     flex-direction: column;
 }
 
-
 /* ==================================================
    BOTTONI
    ================================================== */
@@ -2370,40 +2216,66 @@ button:hover {
 .base-card.selected button {
     background-color: #28a745;
     border-color: #28a745;
-    color: #ffffff;
+    color: --card-bg;
 }
 
 .ingrediente-card.selected button {
     background-color: #dc3545;
     border-color: #dc3545;
-    color: #ffffff;
+    color: --card-bg;
 }
 
-
 /* ==================================================
-   MOBILE
+   RESPONSIVE (MOBILE)
    ================================================== */
+@media (max-width: 900px) {
+    .container-grid {
+        grid-template-columns: 1fr;
+        padding-bottom: 250px; /* Spazio per il riepilogo fisso */
+    }
 
-/* Responsive per cellulari */
-@media (max-width: 768px) {
+    .sidebar-config {
+        order: -1; /* Filtri in alto */
+    }
+
+    .sticky-sidebar {
+        position: static;
+    }
+
+    /* Riepilogo Mobile: Sempre visibile ma compatto */
+    .riepilogo-box {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        border-radius: 20px 20px 0 0;
+        box-shadow: 0 -5px 25px rgba(0,0,0,0.2);
+        max-height: 45vh; /* Non copre tutto lo schermo */
+        background: --card-bg;
+    }
+
+    .riepilogo-scroll-area {
+        max-height: 20vh; /* Area scrollabile interna su mobile */
+    }
+
     .base-content {
         flex-direction: column;
     }
+
     .base-image-standard {
-        width: 100%; /* Su mobile l'immagine prende tutto il largo */
-        height: 250px;
+        width: 100%;
     }
 }
 
 @media (max-width: 480px) {
-    .basi-grid,
     .ingredienti-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr; /* Due colonne su mobile piccolo */
+        gap: 10px;
     }
-
-    .base-card img {
-        height: 180px;
-    }
+    
+    .ingrediente-card { padding: 10px; }
+    .ingrediente-card img { height: 100px; }
 }
 
 
@@ -2538,8 +2410,6 @@ button:hover {
     max-height: 400px;
     object-fit: cover;
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
 }
 
 .content-text img:hover {
@@ -2591,7 +2461,6 @@ body.dark-theme .leaf-icon li::before {
     padding: 1.5em; 
     background-color: var(--card-bg);
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     border: 2px solid var(--button-bg);
     text-align: center;
 }
@@ -2633,13 +2502,11 @@ body.dark-theme .leaf-icon li::before {
     border-left: 4px solid var(--button-bg);
     color: var(--text-color);
     font-size: 1em; 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
 }
 
 #DoveTrovarci ul li:hover {
     transform: translateX(4px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
 #DoveTrovarci ul li strong {

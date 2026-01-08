@@ -1,119 +1,88 @@
 <?php
-// Includi la connessione al database
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
 require_once 'php/connessione.php';
 
-
-// Recupera dati per la pagina
 try {
-    // Query per ottenere le basi disponibili
     $sqlBasi = "SELECT * FROM base ORDER BY nome";
     $stmtBasi = $pdo->query($sqlBasi);
     $basi = $stmtBasi->fetchAll();
     
-    // Query per ottenere gli ingredienti, raggruppati per tipo
     $sqlIngredienti = "SELECT * FROM ingrediente ORDER BY tipo, nome";
     $stmtIngredienti = $pdo->query($sqlIngredienti);
     $ingredientiRaw = $stmtIngredienti->fetchAll();
     
-    // Raggruppa ingredienti per tipo
     $ingredientiPerTipo = [];
     foreach ($ingredientiRaw as $ing) {
         $tipo = $ing['tipo'];
-        if (!isset($ingredientiPerTipo[$tipo])) {
-            $ingredientiPerTipo[$tipo] = [];
-        }
+        if (!isset($ingredientiPerTipo[$tipo])) { $ingredientiPerTipo[$tipo] = []; }
         $ingredientiPerTipo[$tipo][] = $ing;
     }
-    
 } catch (PDOException $e) {
-    // Log dell'errore
     error_log("Errore creaBlend.php: " . $e->getMessage());
-    $basi = [];
-    $ingredientiPerTipo = [];
+    $basi = []; $ingredientiPerTipo = [];
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="it" xml:lang="it" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="it">
 <head>
     <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <title>Catalogo - InfuseMe</title>
-    <meta name="description" content="Catalogo completo di tè e infusi artigianali InfuseMe. Scopri la nostra selezione di tè, infusi e tisane."/>
-    <meta name="keywords" content="tè, infusi, tisane, catalogo, prodotti, acquista, blend" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crea il tuo Blend - InfuseMe</title>
     <link rel="stylesheet" href="style.css" type="text/css"/>
 </head>
-
 <body>
-   <!-- Skip link per accessibilità -->
-    <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
+    <?php include 'navbar.php'; ?>
 
-     <?php include 'navbar.php'; ?>
-
-    <!-- Main Content -->
-    <main id="main-content" role="main">
-        <div class="container">
-            <!-- Nuovo Riepilogo Selezione FISSO in alto -->
-            <div class="riepilogo-blend-fisso" id="riepilogoFisso">
-                <div class="riepilogo-header">
-                    <h3>Il Tuo Blend Personalizzato</h3>
-                    <div class="controlli-selezione">
-                        <div class="controllo-base">
-                            <span class="etichetta">Base (obbligatoria):</span>
-                            <span class="contatore" id="contatore-base">0/1</span>
-                        </div>
-                        
-                        <div class="selettore-ingredienti">
-                            <span class="etichetta">Quanti ingredienti vuoi aggiungere?</span>
-                            <div class="radio-gruppo">
-                                <label>
-                                    <input type="radio" name="numIngredienti" value="2" id="radio-2" checked>
-                                    <span class="radio-label">2 ingredienti</span>
-                                </label>
-                                <label>
-                                    <input type="radio" name="numIngredienti" value="3" id="radio-3">
-                                    <span class="radio-label">3 ingredienti</span>
-                                </label>
+    <main id="main-content" class="crea-blend-layout">
+        <div class="container-grid">
+            
+            <aside class="sidebar-config">
+                <div class="sticky-sidebar">
+                    <div class="card-config" id="controlli-selezione">
+                        <h3>Personalizza</h3>
+                        <div class="config-group">
+                            <span class="label">Ingredienti extra:</span>
+                            <div class="radio-box">
+                                <label><input type="radio" name="numIngredienti" value="2" checked> 2</label>
+                                <label><input type="radio" name="numIngredienti" value="3"> 3</label>
                             </div>
-                            <span class="contatore" id="contatore-ingredienti">0/2</span>
+                        </div>
+                        <div class="stato-selezione">
+                            <p>Base: <span id="contatore-base">0/1</span></p>
+                            <p>Ingredienti: <span id="contatore-ingredienti">0/2</span></p>
+                        </div>
+                        <button class="btn-reset-link" id="btn-reset">Svuota tutto</button>
+                    </div>
+
+                    <div class="riepilogo-box" id="riepilogo-dinamico">
+                        <div class="riepilogo-header">
+                            <h3>Il tuo Blend</h3>
                         </div>
                         
-                        <button class="btn btn-primary btn-reset" id="btn-reset">
-                            Reset Selezione
-                        </button>
+                        <div class="riepilogo-scroll-area">
+                            <div class="sezione-riepilogo">
+                                <h4>Base selezionata:</h4>
+                                <div id="base-selezionata">
+                                    <p class="nessuna-selezione">Nessuna base selezionata</p>
+                                </div>
+                            </div>
+                            
+                            <div class="sezione-riepilogo">
+                                <h4>Ingredienti:</h4>
+                                <div id="ingredienti-selezionati">
+                                    <p class="nessuna-selezione">Nessun ingrediente aggiunto</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="riepilogo-footer">
+                            <div class="prezzo-finale">Totale: € <span id="importo-prezzo">0.00</span></div>
+                            <button id="btn-conferma" class="btn-conferma" disabled>Conferma Blend</button>
+                        </div>
                     </div>
                 </div>
-                
-                <aside class="riepilogo-blend-fisso" id="riepilogoFisso">
-                    <h3>Riepilogo</h3>
-                    
-                    <div class="sezione-riepilogo base-sezione">
-                        <div id="base-selezionata">
-                            <p class="nessuna-selezione">Nessuna base selezionata</p>
-                        </div>
-                    </div>
-                    
-                    <div class="sezione-riepilogo">
-                        <div id="ingredienti-selezionati">
-                            <p class="nessuna-selezione">Nessun ingrediente selezionato</p>
-                        </div>
-                    </div>
-
-                    <div class="prezzo-container">
-                        <span>Prezzo stimato</span>
-                        <span class="importo">€ <span id="importo-prezzo">0.00</span></span>
-                    </div>
-                    
-                    <div class="sidebar-actions">
-                        <button class="btn btn-primary" id="btn-conferma" disabled>
-                            Aggiungi al Carrello
-                        </button>
-                    </div>
-                </aside>
-            </div>
+            </aside>
 
             <!-- Sezione Basi -->
             <section id="basi">
@@ -220,15 +189,13 @@ try {
                 <?php endforeach; ?>
             </section>
 
-            <!-- Form nascosto per inviare il blend al server -->
-            <form id="form-blend" action="php/gestioneCarrello.php" method="POST" style="display: none;">
-                <input type="hidden" name="azione" value="aggiungi"> 
-                <input type="hidden" name="id_base" id="input-id-base">
-                <input type="hidden" name="ingredienti" id="input-ingredienti">
-                <input type="hidden" name="nome_blend" id="input-nome-blend">
-                <input type="hidden" name="prezzo" id="input-prezzo">
-            </form>
-        </div>
+        <form id="form-blend" action="php/gestioneCarrello.php" method="POST" style="display: none;">
+            <input type="hidden" name="azione" value="aggiungi">
+            <input type="hidden" name="id_base" id="input-id-base">
+            <input type="hidden" name="ingredienti" id="input-ingredienti">
+            <input type="hidden" name="nome_blend" id="input-nome-blend">
+            <input type="hidden" name="prezzo" id="input-prezzo">
+        </form>
     </main>
 
     <!-- Footer -->
