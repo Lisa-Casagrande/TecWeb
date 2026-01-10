@@ -569,11 +569,25 @@ body.dark-theme .moon-icon { opacity: 1; }
         width: 25px;
         height: 25px;
     }
+
+    /*FIX TEMA SCURO*/
+    /* 1. Colora di chiaro (var --header-text) tutte le icone nel menu mobile scuro */
+    body.dark-theme .mobile-menu-wrapper .mobile-close-btn,
+    body.dark-theme .mobile-menu-wrapper .icon-button,
+    body.dark-theme .mobile-menu-wrapper .theme-toggle {
+        color: var(--header-text);       /* Usa il colore chiaro definito nelle variabili */
+        background-color: transparent;   /* Toglie sfondi grigi ereditati */
+        border-color: var(--header-text); /* Se c'è bordo, lo fa chiaro */
+    }
+
+    /* 2. Assicura che il disegno SVG prenda il colore del testo */
+    body.dark-theme .mobile-menu-wrapper svg {
+        fill: currentColor;
+    }
 }
 
 /* ========== MOBILE (max 1025px) ========== */
 @media (max-width: 1025px) {
-    
     .header-container {
         display: flex;
         justify-content: space-between;
@@ -599,6 +613,12 @@ body.dark-theme .moon-icon { opacity: 1; }
         flex-direction: column;
         gap: 6px;
         -webkit-tap-highlight-color: transparent;
+
+        background-color: transparent; /* Rimuove lo sfondo ereditato dai bottoni */
+        border: none;                  /* Rimuove il bordo ereditato */
+        padding: 0;                    /* Rimuove padding interno indesiderato */
+        cursor: pointer;
+        width: auto;
     }
 
     .hamburger:focus,
@@ -702,6 +722,21 @@ body.dark-theme .moon-icon { opacity: 1; }
         height: 28px;
         fill: currentColor;
     }
+
+    /*FIX TEMA SCURO*/
+    /* 1. Colora di chiaro (var --header-text) tutte le icone nel menu mobile scuro */
+    body.dark-theme .mobile-menu-wrapper .mobile-close-btn,
+    body.dark-theme .mobile-menu-wrapper .icon-button,
+    body.dark-theme .mobile-menu-wrapper .theme-toggle {
+        color: var(--header-text);       /* Usa il colore chiaro definito nelle variabili */
+        background-color: transparent;   /* Toglie sfondi grigi ereditati */
+        border-color: var(--header-text); /* Se c'è bordo, lo fa chiaro */
+    }
+
+    /* 2. Assicura che il disegno SVG prenda il colore del testo */
+    body.dark-theme .mobile-menu-wrapper svg {
+        fill: currentColor;
+    }
 }
 
 /* ===================================
@@ -770,7 +805,6 @@ body.dark-theme .hero {
     justify-content: center;
     flex-wrap: wrap;
 }
-
 
 /* Cards e Grids */
 .products-grid, .values-grid {
@@ -898,7 +932,7 @@ body.dark-theme .slogan {
 
     /* Prodotti consigliati - 2 per riga */
     .products-grid.catalog-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 1em;
     }
 
@@ -1200,9 +1234,10 @@ footer {
     text-align: center; 
 }
 
+
 /* ===================================
    PULSANTE TORNA SU
-   + backToTop.js per farlo apparire allo scroll
+   + script.js (backToTop) per farlo apparire allo scroll
    =================================== */
 .back-to-top {
     position: fixed;
@@ -1387,7 +1422,10 @@ body.dark-theme .back-to-top:focus {
     }
 }
 
-/* Pagina LOGIN e REGISTRAZIONE */
+
+/* ===========================
+ Pagina LOGIN e REGISTRAZIONE 
+ ============================*/
 
 /* Contenitore principale centrato verticalmente */
 #login-section, #signin-section {
@@ -1963,168 +2001,185 @@ button:hover {
     color: --card-bg;
 }
 
+
 /* ==================================================
-   RESPONSIVE (MOBILE)
+   RESPONSIVE CREA BLEND (< 900px)
+   Sostituisce completamente le vecchie media query
    ================================================== */
-@media (max-width: 900px) {
+@media screen and (max-width: 900px) {
+
+    /* LAYOUT PAGINA: colonna singola, nascondi sidebar */
     .container-grid {
         grid-template-columns: 1fr;
+        gap: 2em;
     }
 
-    /* Nascondi sidebar su mobile */
     .sidebar-config {
-        display: none;
+        display: none; /* Nasconde sidebar desktop */
     }
 
-    /* Mostra pulsante riepilogo mobile */
-    .btn-riepilogo-mobile {
+    /* BOTTONE RIEPILOGO MOBILE (usa stile .fixed-filter-btn) */
+    #btnRiepilogoMobile {
         display: flex;
+        top: 130px;
+    }
+    
+    /* piccolo badge che mostra numero */
+    .riepilogo-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        font-size: 0.85em;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid var(--text-color);
     }
 
-    /*mostra quando visibile*/
-    .btn-riepilogo-mobile.visible {
-        opacity: 1;
-        visibility: visible;
-        transform: scale(1);
-    }
-
-    /* Hover e Focus */
-    .btn-riepilogo-mobile:hover,
-    .btn-riepilogo-mobile:focus {
-        background-color: var(--button-bg);
-        color: var(--button-text);
-        transform: scale(1.1);
-        outline: 3px solid var(--text-color);
-        outline-offset: 3px;
-    }
-
-    /*focus visibile solo tastiera (accessibilità)*/
-    .btn-riepilogo-mobile:focus-visible {
-        outline: 3px solid var(--text-color);
-        outline-offset: 3px;
-    }
-
-    /*rimuovi outline su click mouse*/
-    .btn-riepilogo-mobile:focus:not(:focus-visible) {
-        outline: none;
-    }
-
-    /*icona freccia (svg)*/
-    .btn-riepilogo-mobile svg {
-        width: 2em;
-        height: 2em;
-        fill: currentColor; /*prende colore chiaro*/
-    }
-
-    .btn-riepilogo-mobile:hover,
-    .btn-riepilogo-mobile:focus {
-        background-color: var(--button-bg);
-        color: var(--button-text);
-        transform: scale(1.1);
-        outline: 3px solid var(--text-color);
-        outline-offset: 3px;
-    }
-
-    .riepilogo-mobile-content {
-        background: var(--card-bg);
+    /* MENU RIEPILOGO A SCOMPARSA */
+    .riepilogo-mobile-overlay {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
         width: 100%;
+        height: 100vh;
+        z-index: 1002;
+        background-color: var(--card-bg);
+        transform: translateX(-100%);
         overflow-y: auto;
     }
 
-    @keyframes slideUp {
-        from { transform: translateY(100%); }
-        to { transform: translateY(0); }
+    .riepilogo-mobile-overlay.active {
+        transform: translateX(0); /* Visibile */
+        transition: transform 0.3s ease-in-out;
     }
 
-    .btn-chiudi-riepilogo {
-        background: transparent;
-        color: var(--text-color);
-        border: none;
+    .riepilogo-mobile-content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        background-color: var(--card-bg);
+    }
+
+    /* HEADER */
+    .riepilogo-mobile-content .riepilogo-header {
+        flex-shrink: 0;
+        padding: 15px 25px; /* Padding laterale aumentato */
+        border-bottom: 2px solid var(--button-bg);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: var(--card-bg);
+    }
+
+    /* Header Sticky dentro il riepilogo 
+    .riepilogo-mobile-content .riepilogo-header {
+        top: 0;
+        background-color: var(--card-bg);
+        z-index: 10;
+        padding: 20px;
+        border-bottom: 2px solid var(--button-bg);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    } */
+
+    .riepilogo-mobile-content .riepilogo-header h3 {
+        margin: 0;
+        color: var(--button-bg);
         font-size: 1.5em;
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        cursor: pointer;
-        width: auto;
-        padding: 5px;
     }
 
-    .ingredienti-grid {
-    display: grid; 
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
-}
+    /* Bottone Chiudi (X) */
+    .btn-chiudi-riepilogo {
+        position: static;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--button-bg);
+        color: var(--button-text);
+        border: 2px solid var(--button-bg);
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2em;
+    }
+    
+    /* Contenuto interno */
+    .riepilogo-box-mobile {
+        padding: 20px;
+        flex-grow: 1;
+        overflow-y: auto;
+        /* FIX ALLINEAMENTO: Padding bilanciato a destra e sinistra */
+        padding: 20px 25px; 
+        width: 100%;
+        box-sizing: border-box; /* Assicura che il padding non sballi la larghezza */
+        text-align: left;
+    }
 
+    .riepilogo-footer {
+        bottom: 0;
+        background-color: var(--card-bg);
+        padding: 20px;
+        border-top: 2px solid var(--button-bg);
+        margin-top: 20px;
+        z-index: 20;
+    }
+
+    /* AGGIUSTAMENTI CARD E GRIGLIE */
+    /* Basi: immagine sopra, testo sotto */
     .base-content {
         flex-direction: column;
     }
-
+    
     .base-image-standard {
         width: 100%;
+        height: 200px;
+    }
+
+    /* Ingredienti: Griglia responsive */
+    .ingredienti-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /*160*/
+        gap: 1em;
+    }
+
+    .ingrediente-card {
+        min-height: auto; /* Rimuove altezza fissa */
+    }
+    
+    .ingrediente-card img {
+        height: 120px;
     }
 }
 
-@media (max-width: 793px) {
-  .sidebar {
-    display: none;
-  }
-
-  .ingredienti-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    width: 100%;
-  }
-  
-  .ingrediente-card {
-    width: 100%;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .contenitore-padre {
-    display: block;
-    width: 100%;
-    padding: 0; 
-    margin: 0; 
-    box-sizing: border-box;
-  }
-
-  .ingrediente-card img {
-    max-width: 100%;
-    max-height: 100%;
-    height: auto;
-    width: auto;
-    object-fit: contain;
-    display: block;
-  }
-  
-  body, html {
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Se hai un contenitore principale che lascia spazio per la sidebar, rimuovilo */
-  main, .main-content, .content-wrapper {
-    margin-left: 0 !important;
-    padding-left: 0 !important;
-    width: 100% !important;
-  }
+/* TEMA SCURO: Fix colori bottone riepilogo mobile */
+@media screen and (max-width: 900px) {
+    body.dark-theme #btnRiepilogoMobile {
+        color: var(--header-text);
+        border-color: var(--header-text);
+        background-color: transparent;
+    }
+    
+    body.dark-theme #btnRiepilogoMobile svg {
+        fill: currentColor;
+    }
+    
+    body.dark-theme .riepilogo-badge {
+        border-color: var(--card-bg);
+    }
 }
 
-/* Tema scuro */
-body.dark-theme .btn-riepilogo-mobile {
-    color: var(--header-bg);
-}
 
-body.dark-theme .btn-riepilogo-mobile:hover,
-body.dark-theme .btn-riepilogo-mobile:focus {
-    outline-color: var(--text-color);
-}
 
 /* ===========================
    PAGINA CHI SIAMO
@@ -2477,7 +2532,6 @@ body.dark-theme .leaf-icon li::before {
 /* ===================================
    CATALOGO: BARRA STRUMENTI E FILTRI
 =================================== */
-
 /* Sezione catalogo - riduce padding superiore */
 .catalog-section {
     padding: 1.5em 0;
@@ -2492,45 +2546,7 @@ body.dark-theme .leaf-icon li::before {
     padding: 0 1em;
 }
 
-/* ===================================
-   TOOLBAR ORDINAMENTO
-=================================== */
-
-/* Barra ordinamento con radio buttons */
-.catalog-toolbar {
-    grid-column: 2 / 3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1em;
-    padding: 1em;
-    background-color: var(--alt-section-bg);
-    border-radius: 12px;
-    border: 2px solid var(--text-color);
-}
-
-/* Nascondi bottone toggle filtri su desktop */
-.btn-toggle-filters {
-    display: none;
-}
-
-.sort-fieldset {
-    border: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-}
-
-.sort-fieldset legend {
-    font-weight: 600;
-    font-size: 1.1em;
-    color: var(--text-color);
-    margin-bottom: 0.8em;
-    text-align: center;
-    width: 100%;
-    font-family: 'Helvetica Neue', 'Arial', sans-serif;
-}
-
+/* filtri: ORDINAMENTO */
 .sort-options {
     display: flex;
     gap: 0.8em;
@@ -2579,11 +2595,7 @@ body.dark-theme .leaf-icon li::before {
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
-/* ===================================
-   SIDEBAR FILTRI
-=================================== */
-
-/* Sidebar filtri sempre visibile */
+/* SIDEBAR FILTRI */
 .filter-panel {
     grid-column: 1 / 2;
     grid-row: 1 / 4;
@@ -2652,41 +2664,49 @@ body.dark-theme .leaf-icon li::before {
     cursor: pointer;
 }
 
-/* ===================================
-   GRID PRODOTTI
-=================================== */
-
 /* Grid prodotti */
 .catalog-grid {
     grid-column: 2 / 3;
 }
 
-/* ===================================
-   BOTTONI E IMMAGINI CARD
-=================================== */
+/* BOTTONI E IMMAGINI CARD */
+.product-card {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 350px; /*impedisce alla card di diventare gigante */
+    margin: 0 auto;   /*se è sola, la centra nella pagina */
+}
 
-/* Forza l'altezza delle immagini per uniformità */
+/*forza l'altezza delle immagini per uniformità */
 .product-card .product-image {
+    position: relative;
     border-radius: 8px;
     margin-bottom: 1em;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+    aspect-ratio: 1 / 1; /*mantiene immagine quadrata*/
 }
 
 .product-card .product-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; /*ritaglia l'immagine per riempire il box*/
     transition: transform 0.3s ease;
 }
 
 .product-card:hover .product-image img {
-    transform: scale(1.05);
+    transform: scale(1.05); /*zoom leggero all'hover*/
 }
 
-/* Fix Font e Stile Bottone "Scopri di più" */
+/*Bottone "Scopri di più" */
 .product-card .bottone-primario {
     font-family: 'Helvetica Neue', 'Arial', sans-serif;
     font-weight: 700;
@@ -2695,12 +2715,6 @@ body.dark-theme .leaf-icon li::before {
     letter-spacing: 1px;
     width: 100%;
     margin-top: auto;
-}
-
-/* Stile per l'icona carrello sopra l'immagine */
-.product-image {
-    position: relative;
-    overflow: hidden;
 }
 
 /*icona carrello per aggiunta rapida nelle card*/
@@ -2720,344 +2734,16 @@ body.dark-theme .leaf-icon li::before {
     background-color: var(--card-bg);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
-    color: var(--text-color)
+    color: var(--text-color);
+    /*z-index: 10;*/
+
 }
 
-.product-image .add-to-cart-icon svg {
+.add-to-cart-icon svg {
     width: 20px;
     height: 20px;
     fill: var(--text-color);
-    transition: fill 0.3s ease;
-}
-
-.product-image .add-to-cart-icon:hover,
-.product-image .add-to-cart-icon:focus-visible {
-    background-color: var(--white); 
-    color: var(--text-color);
-    transform: scale(1.1);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    outline: 2px solid var(--text-color); 
-    outline-offset: 2px;
-}
-
-.product-image .add-to-cart-icon:hover svg,
-.product-image .add-to-cart-icon:focus-visible svg {
-    fill: var(--text-color); 
-}
-
-.product-image .add-to-cart-icon:focus:not(:focus-visible) {
-    outline: none;
-}
-
-/* --- TEMA SCURO --- */
-body.dark-theme .product-image .add-to-cart-icon {
-    background-color: var(--card-bg); /*sfondo scuro*/
-    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-}
-
-body.dark-theme .product-image .add-to-cart-icon svg {
-    fill: var(--text-color);
-}
-
-body.dark-theme .product-image .add-to-cart-icon:hover,
-body.dark-theme .product-image .add-to-cart-icon:focus-visible {
-    background-color: var(--card-bg);
-    transform: scale(1.1);
-    outline-color: var(--card-bg); 
-}
-
-body.dark-theme .product-image .add-to-cart-icon:hover svg,
-body.dark-theme .product-image .add-to-cart-icon:focus-visible svg {
-    fill: var(--text-color);
-}
-
-/* ===================================
-   RESPONSIVE DESIGN - BREAKPOINT CRITICO
-   I filtri collassano quando la larghezza non basta
-=================================== */
-
-/* Quando lo spazio è stretto (1200px) riduci larghezza sidebar */
-@media screen and (max-width: 1200px) {
-    .catalog-section .container {
-        grid-template-columns: 250px 1fr;
-        gap: 1.2em;
-    }
-    
-    .filter-panel {
-        padding: 1em;
-    }
-}
-
-/* A 1024px la sidebar diventa ancora più stretta */
-@media screen and (max-width: 1024px) {
-    .catalog-section .container {
-        grid-template-columns: 220px 1fr;
-        gap: 1em;
-        padding: 0 0.8em;
-    }
-    
-    .filter-panel {
-        padding: 1em;
-        top: 80px;
-        font-size: 0.95em;
-    }
-    
-    .filter-group h4 {
-        font-size: 1em;
-    }
-    
-    .filter-group label {
-        font-size: 0.85em;
-    }
-}
-
-/* ===================================
-   RESPONSIVE DESIGN - BREAKPOINT CRITICO
-=================================== */
-
-/* Desktop largo - filtri laterali con card style */
-@media screen and (max-width: 1200px) {
-    .catalog-section .container {
-        grid-template-columns: 280px 1fr;
-        gap: 2em;
-    }
-    
-    .filter-panel {
-        padding: 1.5em;
-        background: var(--card-bg);
-        border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        border: 1px solid rgba(0, 0, 0, 0.06);
-    }
-}
-
-@media screen and (max-width: 1024px) {
-    .catalog-section .container {
-        grid-template-columns: 260px 1fr;
-        gap: 1.5em;
-        padding: 0 1em;
-    }
-    
-    .filter-panel {
-        padding: 1.3em;
-        top: 85px;
-        font-size: 0.95em;
-    }
-}
-
-/* ===================================
-   COLLASSO FILTRI A TENDINA
-=================================== */
-
-@media screen and (max-width: 900px) {
-    .catalog-section {
-        padding: 1.5em 0;
-    }
-    
-    .catalog-section .container {
-        grid-template-columns: 1fr;
-        padding: 0 1em;
-        gap: 1.5em;
-    }
-    
-    /* Bottone toggle filtri */
-    .btn-toggle-filters {
-        display: flex;
-        background: var(--button-bg);
-        border: none;
-        color: var(--button-text);
-        font-size: 1em;
-        font-weight: 600;
-        cursor: pointer;
-        align-items: center;
-        gap: 0.6em;
-        padding: 0.9em 1.5em;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        transition: all 0.3s ease;
-    }
-    
-    .btn-toggle-filters:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-        opacity: 0.9;
-    }
-    
-    .btn-toggle-filters svg {
-        width: 22px;
-        height: 22px;
-        fill: currentColor;
-    }
-    
-    /* Toolbar ordinamento - separata dai filtri */
-    .catalog-toolbar {
-        grid-column: 1;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1em;
-        margin-bottom: 1em;
-        background: var(--card-bg);
-        border-radius: 14px;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-        gap: 1em;
-    }
-    
-    .sort-fieldset {
-        flex: 1;
-    }
-    
-    .sort-fieldset legend {
-        font-size: 0.95em;
-        margin-bottom: 0.5em;
-        font-weight: 600;
-    }
-    
-    .sort-options label {
-        padding: 0.5em 1em;
-        font-size: 0.85em;
-        border-radius: 8px;
-    }
-    
-    /* Pannello filtri a tendina - staccato */
-    .filter-panel {
-        display: none;
-        grid-column: 1;
-        position: relative;
-        top: 0;
-        max-height: none;
-        margin-bottom: 1.5em;
-        padding: 1.5em;
-        background: var(--card-bg);
-        border-radius: 16px;
-        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
-        border: 1px solid rgba(0, 0, 0, 0.06);
-    }
-    
-    .filter-panel.open {
-        display: flex;
-        animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    
-    @keyframes slideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    .catalog-grid {
-        grid-column: 1;
-    }
-}
-
-/* ===================================
-   MOBILE PICCOLO
-=================================== */
-
-@media screen and (max-width: 768px) {
-    .catalog-section {
-        padding: 1.2em 0;
-    }
-    
-    .catalog-section .container {
-        padding: 0 0.8em;
-    }
-    
-    .catalog-toolbar {
-        flex-direction: column;
-        gap: 1.2em;
-        padding: 1.2em;
-    }
-    
-    .btn-toggle-filters {
-        width: 100%;
-        justify-content: center;
-        padding: 1em 1.5em;
-    }
-    
-    .sort-fieldset {
-        width: 100%;
-    }
-    
-    .sort-fieldset legend {
-        text-align: center;
-        font-size: 1em;
-    }
-    
-    .sort-options {
-        flex-direction: column;
-        gap: 0.6em;
-    }
-    
-    .sort-options label {
-        width: 100%;
-        padding: 0.8em 1.2em;
-        font-size: 0.95em;
-        border-radius: 10px;
-    }
-    
-    .filter-panel {
-        padding: 1.3em;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .catalog-section .container {
-        padding: 0 0.6em;
-    }
-    
-    .btn-toggle-filters {
-        padding: 0.9em 1.3em;
-    }
-    
-    .sort-options label {
-        padding: 0.7em 1em;
-        font-size: 0.9em;
-    }
-}
-
-/* ===================================
-   BOTTONI E IMMAGINI CARD
-=================================== */
-
-.product-card {
-    background-color: var(--card-bg);
-    border-radius: 12px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    width: 100%;
-    max-width: 350px; /* Impedisce alla card di diventare gigante */
-    margin: 0 auto;   /* Se è sola, la centra nella pagina */
-}
-
-.product-card .product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ritaglia l'immagine per riempire il box */
-    transition: transform 0.3s ease;
-}
-
-.product-card:hover .product-image img {
-    transform: scale(1.05); /* Zoom leggero all'hover */
-}
-
-/* Fix Font e Stile Bottone "Scopri di più" */
-.product-card .bottone-primario {
-    font-family: 'Helvetica Neue', 'Arial', sans-serif; /* Forza font sans-serif */
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 0.9em;
-    letter-spacing: 1px;
-    width: 100%; /* Bottone largo quanto la card */
-    margin-top: auto; /* Spinge il bottone in fondo */
+    /*transition: fill 0.3s ease;*/
 }
 
 /* Stile per l'icona carrello sopra l'immagine */
@@ -3066,40 +2752,33 @@ body.dark-theme .product-image .add-to-cart-icon:focus-visible svg {
     overflow: hidden;
 }
 
-.add-to-cart-icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: var(--white); /* Bianco per tema chiaro */
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-    z-index: 10;
-}
-
-.add-to-cart-icon:hover {
-    background: var(--white);
+.add-to-cart-icon:hover,
+.add-to-cart-icon:focus-visible {
+    background-color: var(--white); 
+    color: var(--text-color);
     transform: scale(1.1);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.add-to-cart-icon svg {
-    width: 20px;
-    height: 20px;
-    fill: var(--text-color); 
+    outline: 2px solid var(--text-color); 
+    outline-offset: 2px;
 }
 
 .add-to-cart-icon:hover svg {
-    fill: var(--link-visited); 
+    fill: var(--text-color);
 }
 
+.add-to-cart-icon:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Stato "Aggiunto" (opzionale se gestito via JS) */
+.add-to-cart-icon.added {
+    background: var(--link-visited);
+}
+.add-to-cart-icon.added svg {
+    fill: var(--white);
+}
+
+/* --- TEMA SCURO --- */
 body.dark-theme .add-to-cart-icon {
     background: var(--card-bg); 
 }
@@ -3112,14 +2791,6 @@ body.dark-theme .add-to-cart-icon:hover svg {
     fill: var(--link-visited); 
 }
 
-.add-to-cart-icon.added {
-    background: var(--link-visited); 
-}
-
-.add-to-cart-icon.added svg {
-    fill: var(--white); 
-}
-
 body.dark-theme .add-to-cart-icon.added {
     background: var(--link-visited); 
 }
@@ -3127,6 +2798,163 @@ body.dark-theme .add-to-cart-icon.added {
 body.dark-theme .add-to-cart-icon.added svg {
     fill: var(--white); 
 }
+
+/* ===================================
+   STILE BOTTONE FILTRI
+   =================================== */
+.fixed-filter-btn {
+    position: fixed;
+    top: 100px; /*in alto a sinistra, sotto l'header (fisso)*/
+    left: 1.5em; 
+    z-index: 998;
+    width: 3.5em;
+    height: 3.5em;
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: 2px solid var(--button-bg);
+    border-radius: 50%;
+    
+    cursor: pointer;
+    display: none; /*nascosto su desktop*/
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.fixed-filter-btn:hover {
+    transform: scale(1.1);
+}
+
+.fixed-filter-btn svg {
+    width: 1.8em;
+    height: 1.8em;
+    fill: currentColor;
+}
+
+/* HEADER DEL PANNELLO FILTRI nascosto su desktop */
+.mobile-filters-header {
+    display: none;
+}
+
+
+/* ===================================
+   RESPONSIVE DESIGN SPECIFICO CATALOGO (< 1025px)
+   Gestisce SOLO i filtri a scomparsa e la griglia del catalogo
+   ========================================================================== */
+@media screen and (max-width: 1025px) {
+
+    /* BOTTONE APERTURA FILTRI */
+    .fixed-filter-btn {
+        display: flex; /* Diventa visibile */
+        top: 130px;/* distanza dall'alto */
+    }
+    
+    /* LAYOUT CONTENITORE CATALOGO */
+    .catalog-section .container {
+        display: block; /* Disabilita la sidebar laterale desktop */
+        padding: 0 1em;
+        overflow-x: hidden;
+    }
+
+    .catalog-toolbar {
+        display: none;
+    }
+
+    /* PANNELLO FILTRI */
+    .filter-panel {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: 1002;
+        background-color: var(--card-bg);
+        padding: 0;
+        overflow-y: auto; 
+        transform: translateX(-100%); /* Nascosto */
+        /* Reset stili desktop */
+        grid-column: auto;
+        grid-row: auto;
+        border: none;
+        border-radius: 0;
+        max-height: none;
+        box-shadow: none;
+    }
+
+    /* Classe attiva (aperto) */
+    .filter-panel.active {
+        transform: translateX(0);
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    .filter-panel::before { content: none; }
+
+    /* HEADER FILTRI */
+    .mobile-filters-header {
+        display: flex; /*visibile su mobile */
+        justify-content: space-between;
+        align-items: center; 
+        top: 0;
+        z-index: 10;
+        padding: 20px;
+        border-bottom: 2px solid var(--button-bg);
+    }
+
+    .mobile-filters-header h3 {
+        margin: 0;
+        font-size: 1.5em;
+        color: var(--button-bg);
+    }
+
+    /* Stile Bottone X chiusura filtri*/
+    .mobile-filters-header .bottone-primario {
+        padding: 0;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: var(--button-bg);
+        color: var(--button-text);
+        border: 2px solid var(--button-bg);
+    }
+
+    .mobile-filters-header .bottone-primario svg {
+        width: 24px;
+        height: 24px;
+        fill: currentColor;
+    }
+    
+    /* Padding interno gruppi filtri */
+    .filter-group {
+        padding: 15px 20px;
+    }
+
+    /* FIX GRIGLIA PRODOTTI CATALOGO */
+    .products-grid.catalog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+        gap: 1em;
+        margin-top: 20px;
+        padding-bottom: 40px;
+    }
+}
+
+/* MOBILE PICCOLO (< 480px) */
+@media screen and (max-width: 480px) {
+    .products-grid.catalog-grid {
+        grid-template-columns: 1fr; 
+    }
+    
+    .fixed-filter-btn {
+        top: 130px;
+        left: 1em;
+    }
+}
+
+
 
 /* ===================================
    ERRORI

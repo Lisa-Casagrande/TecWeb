@@ -662,7 +662,6 @@ function messaggio(input, mode) {
 window.addEventListener("load", caricamentoForm);
 
 
-
 /* ==========================================================================
    SEZIONE 5: CARRELLO CATALOGO 
    ========================================================================== */
@@ -738,7 +737,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /* ==========================================================================
-   SEZIONE 6.1: CONTROLLO QUANTITÀ PRODOTTO
+   SEZIONE 5.1: CONTROLLO QUANTITÀ PRODOTTO
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', function() {
     // Funzione per il controllo quantità
@@ -859,31 +858,34 @@ function updateCartCounter() {
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    // --- GESTIONE TENDINA RIEPILOGO MOBILE ---
-    const btnApriMobile = document.querySelector('.btn-riepilogo-mobile');
+   // --- GESTIONE TENDINA RIEPILOGO MOBILE ---
+    
+    // 1. Selezioniamo gli elementi (Nota: usiamo getElementById per il nuovo bottone)
+    const btnApriMobile = document.getElementById('btnRiepilogoMobile');
     const overlayMobile = document.getElementById('riepilogo-mobile-overlay');
     const btnChiudiMobile = document.querySelector('.btn-chiudi-riepilogo');
 
     if (btnApriMobile && overlayMobile) {
-        // Apri la tendina quando clicchi il pulsante flottante
+        
+        // APERTURA: Aggiunge classe active e BLOCCA lo scroll del corpo pagina
         btnApriMobile.addEventListener('click', () => {
             overlayMobile.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Blocca lo scroll della pagina sotto
+            document.body.style.overflow = 'hidden'; // blocca lo scroll sotto
         });
 
-        // Chiudi con la X
+        // CHIUSURA (Tasto X): Rimuove classe e RIABILITA lo scroll
         if (btnChiudiMobile) {
             btnChiudiMobile.addEventListener('click', () => {
                 overlayMobile.classList.remove('active');
-                document.body.style.overflow = ''; // Riabilita lo scroll
+                document.body.style.overflow = ''; // <--- ECCOLO: Riabilita lo scroll
             });
         }
 
-        // Chiudi se clicchi fuori dal contenuto (sull'oscuramento)
+        // CHIUSURA (Click fuori): Opzionale, se clicchi sulla parte scura (se presente)
         overlayMobile.addEventListener('click', (e) => {
             if (e.target === overlayMobile) {
                 overlayMobile.classList.remove('active');
-                document.body.style.overflow = '';
+                document.body.style.overflow = ''; // Riabilita lo scroll anche qui
             }
         });
     }
@@ -915,6 +917,14 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (contBase) contBase.textContent = `${statoBlend.base ? 1 : 0}/1`;
         if (contIng) contIng.textContent = `${statoBlend.ingredienti.length}/${statoBlend.maxIngredienti}`;
+
+        // Aggiorna Badge Mobile
+        const badgeMobile = document.getElementById('badge-riepilogo-mobile');
+        if (badgeMobile) {
+            const totaleItems = (statoBlend.base ? 1 : 0) + statoBlend.ingredienti.length;
+            badgeMobile.textContent = totaleItems;
+            badgeMobile.style.display = totaleItems > 0 ? 'flex' : 'none';
+        }
 
         // --- 2. Aggiorna Riepilogo Base (con la X di rimozione) ---
         const baseDiv = document.getElementById('base-selezionata');
@@ -1084,14 +1094,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /**
      * Reset Totale
-     */
-    document.getElementById('btn-reset').addEventListener('click', () => {
+    */
+    function eseguiReset() {
         localStorage.removeItem('mioBlendSalvato');
         statoBlend.base = null;
         statoBlend.ingredienti = [];
         statoBlend.maxIngredienti = 2;
         aggiornaUI();
-    });
+        
+        // Se siamo su mobile, chiudiamo anche la tendina per feedback visivo (opzionale)
+        // const overlayMobile = document.getElementById('riepilogo-mobile-overlay');
+        // if(overlayMobile) overlayMobile.classList.remove('active');
+    }
+
+    // Collega al bottone Desktop
+    const btnReset = document.getElementById('btn-reset');
+    if (btnReset) btnReset.addEventListener('click', eseguiReset);
+
+    // Collega al bottone Mobile
+    const btnResetMobile = document.getElementById('btn-reset-mobile');
+    if (btnResetMobile) btnResetMobile.addEventListener('click', eseguiReset);
 
     /**
      * Invio Form
@@ -1117,33 +1139,50 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ===================================
-// GESTIONE FILTRI E ORDINAMENTO CATALOGO
+// GESTIONE FILTRI E ORDINAMENTO CATALOGO + VERSIONE RESPONSIVE (menù filtri a scomparsa)
 // ===================================
-
 document.addEventListener('DOMContentLoaded', function() {
     
-    // TOGGLE FILTRI MOBILE
-    const toggleFiltersBtn = document.getElementById('toggleFilters');
+    // TOGGLE FILTRI MOBILE (a scomparsa)
+    const filterBtn = document.getElementById('fixedFilterBtn');
     const filterPanel = document.getElementById('filterPanel');
-    
-    if (toggleFiltersBtn && filterPanel) {
-        toggleFiltersBtn.addEventListener('click', function() {
-            const isOpen = filterPanel.classList.contains('open');
-            
-            if (isOpen) {
-                filterPanel.classList.remove('open');
-                toggleFiltersBtn.setAttribute('aria-expanded', 'false');
-            } else {
-                filterPanel.classList.add('open');
-                toggleFiltersBtn.setAttribute('aria-expanded', 'true');
+    const closeBtn = document.getElementById('closeFiltersBtn');
+    const body = document.body;
+
+    //se esiste bottone = solo dentro catalogo -> si attiva la logica
+    if (filterBtn && filterPanel) {
+        //Funzione Apri
+        filterBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            filterPanel.classList.add('active');
+            body.style.overflow = 'hidden'; //blocca lo scroll
+        });
+
+        //Funzione Chiudi
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                filterPanel.classList.remove('active');
+                body.style.overflow = '';
+            });
+        }
+
+        //chiude se si ridimensiona la finestra tornando a desktop
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 1025 && filterPanel.classList.contains('active')) {
+                filterPanel.classList.remove('active');
+                body.style.overflow = '';
             }
         });
     }
     
-    // ELEMENTI DOM
+    // LOGICA DI FILTRAGGIO PRODOTTI
+    //elementi DOM
     const productContainer = document.getElementById('productContainer');
     const noResultsMsg = document.getElementById('noResults');
     const allProducts = document.querySelectorAll('.product-card');
+    //se non ci sono prodotti (es. pagina vuota o errore), non esegue il resto
+    if (!productContainer) return;
     
     // Radio buttons categorie
     const categoryRadios = document.querySelectorAll('input[name="category"]');
@@ -1185,6 +1224,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     shouldShow = false;
                 }
             }
+
+            // FILTRO INGREDIENTI
+            if (selectedIngredients.length > 0) {
+                const productIngredients = product.dataset.ingredients?.toLowerCase() || '';
+                
+                // Il prodotto deve contenere TUTTI gli ingredienti selezionati
+                const hasAllIngredients = selectedIngredients.every(ing => 
+                    productIngredients.includes(ing)
+                );
+                if (!hasAllIngredients) {
+                    shouldShow = false;
+                }
+            }
             
             // FILTRO PREZZO
             if (selectedPriceRange !== 'all') {
@@ -1203,20 +1255,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (selectedBase !== 'all') {
                 const productBase = product.dataset.base?.toLowerCase() || '';
                 if (!productBase.includes(selectedBase)) {
-                    shouldShow = false;
-                }
-            }
-            
-            // FILTRO INGREDIENTI
-            if (selectedIngredients.length > 0) {
-                const productIngredients = product.dataset.ingredients?.toLowerCase() || '';
-                
-                // Il prodotto deve contenere TUTTI gli ingredienti selezionati
-                const hasAllIngredients = selectedIngredients.every(ing => 
-                    productIngredients.includes(ing)
-                );
-                
-                if (!hasAllIngredients) {
                     shouldShow = false;
                 }
             }
@@ -1331,15 +1369,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // INIZIALIZZAZIONE
-    // Applica filtri all'avvio (per sicurezza)
+    // INIZIALIZZAZIONE: esegue filtri all'avvio (per sicurezza)
     filterProducts();
     
     console.log('Sistema filtri e ordinamento catalogo caricato');
 });
 
-// FUNZIONI HELPER AGGIUNTIVE
 
+// FUNZIONI HELPER AGGIUNTIVE
 // Conta prodotti visibili
 function countVisibleProducts() {
     const visible = document.querySelectorAll('.product-card:not([style*="display: none"])');

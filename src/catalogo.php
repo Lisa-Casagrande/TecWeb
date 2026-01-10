@@ -34,43 +34,45 @@ require_once 'php/connessione.php';?>
 
         <section class="catalog-section">
             <div class="container">
-                <h2 id="catalog-products" class="sr-only">Tutti i nostri prodotti</h2>
-                
-                <!-- Strumenti per filtri e ordinamento -->
-                <div class="catalog-toolbar">
+                <button id="fixedFilterBtn" class="fixed-filter-btn" aria-label="Apri filtri">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.051 512.051" xml:space="preserve">
+                        <g>
+                            <path d="M21.359,101.359h58.368c11.52,42.386,55.219,67.408,97.605,55.888c27.223-7.399,48.489-28.665,55.888-55.888h257.472 c11.782,0,21.333-9.551,21.333-21.333s-9.551-21.333-21.333-21.333H233.22C221.7,16.306,178.001-8.716,135.615,2.804 c-27.223,7.399-48.489,28.665-55.888,55.888H21.359c-11.782,0-21.333,9.551-21.333,21.333S9.577,101.359,21.359,101.359z"/>
+                            <path d="M490.692,234.692h-58.368c-11.497-42.38-55.172-67.416-97.552-55.92c-27.245,7.391-48.529,28.674-55.92,55.92H21.359 c-11.782,0-21.333,9.551-21.333,21.333c0,11.782,9.551,21.333,21.333,21.333h257.493c11.497,42.38,55.172,67.416,97.552,55.92 c27.245-7.391,48.529-28.674,55.92-55.92h58.368c11.782,0,21.333-9.551,21.333-21.333 C512.025,244.243,502.474,234.692,490.692,234.692z"/>
+                            <path d="M490.692,410.692H233.22c-11.52-42.386-55.219-67.408-97.605-55.888c-27.223,7.399-48.489,28.665-55.888,55.888H21.359 c-11.782,0-21.333,9.551-21.333,21.333c0,11.782,9.551,21.333,21.333,21.333h58.368c11.52,42.386,55.219,67.408,97.605,55.888 c27.223-7.399,48.489-28.665,55.888-55.888h257.472c11.782,0,21.333-9.551,21.333-21.333 C512.025,420.243,502.474,410.692,490.692,410.692z"/>
+                        </g>
+                    </svg>
+                </button>
 
-                    <!-- Ordinamento con radio buttons -->
-                    <fieldset class="sort-fieldset">
-                        <legend>Ordina per:</legend>
-                        <div class="sort-options">
+                <div id="filterPanel" class="filter-panel">
+                    
+                    <div class="mobile-filters-header">
+                        <h3>Filtra e Ordina</h3>
+                        <button id="closeFiltersBtn" class="bottone-primario" aria-label="Chiudi filtri">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M18.707 6.707l-1.414-1.414L12 10.586 6.707 5.293 5.293 6.707 10.586 12l-5.293 5.293 1.414 1.414L12 13.414l5.293 5.293 1.414-1.414L13.414 12l5.293-5.293z"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>Ordina per</h4>
+                        <div class="sort-options-vertical">
                             <label>
-                                <input type="radio" name="sortOrder" value="priceAsc">
-                                <span>Prezzo crescente</span>
+                                <input type="radio" name="sortOrder" value="priceAsc"> Prezzo crescente
                             </label>
                             <label>
-                                <input type="radio" name="sortOrder" value="priceDesc">
-                                <span>Prezzo decrescente</span>
+                                <input type="radio" name="sortOrder" value="priceDesc"> Prezzo decrescente
                             </label>
                             <label>
-                                <input type="radio" name="sortOrder" value="nameAsc">
-                                <span>Nome crescente</span>
+                                <input type="radio" name="sortOrder" value="nameAsc"> Nome (A-Z)
                             </label>
                             <label>
-                                <input type="radio" name="sortOrder" value="nameDesc">
-                                <span>Nome decrescente</span>
+                                <input type="radio" name="sortOrder" value="nameDesc"> Nome (Z-A)
                             </label>
                         </div>
+                    </div>
 
-                        <!-- Pulsante toggle filtri (visibile solo su mobile) -->
-                        <button class="btn-toggle-filters" id="toggleFilters" aria-expanded="false" aria-controls="filterPanel">
-                            <svg viewBox="0 0 24 24"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
-                            Filtri
-                        </button>
-                    </fieldset>
-                </div>
-
-                <!-- Pannello filtri (sidebar desktop, tendina mobile) -->
-                <div id="filterPanel" class="filter-panel">
                     <!-- Filtro Categorie - Dinamico dal DB -->
                     <div class="filter-group">
                         <h4>Categoria</h4>
