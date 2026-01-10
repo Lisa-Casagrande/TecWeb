@@ -46,7 +46,7 @@ try {
     
 } catch (PDOException $e) {
     // Se c'è un errore, mostra un messaggio semplice
-    error_log("Errore home.php: " . $e->getMessage());
+    error_log("Errore index.php: " . $e->getMessage());
     $prodottiHtml = '<p style="text-align:center; grid-column: 1 / -1;">Impossibile caricare i prodotti in questo momento.</p>';
 }
 
@@ -210,7 +210,7 @@ if (empty($prodottiHtml)) {
                         
                     } catch (PDOException $e) {
                         // Se c'è un errore, mostra un messaggio semplice
-                        error_log("Errore home.php: " . $e->getMessage());
+                        error_log("Errore index.php: " . $e->getMessage());
                         echo '<p style="text-align:center; grid-column: 1 / -1; padding: 20px; color: #666;">
                                 Impossibile caricare i prodotti in questo momento.
                             </p>';

@@ -17,7 +17,7 @@ if (isset($_SESSION['carrello'])) {
 
         <!-- Logo -->
         <div class="logo">
-            <?php if ($currentPage === 'home.php'): ?>
+            <?php if ($currentPage === 'index.php'): ?>
                 <!-- Logo senza link nella home -->
                 <span class="logo-button" aria-label="Logo InfuseMe">
                     <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
@@ -25,7 +25,7 @@ if (isset($_SESSION['carrello'])) {
                 </span>
             <?php else: ?>
                 <!-- Logo con link nelle altre pagine -->
-                <a href="home.php" aria-label="Torna alla home" class="logo-button">
+                <a href="index.php" aria-label="Torna alla home" class="logo-button">
                     <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
                     <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
                 </a>
@@ -40,9 +40,9 @@ if (isset($_SESSION['carrello'])) {
                 <!-- Menu principale -->
                 <nav aria-label="Menu principale" role="navigation">
                     <ul class="main-nav">
-                        <li class="<?= $currentPage === 'home.php' ? 'current-page' : '' ?>">
-                            <a href="home.php" class="nav-link">
-                                <?php if ($currentPage === 'home.php'): ?>
+                        <li class="<?= $currentPage === 'index.php' ? 'current-page' : '' ?>">
+                            <a href="index.php" class="nav-link">
+                                <?php if ($currentPage === 'index.php'): ?>
                                     <svg class="nav-leaf-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-77 79 100 100" aria-hidden="true">
                                         <path d="M-2.5,151.2C13,135.8,16.8,83.6,16.8,83.6s-10.7,6.8-27.5,8.2c-15.8,1.4-30.5,3.6-39.1,12.2c-13.3,13.3-16.6,32.1-9,45.5c10.5-17.8,45-33.5,45-33.5C-38.3,133.4-54.4,150-71.2,174l9.3,1.1c0,0,6.1-11.1,11.5-16.4C-37,168.1-16.6,165.3-2.5,151.2z"/>
                                     </svg>

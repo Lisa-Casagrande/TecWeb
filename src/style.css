@@ -490,7 +490,6 @@ body.dark-theme .moon-icon { opacity: 1; }
     display: none;
 }
 
-/* Mobile Menu Wrapper - nascosto di default */
 .mobile-menu-wrapper {
     display: none;
     position: fixed;
@@ -504,14 +503,12 @@ body.dark-theme .moon-icon { opacity: 1; }
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding: 80px 20px 40px 20px;
 }
 
 .mobile-menu-wrapper[style*="display: flex"] {
     opacity: 1;
 }
 
-/* Pulsante di chiusura (X) nel menu mobile */
 .mobile-close-btn {
     position: absolute;
     border: none;
@@ -522,7 +519,6 @@ body.dark-theme .moon-icon { opacity: 1; }
     justify-content: center;
 }
 
-/* RIMUOVIAMO OGNI EFFETTO DI SFONDO O OUTLINE PER LA X */
 .mobile-close-btn:focus,
 .mobile-close-btn:hover,
 .mobile-close-btn:active {
@@ -538,26 +534,59 @@ body.dark-theme .moon-icon { opacity: 1; }
     fill: currentColor;
 }
 
-/* ========== MOBILE (max 900px) ========== */
-@media (max-width: 900px) {
+/* ========== TABLET / LAPTOP SMALL ========== */
+@media (max-width: 1200px) and (min-width: 1025px) {
+    
+    header {
+        padding: 1m 0;
+    }
+
+    .header-container {
+        padding: 0 40px;
+    }
+
+    /* Rimpicciolisce leggermente il logo */
+    .logo {
+        width: 190px;
+        height: 55px;
+    }
+
+    .main-nav a {
+        padding: 0.5em 0.8em;
+        font-size: 1em;
+    }
+
+    .header-utilities {
+        gap: 0.5em;
+    }
+
+    header .icon-button {
+        width: 44px;
+        height: 44px;
+    }
+
+    header .icon-button svg {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+/* ========== MOBILE (max 1025px) ========== */
+@media (max-width: 1025px) {
     
     .header-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1em;
         position: relative;
         min-height: 60px;
     }
     
     .logo {
-        order: 2;
-        flex-shrink: 0;
         position: absolute;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        z-index: 1;
     }
     
     nav,
@@ -565,19 +594,10 @@ body.dark-theme .moon-icon { opacity: 1; }
         display: none;
     }
     
-    /* Mostra hamburger A SINISTRA */
     .hamburger {
         display: flex;
         flex-direction: column;
-        cursor: pointer;
         gap: 6px;
-        z-index: 1002;
-        padding: 10px;
-        background: transparent;
-        border: none;
-        order: 1;
-        margin-right: auto;
-        align-self: center;
         -webkit-tap-highlight-color: transparent;
     }
 
@@ -593,21 +613,7 @@ body.dark-theme .moon-icon { opacity: 1; }
         height: 3px;
         background: var(--header-text);
         border-radius: 3px;
-        transition: all 0.3s ease;
         display: block;
-    }
-    
-    /* Animazione hamburger → X */
-    .hamburger.active span:nth-child(1) {
-        transform: rotate(45deg) translate(8px, 8px);
-    }
-    
-    .hamburger.active span:nth-child(2) {
-        opacity: 0;
-    }
-    
-    .hamburger.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(8px, -8px);
     }
     
     .mobile-menu-wrapper nav {
@@ -1212,19 +1218,11 @@ footer {
     border-radius: 50%; /*icona a cerchio*/
     
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     
     /*all'inizio è nascosto*/
     opacity: 0;
     visibility: hidden;
     transform: scale(0.8);
-    
-    /*transizioni fluide*/
-    transition: opacity 0.3s ease, 
-                visibility 0.3s ease, 
-                transform 0.3s ease,
-                background-color 0.3s ease,
-                box-shadow 0.3s ease;
     
     /*layout interno*/
     display: flex;
@@ -1245,7 +1243,6 @@ footer {
     background-color: var(--button-bg);
     color: var(--button-text);
     transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
     outline: 3px solid var(--text-color);
     outline-offset: 3px;
 }
@@ -1557,272 +1554,6 @@ body.dark-theme .form-links a:visited {
     color: var(--link-visited);     /* Visitato notte */
 }
 
-
-/* ==================================================================================
-FORSE LE RIGHE DA QUA FINO AL PROSSIMO TEMA SI POSSONO CANCELLARE - DA VERIFICARE
-===================================================================================== */
-#area-account { padding: 3em 0; }
-#area-account h1 { text-align: center; margin-bottom: 2em; color: var(--text-color); }
-
-#profilo-utente, .ordine {
-    background-color: var(--card-bg);
-    padding: 2em;
-    border-radius: 12px;
-    margin-bottom: 3em;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    border: 2px solid var(--text-color);
-}
-
-#profilo-utente h2, #ordini-recenti h2 {
-    margin-bottom: 1.5em;
-    color: var(--text-color);
-    border-bottom: 2px solid var(--accent-color);
-    padding-bottom: 0.5em;
-}
-
-.user-info {
-    display: flex;
-    gap: 2em;
-    align-items: flex-start;
-}
-
-.user-info img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid var(--accent-color);
-    flex-shrink: 0;
-}
-
-.user-details { flex: 1; }
-.user-details p { margin-bottom: 1em; font-size: 1.1em; line-height: 1.6; }
-
-.user-details strong {
-    color: var(--button-bg);
-    font-weight: 600;
-    display: inline-block;
-    min-width: 150px;
-}
-
-.user-details a {
-    display: inline-block;
-    margin-top: 1em;
-    padding: 0.5em 1.5em;
-    background-color: var(--button-bg);
-    color: var(--header-text);
-    border-radius: 6px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.user-details a:hover, .user-details a:focus {
-    background-color: var(--button-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    text-decoration: none;
-}
-
-/* Ordini */
-.ordine {
-    padding: 1.5em;
-    margin-bottom: 1.5em;
-    border-left: 4px solid var(--button-bg);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-}
-
-.ordine:hover {
-    transform: translateX(5px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-}
-
-.ordine:last-child { margin-bottom: 0; }
-
-.ordine h3 {
-    color: var(--button-bg);
-    margin-bottom: 1em;
-    font-size: 1.3em;
-}
-
-.ordine h4 {
-    margin-top: 1em;
-    margin-bottom: 0.5em;
-    color: var(--text-color);
-    font-size: 1.1em;
-}
-
-.ordine p { margin-bottom: 0.5em; color: var(--text-color); }
-
-.ordine ul {
-    list-style: disc;
-    margin-left: 1.5em;
-    margin-top: 0.5em;
-}
-
-.ordine ul li {
-    margin-bottom: 0.3em;
-    color: var(--text-color);
-}
-
-.ordine a {
-    display: inline-block;
-    margin-top: 1em;
-    color: var(--link-color);
-    font-weight: 600;
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-.ordine a:hover, .ordine a:focus {
-    color: var(--link-hover);
-    text-decoration: underline;
-}
-
-#logout-btn {
-    display: block;
-    margin: 2em auto 0;
-    max-width: 300px;
-}
-
-/* ===================================
-   RESPONSIVE DESIGN
-   =================================== */
-
-@media screen and (max-width: 1024px) {
-    .header-container {
-        flex-direction: column;
-        gap: 1.5em;
-        text-align: center;
-    }
-
-    .main-nav ul { gap: 1.5em; }
-    .main-nav a { padding: 0.6em 1em; font-size: 1em; }
-    
-    .hero h1 { font-size: 2.8em; }
-    .hero-subtitle { font-size: 1.5em; }
-    
-    .value-item::after { display: none; }
-}
-
-@media screen and (max-width: 768px) {
-    .header-container { gap: 1em; }
-
-    .main-nav ul {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 1em;
-    }
-
-    .main-nav a { padding: 0.5em 0.8em; font-size: 0.95em; }
-
-    .header-utilities { gap: 1em; }
-    .icon-button { padding: 0.6em; }
-    .icon-button svg { width: 24px; height: 24px; }
-
-    .hero { padding: 4em 1.5em; }
-    .hero h1 { font-size: 2.2em; }
-    .hero-subtitle { font-size: 1.3em; }
-
-    .hero-buttons {
-        flex-direction: column;
-        align-items: center;
-        gap: 1em;
-    }
-
-    .btn { width: 100%; max-width: 300px; }
-
-    .products-grid, .values-grid {
-        grid-template-columns: 1fr;
-        gap: 2em;
-    }
-
-    .footer-content { grid-template-columns: 1fr; gap: 2em; }
-    .slogan { font-size: 1.8em; }
-    
-    .footer-social {
-        text-align: center;
-        flex-direction: column;
-        gap: 1.5em;
-    }
-    
-    .social-icons { justify-content: center; }
-
-    /* Login e Utente */
-    .login-container {
-        margin: 2em 1em;
-        padding: 2em 1.5em;
-    }
-
-    .login-container h2 { font-size: 1.5em; }
-
-    .user-info {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .user-info img { width: 100px; height: 100px; }
-    .user-details { width: 100%; }
-    .user-details strong { display: block; margin-bottom: 0.3em; }
-
-    #profilo-utente, #ordini-recenti { padding: 1.5em; }
-}
-
-@media screen and (max-width: 480px) {
-    body { font-size: 87.5%; }
-
-    h1 { font-size: 1.8em; }
-    h2 { font-size: 1.5em; }
-
-    .header-container { padding: 0 15px; }
-
-    .main-nav ul {
-        flex-direction: column;
-        gap: 0.5em;
-    }
-
-    .main-nav a {
-        width: 100%;
-        text-align: center;
-    }
-
-    .hero { padding: 3em 1em; }
-    .hero h1 { font-size: 1.8em; }
-    .hero-subtitle { font-size: 1.1em; }
-
-    .slogan { font-size: 1.5em; }
-
-    .social-icons { gap: 0.8em; }
-    .social-icon { width: 40px; height: 40px; }
-
-    /* Login e Utente */
-    .login-container {
-        margin: 1.5em 0.5em;
-        padding: 1.5em 1em;
-    }
-
-    .login-container h2 {
-        font-size: 1.3em;
-        margin-bottom: 1.5em;
-    }
-
-    .form-group { margin-bottom: 1.2em; }
-
-    .form-group input[type="text"],
-    .form-group input[type="email"],
-    .form-group input[type="password"] {
-        font-size: 0.95em;
-        padding: 0.6em 0.8em;
-    }
-
-    .user-info img { width: 80px; height: 80px; }
-    .user-details p { font-size: 1em; }
-    .ordine { padding: 1em; }
-    .ordine h3 { font-size: 1.1em; }
-}
-
 /* ===================================
    ACCESSIBILITÀ E PRINT
    =================================== */
@@ -1846,36 +1577,6 @@ button:focus, a:focus, input:focus, select:focus, textarea:focus {
     }
 }
 
-@media print {
-    body {
-        background-color: white;
-        color: black;
-        font-size: 12pt;
-    }
-
-    header, footer, .header-utilities, .skip-link, .btn, .theme-toggle {
-        display: none;
-    }
-
-    main { margin: 0; padding: 0; }
-    a { color: black; text-decoration: underline; }
-
-    .hero {
-        background: white;
-        border-bottom: 2px solid black;
-    }
-
-    .product-card, .base {
-        page-break-inside: avoid;
-        border: 1px solid black;
-    }
-
-    img {
-        max-width: 100%;
-        page-break-inside: avoid;
-    }
-}
-
 /* ==================================================
    LAYOUT GENERALE
    ================================================== */
@@ -1895,102 +1596,130 @@ button:focus, a:focus, input:focus, select:focus, textarea:focus {
 /* ==================================================
    SIDEBAR & RIEPILOGO (STICKY PC / BOTTOM MOBILE)
    ================================================== */
-.sidebar-config {
-    position: relative;
+.container-grid {
+    display: grid;
+    grid-template-columns: 350px 1fr; 
+    gap: 2em;
+    align-items: flex-start;
+}
+
+   .sidebar-config {
+    order: 1;
 }
 
 .sticky-sidebar {
     position: sticky;
-    top: 40px; 
+    top: 20px;
     display: flex;
     flex-direction: column;
     gap: 30px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
 }
 
-/* Card Filtri/Personalizza */
-.card-config {
-    background-color: var(--card-bg);
-    border: 2px solid var(--text-color);
-    border-radius: 12px;
-    padding: 20px;
-}
-
-.config-group {
-    margin: 15px 0;
-    display: flex;
+/* PULSANTE RIEPILOGO MOBILE - NASCOSTO SU DESKTOP */
+.btn-riepilogo-mobile {
+    display: none; /* Nascosto di default su desktop */
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: 2px solid var(--button-bg);
+    border-radius: 50px;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
     align-items: center;
     gap: 10px;
+    transition: all 0.3s ease;
 }
 
-.radio-box {
-    display: flex;
-    gap: 10px;
+.btn-riepilogo-mobile {
+        display: none;
+    }
+
+.btn-riepilogo-mobile:hover,
+.btn-riepilogo-mobile:focus-visible {
+    transform: translateX(-50%) translateY(-3px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+    outline: 3px solid var(--text-color);
+    outline-offset: 3px;
 }
 
-.card-config, .riepilogo-box {
-    background-color: var(--card-bg);
-    border: 2px solid var(--text-color);
-    border-radius: 12px;
-    padding: 25px;
+/* Badge contatore sul pulsante mobile */
+.riepilogo-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: 0.85em;
+    font-weight: bold;
+    min-width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--card-bg);
 }
 
-.riepilogo-header h3 {
-    font-size: 1.4em;
-    border-bottom: 2px solid var(--button-bg);
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-    color: var(--button-bg);
+/* MODAL MOBILE OVERLAY - NASCOSTO DI DEFAULT */
+.riepilogo-mobile-overlay {
+    display: none;
 }
 
-.riepilogo-scroll-area {
-    overflow-y: auto;
-    flex-grow: 1;
-    padding-right: 15px;
-    max-height: 400px; /* Limite altezza per mantenere lo scroll */
-}
-
-.riepilogo-scroll-area::-webkit-scrollbar { width: 6px; }
-.riepilogo-scroll-area::-webkit-scrollbar-thumb { background: var(--button-bg); border-radius: 10px; }
-
-.sezione-riepilogo {
-    margin-bottom: 20px;
-}
-
-.sezione-riepilogo h4 {
-    font-size: 0.9em;
-    text-transform: uppercase;
-    color: var(--text-color);
-    margin-bottom: 10px;
-    opacity: 0.8;
-}
-
-.item-selezionato .btn-rimuovi-x {
+.btn-chiudi-riepilogo {
+    position: absolute;
+    top: 15px;
+    right: 15px;
     background: transparent;
     border: none;
-    color: #ff4d4d;
-    font-size: 1.2em;
+    color: var(--text-color);
+    font-size: 1.8em;
     cursor: pointer;
-    padding: 0 5px;
-    width: auto;
-    transition: transform 0.2s ease;
-}
-
-.btn-rimuovi-x:hover { transform: scale(1.2); }
-
-/* Footer del riepilogo (Prezzo e Bottone) */
-.riepilogo-footer {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px dashed #ccc;
-}
-
-.prezzo-finale {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin-bottom: 15px;
+    width: 40px;
+    height: 40px;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
 }
+
+.riepilogo-mobile-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.riepilogo-mobile-content {
+    background-color: var(--card-bg);
+    border-radius: 20px 20px 0 0;
+    max-height: 85vh;
+    width: 100%;
+    padding: 25px;
+    overflow-y: auto;
+    animation: slideUp 0.3s ease;
+    position: relative;
+}
+
+.btn-chiudi-riepilogo:hover,
+.btn-chiudi-riepilogo:focus-visible {
+    background-color: rgba(0, 0, 0, 0.1);
+    outline: 2px solid var(--text-color);
+    outline-offset: 2px;
+}
+
+/* Contenuto del riepilogo mobile */
+.riepilogo-box-mobile {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
 
 /* ==================================================
    GRIGLIE
@@ -2053,8 +1782,6 @@ button:focus, a:focus, input:focus, select:focus, textarea:focus {
     flex-shrink: 0;
     overflow: hidden;
     border-radius: 4px;
-    border: 1px solid rgba(0,0,0,0.1);
-    background-color: #f9f9f9; 
 }
 
 .base-image-standard img {
@@ -2153,7 +1880,6 @@ button:focus, a:focus, input:focus, select:focus, textarea:focus {
 
 .ingrediente-card.selected {
     border-color: var(--button-bg);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
 .ingrediente-card.selected::before {
@@ -2189,18 +1915,17 @@ button:focus, a:focus, input:focus, select:focus, textarea:focus {
     font-size: 0.95em;
     line-height: 1.5;
     color: var(--text-color);
-    opacity: 1;             /* Forza la visibilità piena */
+    opacity: 1;            
     margin: 10px 0 20px 0;
-    text-align: center;     /* O left, se preferisci */
-    word-wrap: break-word;  /* Evita che parole troppo lunghe escano dalla card */
-    overflow: visible;      /* Assicura che nulla sia nascosto */
-    flex-grow: 1;           /* Spinge il bottone verso il basso in modo uniforme */
+    text-align: center;    
+    word-wrap: break-word; 
+    overflow: visible;  
+    flex-grow: 1;         
 }
 
-/* Assicurati che la card non abbia un'altezza fissa che blocca il testo */
 .ingrediente-card {
-    min-height: 350px;      /* Altezza minima per dare respiro */
-    height: auto;           /* Permette alla card di allungarsi se il testo è tanto */
+    min-height: 350px;  
+    height: auto;      
     display: flex;
     flex-direction: column;
 }
@@ -2244,33 +1969,91 @@ button:hover {
 @media (max-width: 900px) {
     .container-grid {
         grid-template-columns: 1fr;
-        padding-bottom: 250px; /* Spazio per il riepilogo fisso */
     }
 
+    /* Nascondi sidebar su mobile */
     .sidebar-config {
-        order: -1; /* Filtri in alto */
+        display: none;
     }
 
-    .sticky-sidebar {
-        position: static;
+    /* Mostra pulsante riepilogo mobile */
+    .btn-riepilogo-mobile {
+        display: flex;
     }
 
-    /* Riepilogo Mobile: Sempre visibile ma compatto */
-    .riepilogo-box {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 1000;
-        border-radius: 20px 20px 0 0;
-        box-shadow: 0 -5px 25px rgba(0,0,0,0.2);
-        max-height: 45vh; /* Non copre tutto lo schermo */
-        background: --card-bg;
+    /*mostra quando visibile*/
+    .btn-riepilogo-mobile.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1);
     }
 
-    .riepilogo-scroll-area {
-        max-height: 20vh; /* Area scrollabile interna su mobile */
+    /* Hover e Focus */
+    .btn-riepilogo-mobile:hover,
+    .btn-riepilogo-mobile:focus {
+        background-color: var(--button-bg);
+        color: var(--button-text);
+        transform: scale(1.1);
+        outline: 3px solid var(--text-color);
+        outline-offset: 3px;
     }
+
+    /*focus visibile solo tastiera (accessibilità)*/
+    .btn-riepilogo-mobile:focus-visible {
+        outline: 3px solid var(--text-color);
+        outline-offset: 3px;
+    }
+
+    /*rimuovi outline su click mouse*/
+    .btn-riepilogo-mobile:focus:not(:focus-visible) {
+        outline: none;
+    }
+
+    /*icona freccia (svg)*/
+    .btn-riepilogo-mobile svg {
+        width: 2em;
+        height: 2em;
+        fill: currentColor; /*prende colore chiaro*/
+    }
+
+    .btn-riepilogo-mobile:hover,
+    .btn-riepilogo-mobile:focus {
+        background-color: var(--button-bg);
+        color: var(--button-text);
+        transform: scale(1.1);
+        outline: 3px solid var(--text-color);
+        outline-offset: 3px;
+    }
+
+    .riepilogo-mobile-content {
+        background: var(--card-bg);
+        width: 100%;
+        overflow-y: auto;
+    }
+
+    @keyframes slideUp {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+    }
+
+    .btn-chiudi-riepilogo {
+        background: transparent;
+        color: var(--text-color);
+        border: none;
+        font-size: 1.5em;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        cursor: pointer;
+        width: auto;
+        padding: 5px;
+    }
+
+    .ingredienti-grid {
+    display: grid; 
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
 
     .base-content {
         flex-direction: column;
@@ -2281,16 +2064,67 @@ button:hover {
     }
 }
 
-@media (max-width: 480px) {
-    .ingredienti-grid {
-        grid-template-columns: 1fr 1fr; /* Due colonne su mobile piccolo */
-        gap: 10px;
-    }
-    
-    .ingrediente-card { padding: 10px; }
-    .ingrediente-card img { height: 100px; }
+@media (max-width: 793px) {
+  .sidebar {
+    display: none;
+  }
+
+  .ingredienti-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 100%;
+  }
+  
+  .ingrediente-card {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .contenitore-padre {
+    display: block;
+    width: 100%;
+    padding: 0; 
+    margin: 0; 
+    box-sizing: border-box;
+  }
+
+  .ingrediente-card img {
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+  
+  body, html {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Se hai un contenitore principale che lascia spazio per la sidebar, rimuovilo */
+  main, .main-content, .content-wrapper {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    width: 100% !important;
+  }
 }
 
+/* Tema scuro */
+body.dark-theme .btn-riepilogo-mobile {
+    color: var(--header-bg);
+}
+
+body.dark-theme .btn-riepilogo-mobile:hover,
+body.dark-theme .btn-riepilogo-mobile:focus {
+    outline-color: var(--text-color);
+}
 
 /* ===========================
    PAGINA CHI SIAMO
@@ -4702,7 +4536,6 @@ section.product-details-section .product-detail-block {
     outline-offset: 3px;
     text-decoration: underline;
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 /*tema scuro - l'outline deve essere chiara per vedersi sullo scuro */

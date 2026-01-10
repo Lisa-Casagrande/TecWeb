@@ -34,13 +34,79 @@ try {
 <body>
     <?php include 'navbar.php'; ?>
 
+    <!-- Pulsante Riepilogo Mobile (visibile solo su mobile) -->
+    <button class="btn-riepilogo-mobile" aria-label="Apri riepilogo blend">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7,10L12,15L17,10H7Z"/>
+        </svg>
+        <span class="riepilogo-badge" style="display: none;">0</span>
+    </button>
+
+    <!-- Overlay Modal Mobile -->
+    <div class="riepilogo-mobile-overlay" id="riepilogo-mobile-overlay">
+        <div class="riepilogo-mobile-content">
+            <button class="btn-chiudi-riepilogo" aria-label="Chiudi riepilogo">✕</button>
+            
+            <!-- Contenuto identico al riepilogo desktop -->
+            <div class="riepilogo-box-mobile">
+                <div class="riepilogo-header">
+                    <h3>Il tuo Blend</h3>
+                </div>
+
+                <!-- Sezione Personalizza -->
+                <div class="config-group">
+                    <span class="label">Ingredienti extra:</span>
+                    <div class="radio-box">
+                        <label><input type="radio" name="numIngredientiMobile" value="2" checked> 2</label>
+                        <label><input type="radio" name="numIngredientiMobile" value="3"> 3</label>
+                    </div>
+                </div>
+
+                <div class="stato-selezione">
+                    <p>Base: <span id="contatore-base-mobile">0/1</span></p>
+                    <p>Ingredienti: <span id="contatore-ingredienti-mobile">0/2</span></p>
+                </div>
+
+                <button class="btn-reset-link" id="btn-reset-mobile">Svuota tutto</button>
+
+                <!-- Area Riepilogo -->
+                <div class="riepilogo-scroll-area">
+                    <div class="sezione-riepilogo">
+                        <h4>Base selezionata:</h4>
+                        <div id="base-selezionata-mobile">
+                            <p class="nessuna-selezione">Nessuna base selezionata</p>
+                        </div>
+                    </div>
+                    
+                    <div class="sezione-riepilogo">
+                        <h4>Ingredienti:</h4>
+                        <div id="ingredienti-selezionati-mobile">
+                            <p class="nessuna-selezione">Nessun ingrediente aggiunto</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Prezzo e Conferma -->
+                <div class="riepilogo-footer">
+                    <div class="prezzo-finale">Totale: € <span id="importo-prezzo-mobile">0.00</span></div>
+                    <button id="btn-conferma-mobile" class="btn-conferma" disabled>Conferma Blend</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <main id="main-content" class="crea-blend-layout">
         <div class="container-grid">
             
+            <!-- SIDEBAR UNIFICATA (Desktop) -->
             <aside class="sidebar-config">
                 <div class="sticky-sidebar">
-                    <div class="card-config" id="controlli-selezione">
-                        <h3>Personalizza</h3>
+                    <div class="riepilogo-box" id="riepilogo-dinamico">
+                        <div class="riepilogo-header">
+                            <h3>Il tuo Blend</h3>
+                        </div>
+
+                        <!-- Sezione Personalizza (sopra) -->
                         <div class="config-group">
                             <span class="label">Ingredienti extra:</span>
                             <div class="radio-box">
@@ -48,18 +114,15 @@ try {
                                 <label><input type="radio" name="numIngredienti" value="3"> 3</label>
                             </div>
                         </div>
+
                         <div class="stato-selezione">
                             <p>Base: <span id="contatore-base">0/1</span></p>
                             <p>Ingredienti: <span id="contatore-ingredienti">0/2</span></p>
                         </div>
-                        <button class="btn-reset-link" id="btn-reset">Svuota tutto</button>
-                    </div>
 
-                    <div class="riepilogo-box" id="riepilogo-dinamico">
-                        <div class="riepilogo-header">
-                            <h3>Il tuo Blend</h3>
-                        </div>
+                        <button class="btn-reset-link" id="btn-reset">Svuota tutto</button>
                         
+                        <!-- Area scrollabile -->
                         <div class="riepilogo-scroll-area">
                             <div class="sezione-riepilogo">
                                 <h4>Base selezionata:</h4>
@@ -76,6 +139,7 @@ try {
                             </div>
                         </div>
 
+                        <!-- Footer con prezzo e bottone -->
                         <div class="riepilogo-footer">
                             <div class="prezzo-finale">Totale: € <span id="importo-prezzo">0.00</span></div>
                             <button id="btn-conferma" class="btn-conferma" disabled>Conferma Blend</button>
@@ -189,6 +253,8 @@ try {
                 <?php endforeach; ?>
             </section>
 
+        </div>
+        
         <form id="form-blend" action="php/gestioneCarrello.php" method="POST" style="display: none;">
             <input type="hidden" name="azione" value="aggiungi">
             <input type="hidden" name="id_base" id="input-id-base">

@@ -131,7 +131,7 @@ if (!$ordine_completato && isset($_SESSION['user_id'])) {
                 <h1>Grazie! L'ordine è stato completato.</h1>
                 <p>Abbiamo ricevuto la tua richiesta. Stiamo preparando i tuoi infusi.</p>
                 <div class="cart-actions">
-                    <a href="home.php" class="bottone-primario">Torna alla Home</a>
+                    <a href="index.php" class="bottone-primario">Torna alla Home</a>
                     <a href="dettaglioOrdine.php?id=<?php echo $id_ordine_creato; ?>" class="bottone-primario">Visualizza l'ordine</a>
                 </div>
             </section>

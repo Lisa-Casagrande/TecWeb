@@ -858,7 +858,36 @@ function updateCartCounter() {
 // ===================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    
+
+    // --- GESTIONE TENDINA RIEPILOGO MOBILE ---
+    const btnApriMobile = document.querySelector('.btn-riepilogo-mobile');
+    const overlayMobile = document.getElementById('riepilogo-mobile-overlay');
+    const btnChiudiMobile = document.querySelector('.btn-chiudi-riepilogo');
+
+    if (btnApriMobile && overlayMobile) {
+        // Apri la tendina quando clicchi il pulsante flottante
+        btnApriMobile.addEventListener('click', () => {
+            overlayMobile.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Blocca lo scroll della pagina sotto
+        });
+
+        // Chiudi con la X
+        if (btnChiudiMobile) {
+            btnChiudiMobile.addEventListener('click', () => {
+                overlayMobile.classList.remove('active');
+                document.body.style.overflow = ''; // Riabilita lo scroll
+            });
+        }
+
+        // Chiudi se clicchi fuori dal contenuto (sull'oscuramento)
+        overlayMobile.addEventListener('click', (e) => {
+            if (e.target === overlayMobile) {
+                overlayMobile.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+
     // 1. Recupero dati dal localStorage o inizializzo stato vuoto
     const datiSalvati = localStorage.getItem('mioBlendSalvato');
     const statoBlend = datiSalvati ? JSON.parse(datiSalvati) : {
@@ -926,6 +955,21 @@ document.addEventListener('DOMContentLoaded', function() {
         if (btnConferma) {
             const pronto = statoBlend.base && statoBlend.ingredienti.length >= 2;
             btnConferma.disabled = !pronto;
+        }
+
+        const baseDivMob = document.getElementById('base-selezionata-mobile');
+        const ingDivMob = document.getElementById('ingredienti-selezionati-mobile');
+        const importoMob = document.getElementById('importo-prezzo-mobile');
+        const btnConfMob = document.getElementById('btn-conferma-mobile');
+        
+        // Copia il contenuto generato per il desktop dentro i contenitori mobile
+        if (baseDivMob && baseDiv) baseDivMob.innerHTML = baseDiv.innerHTML;
+        if (ingDivMob && ingDiv) ingDivMob.innerHTML = ingDiv.innerHTML;
+        if (importoMob && importoPrezzo) importoMob.textContent = importoPrezzo.textContent;
+        
+        if (btnConfMob) {
+            btnConfMob.disabled = !statoBlend.base || statoBlend.ingredienti.length < 2;
+            // Se hai un listener sul bottone conferma mobile, aggiungilo qui o usa quello desktop
         }
 
         // --- 6. Sincronizzazione Grafica Card ---

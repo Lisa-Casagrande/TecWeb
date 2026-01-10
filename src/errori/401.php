@@ -28,8 +28,8 @@
     <div class="testo-errore">
       <h1>Qui serve un login!</h1>
       <p>Sorseggia un tè caldo, accomodati e concediti un momento di relax… Biscotti opzionali, ma consigliati!</p>
-      <p>Se hai già un account puoi <a href='/login.html'><strong>accedere qui</strong></a>, altrimenti <a href='/registrazione.php'><strong>registrarti da qui</strong></a>.</p>
-      <p>In alternativa, puoi tornare alla <a href="/home.html">Home</a>.</p>
+      <p>Se hai già un account puoi <a href='/login.php'><strong>accedere qui</strong></a>, altrimenti <a href='/registrazione.php'><strong>registrarti da qui</strong></a>.</p>
+      <p>In alternativa, puoi tornare alla <a href="/index.php">Home</a>.</p>
       
       <div class="separatore-testo"></div>
       <p class="ultima-frase">

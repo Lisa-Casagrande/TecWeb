@@ -88,7 +88,7 @@ try {
         <!--logo Infuse Me in alto a sinistra-->
         <div class="header-container">
             <div class="logo">
-                <a href="home.php" aria-label="Torna alla home" class="logo-button">
+                <a href="index.php" aria-label="Torna alla home" class="logo-button">
                     <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
                     <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
                 </a>
@@ -104,7 +104,7 @@ try {
             <!-- Navigation (menù)-->
             <nav aria-label="Menu principale" role="navigation">
                 <ul class="main-nav">
-                    <li><a href="home.php"><span lang="en">Home</span></a></li>
+                    <li><a href="index.php"><span lang="en">Home</span></a></li>
                     <li><a href="catalogo.php">Catalogo</a></li>
                     <li><a href="creaBlend.php">Crea il tuo <span lang="en">Blend</span></a></li>
                     <li><a href="chiSiamo.html">Chi Siamo</a></li>

@@ -29,7 +29,7 @@
     <h1>Il tè è troppo caldo da gestire!</h1>
     <p>Anche il tè migliore a volte ha bisogno di raffreddarsi...</p> 
     <p>Il nostro sistema è andato in ebollizione, ma stiamo già lavorando per risolvere il problema.</p>
-    <p>Nel frattempo, puoi tornare alla <a href="/home.html">Home</a></p>
+    <p>Nel frattempo, puoi tornare alla <a href="/index.php">Home</a></p>
     <div class="separatore-testo"></div>
     <p class="ultima-frase">
         Questo errore indica un problema temporaneo del server. Ci scusiamo per il disagio!
