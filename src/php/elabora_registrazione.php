@@ -1,11 +1,11 @@
 <?php
 session_start();
-
+require_once 'connessione.php';
 /* =============================
    CONTROLLO METODO
 ============================= */
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../registrazione.php');
+    header('Location: /registrazione.php');
     exit;
 }
 
@@ -91,31 +91,9 @@ if (!empty($errors)) {
 $hashPassword = password_hash($password, PASSWORD_DEFAULT);
 
 /* =============================
-   CONNESSIONE DB
+// EMAIL GIÀ ESISTENTE
 ============================= */
-$dbHost = getenv('DB_HOST') ?: 'localhost';
-$dbName = getenv('DB_NAME') ?: 'db_InfuseMe';
-$dbUser = getenv('DB_USER') ?: 'infuseme_user';
-$dbPass = getenv('DB_PASSWORD') ?: 'InfuseMe123!';
-
-try {
-    $db = new PDO(
-        "mysql:host=$dbHost;dbname=$dbName;charset=utf8mb4",
-        $dbUser,
-        $dbPass,
-        [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-        ]
-    );
-} catch (PDOException $e) {
-    die("Errore connessione DB");
-}
-
-/* =============================
-   EMAIL GIÀ ESISTENTE
-============================= */
-$stmt = $db->prepare("SELECT id_utente FROM utente WHERE email = :email LIMIT 1");
+$stmt = $pdo->prepare("SELECT id_utente FROM utente WHERE email = :email LIMIT 1");
 $stmt->execute(['email' => $email]);
 if ($stmt->fetch()) {
     $_SESSION['errors'] = [
@@ -128,9 +106,9 @@ if ($stmt->fetch()) {
 }
 
 /* =============================
-   INSERIMENTO UTENTE
+// INSERIMENTO UTENTE
 ============================= */
-$stmt = $db->prepare("
+$stmt = $pdo->prepare("
     INSERT INTO utente 
     (email, password_hash, nome, cognome, data_nascita, indirizzo, cap, citta)
     VALUES
