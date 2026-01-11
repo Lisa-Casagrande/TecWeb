@@ -67,9 +67,6 @@ $sostituzioni = [
     '[maxDataNascita]'   => $maxDataNascita
 ];
 
-ob_start();
-require 'navbar.php';
-$navbar = ob_get_clean();
 ?>
 <!DOCTYPE html>
 <html lang="it" xml:lang="it" xmlns="http://www.w3.org/1999/xhtml">
@@ -87,7 +84,7 @@ $navbar = ob_get_clean();
     <!-- Skip link per accessibilità -->
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
 
-   <?php echo $navbar; ?>
+   <?php include 'navbar.php'; ?>
 
   <main id="main-content">
     <section id="login-section">
