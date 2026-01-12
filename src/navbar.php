@@ -41,87 +41,133 @@ if (isset($_SESSION['carrello'])) {
                 <nav aria-label="Menu principale" role="navigation">
                     <ul class="main-nav">
                         <li class="<?= $currentPage === 'index.php' ? 'current-page' : '' ?>">
-                            <a href="index.php" class="nav-link">
-                                <?php if ($currentPage === 'index.php'): ?>
+                            <?php if ($currentPage === 'index.php'): ?>
+                                <span class="nav-link">
                                     <svg class="nav-leaf-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-77 79 100 100" aria-hidden="true">
                                         <path d="M-2.5,151.2C13,135.8,16.8,83.6,16.8,83.6s-10.7,6.8-27.5,8.2c-15.8,1.4-30.5,3.6-39.1,12.2c-13.3,13.3-16.6,32.1-9,45.5c10.5-17.8,45-33.5,45-33.5C-38.3,133.4-54.4,150-71.2,174l9.3,1.1c0,0,6.1-11.1,11.5-16.4C-37,168.1-16.6,165.3-2.5,151.2z"/>
                                     </svg>
-                                <?php endif; ?>
-                                <span lang="en">Home</span>
-                            </a>
+                                    <span lang="en">Home</span>
+                                </span>
+                            <?php else: ?>
+                                <a href="index.php" class="nav-link">
+                                    <span lang="en">Home</span>
+                                </a>
+                            <?php endif; ?>
                         </li>
 
                         <li class="<?= $currentPage === 'catalogo.php' ? 'current-page' : '' ?>">
-                            <a href="catalogo.php" class="nav-link">
-                                <?php if ($currentPage === 'catalogo.php'): ?>
+                            <?php if ($currentPage === 'catalogo.php'): ?>
+                                <span class="nav-link">
                                     <svg class="nav-leaf-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-77 79 100 100" aria-hidden="true">
                                         <path d="M-2.5,151.2C13,135.8,16.8,83.6,16.8,83.6s-10.7,6.8-27.5,8.2c-15.8,1.4-30.5,3.6-39.1,12.2c-13.3,13.3-16.6,32.1-9,45.5c10.5-17.8,45-33.5,45-33.5C-38.3,133.4-54.4,150-71.2,174l9.3,1.1c0,0,6.1-11.1,11.5-16.4C-37,168.1-16.6,165.3-2.5,151.2z"/>
                                     </svg>
-                                <?php endif; ?>
-                                Catalogo
-                            </a>
+                                    Catalogo
+                                </span>
+                            <?php else: ?>
+                                <a href="catalogo.php" class="nav-link">
+                                    Catalogo
+                                </a>
+                            <?php endif; ?>
                         </li>
 
                         <li class="<?= $currentPage === 'creaBlend.php' ? 'current-page' : '' ?>">
-                            <a href="creaBlend.php" class="nav-link">
-                                <?php if ($currentPage === 'creaBlend.php'): ?>
+                            <?php if ($currentPage === 'creaBlend.php'): ?>
+                                <span class="nav-link">
                                     <svg class="nav-leaf-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-77 79 100 100" aria-hidden="true">
                                         <path d="M-2.5,151.2C13,135.8,16.8,83.6,16.8,83.6s-10.7,6.8-27.5,8.2c-15.8,1.4-30.5,3.6-39.1,12.2c-13.3,13.3-16.6,32.1-9,45.5c10.5-17.8,45-33.5,45-33.5C-38.3,133.4-54.4,150-71.2,174l9.3,1.1c0,0,6.1-11.1,11.5-16.4C-37,168.1-16.6,165.3-2.5,151.2z"/>
                                     </svg>
-                                <?php endif; ?>
-                                Crea il tuo Blend
-                            </a>
+                                    Crea il tuo Blend
+                                </span>
+                            <?php else: ?>
+                                <a href="creaBlend.php" class="nav-link">
+                                    Crea il tuo Blend
+                                </a>
+                            <?php endif; ?>
                         </li>
 
                         <li class="<?= $currentPage === 'chiSiamo.php' ? 'current-page' : '' ?>">
-                            <a href="chiSiamo.php" class="nav-link">
-                                <?php if ($currentPage === 'chiSiamo.php'): ?>
+                            <?php if ($currentPage === 'chiSiamo.php'): ?>
+                                <span class="nav-link">
                                     <svg class="nav-leaf-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-77 79 100 100" aria-hidden="true">
                                         <path d="M-2.5,151.2C13,135.8,16.8,83.6,16.8,83.6s-10.7,6.8-27.5,8.2c-15.8,1.4-30.5,3.6-39.1,12.2c-13.3,13.3-16.6,32.1-9,45.5c10.5-17.8,45-33.5,45-33.5C-38.3,133.4-54.4,150-71.2,174l9.3,1.1c0,0,6.1-11.1,11.5-16.4C-37,168.1-16.6,165.3-2.5,151.2z"/>
                                     </svg>
-                                <?php endif; ?>
-                                Chi Siamo
-                            </a>
+                                    Chi Siamo
+                                </span>
+                            <?php else: ?>
+                                <a href="chiSiamo.php" class="nav-link">
+                                    Chi Siamo
+                                </a>
+                            <?php endif; ?>
                         </li>
                     </ul>
                 </nav>
 
         <!-- Utility icons -->
         <div class="header-utilities">
-        <!-- Carrello -->
-            <a href="carrello.php"
-   class="icon-button <?= $currentPage === 'carrello.php' ? 'current-page' : '' ?>"
-   aria-label="Vai al carrello">
-                <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7
-                             A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.994,0,0,0,22.713,4.077ZM21.4,6.178
-                             l-.786,4.354A3,3,0,0,1,17.657,13H5.419L4.478,5H20.41A1,1,0,0,1,21.4,6.178Z"/>
-                    <circle cx="7" cy="22" r="2"/>
-                    <circle cx="17" cy="22" r="2"/>
-                </svg>
-                <!--numero che indica quanti prodotti ci sono nel carrello-->
-                <?php if ($totale_articoli > 0): ?>
-                    <span class="badge-count"><?= $totale_articoli ?></span>
-                <?php endif; ?>
-            </a>
+            <!-- Carrello -->
+            <?php if ($currentPage === 'carrello.php'): ?>
+                <span class="icon-button current-page" aria-label="Sei nella pagina carrello">
+                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7
+                                A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.994,0,0,0,22.713,4.077ZM21.4,6.178
+                                l-.786,4.354A3,3,0,0,1,17.657,13H5.419L4.478,5H20.41A1,1,0,0,1,21.4,6.178Z"/>
+                        <circle cx="7" cy="22" r="2"/>
+                        <circle cx="17" cy="22" r="2"/>
+                    </svg>
+                    <?php if ($totale_articoli > 0): ?>
+                        <span class="badge-count"><?= $totale_articoli ?></span>
+                    <?php endif; ?>
+                </span>
+            <?php else: ?>
+                <a href="carrello.php" class="icon-button" aria-label="Vai al carrello">
+                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7
+                                A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.994,0,0,0,22.713,4.077ZM21.4,6.178
+                                l-.786,4.354A3,3,0,0,1,17.657,13H5.419L4.478,5H20.41A1,1,0,0,1,21.4,6.178Z"/>
+                        <circle cx="7" cy="22" r="2"/>
+                        <circle cx="17" cy="22" r="2"/>
+                    </svg>
+                    <?php if ($totale_articoli > 0): ?>
+                        <span class="badge-count"><?= $totale_articoli ?></span>
+                    <?php endif; ?>
+                </a>
+            <?php endif; ?>
 
             <!-- Area utente / login -->
             <?php if ($loggedIn): ?>
                 <!-- Utente loggato -->
-                <a href="paginaUtente.php" class="icon-button <?= $currentPage === 'paginaUtente.php' ? 'current-page' : '' ?>" aria-label="Area personale">
-                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M12,12A6,6,0,1,0,6,6,6.006,6.006,0,0,0,12,12ZM12,2A4,4,0,1,1,8,6,4,4,0,0,1,12,2Z"/>
-                        <path d="M12,14a9.01,9.01,0,0,0-9,9,1,1,0,0,0,2,0,7,7,0,0,1,14,0,1,1,0,0,0,2,0A9.01,9.01,0,0,0,12,14Z"/>
-                    </svg>
-                </a>
+                <?php if ($currentPage === 'paginaUtente.php'): ?>
+                    <span class="icon-button current-page" aria-label="Sei nella tua area personale">
+                        <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12,12A6,6,0,1,0,6,6,6.006,6.006,0,0,0,12,12ZM12,2A4,4,0,1,1,8,6,4,4,0,0,1,12,2Z"/>
+                            <path d="M12,14a9.01,9.01,0,0,0-9,9,1,1,0,0,0,2,0,7,7,0,0,1,14,0,1,1,0,0,0,2,0A9.01,9.01,0,0,0,12,14Z"/>
+                        </svg>
+                    </span>
+                <?php else: ?>
+                    <a href="paginaUtente.php" class="icon-button" aria-label="Area personale">
+                        <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12,12A6,6,0,1,0,6,6,6.006,6.006,0,0,0,12,12ZM12,2A4,4,0,1,1,8,6,4,4,0,0,1,12,2Z"/>
+                            <path d="M12,14a9.01,9.01,0,0,0-9,9,1,1,0,0,0,2,0,7,7,0,0,1,14,0,1,1,0,0,0,2,0A9.01,9.01,0,0,0,12,14Z"/>
+                        </svg>
+                    </a>
+                <?php endif; ?>
             <?php else: ?>
                 <!-- Utente non loggato -->
-                <a href="../login.php" class="icon-button <?= $currentPage === 'login.php' ? 'current-page' : '' ?>" aria-label="Accedi o registrati">
-                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M12,12A6,6,0,1,0,6,6,6.006,6.006,0,0,0,12,12ZM12,2A4,4,0,1,1,8,6,4,4,0,0,1,12,2Z"/>
-                        <path d="M12,14a9.01,9.01,0,0,0-9,9,1,1,0,0,0,2,0,7,7,0,0,1,14,0,1,1,0,0,0,2,0A9.01,9.01,0,0,0,12,14Z"/>
-                    </svg>
-                </a>
+                <?php if ($currentPage === 'login.php'): ?>
+                    <span class="icon-button current-page" aria-label="Sei nella pagina di login">
+                        <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12,12A6,6,0,1,0,6,6,6.006,6.006,0,0,0,12,12ZM12,2A4,4,0,1,1,8,6,4,4,0,0,1,12,2Z"/>
+                            <path d="M12,14a9.01,9.01,0,0,0-9,9,1,1,0,0,0,2,0,7,7,0,0,1,14,0,1,1,0,0,0,2,0A9.01,9.01,0,0,0,12,14Z"/>
+                        </svg>
+                    </span>
+                <?php else: ?>
+                    <a href="../login.php" class="icon-button" aria-label="Accedi o registrati">
+                        <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12,12A6,6,0,1,0,6,6,6.006,6.006,0,0,0,12,12ZM12,2A4,4,0,1,1,8,6,4,4,0,0,1,12,2Z"/>
+                            <path d="M12,14a9.01,9.01,0,0,0-9,9,1,1,0,0,0,2,0,7,7,0,0,1,14,0,1,1,0,0,0,2,0A9.01,9.01,0,0,0,12,14Z"/>
+                        </svg>
+                    </a>
+                <?php endif; ?>
             <?php endif; ?>
 
             <!-- Ricerca -->

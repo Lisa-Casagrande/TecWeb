@@ -113,30 +113,25 @@ a {
     border: 1px solid transparent; 
 }
 
-
-/*fallback per browser che non supportano focus-visible (pochi casi)*/
 a:focus:not(:focus-visible) {
     outline: none;
 }
 
-/*immagine responsive che mantiene proporzioni*/
 img {
     max-width: 100%;
     height: auto;
     display: block;
 }
 
-/*rimuove corsivo per indirizzi*/
 address { font-style: normal; }
 
-/*navigazione solo per screen reader*/
 .sr-only {
    position: absolute;
    width: 1px;
    height: 1px;
    padding: 0;
    margin: -1px;
-   overflow: hidden; /*appare nascosto all'utente*/
+   overflow: hidden;
    clip-path: inset(50%);
    white-space: nowrap;
    border-width: 0;
@@ -298,7 +293,6 @@ a.logo-button:focus-visible {
 body.dark-theme .logo-dark { display: block; }
 body.dark-theme .logo-light { display: none; }
 
-
 /* Navigazione */
 .main-nav {
     flex: 1;
@@ -316,7 +310,7 @@ body.dark-theme .logo-light { display: none; }
     padding: 0;
 }
 
-.main-nav a {
+.main-nav .nav-link {
     display: flex;
     align-items: center;
     gap: 5px;
@@ -327,7 +321,18 @@ body.dark-theme .logo-light { display: none; }
     font-weight: 500;
     border-radius: 6px;
     border: 2px solid transparent;
-    white-space: nowrap; 
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.main-nav span.nav-link {
+    cursor: default;
+    font-weight: bold;
+}
+
+/* Link (altre pagine) - cliccabile */
+.main-nav a.nav-link {
+    cursor: pointer;
 }
 
 body.dark-theme .main-nav a:hover, 
@@ -348,33 +353,15 @@ body.dark-theme .main-nav a:focus {
    ICONE E BOTTONI (NAVIGAZIONE)
    =================================== */
 .main-nav li.current-page .nav-leaf-icon {
-    /*transform: rotateX(180deg);*/ /* Flip orizzontale permanente          VALURARE SE FLIPPARLA O MENO */ 
     width: 20px;
     height: auto;
     fill: var(--header-text);
 }
 
 /* ===================================
-   PAGINA CORRENTE - NON SOTTOLINEATA
-   =================================== */
-
-.main-nav li.current-page a {
-    color: var(--header-text);
-    text-decoration: none;
-    font-weight: bold;
-    cursor: default;
-}
-
-/* Nessun effetto hover sulla pagina corrente */
-.main-nav li.current-page a:hover,
-.main-nav li.current-page a:focus {
-    transform: none;
-}
-
-/* ===================================
    LINK VISITATI - SEMPRE SOTTOLINEATI
    =================================== */
-.main-nav li:not(.current-page) a:visited { 
+.main-nav a:visited { 
     color: var(--link-visited);
     text-decoration-thickness: 2px;
     text-underline-offset: 3px;
@@ -570,19 +557,8 @@ body.dark-theme .moon-icon { opacity: 1; }
         height: 25px;
     }
 
-    /*FIX TEMA SCURO*/
-    /* 1. Colora di chiaro (var --header-text) tutte le icone nel menu mobile scuro */
-    body.dark-theme .mobile-menu-wrapper .mobile-close-btn,
-    body.dark-theme .mobile-menu-wrapper .icon-button,
-    body.dark-theme .mobile-menu-wrapper .theme-toggle {
-        color: var(--header-text);       /* Usa il colore chiaro definito nelle variabili */
-        background-color: transparent;   /* Toglie sfondi grigi ereditati */
-        border-color: var(--header-text); /* Se c'è bordo, lo fa chiaro */
-    }
-
-    /* 2. Assicura che il disegno SVG prenda il colore del testo */
-    body.dark-theme .mobile-menu-wrapper svg {
-        fill: currentColor;
+    .mobile-menu-wrapper .theme-toggle {
+        background-color: transparent; 
     }
 }
 
@@ -645,6 +621,23 @@ body.dark-theme .moon-icon { opacity: 1; }
         width: 100%;
         margin-top: 1em;
     }
+
+    .mobile-menu-wrapper nav li {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .mobile-menu-wrapper nav span.nav-link {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 1.2em;
+        font-size: 1.3em;
+        color: var(--header-text);
+    }
     
     .mobile-menu-wrapper nav ul {
         display: flex;
@@ -653,7 +646,7 @@ body.dark-theme .moon-icon { opacity: 1; }
         width: 100%;
         max-width: 400px;
         padding: 0;
-        margin: 0;
+        margin: 0 auto;
         list-style: none;
     }
     
@@ -665,7 +658,6 @@ body.dark-theme .moon-icon { opacity: 1; }
         font-size: 1.3em;
         color: var(--header-text);
         text-decoration: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         transition: transform 0.2s ease;
     }
     
@@ -1616,18 +1608,19 @@ button:focus, a:focus, input:focus, select:focus, textarea:focus {
 }
 
 /* ==================================================
-   LAYOUT GENERALE
+   CREABLEND
    ================================================== */
 .crea-blend-layout {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 40px 120px; 
+    padding: 10px 100px; 
 }
 
+/* 2. Ottimizzazione Griglia */
 .container-grid {
     display: grid;
-    grid-template-columns: 350px 1fr;
-    gap: 2em;
+    grid-template-columns: 320px 1fr;
+    gap: 1.5em; 
     align-items: flex-start;
 }
 
@@ -1641,121 +1634,146 @@ button:focus, a:focus, input:focus, select:focus, textarea:focus {
     align-items: flex-start;
 }
 
-   .sidebar-config {
+.sidebar-config {
     order: 1;
 }
 
 .sticky-sidebar {
     position: sticky;
-    top: 20px;
+    top: 100px;
     display: flex;
     flex-direction: column;
-    gap: 30px;
-    max-height: calc(100vh - 40px);
+    gap: 1em;
+    max-height: calc(100vh - 120px);
     overflow-y: auto;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 1em;
+    border-radius: 8px;
+    border: 1px solid var(--button-bg);
+}
+
+/* Scrollbar personalizzata marrone */
+.sticky-sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sticky-sidebar::-webkit-scrollbar-track {
+    background: rgba(241, 241, 241, 0.5);
+    border-radius: 10px;
+}
+
+.sticky-sidebar::-webkit-scrollbar-thumb {
+    background: var(--button-bg);
+    border-radius: 10px;
+}
+
+.sticky-sidebar::-webkit-scrollbar-thumb:hover {
+    background: var(--button-bg);
+}
+
+/* Per Firefox */
+.sticky-sidebar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--button-bg) rgba(241, 241, 241, 0.5);
+}
+
+/* Sezione ingredienti extra */
+.config-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0em;
+    padding-bottom: 0em;
+    border-bottom: px solid #e0e0e0;
+}
+
+.config-group .label {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.radio-box {
+    display: flex;
+    gap: 1em;
+}
+
+.config-group {
+    justify-content: flex-start;
+}
+
+.radio-box label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7em;
+    cursor: pointer;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px;
+}
+
+.radio-box input[type="radio"] {
+    accent-color: var(--button-bg);
+    cursor: pointer;
+    margin: 0;
+}
+
+/* Stato selezione */
+.stato-selezione {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+    padding: 0.5em;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+}
+
+.stato-selezione p {
+    margin: 0;
+    font-size: 0.95em;
+}
+
+/* Bottone reset */
+.btn-reset-link {
+    align-self: flex-start;
+    background: none;
+    border: none;
+    color: var(--button-bg);
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0.5em 0;
+    font-size: 0.95em;
+}
+
+/* Area scrollabile riepilogo */
+.riepilogo-scroll-area {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+}
+
+.sezione-riepilogo h4 {
+    color: var(--text-color);
+    margin-bottom: 0.5em;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.item-selezionato {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
 /* PULSANTE RIEPILOGO MOBILE - NASCOSTO SU DESKTOP */
 .btn-riepilogo-mobile {
-    display: none; /* Nascosto di default su desktop */
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 999;
-    background-color: var(--button-bg);
-    color: var(--button-text);
-    border: 2px solid var(--button-bg);
-    border-radius: 50px;
-    padding: 15px 30px;
-    font-size: 1.1em;
-    font-weight: bold;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.3s ease;
-}
-
-.btn-riepilogo-mobile {
-        display: none;
-    }
-
-.btn-riepilogo-mobile:hover,
-.btn-riepilogo-mobile:focus-visible {
-    transform: translateX(-50%) translateY(-3px);
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
-    outline: 3px solid var(--text-color);
-    outline-offset: 3px;
-}
-
-/* Badge contatore sul pulsante mobile */
-.riepilogo-badge {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    font-size: 0.85em;
-    font-weight: bold;
-    min-width: 24px;
-    height: 24px;
-    border-radius: 50%;
     display: none;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid var(--card-bg);
 }
 
 /* MODAL MOBILE OVERLAY - NASCOSTO DI DEFAULT */
 .riepilogo-mobile-overlay {
     display: none;
-}
-
-.btn-chiudi-riepilogo {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: transparent;
-    border: none;
-    color: var(--text-color);
-    font-size: 1.8em;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: all 0.2s ease;
-}
-
-.riepilogo-mobile-overlay.active {
-    display: flex;
-    opacity: 1;
-}
-
-.riepilogo-mobile-content {
-    background-color: var(--card-bg);
-    border-radius: 20px 20px 0 0;
-    max-height: 85vh;
-    width: 100%;
-    padding: 25px;
-    overflow-y: auto;
-    animation: slideUp 0.3s ease;
-    position: relative;
-}
-
-.btn-chiudi-riepilogo:hover,
-.btn-chiudi-riepilogo:focus-visible {
-    background-color: rgba(0, 0, 0, 0.1);
-    outline: 2px solid var(--text-color);
-    outline-offset: 2px;
-}
-
-/* Contenuto del riepilogo mobile */
-.riepilogo-box-mobile {
-    background-color: transparent;
-    border: none;
-    padding: 0;
 }
 
 
@@ -1975,6 +1993,7 @@ button:focus, a:focus, input:focus, select:focus, textarea:focus {
 button {
     width: 100%;
     padding: 0.7em 1em;
+    margin: 1.5em 0;
     background-color: var(--button-bg);
     color: var(--button-text);
     border: 2px solid var(--button-bg);
@@ -1989,42 +2008,78 @@ button:hover {
     color: var(--button-bg);
 }
 
-.base-card.selected button {
-    background-color: #28a745;
-    border-color: #28a745;
-    color: --card-bg;
+.btn-rimuovi-x {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 18px;
+    padding: 0;
+    width: auto;
+    cursor: pointer;
 }
 
-.ingrediente-card.selected button {
-    background-color: #dc3545;
-    border-color: #dc3545;
-    color: --card-bg;
+.riepilogo-header .btn-chiudi-riepilogo {
+    margin: 0;
 }
 
+.btn-rimuovi-x:hover {
+    background: none;
+    color: var(--text-color);
+}
+
+.riepilogo-header .btn-chiudi-riepilogo {
+    position: absolute;
+    right: 15px; 
+    top: 15px;
+    
+    background: transparent;
+    border: none;
+    padding: 0;
+    width: auto;
+    min-width: 0;
+    
+    /* Stile personalizzato */
+    color: var(--button-bg);
+    font-size: 1.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 /* ==================================================
-   RESPONSIVE CREA BLEND (< 900px)
+   RESPONSIVE CREA BLEND (< 1025px)
    Sostituisce completamente le vecchie media query
    ================================================== */
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1025px) {
 
     /* LAYOUT PAGINA: colonna singola, nascondi sidebar */
     .container-grid {
-        grid-template-columns: 1fr;
-        gap: 2em;
+        display: block;
+        width: 100%;
+        gap: 0;
     }
 
     .sidebar-config {
-        display: none; /* Nasconde sidebar desktop */
+        display: none; 
     }
 
-    /* BOTTONE RIEPILOGO MOBILE (usa stile .fixed-filter-btn) */
+    #basi, #ingredienti {
+        grid-column: auto;
+        width: 100%;
+    }
+
+    .crea-blend-layout {
+        padding: 20px 15px;
+    }
+
     #btnRiepilogoMobile {
         display: flex;
         top: 130px;
     }
     
-    /* piccolo badge che mostra numero */
     .riepilogo-badge {
         position: absolute;
         top: -5px;
@@ -2042,144 +2097,166 @@ button:hover {
         border: 2px solid var(--text-color);
     }
 
-    /* MENU RIEPILOGO A SCOMPARSA */
     .riepilogo-mobile-overlay {
-        display: block;
+        display: block; 
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100vh;
-        z-index: 1002;
+        z-index: 2000; /* Deve stare sopra a tutto */
         background-color: var(--card-bg);
         transform: translateX(-100%);
-        overflow-y: auto;
+        transition: transform 0.3s ease-in-out;
+        visibility: hidden; /* Evita click accidentali quando è chiuso */
     }
 
     .riepilogo-mobile-overlay.active {
-        transform: translateX(0); /* Visibile */
-        transition: transform 0.3s ease-in-out;
+        transform: translateX(0);
+        visibility: visible;
     }
 
-    .riepilogo-mobile-content {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        width: 100%;
-        background-color: var(--card-bg);
-    }
-
-    /* HEADER */
-    .riepilogo-mobile-content .riepilogo-header {
-        flex-shrink: 0;
-        padding: 15px 25px; /* Padding laterale aumentato */
-        border-bottom: 2px solid var(--button-bg);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: var(--card-bg);
-    }
-
-    /* Header Sticky dentro il riepilogo 
-    .riepilogo-mobile-content .riepilogo-header {
-        top: 0;
-        background-color: var(--card-bg);
-        z-index: 10;
-        padding: 20px;
-        border-bottom: 2px solid var(--button-bg);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    } */
-
-    .riepilogo-mobile-content .riepilogo-header h3 {
-        margin: 0;
-        color: var(--button-bg);
-        font-size: 1.5em;
-    }
-
-    /* Bottone Chiudi (X) */
-    .btn-chiudi-riepilogo {
-        position: static;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background-color: var(--button-bg);
-        color: var(--button-text);
-        border: 2px solid var(--button-bg);
-        padding: 0;
+    .riepilogo-mobile-overlay {
+        padding: 0 15px;
+        box-sizing: border-box;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.2em;
-    }
-    
-    /* Contenuto interno */
-    .riepilogo-box-mobile {
-        padding: 20px;
-        flex-grow: 1;
-        overflow-y: auto;
-        /* FIX ALLINEAMENTO: Padding bilanciato a destra e sinistra */
-        padding: 20px 25px; 
-        width: 100%;
-        box-sizing: border-box; /* Assicura che il padding non sballi la larghezza */
-        text-align: left;
     }
 
-    .riepilogo-footer {
-        bottom: 0;
+    .riepilogo-mobile-content {
+        width: 100%;
+        max-width: 500px;
+        border-radius: 12px;
+        position: relative; /* Indispensabile per la X */
+    }
+
+    
+}
+
+@media screen and (max-width: 600px) {
+
+    /* LAYOUT PAGINA: colonna singola, nascondi sidebar */
+    .container-grid {
+        display: block;
+        width: 100%;
+        gap: 0;
+    }
+
+    .sidebar-config {
+        display: none; 
+    }
+
+    .riepilogo-header {
+        padding-top: 1.5rem;
+    }
+
+    #basi, #ingredienti {
+        grid-column: auto;
+        width: 100%;
+    }
+
+    .crea-blend-layout {
+        padding: 20px 15px;
+    }
+
+    #btnRiepilogoMobile {
+        display: flex;
+        top: 130px;
+    }
+    
+    .riepilogo-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        font-size: 0.85em;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid var(--text-color);
+    }
+
+    .riepilogo-mobile-overlay {
+        display: block; 
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: 2000; /* Deve stare sopra a tutto */
         background-color: var(--card-bg);
-        padding: 20px;
-        border-top: 2px solid var(--button-bg);
-        margin-top: 20px;
-        z-index: 20;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        visibility: hidden; /* Evita click accidentali quando è chiuso */
     }
 
-    /* AGGIUSTAMENTI CARD E GRIGLIE */
-    /* Basi: immagine sopra, testo sotto */
-    .base-content {
-        flex-direction: column;
+    .riepilogo-mobile-overlay.active {
+        transform: translateX(0);
+        visibility: visible;
     }
-    
+
+    .base-title {
+        font-size: 1.3em;
+        text-align: left;
+        margin-bottom: 5px;
+    }
+
+    .base-info .descrizione {
+        font-size: 0.9em;
+        text-align: left;
+        line-height: 1.4;
+    }
+
     .base-image-standard {
-        width: 100%;
-        height: 200px;
+    width: 200px;   
+    height: 120px; 
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+    .base-content {
+        display: flex;
+        gap: 35px;  
+        align-items: flex-start;
     }
 
-    /* Ingredienti: Griglia responsive */
-    .ingredienti-grid {
+    .info-infusione {
+        justify-content: center;
+        font-size: 0.85em;
+    }
+
+    #ingredienti .ingredienti-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /*160*/
-        gap: 1em;
-    }
-
-    .ingrediente-card {
-        min-height: auto; /* Rimuove altezza fissa */
-    }
-    
-    .ingrediente-card img {
-        height: 120px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        width: 100%;
     }
 }
 
-/* TEMA SCURO: Fix colori bottone riepilogo mobile */
-@media screen and (max-width: 900px) {
-    body.dark-theme #btnRiepilogoMobile {
-        color: var(--header-text);
-        border-color: var(--header-text);
-        background-color: transparent;
+@media screen and (max-width: 450px) {
+    #basi .base-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
     }
-    
-    body.dark-theme #btnRiepilogoMobile svg {
-        fill: currentColor;
-    }
-    
-    body.dark-theme .riepilogo-badge {
-        border-color: var(--card-bg);
+
+    #basi .base-image-standard {
+        width: 100%;
+        height: 180px; 
+        max-width: 100%;
+        overflow: hidden;
+        border-radius: 6px;
+        flex-shrink: 0;
     }
 }
-
-
 
 /* ===========================
    PAGINA CHI SIAMO
@@ -2532,16 +2609,14 @@ body.dark-theme .leaf-icon li::before {
 /* ===================================
    CATALOGO: BARRA STRUMENTI E FILTRI
 =================================== */
-/* Sezione catalogo - riduce padding superiore */
 .catalog-section {
     padding: 1.5em 0;
 }
 
-/* Layout principale: sidebar + prodotti */
 .catalog-section .container {
     display: grid;
     grid-template-columns: 280px 1fr;
-    gap: 1.5em;
+    gap: 2em;
     align-items: start;
     padding: 0 1em;
 }
@@ -2573,8 +2648,6 @@ body.dark-theme .leaf-icon li::before {
     background-color: var(--button-bg);
     color: var(--button-text);
     border-color: var(--button-bg);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .sort-options input[type="radio"] {
@@ -2584,51 +2657,59 @@ body.dark-theme .leaf-icon li::before {
     height: 18px;
 }
 
-.sort-options input[type="radio"]:checked + span {
-    font-weight: bold;
-}
-
 .sort-options label:has(input:checked) {
     background-color: var(--button-bg);
     color: var(--button-text);
     border-color: var(--button-bg);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
-/* SIDEBAR FILTRI */
+/* SIDEBAR FILTRI - stile minimalista con sfondo trasparente */
+/* SIDEBAR FILTRI - stile minimalista con sfondo trasparente */
 .filter-panel {
     grid-column: 1 / 2;
     grid-row: 1 / 4;
     display: flex;
     flex-direction: column;
-    gap: 1.2em;
-    background-color: var(--card-bg);
-    border: 2px solid var(--button-bg);
-    border-radius: 12px;
-    padding: 1.2em;
+    gap: 1.5em;
     position: sticky;
     top: 100px;
     max-height: calc(100vh - 120px);
     overflow-y: auto;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 1.2em;
+    border-radius: 8px;
+    border: 2px solid var(--button-bg);
 }
 
-/* Titolo sidebar */
-.filter-panel::before {
-    content: "Filtra Prodotti";
-    font-size: 1.2em;
-    font-weight: bold;
-    color: var(--button-bg);
-    padding-bottom: 0.6em;
-    border-bottom: 2px solid var(--button-bg);
-    margin-bottom: 0.3em;
-    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+/* Scrollbar personalizzata marrone */
+.filter-panel::-webkit-scrollbar {
+    width: 8px;
+}
+
+.filter-panel::-webkit-scrollbar-track {
+    background: rgba(241, 241, 241, 0.5);
+    border-radius: 10px;
+}
+
+.filter-panel::-webkit-scrollbar-thumb {
+    background: var(--button-bg);
+    border-radius: 10px;
+}
+
+.filter-panel::-webkit-scrollbar-thumb:hover {
+    background: var(--button-bg);
+}
+
+/* Per Firefox */
+.filter-panel {
+    scrollbar-width: thin;
+    scrollbar-color: var(--button-bg) rgba(241, 241, 241, 0.5);
 }
 
 /* Gruppi filtri */
 .filter-group {
-    padding-bottom: 1em;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding-bottom: 1.2em;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .filter-group:last-child {
@@ -2638,17 +2719,19 @@ body.dark-theme .leaf-icon li::before {
 
 .filter-group h4 {
     color: var(--text-color);
-    margin-bottom: 0.6em;
-    font-size: 1.05em;
+    margin-bottom: 0.8em;
+    font-size: 1em;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .filter-group label {
     display: flex;
     align-items: center;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.6em;
     cursor: pointer;
-    font-size: 0.9em;
+    font-size: 0.95em;
     color: var(--text-color);
     transition: color 0.2s ease;
 }
@@ -2659,7 +2742,7 @@ body.dark-theme .leaf-icon li::before {
 
 .filter-group input[type="checkbox"],
 .filter-group input[type="radio"] {
-    margin-right: 0.5em;
+    margin-right: 0.8em;
     accent-color: var(--button-bg);
     cursor: pointer;
 }
@@ -2770,35 +2853,6 @@ body.dark-theme .leaf-icon li::before {
     outline: none;
 }
 
-/* Stato "Aggiunto" (opzionale se gestito via JS) */
-.add-to-cart-icon.added {
-    background: var(--link-visited);
-}
-.add-to-cart-icon.added svg {
-    fill: var(--white);
-}
-
-/* --- TEMA SCURO --- */
-body.dark-theme .add-to-cart-icon {
-    background: var(--card-bg); 
-}
-
-body.dark-theme .add-to-cart-icon svg {
-    fill: var(--text-color); 
-}
-
-body.dark-theme .add-to-cart-icon:hover svg {
-    fill: var(--link-visited); 
-}
-
-body.dark-theme .add-to-cart-icon.added {
-    background: var(--link-visited); 
-}
-
-body.dark-theme .add-to-cart-icon.added svg {
-    fill: var(--white); 
-}
-
 /* ===================================
    STILE BOTTONE FILTRI
    =================================== */
@@ -2818,7 +2872,6 @@ body.dark-theme .add-to-cart-icon.added svg {
     display: none; /*nascosto su desktop*/
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease;
 }
 
@@ -2827,16 +2880,29 @@ body.dark-theme .add-to-cart-icon.added svg {
 }
 
 .fixed-filter-btn svg {
-    width: 1.8em;
-    height: 1.8em;
+    width: 45px;
+    height: 45px;
     fill: currentColor;
 }
 
-/* HEADER DEL PANNELLO FILTRI nascosto su desktop */
-.mobile-filters-header {
-    display: none;
+/* Intestazione filtri - visibile sempre */
+.filters-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    border-bottom: 2px solid var(--button-bg);
 }
 
+.filters-header h3 {
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.mobile-only {
+    display: none;
+}
 
 /* ===================================
    RESPONSIVE DESIGN SPECIFICO CATALOGO (< 1025px)
@@ -2844,15 +2910,13 @@ body.dark-theme .add-to-cart-icon.added svg {
    ========================================================================== */
 @media screen and (max-width: 1025px) {
 
-    /* BOTTONE APERTURA FILTRI */
     .fixed-filter-btn {
-        display: flex; /* Diventa visibile */
-        top: 130px;/* distanza dall'alto */
+        display: flex;
+        top: 130px;
     }
     
-    /* LAYOUT CONTENITORE CATALOGO */
     .catalog-section .container {
-        display: block; /* Disabilita la sidebar laterale desktop */
+        display: block;
         padding: 0 1em;
         overflow-x: hidden;
     }
@@ -2870,7 +2934,7 @@ body.dark-theme .add-to-cart-icon.added svg {
         height: 100vh;
         z-index: 1002;
         background-color: var(--card-bg);
-        padding: 0;
+        padding: 1em;
         overflow-y: auto; 
         transform: translateX(-100%); /* Nascosto */
         /* Reset stili desktop */
@@ -2890,49 +2954,36 @@ body.dark-theme .add-to-cart-icon.added svg {
     
     .filter-panel::before { content: none; }
 
-    /* HEADER FILTRI */
-    .mobile-filters-header {
-        display: flex; /*visibile su mobile */
-        justify-content: space-between;
-        align-items: center; 
-        top: 0;
-        z-index: 10;
-        padding: 20px;
-        border-bottom: 2px solid var(--button-bg);
-    }
-
-    .mobile-filters-header h3 {
-        margin: 0;
-        font-size: 1.5em;
-        color: var(--button-bg);
-    }
-
-    /* Stile Bottone X chiusura filtri*/
-    .mobile-filters-header .bottone-primario {
+    .mobile-only {
+        display: block;
+        background: none;
+        border: none;
+        cursor: pointer;
         padding: 0;
         width: 40px;
         height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         border-radius: 50%;
-        background-color: var(--button-bg);
-        color: var(--button-text);
-        border: 2px solid var(--button-bg);
+        transition: none;
     }
 
-    .mobile-filters-header .bottone-primario svg {
+    .mobile-only:hover,
+    .mobile-only:focus,
+    .mobile-only:active {
+        background: none;
+        outline: none;
+        border: none;
+    }
+
+    .mobile-only svg {
         width: 24px;
         height: 24px;
-        fill: currentColor;
+        fill: var(--button-bg);
     }
     
-    /* Padding interno gruppi filtri */
     .filter-group {
         padding: 15px 20px;
     }
 
-    /* FIX GRIGLIA PRODOTTI CATALOGO */
     .products-grid.catalog-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
@@ -2944,17 +2995,12 @@ body.dark-theme .add-to-cart-icon.added svg {
 
 /* MOBILE PICCOLO (< 480px) */
 @media screen and (max-width: 480px) {
-    .products-grid.catalog-grid {
-        grid-template-columns: 1fr; 
-    }
     
     .fixed-filter-btn {
         top: 130px;
         left: 1em;
     }
 }
-
-
 
 /* ===================================
    ERRORI

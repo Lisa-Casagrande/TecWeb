@@ -46,9 +46,9 @@ require_once 'php/connessione.php';?>
 
                 <div id="filterPanel" class="filter-panel">
                     
-                    <div class="mobile-filters-header">
+                    <div class="filters-header">
                         <h3>Filtra e Ordina</h3>
-                        <button id="closeFiltersBtn" class="bottone-primario" aria-label="Chiudi filtri">
+                        <button id="closeFiltersBtn" class="bottone-primario mobile-only" aria-label="Chiudi filtri">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
                                 <path d="M18.707 6.707l-1.414-1.414L12 10.586 6.707 5.293 5.293 6.707 10.586 12l-5.293 5.293 1.414 1.414L12 13.414l5.293 5.293 1.414-1.414L13.414 12l5.293-5.293z"/>
                             </svg>
@@ -75,7 +75,7 @@ require_once 'php/connessione.php';?>
 
                     <!-- Filtro Categorie - Dinamico dal DB -->
                     <div class="filter-group">
-                        <h4>Categoria</h4>
+                        <h4>Filtra per Categoria</h4>
                         <label><input type="radio" name="category" value="all" checked> Tutte le categorie</label>
                         <?php
                         try {

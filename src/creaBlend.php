@@ -48,7 +48,7 @@ try {
             
             <div class="riepilogo-header">
                 <h3>Il tuo Blend</h3>
-                <button class="btn-chiudi-riepilogo" aria-label="Chiudi riepilogo">✕</button>
+                <button class="btn-chiudi-riepilogo">✕</button>
             </div>
             
             <div class="riepilogo-box-mobile">
@@ -100,49 +100,47 @@ try {
             <!-- SIDEBAR UNIFICATA (Desktop) -->
             <aside class="sidebar-config">
                 <div class="sticky-sidebar">
-                    <div class="riepilogo-box" id="riepilogo-dinamico">
-                        <div class="riepilogo-header">
-                            <h3>Il tuo Blend</h3>
-                        </div>
+                    <div class="riepilogo-header">
+                        <h3>Il tuo Blend</h3>
+                    </div>
 
-                        <!-- Sezione Personalizza (sopra) -->
-                        <div class="config-group">
-                            <span class="label">Ingredienti extra:</span>
-                            <div class="radio-box">
-                                <label><input type="radio" name="numIngredienti" value="2" checked> 2</label>
-                                <label><input type="radio" name="numIngredienti" value="3"> 3</label>
+                    <!-- Sezione Personalizza (sopra) -->
+                    <div class="config-group">
+                        <span class="label">Ingredienti extra:</span>
+                        <div class="radio-box">
+                            <label><input type="radio" name="numIngredienti" value="2" checked> 2</label>
+                            <label><input type="radio" name="numIngredienti" value="3"> 3</label>
+                        </div>
+                    </div>
+
+                    <div class="stato-selezione">
+                        <p>Base: <span id="contatore-base">0/1</span></p>
+                        <p>Ingredienti: <span id="contatore-ingredienti">0/2</span></p>
+                    </div>
+
+                    <button class="btn-reset-link" id="btn-reset">Svuota tutto</button>
+                    
+                    <!-- Area scrollabile -->
+                    <div class="riepilogo-scroll-area">
+                        <div class="sezione-riepilogo">
+                            <h4>Base selezionata:</h4>
+                            <div id="base-selezionata">
+                                <p class="nessuna-selezione">Nessuna base selezionata</p>
                             </div>
                         </div>
-
-                        <div class="stato-selezione">
-                            <p>Base: <span id="contatore-base">0/1</span></p>
-                            <p>Ingredienti: <span id="contatore-ingredienti">0/2</span></p>
-                        </div>
-
-                        <button class="btn-reset-link" id="btn-reset">Svuota tutto</button>
                         
-                        <!-- Area scrollabile -->
-                        <div class="riepilogo-scroll-area">
-                            <div class="sezione-riepilogo">
-                                <h4>Base selezionata:</h4>
-                                <div id="base-selezionata">
-                                    <p class="nessuna-selezione">Nessuna base selezionata</p>
-                                </div>
-                            </div>
-                            
-                            <div class="sezione-riepilogo">
-                                <h4>Ingredienti:</h4>
-                                <div id="ingredienti-selezionati">
-                                    <p class="nessuna-selezione">Nessun ingrediente aggiunto</p>
-                                </div>
+                        <div class="sezione-riepilogo">
+                            <h4>Ingredienti:</h4>
+                            <div id="ingredienti-selezionati">
+                                <p class="nessuna-selezione">Nessun ingrediente aggiunto</p>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Footer con prezzo e bottone -->
-                        <div class="riepilogo-footer">
-                            <div class="prezzo-finale">Totale: € <span id="importo-prezzo">0.00</span></div>
-                            <button id="btn-conferma" class="btn-conferma" disabled>Conferma Blend</button>
-                        </div>
+                    <!-- Footer con prezzo e bottone -->
+                    <div class="riepilogo-footer">
+                        <div class="prezzo-finale">Totale: € <span id="importo-prezzo">0.00</span></div>
+                        <button id="btn-conferma" class="btn-conferma" disabled>Conferma Blend</button>
                     </div>
                 </div>
             </aside>
