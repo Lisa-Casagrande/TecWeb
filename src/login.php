@@ -1,6 +1,9 @@
 <?php 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once 'php/connessione.php';
+
 
 // --- Variabili per il form ---
 $valoreEmail = '';
@@ -61,11 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-
-// --- Navbar ---
-ob_start();
-require 'navbar.php';
-$navbar = ob_get_clean();
 ?>
 
 <!DOCTYPE html>
@@ -81,7 +79,8 @@ $navbar = ob_get_clean();
 <body>
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
 
-    <?php echo $navbar; ?>
+    <?php include 'navbar.php'; ?>
+
 
     <main id="main-content">
         <section id="login-section">

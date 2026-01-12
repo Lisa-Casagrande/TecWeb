@@ -153,6 +153,7 @@ if (isset($_SESSION['carrello'])) {
                 <?php endif; ?>
             <?php else: ?>
                 <!-- Utente non loggato -->
+
                 <?php if ($currentPage === 'login.php'): ?>
                     <span class="icon-button current-page" aria-label="Sei nella pagina di login">
                         <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
@@ -161,12 +162,12 @@ if (isset($_SESSION['carrello'])) {
                         </svg>
                     </span>
                 <?php else: ?>
-                    <a href="../login.php" class="icon-button" aria-label="Accedi o registrati">
-                        <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M12,12A6,6,0,1,0,6,6,6.006,6.006,0,0,0,12,12ZM12,2A4,4,0,1,1,8,6,4,4,0,0,1,12,2Z"/>
-                            <path d="M12,14a9.01,9.01,0,0,0-9,9,1,1,0,0,0,2,0,7,7,0,0,1,14,0,1,1,0,0,0,2,0A9.01,9.01,0,0,0,12,14Z"/>
-                        </svg>
-                    </a>
+                    <a href="login.php" class="icon-button <?= $currentPage === 'login.php' ? 'current-page' : '' ?>" aria-label="Accedi o registrati">
+                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12,12A6,6,0,1,0,6,6,6.006,6.006,0,0,0,12,12ZM12,2A4,4,0,1,1,8,6,4,4,0,0,1,12,2Z"/>
+                        <path d="M12,14a9.01,9.01,0,0,0-9,9,1,1,0,0,0,2,0,7,7,0,0,1,14,0,1,1,0,0,0,2,0A9.01,9.01,0,0,0,12,14Z"/>
+                    </svg>
+                </a>
                 <?php endif; ?>
             <?php endif; ?>
 
