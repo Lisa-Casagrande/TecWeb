@@ -43,6 +43,7 @@ try {
     <meta name="description" content="Gestisci il tuo account personale nel nostro negozio di tè, infusi e tisane di qualità" />
     <meta name="keywords" content="tè, infusi, tisane, account utente, profilo, ordini, preferenze" />
     <link rel="stylesheet" href="style.css" type="text/css" />
+    <link rel="stylesheet" href="print.css" type="text/css" media="print">
 </head>
 
 <body>

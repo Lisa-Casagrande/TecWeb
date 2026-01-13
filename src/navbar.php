@@ -22,12 +22,14 @@ if (isset($_SESSION['carrello'])) {
                 <span class="logo-button" aria-label="Logo InfuseMe">
                     <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
                     <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
+                    <img src="images/logo/logoStampa.png" alt="InfuseMe" class="logo-image logo-print print-only">
                 </span>
             <?php else: ?>
                 <!-- Logo con link nelle altre pagine -->
                 <a href="index.php" aria-label="Torna alla home" class="logo-button">
                     <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
                     <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
+                    <img src="images/logo/logoStampa.png" alt="InfuseMe" class="logo-image logo-print print-only">
                 </a>
             <?php endif; ?>
         </div>

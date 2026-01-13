@@ -7,7 +7,7 @@ $userId = userId(); // ottieni ID utente loggato
 try {
     // Recupero dati utente
     $stmt = $pdo->prepare("
-        SELECT nome, cognome, email, data_nascita, indirizzo, citta, cap, paese
+        SELECT nome, cognome, email, data_nascita, indirizzo, citta, paese
         FROM utente
         WHERE id_utente = :id
         LIMIT 1
@@ -22,14 +22,13 @@ try {
     // Se il form è stato inviato
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Pulizia e validazione minima
-        $nome = trim($_POST['nome']);
-        $cognome = trim($_POST['cognome']);
-        $email = trim($_POST['email']);
-        $data_nascita = trim($_POST['data_nascita']);
-        $indirizzo = trim($_POST['indirizzo']);
-        $citta = trim($_POST['citta']);
-        $cap = trim($_POST['cap']);
-        $paese = trim($_POST['paese']);
+        $nome = trim($_POST['nome_profilo']);
+        $cognome = trim($_POST['cognome_profilo']);
+        $email = trim($_POST['email_profilo']);
+        $data_nascita = trim($_POST['data_nascita_profilo']);
+        $indirizzo = trim($_POST['indirizzo_profilo']);
+        $citta = trim($_POST['citta_profilo']);
+        $paese = trim($_POST['paese_profilo']);
 
         if (empty($nome) || empty($cognome) || empty($email) || empty($data_nascita)) {
             $error = "Nome, cognome, email e data di nascita sono obbligatori.";
@@ -45,7 +44,6 @@ try {
                     data_nascita = :data_nascita,
                     indirizzo = :indirizzo,
                     citta = :citta,
-                    cap = :cap,
                     paese = :paese
                 WHERE id_utente = :id
             ");
@@ -56,7 +54,6 @@ try {
                 ':data_nascita' => $data_nascita,
                 ':indirizzo' => $indirizzo,
                 ':citta' => $citta,
-                ':cap' => $cap,
                 ':paese' => $paese,
                 ':id' => $userId
             ]);
@@ -70,7 +67,6 @@ try {
                 'data_nascita' => $data_nascita,
                 'indirizzo' => $indirizzo,
                 'citta' => $citta,
-                'cap' => $cap,
                 'paese' => $paese
             ];
         }
@@ -88,6 +84,7 @@ try {
      <meta name="description" content="Modifica il tuo account personale nel nostro negozio di tè, infusi e tisane di qualità" />
     <meta name="keywords" content="tè, infusi, tisane, modifca, account utente, profilo, ordini, preferenze" />
     <link rel="stylesheet" href="style.css" type="text/css" />
+    <link rel="stylesheet" href="print.css" type="text/css" media="print">
 </head>
 <body>
 <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
@@ -97,36 +94,51 @@ try {
     <section id="area-account">
         <h1>Modifica il Mio Profilo</h1>
 
-        <form action="" method="post" class="form-modifica-profilo">
-            <label for="nome">Nome *</label>
-            <input type="text" id="nome" name="nome" value="<?= htmlspecialchars($utente['nome']) ?>" required>
+        <section id="modifica-profilo">
+    
+            <form action="" method="post" class="form-modifica-profilo">
+                <div class="form-group">
+                    <label for="nome">Nome *</label>
+                    <input type="text" id="reg_nome" name="reg_nome" value="<?= htmlspecialchars($utente['nome']) ?>" required>
+                </div>
 
-            <label for="cognome">Cognome *</label>
-            <input type="text" id="cognome" name="cognome" value="<?= htmlspecialchars($utente['cognome']) ?>" required>
+                <div class="form-group">
+                    <label for="cognome">Cognome *</label>
+                    <input type="text" id="reg_cognome" name="reg_cognome" value="<?= htmlspecialchars($utente['cognome']) ?>" required>
+                </div>
 
-            <label for="email">Email *</label>
-            <input type="email" id="email" name="email" value="<?= htmlspecialchars($utente['email']) ?>" required>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="reg_email" name="reg_email" value="<?= htmlspecialchars($utente['email']) ?>" required>
+                </div>
 
-            <label for="data_nascita">Data di Nascita *</label>
-            <input type="date" id="data_nascita" name="data_nascita" value="<?= htmlspecialchars($utente['data_nascita']) ?>" required>
+                <div class="form-group">
+                    <label for="data_nascita">Data di Nascita *</label>
+                    <input type="date" id="reg_data-nascita" name="reg_nata-nascita" value="<?= htmlspecialchars($utente['data_nascita']) ?>" required>
+                </div>
 
-            <label for="indirizzo">Indirizzo</label>
-            <input type="text" id="indirizzo" name="indirizzo" value="<?= htmlspecialchars($utente['indirizzo']) ?>">
+                <div class="form-group">
+                    <label for="indirizzo">Indirizzo</label>
+                    <input type="text" id="reg_indirizzo" name="reg_indirizzo" value="<?= htmlspecialchars($utente['indirizzo']) ?>">
+                </div>
 
-            <label for="citta">Città</label>
-            <input type="text" id="citta" name="citta" value="<?= htmlspecialchars($utente['citta']) ?>">
+                <div class="form-group">
+                    <label for="citta">Città</label>
+                    <input type="text" id="reg_citta" name="reg_citta" value="<?= htmlspecialchars($utente['citta']) ?>">
+                </div>
 
-            <label for="cap">CAP</label>
-            <input type="text" id="cap" name="cap" value="<?= htmlspecialchars($utente['cap']) ?>">
+                <div class="form-group">
+                    <label for="paese">Paese</label>
+                    <input type="text" id="reg_paese" name="reg_paese" value="<?= htmlspecialchars($utente['paese']) ?>">
+                </div>
 
-            <label for="paese">Paese</label>
-            <input type="text" id="paese" name="paese" value="<?= htmlspecialchars($utente['paese']) ?>">
 
-            <div class="form-buttons">
-                <button type="submit">Salva Modifiche</button>
-                <a href="paginautente.php" class="button-secondary">Annulla</a>
-            </div>
-        </form>
+                <div class="form-buttons">
+                    <button type="submit">Salva Modifiche</button>
+                    <a href="paginautente.php" class="form-button">Annulla</a>
+                </div>
+            </form>
+        </section>
     </section>
 </main>
 

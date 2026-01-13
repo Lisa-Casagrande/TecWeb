@@ -104,6 +104,7 @@ try {
     <meta name="description" content="<?php echo substr($descrizione, 0, 150); ?>">
     <meta name="keywords" content="InfuseMe, tè, tisana, infusi, <?php echo $categoria; ?>, <?php echo $nome; ?>">
     <link rel="stylesheet" href="style.css" type="text/css"/>
+    <link rel="stylesheet" href="print.css" type="text/css" media="print">
 </head>
 
 <body>

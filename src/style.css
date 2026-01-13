@@ -4535,3 +4535,9 @@ PAGINA UTENTE (stile unificato a pagine admin)
     line-height: 1.5;
 }
 }
+
+/* IMMAGINI PER STAMPA */
+
+.print-only{
+    display: none;
+}

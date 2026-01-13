@@ -24,6 +24,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"/>
     <title>Ordini dei Clienti - Admin</title>
     <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="print.css" type="text/css" media="print">
 </head>
 
 <body>

@@ -78,6 +78,7 @@ $sostituzioni = [
     <meta name="description" content="Registrati al sito InfuseMe per acquistare i nostri prodotti artigianali" />
     <meta name="keywords" content="registrazione, InfuseMe, tè, infusi, tisane, biologico, artigianale, Val d'Ossola, blend, acquisto" />
     <link rel="stylesheet" href="style.css" type="text/css" />
+    <link rel="stylesheet" href="print.css" type="text/css" media="print">
 </head>
 
 <body>

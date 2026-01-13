@@ -78,6 +78,7 @@ try {
     <meta name="description" content="Visualizza i dettagli del tuo ordine InfuseMe." />
     <meta name="keywords" content="tè, infuso, tisana, ordine, dettaglio, utente, profilo, ordini, preferenze" />
     <link rel="stylesheet" href="style.css" type="text/css" />
+    <link rel="stylesheet" href="print.css" type="text/css" media="print">
 </head>
 
 <body>

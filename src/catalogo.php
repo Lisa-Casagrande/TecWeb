@@ -15,6 +15,7 @@ require_once 'php/connessione.php';?>
     <meta name="description" content="Catalogo completo di tè e infusi artigianali InfuseMe. Scopri la nostra selezione di tè, infusi e tisane."/>
     <meta name="keywords" content="tè, infusi, tisane, catalogo, prodotti, acquista, blend" />
     <link rel="stylesheet" href="style.css" type="text/css"/>
+    <link rel="stylesheet" href="print.css" type="text/css" media="print">
 </head>
 
 <body>

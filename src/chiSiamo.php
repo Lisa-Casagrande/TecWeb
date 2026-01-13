@@ -15,6 +15,7 @@ require_once 'php/connessione.php';?>
     <meta name="description" content="InfuseMe - Tè e infusi artigianali dal 1975. Qualità, tradizione e sostenibilità dalla Val d'Ossola." />
     <meta name="keywords" content="tè, infusi, tisane, biologico, artigianale, Val d'Ossola, blend" />
     <link rel="stylesheet" href="style.css" type="text/css" />
+    <link rel="stylesheet" href="print.css" type="text/css" media="print">
 </head>
 <body>
     <!-- Skip link per accessibilità -->

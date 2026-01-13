@@ -22,6 +22,7 @@ try {
     <meta name="description" content="Pagina dedicata ai prodotti del catalogo InfuseMe: tè, infusi e tisane." >
 	<meta name="keywords" content="InfuseMe, tè, infuso, tisana, biologico, ingredienti, artigianale" >
     <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="print.css" type="text/css" media="print">
 </head>
 
 <body>

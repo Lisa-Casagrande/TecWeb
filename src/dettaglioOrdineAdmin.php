@@ -68,6 +68,7 @@ $statoFormattato = ucfirst(str_replace('_', ' ', $stato));
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"/>
     <title>Dettaglio Ordine #<?php echo $id_ordine; ?></title>
     <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="print.css" type="text/css" media="print">
 </head>
 
 <body>
@@ -155,7 +156,7 @@ $statoFormattato = ucfirst(str_replace('_', ' ', $stato));
                 </div>
             </article>
 
-            <article class="admin-card">
+            <article class="admin-card" id="aggiorna-stato">
                 <div class="card-content">
                     <h3>Aggiorna Stato</h3>
                     <p>Modifica lo stato attuale dell'ordine.</p>

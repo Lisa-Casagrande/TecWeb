@@ -118,6 +118,7 @@ if (!$ordine_completato && isset($_SESSION['user_id'])) {
     <meta name="description" content="Gestisci il tuo carrello e completa l'ordine dei tuoi infusi preferiti." />
     <meta name="keywords" content="tè, infusi, tisane, carrello, biologico, artigianale, prodotto, catalogo, blend, acquisto" />
     <link rel="stylesheet" href="style.css" type="text/css" />
+    <link rel="stylesheet" href="print.css" type="text/css" media="print">
 </head>
 <body>
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
