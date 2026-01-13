@@ -28,7 +28,7 @@
     <div class="testo-errore">
     <h1>Chi ha rovesciato il tè qui?</h1>
     <p>Sembra che una tazza sia scivolata e abbia bagnato proprio questa pagina. Non preoccuparti, asciughiamo tutto!</p>
-    <p>Intanto, puoi tornare alla <a href="/home.html">Home</a>.</p>
+    <p>Intanto, puoi tornare alla <a href="/index.php">Home</a>.</p>
     <div class="separatore-testo"></div>
     <p class="ultima-frase">
         La pagina che stai cercando potrebbe essere stata spostata o non esistere più.
