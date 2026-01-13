@@ -1,719 +1,234 @@
-
-
-  /* =======================
-           BASE
-  ======================= */
-  * {
-    background: transparent;
-    box-shadow: none;
-    text-shadow: none;
-    filter: none;
-    transition: none;
-  }
-
-  html, body {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
-
-  body {
-    font-family: serif;
-    font-size: 11pt;
-    line-height: 1.4;
-    color: #000;
-  }
-
-  a {
-    color: #000;
-    text-decoration: underline;
-  }
-
-  a[href^="http"]::after {
-    content: " (" attr(href) ")";
-    font-size: 90%;
-  }
-
-  a[href^="/"]::after,
-  a[href^="#"]::after {
-    content: "";
-  }
-
-  img {
-    max-width: 100%;
-    height: auto;
-    page-break-inside: avoid;
-  }
-
-  /* elementi sempre nascosti in stampa */
-  aside,
-  .cookie,
-  .cta,
-  .btn,
-  .button,
-  .no-print,
-  script,
-  .skip-link,
-  .back-to-top {
-    display: none;
-  }
-
-  /* =======================
-     GRID GENERICHE
-  ======================= */
-  .products-grid,
-  .values-grid {
-    display: block;
-    width: 100%;
-  }
-
-  .product-card,
-  .value-item,
-  .base {
-    border: 1px solid #000;
-    border-radius: 0;
-    padding: 1cm;
-    margin-bottom: 1cm;
-    page-break-inside: avoid;
-    break-inside: avoid;
-  }
-
-  /* =======================
-         HOME
-  ======================= */
-  .hero-background,
-  .hero-buttons,
-  .featured-products {
-    display: none;
-  }
-
-  .hero h1 {
-    font-size: 22pt;
-    margin-bottom: 0.5cm;
-  }
-
-  .hero .subtitle,
-  .hero p {
-    font-size: 12pt;
-    margin-bottom: 1cm;
-  }
-
-  .hero .slogan,
-  .hero .tagline {
-    font-size: 11pt;
-    font-style: italic;
-    margin: 0.1cm 0 0.3cm;
-  }
-
-  .about-preview {
-    margin-top: 0;
-  }
-
-  .about-preview h2 {
-    font-size: 18pt;
-    margin-bottom: 1cm;
-  }
-
-  .about-preview p {
-    font-size: 11pt;
-    margin-bottom: 0.2cm;
-  }
-
-  .values-grid {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 0;
-  }
-
-  .value-item {
-    width: 25%;
-    text-align: center;
-    padding: 0.5cm;
-    margin: 0;
-  }
-
-  .value-item svg {
-    display: block;
-    margin: 0 auto 0.4cm;
-    width: 1.8cm;
-    height: auto;
-  }
-
-  .value-item h3 {
-    font-size: 11pt;
-    margin-bottom: 0.2cm;
-  }
-
-  .value-item p {
-    font-size: 10pt;
-    margin: 0;
-  }
-
-  /* =======================
-     CATALOGO
-  ======================= */
-  .hero {
-    display: block;
-    margin: 0 0 0.6cm 0;
-    padding: 0;
-  }
-
-  .hero-content {
-    padding: 0;
-    margin: 0;
-    text-align: left;
-  }
-
-  .hero-content h1#catalog-title {
-    font-size: 20pt;
-    margin: 0 0 0.15cm 0;
-    color: #000;
-  }
-
-  .hero-content .hero-subtitle {
-    font-size: 11pt;
-    margin: 0 0 0.35cm 0;
-    color: #000;
-  }
-
-  .catalog-toolbar,
-  .filter-panel,
-  .btn-toggle-filters,
-  .sort-fieldset,
-  fieldset,
-  input,
-  button,
-  form,
-  #noResults {
-    display: none;
-  }
-
-  .catalog-section .container {
-    width: 100%;
-    max-width: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .products-grid.catalog-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: stretch;
-    align-content: flex-start;
-    gap: 0;
-    margin: 0;
-    padding: 0;
-  }
-
-  .products-grid.catalog-grid .product-card {
-    width: 49%;
-    box-sizing: border-box;
-
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    background: transparent;
-
-    padding: 0.35cm 0.2cm;
-    margin: 0 0 0.55cm 0;
-
-    text-align: left;
-
-    page-break-inside: avoid;
-    break-inside: avoid;
-  }
-
-  .products-grid.catalog-grid .product-image {
-    margin: 0 0 0.25cm 0;
-    padding: 0;
-  }
-
-  .products-grid.catalog-grid .product-image img {
-    width: 100%;
-    max-height: 5.8cm;
-    object-fit: contain;
-    display: block;
-    border: none;
-  }
-
-  .products-grid.catalog-grid .product-card h3 {
-    font-size: 12pt;
-    margin: 0 0 0.12cm 0;
-    color: #000;
-  }
-
-  .products-grid.catalog-grid .product-format {
-    margin: 0 0 0.15cm 0;
-    font-size: 10pt;
-    color: #000;
-  }
-
-  .products-grid.catalog-grid .product-price {
-    margin: 0;
-    font-size: 11pt;
-    font-weight: 700;
-    color: #000;
-  }
-
-  .products-grid.catalog-grid .add-to-cart-icon,
-  .products-grid.catalog-grid .product-buttons {
-    display: none;
-  }
-
-  .products-grid.catalog-grid .product-card:nth-child(4n + 1),
-  .products-grid.catalog-grid .product-card:first-child {
-    page-break-before: auto;
-  }
-
-  /* =======================
-     PRODOTTO
-  ======================= */
-  nav,
-  .breadcrumb {
-    display: none;
-  }
-
-  .add-to-cart-section,
-  .quantity-selector,
-  .add-to-cart-icon,
-  .product-buttons,
-  .availability-badge {
-    display: none;
-  }
-
-  .product-detail-section {
-    page-break-after: always;
-  }
-
-  .product-detail-container {
-    display: grid;
-    grid-template-columns: 45% 55%;
-    gap: 1.2cm;
-    align-items: start;
-  }
-
-  .product-main-image img {
-    max-width: 100%;
-    max-height: 12cm;
-    object-fit: contain;
-  }
-
-  .product-info-column h1 {
-    font-size: 20pt;
-    margin-bottom: 0.4cm;
-  }
-
-  .product-meta {
-    font-size: 10pt;
-    margin-bottom: 0.4cm;
-  }
-
-  .product-price {
-    font-size: 14pt;
-    font-weight: bold;
-    margin: 0.5cm 0 0.2cm;
-  }
-
-  .product-tax {
-    font-size: 9pt;
-  }
-
-  .preparation-info {
-    margin-top: 0.8cm;
-  }
-
-  .preparation-item {
-    display: flex;
-    gap: 0.6cm;
-    align-items: center;
-    margin-bottom: 0.4cm;
-  }
-
-  .preparation-icon svg {
-    width: 1.5cm;
-    height: auto;
-  }
-
-  .preparation-text {
-    font-size: 10pt;
-  }
-
-  .product-details-section {
-    page-break-before: always;
-  }
-
-  .product-detail-block {
-    margin-bottom: 1.2cm;
-    page-break-inside: avoid;
-  }
-
-  .product-detail-block h2 {
-    font-size: 14pt;
-    margin-bottom: 0.4cm;
-  }
-
-  .product-detail-block p {
-    font-size: 11pt;
-    line-height: 1.4;
-  }
-
-  .ingredienti-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5cm;
-  }
-
-  .ingrediente-card {
-    width: 25%;
-    text-align: center;
-    font-size: 9pt;
-  }
-
-  .ingrediente-card img {
-    max-width: 2.5cm;
-    height: auto;
-    margin-bottom: 0.2cm;
-  }
-
-  .preparation-steps {
-    display: block;
-  }
-
-  .step {
-    display: flex;
-    gap: 0.4cm;
-    margin-bottom: 0.3cm;
-    page-break-inside: avoid;
-  }
-
-  .step-number {
-    font-weight: bold;
-  }
-
-  .recommended-grid {
-    display: none;
-  }
-
-  /* =======================
-     CHI SIAMO
-  ======================= */
-  #about-title {
-    font-size: 24pt;
-    text-align: center;
-    margin-bottom: 1.5cm;
-    page-break-after: avoid;
-  }
-
-  .content-text {
-    display: grid;
-    grid-template-columns: 60% 40%;
-    gap: 1cm;
-    align-items: start;
-    margin-bottom: 2cm;
-    page-break-inside: avoid;
-  }
-
-  .content-text-wrapper {
-    padding: 0;
-  }
-
-  .content-text img {
-    max-width: 100%;
-    max-height: 9cm;
-    object-fit: cover;
-  }
-
-  .p-title {
-    font-size: 16pt;
-    margin-bottom: 0.4cm;
-    page-break-after: avoid;
-  }
-
-  .content-text p {
-    font-size: 11pt;
-    line-height: 1.5;
-    margin-bottom: 0.5cm;
-  }
-
-  strong {
-    font-weight: bold;
-  }
-
-  ul.leaf-icon {
-    margin-left: 0.5cm;
-    font-size: 11pt;
-  }
-
-  ul.leaf-icon li {
-    margin-bottom: 0.2cm;
-  }
-
-  #DoveTrovarci {
-    page-break-before: always;
-    text-align: center;
-  }
-
-  #DoveTrovarci img {
-    max-width: 12cm;
-    margin: 0.5cm auto;
-  }
-
-  #DoveTrovarci ul {
-    list-style: none;
-    padding: 0;
-    font-size: 11pt;
-  }
-
-  /* =======================
-     CARRELLO (solo indirizzo)
-  ======================= */
-  .cart-summary form {
-    display: block;
-  }
-
-  .cart-summary button,
-  .cart-summary a,
-  .cart-summary input,
-  .cart-summary .checkout,
-  .cart-summary .bottone-primario,
-  .cart-summary .errorSuggestion {
-    display: none;
-  }
-
-  .cart-summary .indirizzo-container {
-    display: block;
-    border: 1px solid #000;
-    padding: 0.6cm;
-    margin-top: 0.6cm;
-  }
-
-  .cart-summary .indirizzo_spedizione {
-    display: block;
-    font-weight: bold;
-    color: #000;
-    margin-bottom: 0.2cm;
-    font-size: 11pt;
-  }
-
-  .cart-summary p {
-    margin: 0;
-    font-size: 10.5pt;
-  }
-
-  /* =======================
-     HEADER (solo logo)
-  ======================= */
-  header {
-    display: block;
-    visibility: visible;
-    position: static;
-    height: auto;
-    min-height: 0;
-    overflow: visible;
-    border: none;
-    margin: 0 0 1cm 0;
-    padding: 0.5cm 0;
-  }
-
-  header .header-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
-
-  header .hamburger,
-  header nav,
-  header .header-utilities,
-  header .icon-button,
-  header .theme-toggle,
-  header .badge-count,
-  header svg,
-  header .logo .logo-light,
-  header .logo .logo-dark {
-    display: none;
-  }
-
-  header .logo {
-    display: block;
-    margin: 0 auto;
-    padding: 0;
-  }
-
-  header .logo .logo-print {
-    display: block;
-    visibility: visible;
-    max-height: 2.2cm;
-    height: auto;
-    width: auto;
-    border: 0;
-    box-shadow: none;
-  }
-
-  header .logo .logo-button {
-    display: inline-block;
-    text-decoration: none;
-    border: 0;
-  }
-
-  /* =======================
-     FOOTER (3 colonne)
-  ======================= */
-  footer {
-    display: block;
-    visibility: visible;
-    position: static;
-    page-break-inside: avoid;
-    break-inside: avoid;
-    margin-top: 1cm;
-    padding-top: 0.6cm;
-    border-top: 1px solid #000;
-    color: #000;
-    background: transparent;
-  }
-
-  footer h3,
-  footer .brand-name,
-  footer .motto-brand {
-    color: #000;
-    font-weight: bold;
-    opacity: 1;
-  }
-
-  footer .container {
-    display: block;
-    width: 100%;
-  }
-
-  footer .footer-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1cm;
-    align-items: start;
-  }
-
-  footer .footer-section {
-    margin: 0;
-    padding: 0;
-  }
-
-  footer .footer-bottom {
-    margin-top: 0.8cm;
-    padding-top: 0.4cm;
-    border-top: 1px solid #000;
-    text-align: center;
-    font-size: 10pt;
-  }
-
-  footer h3 {
-    margin: 0 0 0.25cm 0;
-    font-size: 11pt;
-  }
-
-  footer address {
-    font-style: normal;
-  }
-
-  footer .contact,
-  footer .work-item,
-  footer .hours,
-  footer .location-item {
-    margin: 0 0 0.15cm 0;
-    font-size: 10pt;
-  }
-
-  footer .footer-social,
-  footer svg {
-    display: none;
-  }
-
-  /* =======================
-     ADMIN
-  ======================= */
-  .order-status-action a,
-  #aggiorna-stato {
-    display: none;
-  }
-
-  .admin-dashboard {
-    margin: 0;
-    padding: 0;
-  }
-
-  .admin-dashboard h1 {
-    font-size: 16pt;
-    margin: 0 0 0.3cm 0;
-  }
-
-  .admin-dashboard p {
-    margin: 0 0 0.6cm 0;
-  }
-
-  .admin-dashboard h2 {
-    font-size: 13pt;
-    margin: 0.6cm 0 0.3cm 0;
-    page-break-after: avoid;
-  }
-
-  .admin-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.5cm;
-    align-items: start;
-    margin: 0 0 0.8cm 0;
-  }
-
-  .admin-card {
-    display: grid;
-    grid-template-columns: 2.4cm 1fr;
-    column-gap: 0.35cm;
-    border: 1px solid #000;
-    border-radius: 0;
-    padding: 0.35cm;
-    margin: 0;
-    page-break-inside: avoid;
-    break-inside: avoid;
-  }
-
-  .admin-card-img {
-    width: 2.4cm;
-    height: 2.4cm;
-    object-fit: cover;
-    margin: 0;
-  }
-
-  .admin-card .card-content {
-    margin: 0;
-    padding: 0;
-  }
-
-  .admin-card h3 {
-    font-size: 11pt;
-    margin: 0 0 0.15cm 0;
-    font-weight: 700;
-    color: #000;
-  }
-
-  .admin-details p {
-    margin: 0 0 0.12cm 0;
-    font-size: 10pt;
-  }
-
-  .admin-card form,
-  .admin-card fieldset,
-  .admin-card input,
-  .admin-card .bottone-primario {
-    display: none;
-  }
-
-  .stato-disponibile,
-  .stato-non-disponibile {
-    border: 1px solid #000;
-    background: transparent;
-  }
-
+/* --- Reset base --- */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* --- Nascondere elementi non necessari --- */
+header, footer, nav, .skip-link, .hero-background, .hero-buttons, .fixed-filter-btn, .filter-panel, .sort-options-vertical, #noResults, .bottone-primario, .add-to-cart-icon, .slogan-section, .btn, .admin-actions, .riepilogo-mobile-overlay, .sidebar-config, .btn-reset-link, .btn-conferma, #form-blend, a.pulsante-torna-su {
+  display: none;
+}
+/* --- Immagini --- */
+.screen-only { display: none; }
+.print-only { display: block; }
+img { border: none; display: block; }
+
+/* --- Layout principale --- */
+main > article { min-height: 0; }
+
+/* --- Container generale --- */
+.catalog-section .container, .crea-blend-layout .container-grid {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- Gestione Sezione Hero  --- */
+.hero, .hero-content, .nostra-filosofia {
+  background-color: white;
+  background-image: none;
+  color: black;
+  padding: 0.5cm 0;
+  text-align: center;
+}
+
+#hero-title {
+  font-size: 18pt;
+  margin-bottom: 0.3cm;
+  color: black;
+}
+
+.hero-subtitle {
+  font-size: 12pt;
+  margin-bottom: 0.5cm;
+}
+
+/* --- Grid uniforme --- */
+.catalog-grid, .basi-grid, .ingredienti-grid, .products-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 0.1cm;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+}
+
+/* --- Card uniformi --- */
+.catalog-grid .product-card, .ingredienti-grid .ingrediente-card, .products-grid .product-card {
+  flex: 1 1 calc(33.333% - 0.1cm);
+  max-width: calc(33.333% - 0.1cm);
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0.15cm;
+  text-align: center;
+  page-break-inside: avoid;
+  break-inside: avoid;
+  border: 0.5pt solid #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: white;
+  color: black;
+  border-radius: 2px;
+  min-height: 4cm;
+}
+
+/* --- Container immagini --- */
+.catalog-grid .product-card .product-image, .products-grid .product-card .product-image, .admin-grid .admin-card .image-container, .ingredienti-grid .ingrediente-card .image-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.1cm;
+  min-height: 2.5cm;
+  background-color: white;
+}
+
+/* --- Immagini Card --- */
+.catalog-grid .product-card img, .admin-grid .admin-card img, .ingredienti-grid .ingrediente-card img, .products-grid .product-card img {
+  width: 80%;
+  height: auto;
+  max-height: 2.5cm;
+  object-fit: contain;
+  margin: 0 auto;
+  background-color: white;
+}
+
+/* --- Titoli e Testi Card (VERSIONE INGRANDITA) --- */
+.catalog-grid .product-card h3, .admin-grid .admin-card h3, .ingredienti-grid .ingrediente-card h4, .products-grid .product-card h3 {
+  margin: 0.15cm 0;
+  font-size: 13pt; /* Aumentato da 11pt */
+  font-weight: bold;
+  line-height: 1.2;
+  color: black;
+  background-color: white;
+}
+
+.catalog-grid .product-card p, .admin-grid .admin-card .admin-desc, .ingredienti-grid .ingrediente-card p, .products-grid .product-card p {
+  margin: 0.1cm 0;
+  font-size: 10.5pt; /* Aumentato da 9pt */
+  font-weight: normal;
+  color: black;
+  background-color: white;
+}
+
+/* --- Prezzi --- */
+.product-card b, .product-card strong, .price-tag {
+  font-size: 12pt; /* Aumentato da 11pt */
+  font-weight: 800;
+  display: block;
+  margin-top: 0.15cm;
+}
+
+/* --- Visualizzazione su riga singola per i Valori --- */
+.values-grid {
+  display: flex;
+  flex-wrap: nowrap; 
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.2cm;
+  width: 100%;
+  margin-top: 0.5cm;
+}
+
+.value-item {
+  flex: 1 1 0; 
+  text-align: center;
+  padding: 0.1cm;
+}
+
+/* Ridimensionamento icone SVG per farle stare in una riga stretta */
+.value-item svg {
+  width: 30pt; /* Dimensione ridotta per non affollare la riga */
+  height: 30pt;
+  margin-bottom: 0.2cm;
+}
+
+.value-item h3 {
+  font-size: 9pt; 
+  margin-bottom: 0.1cm;
+  line-height: 1.1;
+}
+
+.value-item p {
+  font-size: 9pt;
+  line-height: 1.2;
+}
+
+/* card admin non si spezzano*/
+  .admin-card, .admin-details {
+    page-break-inside: avoid; 
+    break-inside: avoid;      
+    display: block;           
+  }
+
+/* Contenitore delle sezioni (Testo + Immagine) */
+    .content-text {
+        display: flex ; 
+        flex-direction: row ;
+        align-items: flex-start;
+        gap: 0.5cm;
+        margin-bottom: 1cm;
+        page-break-inside: avoid; 
+        break-inside: avoid;
+        border-bottom: 0.5pt solid #eee; 
+        padding-bottom: 0.5cm;
+    }
+
+    /* Wrapper del testo */
+    .content-text-wrapper {
+        flex: 1;
+        text-align: left;
+    }
+
+    .content-text h2 {
+        font-size: 14pt;
+        margin-bottom: 0.2cm;
+        color: #000;
+    }
+
+    .content-text p {
+        font-size: 10.5pt;
+        line-height: 1.4;
+    }
+
+    /* Immagini della storia */
+    .content-text img {
+        width: 40% !important; 
+        max-height: 6cm;
+        object-fit: cover;
+        border-radius: 4px; 
+    }
+
+    /* Sezione Dove Trovarci (allineata al centro) */
+    #DoveTrovarci {
+        text-align: center;
+        page-break-inside: avoid;
+        margin-top: 1cm;
+    }
+
+    #DoveTrovarci img {
+        width: 60%;
+        margin: 0.3cm auto;
+        display: block;
+    }
+
+    #DoveTrovarci ul {
+        list-style: none;
+        padding: 0;
+    }
+    /* lista puntata Chi Siamo (se sono caratteri o immagini piccole) */
+    .leaf-icon {
+        list-style-type: none;
+        padding-left: 0.5cm;
+    }
+
+    .leaf-icon li:before {
+        content: "• "; /* Sostituisce eventuali icone web con un punto pulito */
+        color: #2d5a27;
+    }
