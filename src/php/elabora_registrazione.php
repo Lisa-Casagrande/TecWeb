@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'connessione.php';
+
 /* =============================
    CONTROLLO METODO
 ============================= */
@@ -12,8 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 /* =============================
    FUNZIONI
 ============================= */
-function clean($val) {
-    return trim(htmlspecialchars($val ?? '', ENT_QUOTES, 'UTF-8'));
+function cleanDB($val) {
+    return trim($val ?? '');
 }
 
 function validaTesto($val) {
@@ -51,39 +52,42 @@ function validaEmailAvanzata($email) {
 $errors = [];
 $old = $_POST;
 
-$nome       = clean($_POST['reg_nome'] ?? '');
-$cognome    = clean($_POST['reg_cognome'] ?? '');
-$dataNasc   = clean($_POST['reg_data-nascita'] ?? '');
-$citta      = clean($_POST['reg_citta'] ?? '');
-$indirizzo  = clean($_POST['reg_indirizzo'] ?? '');
-$email      = clean($_POST['reg_email'] ?? '');
+// Pulizia valori per DB (senza htmlspecialchars)
+$nome       = cleanDB($_POST['reg_nome'] ?? '');
+$cognome    = cleanDB($_POST['reg_cognome'] ?? '');
+$dataNasc   = cleanDB($_POST['reg_data-nascita'] ?? '');
+$citta      = cleanDB($_POST['reg_citta'] ?? '');
+$indirizzo  = cleanDB($_POST['reg_indirizzo'] ?? '');
+$email      = cleanDB($_POST['reg_email'] ?? '');
+$cap        = cleanDB($_POST['reg_cap'] ?? '');
 $password   = $_POST['reg_password'] ?? '';
 $confPass   = $_POST['reg_conferma-password'] ?? '';
-$cap        = clean($_POST['reg_cap'] ?? '');
 
 /* =============================
    VALIDAZIONE
 ============================= */
-if (!validaTesto($nome))        $errors['reg_nome'] = "Errore: Nome non valido.";
-if (!validaTesto($cognome))     $errors['reg_cognome'] = "Errore: Cognome non valido.";
+if (!validaTesto($nome))           $errors['reg_nome'] = "Errore: Nome non valido.";
+if (!validaTesto($cognome))        $errors['reg_cognome'] = "Errore: Cognome non valido.";
 if (!validaMaggiorenne($dataNasc)) $errors['reg_data-nascita'] = "Errore: Devi essere maggiorenne.";
-if (!validaTesto($citta))       $errors['reg_citta'] = "Errore: Città non valida.";
-if (!validaIndirizzo($indirizzo)) $errors['reg_indirizzo'] = "Errore: Indirizzo non valido.";
+if (!validaTesto($citta))          $errors['reg_citta'] = "Errore: Città non valida.";
+if (!validaIndirizzo($indirizzo))  $errors['reg_indirizzo'] = "Errore: Indirizzo non valido.";
 if (!preg_match('/^\d{5}$/', $cap)) $errors['reg_cap'] = "Errore: Il CAP deve contenere esattamente 5 numeri.";
-if (!validaEmailAvanzata($email)) $errors['reg_email'] = "Errore: Email non valida.";
+if (!validaEmailAvanzata($email))  $errors['reg_email'] = "Errore: Email non valida.";
 if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/', $password)) $errors['reg_password'] = "Errore: Password non sicura.";
-if ($password !== $confPass)     $errors['reg_conf'] = "Errore: Le password non coincidono.";
+if ($password !== $confPass)       $errors['reg_conf'] = "Errore: Le password non coincidono.";
 
 /* =============================
    ERRORI → RITORNO AL FORM
 ============================= */
 if (!empty($errors)) {
+    unset($old['reg_password'], $old['reg_conferma-password']); // non salvare password in sessione
     $_SESSION['errors'] = $errors;
     $_SESSION['errors']['generale'] = "Attenzione: correggi gli errori evidenziati.";
     $_SESSION['old'] = $old;
     header('Location: ../registrazione.php');
     exit;
 }
+
 
 /* =============================
    HASH PASSWORD

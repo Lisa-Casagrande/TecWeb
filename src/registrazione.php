@@ -29,30 +29,30 @@ $maxDataNascita = date('Y-m-d', strtotime('-18 years'));
 // Prepara le sostituzioni per i placeholder nel template
 $sostituzioni = [
     // Errore generale
-    '[erroreGenerale]' => $errors['generale'] ?? '',
+    '[erroreGenerale]' => isset($errors['generale']) ? htmlspecialchars($errors['generale'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : '',
 
     // Errori specifici per ogni campo
-    '[erroreNome]'       => $errors['reg_nome'] ?? '',
-    '[erroreCognome]'    => $errors['reg_cognome'] ?? '',
-    '[erroreNascita]'    => $errors['reg_data-nascita'] ?? '',
-    '[erroreCitta]'      => $errors['reg_citta'] ?? '',
-    '[erroreIndirizzo]'  => $errors['reg_indirizzo'] ?? '',
-    '[erroreCap]'        => $errors['reg_cap'] ?? '',
-    '[erroreEmail]'      => $errors['reg_email'] ?? '',
-    '[errorePassword]'   => $errors['reg_password'] ?? '',
-    '[erroreConferma]'   => $errors['reg_conf'] ?? '',
+    '[erroreNome]'       => isset($errors['reg_nome']) ? htmlspecialchars($errors['reg_nome'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : '',
+    '[erroreCognome]'    => isset($errors['reg_cognome']) ? htmlspecialchars($errors['reg_cognome'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : '',
+    '[erroreNascita]'    => isset($errors['reg_data-nascita']) ? htmlspecialchars($errors['reg_data-nascita'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : '',
+    '[erroreCitta]'      => isset($errors['reg_citta']) ? htmlspecialchars($errors['reg_citta'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : '',
+    '[erroreIndirizzo]'  => isset($errors['reg_indirizzo']) ? htmlspecialchars($errors['reg_indirizzo'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : '',
+    '[erroreCap]'        => isset($errors['reg_cap']) ? htmlspecialchars($errors['reg_cap'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : '',
+    '[erroreEmail]'      => isset($errors['reg_email']) ? htmlspecialchars($errors['reg_email'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : '',
+    '[errorePassword]'   => isset($errors['reg_password']) ? htmlspecialchars($errors['reg_password'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : '',
+    '[erroreConferma]'   => isset($errors['reg_conf']) ? htmlspecialchars($errors['reg_conf'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : '',
 
-    // Valori precedenti (per ripopolare i campi)
-    '[valoreNome]'       => htmlspecialchars($old['reg_nome'] ?? ''),
-    '[valoreCognome]'    => htmlspecialchars($old['reg_cognome'] ?? ''),
-    '[valoreData]'       => htmlspecialchars($old['reg_data-nascita'] ?? ''),
-    '[valoreCitta]'      => htmlspecialchars($old['reg_citta'] ?? ''),
-    '[valoreIndirizzo]'  => htmlspecialchars($old['reg_indirizzo'] ?? ''),
-    '[valoreCap]'        => htmlspecialchars($old['reg_cap'] ?? ''),
-    '[valoreEmail]'      => htmlspecialchars($old['reg_email'] ?? ''),
-    '[valorePassword]'  => htmlspecialchars($old['reg_password'] ?? ''),
-    
-    // Classi CSS per input
+    // Valori precedenti (per ripopolare i campi, **non password**)
+    '[valoreNome]'       => htmlspecialchars($old['reg_nome'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+    '[valoreCognome]'    => htmlspecialchars($old['reg_cognome'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+    '[valoreData]'       => htmlspecialchars($old['reg_data-nascita'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+    '[valoreCitta]'      => htmlspecialchars($old['reg_citta'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+    '[valoreIndirizzo]'  => htmlspecialchars($old['reg_indirizzo'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+    '[valoreCap]'        => htmlspecialchars($old['reg_cap'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+    '[valoreEmail]'      => htmlspecialchars($old['reg_email'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+    '[valorePassword]'   => '', 
+
+    // Classi CSS per input 
     '[classeNome]'       => getClasse('reg_nome', $errors, $old),
     '[classeCognome]'    => getClasse('reg_cognome', $errors, $old),
     '[classeData]'       => getClasse('reg_data-nascita', $errors, $old),
@@ -66,6 +66,7 @@ $sostituzioni = [
     // Data massima per la nascita
     '[maxDataNascita]'   => $maxDataNascita
 ];
+
 
 ?>
 <!DOCTYPE html>

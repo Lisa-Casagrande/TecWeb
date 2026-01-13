@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <!-- Errore generale lato server -->
                 <div class="display-error" role="alert" aria-live="polite">
-                    <?php echo $erroreGenerale; ?>
+                    <?php echo htmlspecialchars($erroreGenerale); ?>
                 </div>
 
                 <form id="login-form" action="" method="post" novalidate>
@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="form-group">
                             <label for="email"> Email *:</label>
                             <input type="email" id="email" name="email" autocomplete="email" required aria-required="true" aria-describedby="email-hint email-error" value="<?php echo htmlspecialchars($valoreEmail); ?>" class="<?php echo $classeEmail; ?>" >
-                            <span id="email-error" class="errorSuggestion" role="alert"><?php echo $erroreEmail; ?></span>
+                            <span id="email-error" class="errorSuggestion" role="alert"><?php echo htmlspecialchars($erroreEmail); ?></span>
                             <small id="email-hint" class="form-hint">
                                 Inserisci l'email associata al tuo <span lang="en">account</span>
                             </small>
@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="form-group">
                             <label for="password"> Password *: </label>
                             <input type="password" id="password" name="password" autocomplete="current-password" required aria-describedby="password-hint password-error" class="<?php echo $classePassword; ?>" >
-                            <span id="password-error" class="errorSuggestion" role="alert"><?php echo $errorePassword; ?></span>
+                            <span id="password-error" class="errorSuggestion" role="alert"><?php echo htmlspecialchars($errorePassword); ?></span>
                             <small id="password-hint" class="form-hint">
                                 Inserisci la password associata al tuo <span lang="en">account</span>
                             </small>
