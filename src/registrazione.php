@@ -67,21 +67,27 @@ $sostituzioni = [
     '[maxDataNascita]'   => $maxDataNascita
 ];
 
+/* PARTE MODIFICATA: ho tolto (dipende se teniamo header uguale alle altre pagine)
 ob_start();
 include 'navbar.php';
 $navbar_html = ob_get_clean();
+*/
 
-// Caricamento del template HTML
-$template = file_get_contents(__DIR__ . '/html/Area_registrazione.html');
+require_once 'php/navbar.php';
 
+//caricamento del template HTML
+$templatePath = __DIR__ . '/html/Area_registrazione.html';
 
-// Sostituzione della navbar
-$template = str_replace("[navbar]", $navbar_html, $template);
+if (file_exists($templatePath)) {
+    $template = file_get_contents($templatePath);
+    //sostituzione della navbar
+    $template = str_replace('[navbar]', $navbarBlock, $template);
+    //sostituzione di tutti i placeholder definiti nell'array
+    $template = str_replace(array_keys($sostituzioni), array_values($sostituzioni), $template);
 
-// Sostituzione di tutti i placeholder definiti nell'array
-$template = str_replace(array_keys($sostituzioni), array_values($sostituzioni), $template);
+    echo $template;
 
-// Output finale
-echo $template;
-?>
+    } else {
+        die("Errore: Template Area_registrazione.html non trovato.");
+    }
 ?>

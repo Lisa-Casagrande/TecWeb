@@ -168,23 +168,24 @@ try {
     error_log("Errore catalogo.php: " . $e->getMessage());
 }
 
-ob_start();
-include 'navbar.php';
-$navbar_html = ob_get_clean();
 
-$templatePath = __DIR__ . '/html/catalogo.html';
+// Logica navbar e collegamento template
+require_once 'php/navbar.php'; 
+
+$templatePath = 'html/catalogo.html';
 
 if (file_exists($templatePath)) {
     $template = file_get_contents($templatePath);
     
-    // Sostituzioni
-    $template = str_replace('[NAVBAR]', $navbar_html, $template);
+    $template = str_replace('[navbar]', $navbarBlock, $template);
+    
     $template = str_replace('[FILTRO_CATEGORIE]', $filtro_categorie_html, $template);
     $template = str_replace('[FILTRO_INGREDIENTI]', $filtro_ingredienti_html, $template);
+    $template = str_replace('[LISTA_PRODOTTI]', $prodotti_html, $template);
     $template = str_replace('[PRODOTTI_GRID]', $prodotti_html, $template);
     
     echo $template;
 } else {
-    die("Errore: Template non trovato.");
+    die("Errore: Template catalogo.html non trovato.");
 }
 ?>

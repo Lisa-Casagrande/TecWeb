@@ -194,19 +194,15 @@ try {
     exit();
 }
 
-// Carica navbar
-ob_start();
-include 'navbar.php';
-$navbar_html = ob_get_clean();
-
-// Carica template
-$templatePath = __DIR__ . '/html/prodotto.html';
+// Carica navbar e template
+require_once 'php/navbar.php';
+$templatePath = 'html/prodotto.html';
 
 if (file_exists($templatePath)) {
     $template = file_get_contents($templatePath);
     
-    // Sostituzioni
-    $template = str_replace('[NAVBAR]', $navbar_html, $template);
+    $template = str_replace('[navbar]', $navbarBlock, $template);
+    
     $template = str_replace('[NOME]', $nome, $template);
     $template = str_replace('[DESCRIZIONE_META]', substr($descrizione, 0, 150), $template);
     $template = str_replace('[CATEGORIA]', $categoria, $template);
@@ -226,6 +222,8 @@ if (file_exists($templatePath)) {
     
     echo $template;
 } else {
-    die("Errore: Template non trovato.");
+    header('Location: catalogo.php');
+    exit();
 }
+
 ?>

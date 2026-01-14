@@ -2,6 +2,8 @@
 require_once 'php/connessione.php';
 require_once 'php/verificaSessione.php';
 
+require_once 'php/navbar.php';
+
 // Controllo se è stato passato l'id ordine
 if (!isset($_GET['id'])) {
     header("Location: paginaUtente.php");

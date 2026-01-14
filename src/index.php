@@ -5,7 +5,10 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 require_once 'php/connessione.php';
 
-// Variabili per il template
+//logica della Navbar: includendo questo file, viene generata la variabile $navbarBlock
+require_once 'php/navbar.php';
+
+//variabili per il template
 $prodottiPiuAmati = '';
 $erroreProdotti = false;
 
@@ -103,14 +106,19 @@ try {
 } catch (PDOException $e) {
     error_log("Errore index.php: " . $e->getMessage());
     $erroreProdotti = true;
-    $prodottiPiuAmati = '<p style="text-align:center; grid-column: 1 / -1; padding: 20px; color: #666;">Impossibile caricare i prodotti in questo momento.</p>';
+    $prodottiPiuAmati = '<p>Impossibile caricare i prodotti in questo momento.</p>';
 }
 
-// Includi il template HTML
-$templatePath = __DIR__ . '/html/index.html';
-if (file_exists($templatePath)) {
-    include $templatePath;
-} else {
-    die("Errore: template non trovato");
-}
+// Caricamento del Template Principale
+$templateIndex = file_get_contents('html/index.html');
+
+// Sostituzione dei Placeholder
+$paginaFinale = str_replace(
+    ['[navbar]', '[prodottiPiuAmati]'],
+    [$navbarBlock, $prodottiPiuAmati],
+    $templateIndex
+);
+
+//output finale
+echo $paginaFinale;
 ?>

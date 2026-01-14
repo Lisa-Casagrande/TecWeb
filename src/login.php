@@ -64,17 +64,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-// Generazione Dinamica della Navbar ---
-include 'navbar.php'; 
-$navbar_html = ob_get_clean();
+//Generazione Logica Navbar (crea $navbarBlock)
+require_once 'php/navbar.php';
+//Caricamento template
+$templatePath = __DIR__ . '/html/Area_login.html';
 
-$template = file_get_contents(__DIR__ . '/html/Area_login.html');
+//HO TOLTO:  $navbar_html = ob_get_clean();
 
-$template = str_replace("[navbar]", $navbar_html, $template);
-// Sostituzione dei placeholder [NOME_VARIABILE]
-foreach ($data as $key => $value) {
-    $template = str_replace("[$key]", htmlspecialchars((string)$value), $template);
+if (file_exists($templatePath)) {
+    $template = file_get_contents($templatePath);
+
+    // sostituzione navbar
+    $template = str_replace("[navbar]", $navbarBlock, $template);
+
+    // 4. Sostituzione dei dati dinamici del form
+    foreach ($data as $key => $value) {
+        // [valoreEmail], [erroreEmail], etc.
+        $template = str_replace("[$key]", $value, $template);
+    }
+
+    echo $template;
+} else {
+    die("Errore: Template Area_login.html non trovato.");
 }
 
-echo $template;
 ?>

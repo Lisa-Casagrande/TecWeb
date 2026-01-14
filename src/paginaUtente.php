@@ -4,8 +4,10 @@ requireUser();
 
 require_once 'php/connessione.php';
 
+require_once 'php/navbar.php';
+
 try {
-    $userId = userId()
+    $userId = userId();
 
     // Dati utente
     $stmt = $pdo->prepare("
@@ -87,12 +89,24 @@ if (!empty($ordini)) {
         </div>';
 }
 
-$paginaHTML = file_get_contents('html/account.html');
+// Genera dati utente per il template
+$nomeCompleto = htmlspecialchars($utente['nome'] . ' ' . $utente['cognome']);
+$emailUtente = htmlspecialchars($utente['email']);
 
-$paginaHTML = str_replace('[NOME_COMPLETO]', $nomeCompleto, $paginaHTML);
-$paginaHTML = str_replace('[EMAIL_UTENTE]', $emailUtente, $paginaHTML);
-$paginaHTML = str_replace('[DATA_REGISTRAZIONE]', $dataRegistrazione, $paginaHTML);
-$paginaHTML = str_replace('[ORDINI_CONTENT]', $ordiniHTML, $paginaHTML);
+$templatePath = 'html/paginaUtente.html';
+if (file_exists($templatePath)) {
+    $template = file_get_contents($templatePath);
+    
+    // 3. Sostituzioni
+    $template = str_replace('[navbar]', $navbarBlock, $template);
+    $template = str_replace('[NOME_COMPLETO]', $nomeCompleto, $template);
+    $template = str_replace('[EMAIL_UTENTE]', $emailUtente, $template);
+    $template = str_replace('[DATA_REGISTRAZIONE]', $dataRegistrazione, $template);
+    $template = str_replace('[ORDINI_CONTENT]', $ordiniHTML, $template);
+    
+    echo $template;
+} else {
+    die("Errore: Template paginaUtente.html non trovato in src/html/.");
+}
 
-echo $paginaHTML;
 ?>

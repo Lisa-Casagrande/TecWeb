@@ -2,7 +2,6 @@
 session_start();
 require_once 'php/connessione.php';
 
-// VERIFICA LOGIN
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
@@ -16,8 +15,9 @@ $id_ordine_creato = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['conferma_ordine'])) {
     if (!empty($_SESSION['carrello'])) {
         $id_utente = $_SESSION['user_id'];
+        
         $indirizzo_spedizione = trim($_POST['indirizzo_spedizione'] ?? '');
-        $sottototale = floatval($_POST['sottototale_calcolato']);
+        $sottototale = floatval($_POST['sottototale_calcolato'] ?? 0);
         $spese_spedizione = 4.99;
         $totale_ordine = $sottototale + $spese_spedizione;
         
@@ -28,65 +28,67 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['conferma_ordine'])) {
             $errore_ordine = "L'indirizzo di spedizione è obbligatorio.";
         } else {
             try {
-                $sql = "INSERT INTO ordine (id_utente, indirizzo_spedizione, sottotota, spese_spedizione, totale, stato_ord, data_ordine, omaggio, descrizione_omaggio) 
-                VALUES (?, ?, ?, ?, ?, 'in_attesa', NOW(), ?, ?)";
+                $pdo->beginTransaction();
+
+                // INSERIMENTO ORDINE
+                $sql = "INSERT INTO ordine (id_utente, indirizzo_spedizione, sottototale, spese_spedizione, totale, stato_ord, data_ordine, omaggio, descrizione_omaggio) 
+                        VALUES (?, ?, ?, ?, ?, 'in_attesa', NOW(), ?, ?)";
                 $stmt = $pdo->prepare($sql);
+                $stmt->execute([$id_utente, $indirizzo_spedizione, $sottototale, $spese_spedizione, $totale_ordine, $omaggio, $descrizione_omaggio]);
+                $id_ordine_creato = $pdo->lastInsertId();
 
-                if ($stmt->execute([$id_utente, $indirizzo_spedizione, $sottototale, $spese_spedizione, $totale_ordine, $omaggio, $descrizione_omaggio])) {
-                    $id_ordine_creato = $pdo->lastInsertId();
-                    
-                    foreach ($_SESSION['carrello'] as $item) {
-                        $id_prodotto_finale = null;
-                        $id_custom_finale = null;
+                // INSERIMENTO DETTAGLI
+                $sql_dett = "INSERT INTO dettaglio_ordine (id_ordine, id_prodotto, id_custom, quantita, prezzo_unit) VALUES (?, ?, ?, ?, ?)";
+                $stmt_dett = $pdo->prepare($sql_dett);
 
-                        if ($item['tipo'] === 'custom') {
-                            $nome_blend = $item['nome'];
-                            $id_base = $item['id_base'];
-                            $prezzo = $item['prezzo'];
-                            $num_ingredienti = isset($item['ids_ingredienti']) ? count($item['ids_ingredienti']) : 0;
-                            
-                            $nomi_ing = is_array($item['ingredienti']) ? implode(", ", $item['ingredienti']) : $item['ingredienti'];
-                            $descrizione = "Blend creato dall'utente su base " . $item['base'] . ". Ingredienti: " . $nomi_ing;
+                foreach ($_SESSION['carrello'] as $item) {
+                    $id_prodotto_finale = null;
+                    $id_custom_finale = null;
 
-                            $stmt_custom = $pdo->prepare("INSERT INTO prodotto_custom (nome_blend, descrizione, num_ingredienti, prezzo, id_base) VALUES (?, ?, ?, ?, ?)");
-                            $stmt_custom->execute([$nome_blend, $descrizione, $num_ingredienti, $prezzo, $id_base]);
-                            
-                            $id_custom_finale = $pdo->lastInsertId();
-
-                            if (!empty($item['ids_ingredienti'])) {
-                                $stmt_ing = $pdo->prepare("INSERT INTO custom_ingrediente (id_custom, id_ingrediente) VALUES (?, ?)");
-                                foreach ($item['ids_ingredienti'] as $id_ing) {
-                                    $stmt_ing->execute([$id_custom_finale, $id_ing]);
-                                }
-                            }
-                            
-                        } else {
-                            $id_prodotto_finale = $item['id'];
-                        }
+                    // Gestione BLEND CUSTOM
+                    if ($item['tipo'] === 'custom') {
+                        $nome_blend = $item['nome'];
+                        $id_base = $item['id_base'] ?? 1;
+                        $prezzo = $item['prezzo'];
                         
-                        $stmt_det = $pdo->prepare("INSERT INTO dettaglio_ordine (id_ordine, id_prodotto, id_custom, quantita, prezzo_unit) VALUES (?, ?, ?, ?, ?)");
-                        $stmt_det->execute([$id_ordine_creato, $id_prodotto_finale, $id_custom_finale, $item['quantita'], $item['prezzo']]);
+                        $nomi_ing = is_array($item['ingredienti']) ? implode(", ", $item['ingredienti']) : $item['ingredienti'];
+                        $descrizione = "Blend creato dall'utente. Base: " . ($item['base'] ?? 'Custom') . ". Ingredienti: " . $nomi_ing;
+                        $num_ingredienti = substr_count($nomi_ing, ',') + 1;
+
+                        $stmt_custom = $pdo->prepare("INSERT INTO prodotto_custom (nome_blend, descrizione, num_ingredienti, prezzo, id_base) VALUES (?, ?, ?, ?, ?)");
+                        $stmt_custom->execute([$nome_blend, $descrizione, $num_ingredienti, $prezzo, $id_base]);
+                        $id_custom_finale = $pdo->lastInsertId();
+                    } else {
+                        // PRODOTTO STANDARD
+                        $id_prodotto_finale = $item['id'];
                     }
                     
-                    unset($_SESSION['carrello']);
-                    $ordine_completato = true;
-                } else {
-                    $errore_ordine = "Errore durante il salvataggio dell'ordine.";
+                    $stmt_dett->execute([
+                        $id_ordine_creato, 
+                        $id_prodotto_finale, 
+                        $id_custom_finale, 
+                        $item['quantita'], 
+                        $item['prezzo']
+                    ]);
                 }
+
+                $pdo->commit();
+                $_SESSION['carrello'] = [];
+                $ordine_completato = true;
+
             } catch (PDOException $e) {
-                $errore_ordine = "Errore nel Database: " . $e->getMessage();
-                error_log("Errore Ordine: " . $e->getMessage());
+                $pdo->rollBack();
+                $errore_ordine = "Errore nel salvataggio ordine: " . $e->getMessage();
             }
         }
     }
 }
 
-// RECUPERO INDIRIZZO UTENTE
+// RECUPERO INDIRIZZO
 $indirizzo_precompilato = "";
 if (!$ordine_completato && isset($_SESSION['user_id'])) {
-    $stmt = $pdo->prepare("SELECT indirizzo, citta, cap, paese FROM utente WHERE id_utente = ?");
+    $stmt = $pdo->prepare("SELECT indirizzo, citta, cap FROM utente WHERE id_utente = ?");
     $stmt->execute([$_SESSION['user_id']]);
-    
     if ($r = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $parti = [];
         if (!empty($r['indirizzo'])) $parti[] = $r['indirizzo'];
@@ -96,113 +98,213 @@ if (!$ordine_completato && isset($_SESSION['user_id'])) {
     }
 }
 
-// CALCOLO CARRELLO (se non vuoto)
-$carrello_html = '';
-$sottototale = 0;
-$spedizione = 4.99;
+// GENERAZIONE HTML DINAMICO
+$html_output = '';
 
-if (!empty($_SESSION['carrello'])) {
-    foreach ($_SESSION['carrello'] as $key => $item) {
-        $importo_riga = $item['prezzo'] * $item['quantita'];
-        $sottototale += $importo_riga;
+// CASO 1: SUCCESSO
+if ($ordine_completato) {
+    $html_output = <<<HTML
+    <section class="cart-message-container admin-card" role="alert">
+        <h1>Grazie! L'ordine è stato completato.</h1>
+        <p>Abbiamo ricevuto la tua richiesta. Numero ordine: <strong>#{$id_ordine_creato}</strong></p>
+        <div class="cart-actions">
+            <a href="index.php" class="bottone-primario">Torna alla Home</a>
+            <a href="paginaUtente.php" class="bottone-primario">I miei ordini</a>
+        </div>
+    </section>
+HTML;
+
+// CASO 2: VUOTO
+} elseif (empty($_SESSION['carrello'])) {
+    $html_output = <<<HTML
+    <section class="cart-message-container admin-card">
+        <h1>Il tuo carrello è vuoto</h1>
+        <p>Non hai ancora aggiunto prodotti.</p>
+        <div class="cart-actions">
+            <a href="catalogo.php" class="bottone-primario">Vai al Catalogo</a>
+        </div>
+    </section>
+HTML;
+
+// CASO 3: PIENO
+} else {
+    $items_html = '';
+    $sottototale = 0;
+    
+    foreach ($_SESSION['carrello'] as $chiave => $item) {
+        $prezzo = floatval($item['prezzo']);
+        $qty = intval($item['quantita']);
+        $importo_riga = $prezzo * $qty; //totale per questa riga
+        $sottototale += $importo_riga; //totale generale accumulato
+        $prezzoRigaFmt = number_format($importo_riga, 2); 
+        $nome = htmlspecialchars($item['nome']);
         
-        // Genera HTML per ogni item
-        $carrello_html .= '<li class="cart-item">';
-        $carrello_html .= '<div class="cart-item-info">';
-        $carrello_html .= '<h2>' . htmlspecialchars($item['nome']) . '</h2>';
-        
-        if ($item['tipo'] == 'custom') {
-            $ingredienti_str = is_array($item['ingredienti']) ? implode(", ", $item['ingredienti']) : $item['ingredienti'];
-            $carrello_html .= '<div class="product-grams">';
-            $carrello_html .= '<span>Base: ' . htmlspecialchars($item['base']) . '</span>';
-            $carrello_html .= '<span>Ingredienti: ' . htmlspecialchars($ingredienti_str) . '</span>';
-            $carrello_html .= '</div>';
+        // Dettagli custom o standard
+        $dettagli = '';
+        if ($item['tipo'] === 'custom') {
+            $base = htmlspecialchars($item['base'] ?? 'Base');
+            $ingText = htmlspecialchars(is_array($item['ingredienti']) ? implode(", ", $item['ingredienti']) : $item['ingredienti']);
+            $dettagli = <<<HTML
+            <div class="product-grams">
+                <span>Base: {$base}</span><br>
+                <span>Ingredienti: {$ingText}</span>
+            </div>
+HTML;
         } else {
-            $carrello_html .= '<span class="product-grams">' . $item['grammi'] . 'g - Confezione classica</span>';
+            $grammi = htmlspecialchars($item['grammi'] ?? '50');
+            $dettagli = "<span class=\"product-grams\">{$grammi}g - Confezione classica</span>";
         }
-        
-        $carrello_html .= '</div>';
-        
-        // Quantity selector
-        $carrello_html .= '<div class="quantity-selector">';
-        $carrello_html .= '<form action="php/gestioneCarrello.php" method="POST">';
-        $carrello_html .= '<input type="hidden" name="azione" value="aggiorna">';
-        $carrello_html .= '<input type="hidden" name="chiave_carrello" value="' . $key . '">';
-        $carrello_html .= '<label for="qty-' . $key . '" class="sr-only">Quantità</label>';
-        $carrello_html .= '<div class="quantity-controls">';
-        $carrello_html .= '<button type="submit" name="nuova_quantita" value="' . ($item['quantita'] - 1) . '" class="quantity-btn" aria-label="Diminuisci">-</button>';
-        $carrello_html .= '<input type="number" id="qty-' . $key . '" value="' . $item['quantita'] . '" readonly>';
-        $carrello_html .= '<button type="submit" name="nuova_quantita" value="' . ($item['quantita'] + 1) . '" class="quantity-btn" aria-label="Aumenta">+</button>';
-        $carrello_html .= '</div></form></div>';
-        
-        $carrello_html .= '<div class="product-price cart-price-fix">€ ' . number_format($importo_riga, 2) . '</div>';
-        
-        // Remove button
-        $carrello_html .= '<div class="cart-item-remove">';
-        $carrello_html .= '<form action="php/gestioneCarrello.php" method="POST">';
-        $carrello_html .= '<input type="hidden" name="azione" value="rimuovi">';
-        $carrello_html .= '<input type="hidden" name="chiave_carrello" value="' . $key . '">';
-        $carrello_html .= '<button type="submit" class="bottone-primario" aria-label="Rimuovi ' . htmlspecialchars($item['nome']) . '">Rimuovi</button>';
-        $carrello_html .= '</form></div>';
-        $carrello_html .= '</li>';
+
+        $qtyMinus = $qty - 1;
+        $qtyPlus = $qty + 1;
+
+        $items_html .= <<<HTML
+        <li class="cart-item">
+            <div class="cart-item-info">
+                <h2>{$nome}</h2>
+                {$dettagli}
+            </div>
+
+            <div class="quantity-selector">
+                <form action="php/gestioneCarrello.php" method="POST">
+                    <input type="hidden" name="azione" value="aggiorna">
+                    <input type="hidden" name="chiave_carrello" value="{$chiave}">
+                    <label for="qty-{$chiave}" class="sr-only">Quantità</label>
+                    
+                    <div class="quantity-controls">
+                        <button type="submit" name="nuova_quantita" value="{$qtyMinus}" class="quantity-btn" aria-label="Diminuisci">-</button>
+                        <input type="number" id="qty-{$chiave}" value="{$qty}" readonly>
+                        <button type="submit" name="nuova_quantita" value="{$qtyPlus}" class="quantity-btn" aria-label="Aumenta">+</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="product-price cart-price-fix">
+                € {$prezzoRigaFmt}
+            </div>
+
+            <div class="cart-item-remove">
+                <form action="php/gestioneCarrello.php" method="POST">
+                    <input type="hidden" name="azione" value="rimuovi">
+                    <input type="hidden" name="chiave_carrello" value="{$chiave}">
+                    <button type="submit" class="bottone-primario" aria-label="Rimuovi {$nome}">Rimuovi</button>
+                </form>
+            </div>
+        </li>
+HTML;
     }
-    
-    // Omaggio se >= 50
+
+    // Omaggio
     if ($sottototale >= 50) {
-        $carrello_html .= '<li class="cart-item omaggio-item">';
-        $carrello_html .= '<div class="cart-item-info">';
-        $carrello_html .= '<h2>Prodotto in Omaggio 🎁</h2>';
-        $carrello_html .= '<h3>Infuso Alpino - Edizione <abbr title="cinquantesimo">50°</abbr> Anniversario</h3>';
-        $carrello_html .= '</div>';
-        $carrello_html .= '<div class="product-grams">1 pezzo</div>';
-        $carrello_html .= '<div class="product-price cart-price-fix"> Gratis </div>';
-        $carrello_html .= '<div class="cart-item-remove"></div>';
-        $carrello_html .= '</li>';
+        $items_html .= <<<HTML
+        <li class="cart-item omaggio-item">
+            <div class="cart-item-info">
+                <h2>Prodotto in Omaggio 🎁</h2>
+                <h3>Infuso Alpino - Edizione <abbr title="cinquantesimo">50°</abbr> Anniversario</h3>
+            </div>
+            <div class="product-grams">1 pezzo</div>
+            <div class="product-price cart-price-fix"> Gratis </div>
+            <div class="cart-item-remove"></div> 
+        </li>
+HTML;
     }
-    
+
+    $spedizione = 4.99;
     $totale_finale = $sottototale + $spedizione;
     
-    // Righe totali
-    $carrello_html .= '<li class="cart-total-row subtotal">';
-    $carrello_html .= '<span>Sottototale:</span>';
-    $carrello_html .= '<span class="total-price">€ ' . number_format($sottototale, 2) . '</span>';
-    $carrello_html .= '</li>';
+    $sotFmt = number_format($sottototale, 2);
+    $speFmt = number_format($spedizione, 2);
+    $totFmt = number_format($totale_finale, 2);
+
+    $items_html .= <<<HTML
+    <li class="cart-total-row subtotal">
+        <span>Sottototale:</span>
+        <span class="total-price">€ {$sotFmt}</span>
+    </li>
+    <li class="cart-total-row subtotal">
+        <span>Spedizione standard:</span>
+        <span class="total-price">€ {$speFmt}</span>
+    </li>
+    <li class="cart-total-row">
+        <span>Totale Ordine:</span>
+        <strong class="total-price">€ {$totFmt}</strong>
+    </li>
+HTML;
+
+    // Indirizzo
+    $indirizzo_block = '';
+    $disabled = '';
     
-    $carrello_html .= '<li class="cart-total-row subtotal">';
-    $carrello_html .= '<span>Spedizione standard:</span>';
-    $carrello_html .= '<span class="total-price">€ ' . number_format($spedizione, 2) . '</span>';
-    $carrello_html .= '</li>';
+    if (!empty($indirizzo_precompilato)) {
+        $addrSafe = htmlspecialchars($indirizzo_precompilato);
+        $indirizzo_block = <<<HTML
+        <div class="indirizzo-container">
+            <span class="indirizzo_spedizione">Indirizzo di consegna:</span>
+            <p>{$addrSafe}</p>
+            <p class="indirizzo_spedizione">L'indirizzo non è corretto?
+                <a href="paginaUtente.php">Modificalo nel profilo</a>
+            </p>
+        </div>
+HTML;
+    } else {
+        $disabled = 'disabled';
+        $indirizzo_block = <<<HTML
+        <div class="indirizzo-container">
+            <p class="errorSuggestion">Non hai impostato un indirizzo nel tuo profilo.</p>
+            <a href="paginaUtente.php" class="bottone-primario">Vai al Profilo per inserirlo</a>
+        </div>
+HTML;
+    }
     
-    $carrello_html .= '<li class="cart-total-row">';
-    $carrello_html .= '<span>Totale Ordine:</span>';
-    $carrello_html .= '<strong class="total-price">€ ' . number_format($totale_finale, 2) . '</strong>';
-    $carrello_html .= '</li>';
+    // Gestione Errore
+    $error_block = '';
+    if ($errore_ordine) {
+        $msg = htmlspecialchars($errore_ordine);
+        $error_block = "<div class=\"errorSuggestion\" role=\"alert\">{$msg}</div>";
+    }
+
+    $addrValue = htmlspecialchars($indirizzo_precompilato);
+
+    // Layout Finale
+    $html_output = <<<HTML
+    <h1>Il tuo Carrello</h1>
+    {$error_block}
+
+    <div class="cart-layout">
+        <div class="cart-list-container admin-card">
+            <ul class="cart-list" aria-label="Elenco prodotti nel carrello">
+                {$items_html}
+            </ul>
+        </div>
+
+        <section class="cart-summary admin-card" aria-labelledby="titolo-spedizione">
+            <form action="carrello.php" method="POST" class="form-checkout">
+                <input type="hidden" name="sottototale_calcolato" value="{$sottototale}">
+                <input type="hidden" name="indirizzo_spedizione" value="{$addrValue}">
+                
+                {$indirizzo_block}
+                
+                <div class="checkout">
+                    <button type="submit" name="conferma_ordine" class="bottone-primario" {$disabled}>
+                        Conferma Ordine
+                    </button>
+                </div>
+            </form>
+        </section>
+    </div>
+HTML;
 }
 
-// Carica navbar
-ob_start();
-include 'navbar.php';
-$navbar_html = ob_get_clean();
-
-// Carica template
-$templatePath = __DIR__ . '/html/carrello.html';
+// 5. STAMPA TEMPLATE
+require_once 'php/navbar.php';
+$templatePath = 'html/carrello.html';
 
 if (file_exists($templatePath)) {
     $template = file_get_contents($templatePath);
-    
-    // Sostituzioni
-    $template = str_replace('[NAVBAR]', $navbar_html, $template);
-    $template = str_replace('[ORDINE_COMPLETATO]', $ordine_completato ? '1' : '0', $template);
-    $template = str_replace('[ID_ORDINE]', $id_ordine_creato ?? '', $template);
-    $template = str_replace('[CARRELLO_VUOTO]', empty($_SESSION['carrello']) ? '1' : '0', $template);
-    $template = str_replace('[ERRORE_ORDINE]', htmlspecialchars($errore_ordine), $template);
-    $template = str_replace('[CARRELLO_ITEMS]', $carrello_html, $template);
-    $template = str_replace('[SOTTOTOTALE]', number_format($sottototale, 2), $template);
-    $template = str_replace('[INDIRIZZO]', htmlspecialchars($indirizzo_precompilato), $template);
-    $template = str_replace('[INDIRIZZO_VUOTO]', empty($indirizzo_precompilato) ? '1' : '0', $template);
-    
+    $template = str_replace('[navbar]', $navbarBlock, $template);
+    $template = str_replace('[CONTENUTO_CARRELLO]', $html_output, $template);
     echo $template;
 } else {
-    die("Errore: Template non trovato.");
+    die("Errore: Template carrello.html non trovato.");
 }
 ?>

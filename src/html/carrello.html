@@ -11,91 +11,27 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
-    <?php include 'navbar.php'; ?>
-
+    [navbar]
 
     <main id="main-content" role="main">
-    <section class="admin-dashboard">
-        <div style="display: [ORDINE_COMPLETATO]" data-show-if="[ORDINE_COMPLETATO]=1">
-            <section class="cart-message-container admin-card" role="alert">
-                <h1>Grazie! L'ordine è stato completato.</h1>
-                <p>Abbiamo ricevuto la tua richiesta. Stiamo preparando i tuoi infusi.</p>
-                <div class="cart-actions">
-                    <a href="index.php" class="bottone-primario">Torna alla Home</a>
-                    <a href="dettaglioOrdine.php?id=[ID_ORDINE]" class="bottone-primario">Visualizza l'ordine</a>
-                </div>
-            </section>
-        </div>
-
-        <div style="display: [CARRELLO_VUOTO]" data-show-if="[CARRELLO_VUOTO]=1 AND [ORDINE_COMPLETATO]=0">
-            <section class="cart-message-container admin-card">
-                <h1>Il tuo carrello è vuoto</h1>
-                <p>Non hai ancora aggiunto infusi al tuo carrello.</p>
-                <div class="cart-actions">
-                    <a href="catalogo.php" class="bottone-primario">Vai al Catalogo</a>
-                </div>
-            </section>
-        </div>
-
-        <div data-show-if="[CARRELLO_VUOTO]=0 AND [ORDINE_COMPLETATO]=0">
-            <h1>Il tuo Carrello</h1>
-                
-            <div style="display: none" data-show-if="[ERRORE_ORDINE]!=">
-                <div class="errorSuggestion" role="alert">
-                    [ERRORE_ORDINE]
-                </div>
-            </div>
-
-            <div class="cart-layout">
-                <div class="cart-list-container admin-card">
-                    <ul class="cart-list" aria-label="Elenco prodotti nel carrello">
-                        [CARRELLO_ITEMS]
-                    </ul>
-                </div>
-
-                <section class="cart-summary admin-card" aria-labelledby="titolo-spedizione">
-                    <form action="carrello.php" method="POST" class="form-checkout">
-                        <input type="hidden" name="sottototale_calcolato" value="[SOTTOTOTALE]">
-                        <input type="hidden" name="indirizzo_spedizione" value="[INDIRIZZO]">
-                            
-                        <div class="indirizzo-container">
-                            <span class="indirizzo_spedizione">Indirizzo di consegna:</span>
-                            
-                            <div data-show-if="[INDIRIZZO_VUOTO]=0">
-                                <p>[INDIRIZZO]</p>
-                                <p class="indirizzo_spedizione">L'indirizzo non è corretto?
-                                    <a href="paginaUtente.php">Modificalo nel profilo</a>
-                                </p>
-                            </div>
-                            
-                            <div data-show-if="[INDIRIZZO_VUOTO]=1">
-                                <p class="errorSuggestion">Non hai impostato un indirizzo nel tuo profilo.</p>
-                                <a href="paginaUtente.php" class="bottone-primario">Vai al Profilo per inserirlo</a>
-                            </div>
-                        </div>
-                        
-                        <div class="checkout">
-                            <button type="submit" name="conferma_ordine" class="bottone-primario" data-disabled-if="[INDIRIZZO_VUOTO]=1">
-                                Conferma Ordine
-                            </button>
-                        </div>
-                    </form>
-                </section>
-            </div>
-        </div>
-    </section>
+        <section class="admin-dashboard">
+            [CONTENUTO_CARRELLO]
+        </section>
     </main>
 
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
-               <div class="footer-section">
+               <!-- Colonna 1: Brand -->
+                <div class="footer-section">
                     <div class="footer-brand">
                         <div class="brand-name"><span lang="en">InfuseMe</span></div>
-                        <div class="motto-brand"><span lang="en">Taste Tradition</span></div>
+                        <div class="motto-brand">Taste Tradition</div>
                     </div>
                 </div>
 
+                <!-- Colonna 2: Contatti e Lavora con Noi-->
                 <div class="footer-section">
                     <h3>Contatti</h3>
                     <address>
@@ -103,7 +39,7 @@
                             <strong>Centralino:</strong> +39 000 111 abcd 
                         </div>
                         <div class="contact">
-                            <strong><span lang="en">Customer Care</span>:</strong> +39 111 222 efgh
+                            <strong>Customer Care:</strong> +39 111 222 efgh
                         </div>
                         <div class="contact">
                             <strong>Assistenza Clienti:</strong> assistenza@infuseme.com
@@ -119,6 +55,7 @@
                     </div>
                 </div>
 
+                <!-- Colonna 3: Orari Sedi -->
                 <div class="footer-section">
                     <h3>Orari Ufficio</h3>
                     <div class="hours">
@@ -134,8 +71,9 @@
                     <h3>Le Nostre Sedi</h3>
                     <div class="location-item">Val d'Ossola (Piemonte)</div>
                     <div class="location-item">Biella</div>
-                </div>
-            </div>
+
+                </div> <!--fine footer content-->
+
 
             <!-- Social Media Icons - solo icoe dei social-->
             <div class="footer-social">

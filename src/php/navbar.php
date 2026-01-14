@@ -1,5 +1,5 @@
 <?php
-$loggedIn = $_SESSION['logged_in'] ?? false;
+$loggedIn = $_SESSION['logged_in'] ?? false; //forse da invertire queste due righe
 $currentPage = basename($_SERVER['PHP_SELF']);
 
 // CALCOLO TOTALE ARTICOLI NEL CARRELLO
@@ -111,14 +111,12 @@ if ($loggedIn) {
     }
 }
 
-// Carica il template navbar
-$navbarHTML = file_get_contents('html/navbar.html');
+// CARICAMENTO TEMPLATE E SOSTITUZIONE
+$templateNavbar = file_get_contents(__DIR__ . '/../html/navbar.html');
 
-// Sostituisci i placeholder
-$navbarHTML = str_replace('[logoHtml]', $logoHtml, $navbarHTML);
-$navbarHTML = str_replace('[menuVoci]', $menuHtml, $navbarHTML);
-$navbarHTML = str_replace('[carrelloHtml]', $carrelloHtml, $navbarHTML);
-$navbarHTML = str_replace('[utenteHtml]', $utenteHtml, $navbarHTML);
-
-echo $navbarHTML;
+$navbarBlock = str_replace(
+    ['[logoHtml]', '[menuVoci]', '[carrelloHtml]', '[utenteHtml]'],
+    [$logoHtml, $menuHtml, $carrelloHtml, $utenteHtml],
+    $templateNavbar
+);
 ?>

@@ -6,6 +6,8 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 
 $userId = $_SESSION['user_id']; // Assunto dalla sessione di login
 
+require_once 'php/navbar.php';
+
 // 1. Recupero dati attuali dal DB (se non ci sono dati "vecchi" da errori di validazione)
 $stmt = $pdo->prepare("SELECT nome, cognome, email, data_nascita, indirizzo, citta, cap FROM utente WHERE id_utente = :id");
 $stmt->execute([':id' => $userId]);
@@ -30,24 +32,30 @@ $data = [
 // Pulizia sessione messaggi dopo la lettura
 unset($_SESSION['errors'], $_SESSION['old'], $_SESSION['successo']);
 
-// 3. Gestione Errori specifici per classi CSS e messaggi
+//Gestione Errori specifici per classi CSS e messaggi
 $campi = ['reg_nome', 'reg_cognome', 'reg_email', 'reg_data-nascita', 'reg_indirizzo', 'reg_citta', 'reg_cap'];
 foreach ($campi as $campo) {
     $data['err_' . $campo] = $errors[$campo] ?? '';
     $data['css_' . $campo] = isset($errors[$campo]) ? 'input-error' : '';
 }
 
-// 4. Caricamento Navbar
-ob_start();
-include 'navbar.php';
-$navbar = ob_get_clean();
+//caricamento template
+$templatePath = 'html/Modifica_profilo.html';
 
-// 5. Rendering Template
-$template = file_get_contents(__DIR__ . '/html/Modifica_profilo.html');
-$template = str_replace("[navbar]", $navbar, $template);
-
-foreach ($data as $key => $value) {
-    $template = str_replace("[$key]", $value, $template);
+if (file_exists($templatePath)) {
+    $template = file_get_contents($templatePath);
+    
+    // Sostituzione Navbar
+    $template = str_replace('[navbar]', $navbarBlock, $template);
+    
+    // Sostituzione placeholder dati
+    foreach ($data as $key => $value) {
+        // Sostituisce ad esempio [valoreNome] con il valore reale
+        $template = str_replace("[$key]", $value, $template);
+    }
+    
+    echo $template;
+} else {
+    die("Errore: Template Modifica_profilo.html non trovato.");
 }
-
-echo $template;
+?>
