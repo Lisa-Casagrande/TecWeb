@@ -12,10 +12,7 @@ $templatePath = __DIR__ . '/html/errore401.html';
 if (file_exists($templatePath)) {
     $template = file_get_contents($templatePath);
     
-   
     $template = str_replace("[navbar]", $navbar_html, $template);
-    
-
     
     echo $template;
 } else {
