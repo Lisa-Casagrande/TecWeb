@@ -3,21 +3,21 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-ob_start();
-include $_SERVER['DOCUMENT_ROOT'] . '/navbar.php';
-$navbar_html = ob_get_clean();
+// Imposta header HTTP 500
+http_response_code(500);
+//bisogna includere logica navbar (in tutte le pagine)
+require_once 'php/navbar.php';
 
-$templatePath = __DIR__ . '/html/errore500_template.html';
-
+//carica Template HTML
+$templatePath = 'html/errore500.html';
 if (file_exists($templatePath)) {
     $template = file_get_contents($templatePath);
     
-    $template = str_replace("[navbar]", $navbar_html, $template);
+    //sostituisce [navbar] con la variabile generata da navbar.php
+    $paginaFinale = str_replace('[navbar]', $navbarBlock, $template);
     
-    header('HTTP/1.1 500 Internal Server Error');
-    
-    echo $template;
+    echo $paginaFinale;
 } else {
-    header('HTTP/1.1 500 Internal Server Error');
+    die("Errore: Template non trovato.");
 }
 ?>

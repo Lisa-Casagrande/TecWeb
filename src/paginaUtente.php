@@ -10,14 +10,13 @@ try {
     $userId = userId();
 
     // Dati utente
-    $stmt = $pdo->prepare("
-        SELECT id_utente, nome, cognome, email, data_registrazione
-        FROM utente
-        WHERE id_utente = :id
-        LIMIT 1
-    ");
-    $stmt->execute([':id' => $userId]);
-    $utente = $stmt->fetch();
+   $stmt = $pdo->prepare("
+    SELECT id_utente, nome, cognome, email, data_registrazione, citta, indirizzo, cap
+    FROM utente
+    WHERE id_utente = :id
+    LIMIT 1");
+$stmt->execute([':id' => $userId]);
+$utente = $stmt->fetch();
 
     // Ultimi 5 ordini
     $stmt_ordini = $pdo->prepare("
@@ -47,6 +46,12 @@ $mappaStati = [
 $nomeCompleto = htmlspecialchars($utente['nome'] . ' ' . $utente['cognome']);
 $emailUtente = htmlspecialchars($utente['email']);
 $dataRegistrazione = date("d/m/Y", strtotime($utente['data_registrazione']));
+
+// Dati indirizzo
+$citta = htmlspecialchars($utente['citta'] ?? '');
+$via = htmlspecialchars($utente['indirizzo'] ?? '');
+$cap = htmlspecialchars($utente['cap'] ?? '');
+$indirizzoCompleto = trim("$via, $cap $citta");
 
 // Genera HTML ordini
 $ordiniHTML = '';
@@ -102,6 +107,7 @@ if (file_exists($templatePath)) {
     $template = str_replace('[NOME_COMPLETO]', $nomeCompleto, $template);
     $template = str_replace('[EMAIL_UTENTE]', $emailUtente, $template);
     $template = str_replace('[DATA_REGISTRAZIONE]', $dataRegistrazione, $template);
+    $template = str_replace('[INDIRIZZO_COMPLETO]', $indirizzoCompleto, $template);
     $template = str_replace('[ORDINI_CONTENT]', $ordiniHTML, $template);
     
     echo $template;

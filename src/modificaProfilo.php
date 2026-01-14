@@ -20,8 +20,6 @@ $errors = $_SESSION['errors'] ?? [];
 $data = [
     'valoreNome'        => htmlspecialchars($old['reg_nome'] ?? $utenteDB['nome']),
     'valoreCognome'     => htmlspecialchars($old['reg_cognome'] ?? $utenteDB['cognome']),
-    'valoreEmail'       => htmlspecialchars($old['reg_email'] ?? $utenteDB['email']),
-    'valoreDataNascita' => htmlspecialchars($old['reg_data-nascita'] ?? $utenteDB['data_nascita']),
     'valoreIndirizzo'   => htmlspecialchars($old['reg_indirizzo'] ?? $utenteDB['indirizzo']),
     'valoreCitta'       => htmlspecialchars($old['reg_citta'] ?? $utenteDB['citta']),
     'valoreCap'         => htmlspecialchars($old['reg_cap'] ?? $utenteDB['cap']),
@@ -33,7 +31,7 @@ $data = [
 unset($_SESSION['errors'], $_SESSION['old'], $_SESSION['successo']);
 
 //Gestione Errori specifici per classi CSS e messaggi
-$campi = ['reg_nome', 'reg_cognome', 'reg_email', 'reg_data-nascita', 'reg_indirizzo', 'reg_citta', 'reg_cap'];
+$campi = ['reg_nome', 'reg_cognome','reg_indirizzo', 'reg_citta', 'reg_cap'];
 foreach ($campi as $campo) {
     $data['err_' . $campo] = $errors[$campo] ?? '';
     $data['css_' . $campo] = isset($errors[$campo]) ? 'input-error' : '';

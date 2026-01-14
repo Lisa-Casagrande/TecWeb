@@ -66,9 +66,9 @@ try {
     $_SESSION['user_nome'] = $nome;
 
     $_SESSION['successo'] = "Profilo aggiornato con successo!";
-    
-    // Ritorno alla pagina utente
-    header('Location: ../modificaProfilo.php');
+
+    // Redirect alla pagina utente
+    header('Location: ../paginaUtente.php');
     exit;
 
 } catch (PDOException $e) {

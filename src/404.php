@@ -1,24 +1,24 @@
 <?php
-// Gestione sessione (necessaria se la navbar deve mostrare "Login" o "Profilo")
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-ob_start();
-include $_SERVER['DOCUMENT_ROOT'] . '/navbar.php';
-$navbar_html = ob_get_clean();
+// Imposta header 404
+http_response_code(404);
 
-$templatePath = __DIR__ . '/html/errore404.html';
+require_once 'php/navbar.php';
 
+$templatePath = 'html/errore404.html';
 if (file_exists($templatePath)) {
     $template = file_get_contents($templatePath);
-
-    $template = str_replace("[navbar]", $navbar_html, $template);
     
-    header('HTTP/1.1 404 Not Found');
+    // Sostituisci il placeholder navbar
+    $paginaFinale = str_replace('[navbar]', $navbarBlock, $template);
     
-    echo $template;
+    echo $paginaFinale;
 } else {
-    die("Errore: Template non trovato.");
+    // logga errore invece di morire
+    error_log("Template 404 non trovato: $templatePath");
+    echo "<h1>Errore 404</h1><p>La pagina richiesta non esiste.</p>";
 }
 ?>

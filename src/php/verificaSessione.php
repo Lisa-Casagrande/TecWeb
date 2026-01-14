@@ -32,7 +32,7 @@ if (basename($_SERVER['PHP_SELF']) === 'paginaUtente.php') {
         // Se arriva da un link interno → redirect login
        if (!isset($_SESSION['user_id'])) {
     header('HTTP/1.1 401 Unauthorized');
-    include $_SERVER['DOCUMENT_ROOT'] . '/errori/401.php';
+    include $_SERVER['DOCUMENT_ROOT'] . '/401.php';
     exit();
 }
 }
@@ -40,7 +40,7 @@ if (basename($_SERVER['PHP_SELF']) === 'paginaUtente.php') {
 function requireUser() {
     if (!isLoggedIn() || userType() !== 'utente') {
         header('HTTP/1.1 401 Unauthorized');
-        include $_SERVER['DOCUMENT_ROOT'].'/errori/401.php';
+        include $_SERVER['DOCUMENT_ROOT'].'/401.php';
         exit();
     }
 }}

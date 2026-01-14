@@ -38,8 +38,8 @@ RewriteRule ^([^\.]+)$ $1.php [NC,L]
 # 5. PAGINE DI ERRORE
 # =========================
 # Forza l'uso delle tue pagine PHP per gli errori
-ErrorDocument 401 /errori/401.php
-ErrorDocument 403 /errori/403.php
-ErrorDocument 404 /errori/404.php
-ErrorDocument 500 /errori/500.php
+ErrorDocument 401 /401.php
+ErrorDocument 403 /403.php
+ErrorDocument 404 /404.php
+ErrorDocument 500 /500.php
 
