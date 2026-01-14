@@ -33,13 +33,6 @@ main > article { min-height: 0; }
   padding: 0;
 }
 
-/* --- Gestione Sezione Hero  --- */
-.hero, .hero-content, .nostra-filosofia {
-  background-image: none;
-  padding: 0.5cm 0;
-  text-align: center;
-}
-
 #hero-title {
   font-size: 18pt;
   margin-bottom: 0.3cm;
@@ -184,7 +177,6 @@ main > article { min-height: 0; }
     .content-text h2 {
         font-size: 14pt;
         margin-bottom: 0.2cm;
-        color: #000;
     }
 
     .content-text p {
@@ -194,7 +186,7 @@ main > article { min-height: 0; }
 
     /* Immagini della storia */
     .content-text img {
-        width: 40% !important; 
+        width: 40% ; 
         max-height: 6cm;
         object-fit: cover;
         border-radius: 4px; 
