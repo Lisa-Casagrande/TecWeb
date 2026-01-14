@@ -96,12 +96,19 @@ function validazioneCampo(input) {
 
 // Funzione caricamento eventi
 function caricamento() {
-    const form = document.getElementById("registrazione-form");
+    // Cerca il form di registrazione O quello di modifica
+    const form = document.getElementById("registrazione-form") || document.getElementById("modifica-form");
     if (!form) return;
 
+    
     Object.keys(dettagli_form_reg).forEach(id => {
         const input = document.getElementById(id);
         if (input) {
+            
+            if (input.value.trim() !== "") {
+                validazioneCampo(input);
+            }
+            
             input.addEventListener("input", () => validazioneCampo(input));
             input.addEventListener("blur", () => validazioneCampo(input));
         }
@@ -119,10 +126,8 @@ function caricamento() {
             }
         });
 
-        // Focus sul primo errore
         if (firstInvalid) firstInvalid.focus();
-
-        if (!isValido) e.preventDefault(); // Blocca submit solo se ci sono errori
+        if (!isValido) e.preventDefault();
     });
 }
 

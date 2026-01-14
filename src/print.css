@@ -134,6 +134,7 @@ main > article { min-height: 0; }
   gap: 0.2cm;
   width: 100%;
   margin-top: 0.5cm;
+  background-color: white;
 }
 
 .value-item {
@@ -230,5 +231,4 @@ main > article { min-height: 0; }
 
     .leaf-icon li:before {
         content: "• "; /* Sostituisce eventuali icone web con un punto pulito */
-        color: #2d5a27;
     }
