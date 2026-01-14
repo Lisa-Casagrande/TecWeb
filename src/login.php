@@ -68,7 +68,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 include 'navbar.php'; 
 $navbar_html = ob_get_clean();
 
-// --- Caricamento del Template ---
 $template = file_get_contents(__DIR__ . '/html/Area_login.html');
 
 $template = str_replace("[navbar]", $navbar_html, $template);

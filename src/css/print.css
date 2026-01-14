@@ -1,0 +1,234 @@
+/* --- Reset base --- */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* --- Nascondere elementi non necessari --- */
+header, footer, nav, .skip-link, .hero-background, .hero-buttons, .fixed-filter-btn, .filter-panel, .sort-options-vertical, #noResults, .bottone-primario, .add-to-cart-icon, .slogan-section, .btn, .admin-actions, .riepilogo-mobile-overlay, .sidebar-config, .btn-reset-link, .btn-conferma, #form-blend, a.pulsante-torna-su {
+  display: none;
+}
+/* --- Immagini --- */
+.screen-only { display: none; }
+.print-only { display: block; }
+img { border: none; display: block; }
+
+/* --- Layout principale --- */
+main > article { min-height: 0; }
+
+/* --- Container generale --- */
+.catalog-section .container, .crea-blend-layout .container-grid {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- Gestione Sezione Hero  --- */
+.hero, .hero-content, .nostra-filosofia {
+  background-color: white;
+  background-image: none;
+  color: black;
+  padding: 0.5cm 0;
+  text-align: center;
+}
+
+#hero-title {
+  font-size: 18pt;
+  margin-bottom: 0.3cm;
+  color: black;
+}
+
+.hero-subtitle {
+  font-size: 12pt;
+  margin-bottom: 0.5cm;
+}
+
+/* --- Grid uniforme --- */
+.catalog-grid, .basi-grid, .ingredienti-grid, .products-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 0.1cm;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+}
+
+/* --- Card uniformi --- */
+.catalog-grid .product-card, .ingredienti-grid .ingrediente-card, .products-grid .product-card {
+  flex: 1 1 calc(33.333% - 0.1cm);
+  max-width: calc(33.333% - 0.1cm);
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0.15cm;
+  text-align: center;
+  page-break-inside: avoid;
+  break-inside: avoid;
+  border: 0.5pt solid #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: white;
+  color: black;
+  border-radius: 2px;
+  min-height: 4cm;
+}
+
+/* --- Container immagini --- */
+.catalog-grid .product-card .product-image, .products-grid .product-card .product-image, .admin-grid .admin-card .image-container, .ingredienti-grid .ingrediente-card .image-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.1cm;
+  min-height: 2.5cm;
+  background-color: white;
+}
+
+/* --- Immagini Card --- */
+.catalog-grid .product-card img, .admin-grid .admin-card img, .ingredienti-grid .ingrediente-card img, .products-grid .product-card img {
+  width: 80%;
+  height: auto;
+  max-height: 2.5cm;
+  object-fit: contain;
+  margin: 0 auto;
+  background-color: white;
+}
+
+/* --- Titoli e Testi Card (VERSIONE INGRANDITA) --- */
+.catalog-grid .product-card h3, .admin-grid .admin-card h3, .ingredienti-grid .ingrediente-card h4, .products-grid .product-card h3 {
+  margin: 0.15cm 0;
+  font-size: 13pt; /* Aumentato da 11pt */
+  font-weight: bold;
+  line-height: 1.2;
+  color: black;
+  background-color: white;
+}
+
+.catalog-grid .product-card p, .admin-grid .admin-card .admin-desc, .ingredienti-grid .ingrediente-card p, .products-grid .product-card p {
+  margin: 0.1cm 0;
+  font-size: 10.5pt; /* Aumentato da 9pt */
+  font-weight: normal;
+  color: black;
+  background-color: white;
+}
+
+/* --- Prezzi --- */
+.product-card b, .product-card strong, .price-tag {
+  font-size: 12pt; /* Aumentato da 11pt */
+  font-weight: 800;
+  display: block;
+  margin-top: 0.15cm;
+}
+
+/* --- Visualizzazione su riga singola per i Valori --- */
+.values-grid {
+  display: flex;
+  flex-wrap: nowrap; 
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.2cm;
+  width: 100%;
+  margin-top: 0.5cm;
+  background-color: white;
+}
+
+.value-item {
+  flex: 1 1 0; 
+  text-align: center;
+  padding: 0.1cm;
+}
+
+/* Ridimensionamento icone SVG per farle stare in una riga stretta */
+.value-item svg {
+  width: 30pt; /* Dimensione ridotta per non affollare la riga */
+  height: 30pt;
+  margin-bottom: 0.2cm;
+}
+
+.value-item h3 {
+  font-size: 9pt; 
+  margin-bottom: 0.1cm;
+  line-height: 1.1;
+}
+
+.value-item p {
+  font-size: 9pt;
+  line-height: 1.2;
+}
+
+/* card admin non si spezzano*/
+  .admin-card, .admin-details {
+    page-break-inside: avoid; 
+    break-inside: avoid;      
+    display: block;           
+  }
+
+/* Contenitore delle sezioni (Testo + Immagine) */
+    .content-text {
+        display: flex ; 
+        flex-direction: row ;
+        align-items: flex-start;
+        gap: 0.5cm;
+        margin-bottom: 1cm;
+        page-break-inside: avoid; 
+        break-inside: avoid;
+        border-bottom: 0.5pt solid #eee; 
+        padding-bottom: 0.5cm;
+    }
+
+    /* Wrapper del testo */
+    .content-text-wrapper {
+        flex: 1;
+        text-align: left;
+    }
+
+    .content-text h2 {
+        font-size: 14pt;
+        margin-bottom: 0.2cm;
+        color: #000;
+    }
+
+    .content-text p {
+        font-size: 10.5pt;
+        line-height: 1.4;
+    }
+
+    /* Immagini della storia */
+    .content-text img {
+        width: 40% !important; 
+        max-height: 6cm;
+        object-fit: cover;
+        border-radius: 4px; 
+    }
+
+    /* Sezione Dove Trovarci (allineata al centro) */
+    #DoveTrovarci {
+        text-align: center;
+        page-break-inside: avoid;
+        margin-top: 1cm;
+    }
+
+    #DoveTrovarci img {
+        width: 60%;
+        margin: 0.3cm auto;
+        display: block;
+    }
+
+    #DoveTrovarci ul {
+        list-style: none;
+        padding: 0;
+    }
+    /* lista puntata Chi Siamo (se sono caratteri o immagini piccole) */
+    .leaf-icon {
+        list-style-type: none;
+        padding-left: 0.5cm;
+    }
+
+    .leaf-icon li:before {
+        content: "• "; /* Sostituisce eventuali icone web con un punto pulito */
+    }

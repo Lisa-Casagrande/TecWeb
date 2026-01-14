@@ -1,0 +1,392 @@
+<?php
+require_once 'php/connessione.php';
+require_once 'php/verificaSessione.php';
+
+// Controllo se è stato passato l'id ordine
+if (!isset($_GET['id'])) {
+    header("Location: paginaUtente.php");
+    exit;
+}
+
+$id_ordine = intval($_GET['id']);
+
+try {
+    //Recupera ID utente dalla sessione o rimanda a pagina login
+    $userId = $_SESSION['user_id'] ?? null;
+    if (!$userId) {
+        header("Location: login.php");
+        exit;
+    }
+
+    //Recupera dati ordine solo se appartiene all'utente
+    $stmt_ordine = $pdo->prepare("
+        SELECT o.*, u.nome, u.cognome, u.email
+        FROM ordine o
+        INNER JOIN utente u ON o.id_utente = u.id_utente
+        WHERE o.id_ordine = :id_ordine AND o.id_utente = :id_utente
+        LIMIT 1
+    ");
+    $stmt_ordine->execute([
+        ':id_ordine' => $id_ordine,
+        ':id_utente' => $userId
+    ]);
+    $ordine = $stmt_ordine->fetch();
+
+    if (!$ordine) {
+        die("Ordine non trovato o non accessibile.");
+    }
+
+    //Recupero dettagli prodotti
+   $stmt_dettagli = $pdo->prepare("
+        SELECT d.*, 
+               p.nome AS nome_prodotto, p.img_path,
+               pc.nome_blend, pc.grammi AS grammi_custom
+        FROM dettaglio_ordine d
+        LEFT JOIN prodotto p ON d.id_prodotto = p.id_prodotto
+        LEFT JOIN prodotto_custom pc ON d.id_custom = pc.id_custom
+        WHERE d.id_ordine = :id_ordine
+    ");
+
+    $stmt_dettagli->execute([':id_ordine' => $id_ordine]);
+    $dettagli = $stmt_dettagli->fetchAll(); // array vuoto se non ci sono prodotti
+
+    //Logica colori stato (come admin)
+    $stato = $ordine['stato_ord'];
+    $mappaStati = [
+        'annullato'       => 'stato-rosso',
+        'in_attesa'       => 'stato-giallo',
+        'in_preparazione' => 'stato-giallo',
+        'pagato'          => 'stato-verde',
+        'spedito'         => 'stato-verde',
+        'consegnato'      => 'stato-blu'
+    ];
+    $classStato = isset($mappaStati[$stato]) ? $mappaStati[$stato] : 'stato-giallo';
+    $statoFormattato = ucfirst(str_replace('_', ' ', $stato));
+
+} catch (PDOException $e) {
+    die("Errore caricamento dati: " . $e->getMessage());
+}
+?>
+
+<!DOCTYPE html>
+<html lang="it" xml:lang="it" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>Dettaglio Ordine #<?php echo $id_ordine; ?> - InfuseMe</title>
+    <meta name="description" content="Visualizza i dettagli del tuo ordine InfuseMe." />
+    <meta name="keywords" content="tè, infuso, tisana, ordine, dettaglio, utente, profilo, ordini, preferenze" />
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <link rel="stylesheet" href="print.css" type="text/css" media="print">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
+
+    <!-- Header -->
+    <header>
+        <!--logo Infuse Me in alto a sinistra-->
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.php" aria-label="Torna alla home" class="logo-button">
+                    <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
+                    <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
+                </a>
+            </div>
+
+            <!-- Pulsante hamburger: button così è accessibile da tastiera-->
+            <button class="hamburger" id="hamburger" aria-label="Apri il menu navigazione">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <!-- Navigation (menù)-->
+            <nav aria-label="Menu principale" role="navigation">
+                <ul class="main-nav">
+                    <li><a href="index.php"><span lang="en">Home</span></a></li>
+                    <li><a href="catalogo.php">Catalogo</a></li>
+                    <li><a href="creaBlend.php">Crea il tuo <span lang="en">Blend</span></a></li>
+                    <li><a href="chiSiamo.html">Chi Siamo</a></li>
+                </ul>
+            </nav>
+
+            <!-- Utility Icons -->
+            <div class="header-utilities">
+                <button class="icon-button" aria-label="Cerca prodotti">
+                    <!--icona di ricerca-->
+                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 513.749 513.749"
+                        aria-hidden="true">
+                        <path
+                            d="M504.352,459.061l-99.435-99.477c74.402-99.427,54.115-240.344-45.312-314.746S119.261-9.277,44.859,90.15 S-9.256,330.494,90.171,404.896c79.868,59.766,189.565,59.766,269.434,0l99.477,99.477c12.501,12.501,32.769,12.501,45.269,0 c12.501-12.501,12.501-32.769,0-45.269L504.352,459.061z M225.717,385.696c-88.366,0-160-71.634-160-160s71.634-160,160-160 s160,71.634,160,160C385.623,314.022,314.044,385.602,225.717,385.696z" />
+                    </svg>
+                </button>
+
+                <a href="carrello.php" class="icon-button" aria-label="Vai al carrello">
+                    <!--icona del carrello-->
+                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                            d="M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.994,0,0,0,22.713,4.077ZM21.4,6.178l-.786,4.354A3,3,0,0,1,17.657,13H5.419L4.478,5H20.41A1,1,0,0,1,21.4,6.178Z" />
+                        <circle cx="7" cy="22" r="2" />
+                        <circle cx="17" cy="22" r="2" />
+                    </svg>
+                </a>
+
+                <a href="paginaUtente.html" class="icon-button" aria-label="Accedi all'area personale">
+                    <!--icona dell'user per area personale, login, registrazione-->
+                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12,12A6,6,0,1,0,6,6,6.006,6.006,0,0,0,12,12ZM12,2A4,4,0,1,1,8,6,4,4,0,0,1,12,2Z" />
+                        <path
+                            d="M12,14a9.01,9.01,0,0,0-9,9,1,1,0,0,0,2,0,7,7,0,0,1,14,0,1,1,0,0,0,2,0A9.01,9.01,0,0,0,12,14Z" />
+                    </svg>
+                </a>
+
+                <!-- icone per modalità chiara/scura -->
+                <button class="icon-button theme-toggle" aria-label="Cambia tema">
+                    <!-- Icona sole -->
+                    <svg class="theme-icon sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                        aria-hidden="true">
+                        <path
+                            d="M12,17c-2.76,0-5-2.24-5-5s2.24-5,5-5,5,2.24,5,5-2.24,5-5,5Zm0-8c-1.65,0-3,1.35-3,3s1.35,3,3,3,3-1.35,3-3-1.35-3-3-3Zm1-5V1c0-.55-.45-1-1-1s-1,.45-1,1v3c0,.55,.45,1,1,1s1-.45,1-1Zm0,19v-3c0-.55-.45-1-1-1s-1,.45-1,1v3c0,.55,.45,1,1,1s1-.45,1-1ZM5,12c0-.55-.45-1-1-1H1c-.55,0-1,.45-1,1s.45,1,1,1h3c.55,0,1-.45,1-1Zm19,0c0-.55-.45-1-1-1h-3c-.55,0-1,.45-1,1s.45,1,1,1h3c.55,0,1-.45,1-1ZM6.71,6.71c.39-.39,.39-1.02,0-1.41l-2-2c-.39-.39-1.02-.39-1.41,0s-.39,1.02,0,1.41l2,2c.2,.2,.45,.29,.71,.29s.51-.1,.71-.29Zm14,14c.39-.39,.39-1.02,0-1.41l-2-2c-.39-.39-1.02-.39-1.41,0s-.39,1.02,0,1.41l2,2c.2,.2,.45,.29,.71,.29s.51-.1,.71-.29Zm-16,0l2-2c.39-.39,.39-1.02,0-1.41s-1.02-.39-1.41,0l-2,2c-.39,.39-.39,1.02,0,1.41,.2,.2,.45,.29,.71,.29s.51-.1,.71-.29ZM18.71,6.71l2-2c.39-.39,.39-1.02,0-1.41s-1.02-.39-1.41,0l-2,2c-.39,.39-.39,1.02,0,1.41,.2,.2,.45,.29,.71,.29s.51-.1,.71-.29Z" />
+                    </svg>
+
+                    <!-- Icona luna -->
+                    <svg class="theme-icon moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                        aria-hidden="true">
+                        <path
+                            d="M22.386,12.003c-.402-.167-.871-.056-1.151,.28-.928,1.105-2.506,1.62-4.968,1.62-3.814,0-6.179-1.03-6.179-6.158,0-2.397,.532-4.019,1.626-4.957,.33-.283,.439-.749,.269-1.149-.17-.401-.571-.655-1.015-.604C5.285,1.573,1,6.277,1,11.978c0,6.062,4.944,10.993,11.022,10.993,5.72,0,10.438-4.278,10.973-9.951,.042-.436-.205-.848-.609-1.017Z" />
+                    </svg>
+                </button>
+
+            </div> <!--fine header utilities icons-->
+
+        </div>
+    </header>
+
+    <main id="main-content" role="main">
+        <section class="admin-dashboard"> <!--stesse classi dettaglioProdottoAdmin.php-->
+            <div class="admin-page-header">
+                <div class="header-title-group">
+                    <h1>Dettaglio Ordine #<?php echo $ordine['id_ordine']; ?></h1>
+                    <div class="order-status-badge">
+                        <span class="<?php echo $classStato; ?>"></span>
+                        <strong><?php echo $statoFormattato; ?></strong>
+                    </div>
+                </div>
+                
+                <a href="paginaUtente.php" class="bottone-primario">Torna al Profilo</a>
+            </div>
+
+            <div class="admin-grid">
+                <article class="admin-card">
+                    <div class="card-content">
+                        <h3>Dettagli Spedizione</h3>
+                        <div class="admin-details">
+                            <p><strong>Data Ordine:</strong> <?php echo date("d/m/Y H:i", strtotime($ordine['data_ordine'])); ?></p>
+                            <p><strong>Indirizzo di Consegna:</strong> <?php echo htmlspecialchars($ordine['indirizzo_spedizione']); ?></p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="admin-card card-full-width">
+                    <div class="card-content">
+                        <h3>Articoli Acquistati</h3>
+                        <ul class="product-list">
+                            <?php if (!empty($dettagli)): ?>
+                                <?php foreach ($dettagli as $item): 
+                                    $nomeItem = !empty($item['nome_prodotto']) ? $item['nome_prodotto'] : $item['nome_blend'];
+                                    $tipoItem = !empty($item['nome_prodotto']) ? "Catalogo" : "Blend Custom";
+                                ?>
+                                <li class="product-item">
+                                    <div class="product-info">
+                                        <strong><?php echo htmlspecialchars($nomeItem); ?></strong>
+                                        <span class="product-type"><?php echo $tipoItem; ?></span>
+                                    </div>
+                                    
+                                    <div class="product-pricing">
+                                        <span class="qty-badge">x<?php echo $item['quantita']; ?></span>
+                                        <span class="price">€ <?php echo number_format($item['totale_riga'], 2); ?></span>
+                                    </div>
+                                </li>
+                                <?php endforeach; ?>
+
+                                <?php if ($ordine['omaggio'] == 1): ?>
+                                <li class="product-item omaggio-admin-row"> <div class="product-info">
+                                        <strong>🎁 Omaggio: <?php echo htmlspecialchars($ordine['descrizione_omaggio']); ?></strong>
+                                        <span class="product-type">Omaggio per ordini sopra i 50 euro</span>
+                                    </div>
+                                    
+                                    <div class="product-pricing">
+                                        <span class="qty-badge">x1</span>
+                                        <span class="price">Gratis</span>
+                                    </div>
+                                </li>
+                                <?php endif; ?>
+
+                            <?php else: ?>
+                                <li class="product-item"><p>Nessun articolo trovato.</p></li>
+                            <?php endif; ?>
+                        </ul>
+
+                        <div class="order-summary">
+                            <div class="summary-row">
+                                <span>Sottototale</span>
+                                <span>€ <?php echo number_format($ordine['sottototale'], 2); ?></span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Spedizione</span>
+                                <span>€ <?php echo number_format($ordine['spese_spedizione'], 2); ?></span>
+                            </div>
+                            <div class="summary-row total-row">
+                                <strong>TOTALE</strong>
+                                <strong>€ <?php echo number_format($ordine['totale'], 2); ?></strong>
+                            </div>
+                        </div>
+
+                        <?php if(!empty($ordine['note'])): ?>
+                            <div class="order-notes">
+                                <strong>Note:</strong>
+                                <p><?php echo htmlspecialchars($ordine['note']); ?></p>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <!-- Colonna 1: Brand -->
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <div class="brand-name"><span lang="en">InfuseMe</span></div>
+                        <div class="motto-brand"><span lang="en">Taste Tradition</span></div>
+                    </div>
+                </div>
+
+                <!-- Colonna 2: Contatti e Lavora con Noi-->
+                <div class="footer-section">
+                    <h3>Contatti</h3>
+                    <address>
+                        <div class="contact">
+                            <strong>Centralino:</strong> +39 000 111 abcd
+                        </div>
+                        <div class="contact">
+                            <strong><span lang="en">Customer Care</span>:</strong> +39 111 222 efgh
+                        </div>
+                        <div class="contact">
+                            <strong>Assistenza Clienti:</strong> assistenza@infuseme.com
+                        </div>
+                    </address>
+
+                    <h3>Lavora con Noi</h3>
+                    <div class="work-item">
+                        <strong>Carriere:</strong> hr@infuseme.com
+                    </div>
+                    <div class="work-item">
+                        <strong>Collaborazioni:</strong> procurement@infuseme.com
+                    </div>
+                </div>
+
+                <!-- Colonna 3: Orari Sedi -->
+                <div class="footer-section">
+                    <h3>Orari Ufficio</h3>
+                    <div class="hours">
+                        <strong>Lunedì - Venerdì:</strong> 9:00 - 18:00
+                    </div>
+                    <div class="hours">
+                        <strong>Sabato:</strong> 9:00 - 13:00
+                    </div>
+                    <div class="hours">
+                        <strong>Domenica:</strong> Chiuso
+                    </div>
+
+                    <h3>Le Nostre Sedi</h3>
+                    <div class="location-item">Val d'Ossola (Piemonte)</div>
+                    <div class="location-item">Biella</div>
+
+                </div> <!--fine footer content-->
+
+
+                <!-- Social Media Icons - solo icoe dei social-->
+                <div class="footer-social">
+                    <h3>Seguici sui social</h3>
+                    <div class="social-icons">
+                        <!-- Instagram -->
+                        <span class="social-icon" aria-label="Instagram" title="Seguici su Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="m14.502,11.986c0,1.431-1.16,2.591-2.591,2.591s-2.59-1.16-2.59-2.591,1.16-2.591,2.59-2.591,2.591,1.16,2.591,2.591h0Zm0,0" />
+                                <path
+                                    d="m12,0h0C5.373,0,0,5.373,0,12h0c0,6.627,5.373,12,12,12h0c6.627,0,12-5.373,12-12h0C24,5.373,18.627,0,12,0Zm7.637,15.19c-.037.827-.169,1.392-.361,1.886-.199.511-.465.945-.897,1.377-.432.432-.866.698-1.376.896-.494.192-1.06.323-1.887.361-.829.038-1.094.047-3.205.047s-2.375-.009-3.204-.047c-.827-.038-1.392-.169-1.887-.361-.511-.198-.944-.465-1.377-.896-.432-.432-.698-.866-.897-1.377-.192-.494-.323-1.059-.361-1.886-.038-.829-.047-1.094-.047-3.205s.009-2.375.047-3.204c.038-.827.169-1.392.361-1.887.199-.511.465-.944.897-1.376s.866-.698,1.377-.897c.494-.192,1.06-.323,1.887-.361.829-.038,1.094-.047,3.204-.047s2.376.009,3.205.047c.827.037,1.392.169,1.887.361.511.198.944.465,1.376.897.432.432.698.866.897,1.376.192.494.323,1.06.361,1.887.038.829.047,1.093.047,3.204s-.009,2.375-.047,3.205h0Zm-1.666-7.788c-.141-.363-.309-.622-.582-.894-.272-.272-.531-.441-.894-.582-.274-.106-.685-.233-1.443-.267-.82-.038-1.066-.045-3.141-.045s-2.321.008-3.141.045c-.757.034-1.169.161-1.443.267-.363.141-.622.309-.894.582-.272.272-.441.531-.582.894-.106.274-.233.685-.267,1.443-.038.819-.045,1.065-.045,3.141s.008,2.321.045,3.141c.035.757.161,1.169.267,1.443.141.363.309.622.582.894.272.272.531.44.894.581.274.107.685.233,1.443.268.819.038,1.065.045,3.141.045s2.322-.008,3.141-.045c.758-.035,1.169-.161,1.443-.268.363-.141.622-.309.894-.581s.441-.531.582-.894c.106-.274.233-.685.267-1.443.038-.82.046-1.066.046-3.141s-.008-2.321-.046-3.141c-.035-.758-.161-1.169-.267-1.443h0Zm-6.059,8.574c-2.204,0-3.991-1.787-3.991-3.991s1.787-3.991,3.991-3.991,3.991,1.787,3.991,3.991-1.787,3.991-3.991,3.991h0Zm4.149-7.207c-.515,0-.933-.417-.933-.932s.417-.933.933-.933.933.418.933.933-.418.932-.933.932h0Zm0,0" />
+                            </svg>
+                        </span>
+
+                        <!-- Facebook -->
+                        <span class="social-icon" aria-label="Facebook" title="Seguici su Facebook">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M24,12.073c0,5.989-4.394,10.954-10.13,11.855v-8.363h2.789l0.531-3.46H13.87V9.86c0-0.947,0.464-1.869,1.95-1.869h1.509V5.045c0,0-1.37-0.234-2.679-0.234c-2.734,0-4.52,1.657-4.52,4.656v2.637H7.091v3.46h3.039v8.363C4.395,23.025,0,18.061,0,12.073c0-6.627,5.373-12,12-12S24,5.445,24,12.073z" />
+                            </svg>
+                        </span>
+
+                        <!-- TikTok -->
+                        <span class="social-icon" aria-label="TikTok" title="Seguici su TikTok">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="m12,0C5.373,0,0,5.373,0,12s5.373,12,12,12,12-5.373,12-12S18.627,0,12,0h0Zm7.439,10.483c-1.52,0-2.93-.486-4.081-1.312v5.961c0,2.977-2.422,5.399-5.399,5.399-1.151,0-2.217-.363-3.094-.978-1.393-.978-2.305-2.594-2.305-4.421,0-2.977,2.422-5.399,5.399-5.399.247,0,.489.02.727.053v2.994c-.23-.072-.474-.114-.727-.114-1.36,0-2.466,1.106-2.466,2.466,0,.947.537,1.769,1.322,2.183.342.18.731.283,1.144.283,1.329,0,2.412-1.057,2.461-2.373l.005-11.756h2.933c0,.254.025.503.069.744.207,1.117.87,2.077,1.789,2.676.64.418,1.403.661,2.222.661v2.933Zm0,0" />
+                            </svg>
+                        </span>
+
+                        <!-- LinkedIn -->
+                        <span class="social-icon" aria-label="LinkedIn" title="Seguici su LinkedIn">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="m20.65,18.172h-.174v-.353h.22c.114,0,.244.018.244.167,0,.171-.131.185-.29.185Z" />
+                                <path
+                                    d="m20.639,17.366c-.473.008-.85.398-.843.871.008.473.398.851.871.843h0s.022,0,.022,0c.463-.01.83-.393.821-.856v-.014c-.008-.473-.398-.851-.871-.843h0Zm.31,1.378l-.285-.449-.004-.005h-.184v.454h-.149v-1.043h.398c.246,0,.367.095.367.294,0,.006,0,.012,0,.018-.001.147-.095.266-.289.266l.308.465h-.160Z" />
+                                <path
+                                    d="m12,0h0C5.373,0,0,5.373,0,12h0c0,6.627,5.373,12,12,12h0c6.627,0,12-5.373,12-12h0C24,5.373,18.627,0,12,0Zm7.037,18.056c-.008.578-.483,1.042-1.062,1.034H5.76c-.577.006-1.051-.457-1.058-1.034V5.79c.007-.577.48-1.04,1.058-1.033h12.215c.578-.009,1.053.454,1.062,1.032v12.267Zm1.65,1.136c-.54.005-.982-.428-.987-.968-.005-.539.428-.981.968-.987h.019c.532.005.963.436.968.968.005.539-.428.981-.968.987Zm-6.32-9.232c-.823-.03-1.596.394-2.012,1.105h-.028v-.935h-2.039v6.84h2.124v-3.383c0-.893.169-1.756,1.276-1.756,1.09,0,1.104,1.021,1.104,1.814v3.326h2.124v-3.752c0-1.843-.396-3.258-2.549-3.258h0Zm-7.54,7.01h2.126v-6.84h-2.126v6.84Zm1.064-10.24c-.681,0-1.233.552-1.233,1.233,0,.681.552,1.232,1.233,1.232s1.233-.552,1.233-1.233c0-.681-.552-1.233-1.233-1.232Z" />
+                            </svg>
+                        </span>
+
+                        <!-- Pinterest -->
+                        <span class="social-icon" aria-label="Pinterest" title="Seguici su Pinterest">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M12.01,0C5.388,0,0.02,5.368,0.02,11.99c0,5.082,3.158,9.424,7.618,11.171c-0.109-0.947-0.197-2.408,0.039-3.444c0.217-0.938,1.401-5.961,1.401-5.961s-0.355-0.72-0.355-1.776c0-1.668,0.967-2.911,2.171-2.911c1.026,0,1.52,0.77,1.52,1.688c0,1.026-0.651,2.566-0.997,3.997c-0.286,1.194,0.602,2.171,1.776,2.171c2.132,0,3.77-2.25,3.77-5.487c0-2.872-2.062-4.875-5.013-4.875c-3.414,0-5.418,2.556-5.418,5.201c0,1.026,0.395,2.132,0.888,2.734C7.52,14.615,7.53,14.724,7.5,14.842c-0.089,0.375-0.296,1.194-0.336,1.362c-0.049,0.217-0.178,0.266-0.405,0.158c-1.5-0.701-2.438-2.882-2.438-4.648c0-3.78,2.743-7.253,7.924-7.253c4.155,0,7.391,2.961,7.391,6.928c0,4.135-2.605,7.461-6.217,7.461c-1.214,0-2.359-0.632-2.743-1.382c0,0-0.602,2.289-0.75,2.852c-0.266,1.046-0.997,2.349-1.49,3.148C9.562,23.812,10.747,24,11.99,24,9.562,23.812,10.747,24,11.99,24c6.622,0,11.99-5.368,11.99-11.99C24,5.368,18.632,0,12.01,0z" />
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="footer-bottom">
+                    <p>&copy; 2025 <span lang="en">InfuseMe</span>. Tutti i diritti riservati.</p>
+                </div>
+
+            </div> <!--fine class container-->
+    </footer>
+
+    <!-- Pulsante Torna Su (no title perchè c'è nel css)-->
+    <button class="back-to-top" id="backToTop" aria-label="Torna all'inizio della pagina">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+                d="M18,15.5a1,1,0,0,1-.71-.29l-4.58-4.59a1,1,0,0,0-1.42,0L6.71,15.21a1,1,0,0,1-1.42-1.42L9.88,9.21a3.06,3.06,0,0,1,4.24,0l4.59,4.58a1,1,0,0,1,0,1.42A1,1,0,0,1,18,15.5Z" />
+        </svg>
+    </button>
+
+
+
+
+
+    <!--file js unico per tutti gli elementi -->
+    <script src="javaScript/script.js"></script>
+
+</body>
+
+</html>
