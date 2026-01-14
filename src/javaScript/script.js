@@ -1398,3 +1398,45 @@ function debugFilters() {
     console.log('Prodotti visibili:', countVisibleProducts());
     console.log('===================');
 }
+
+
+/* ==============================
+    GESTIONE RICERCA DELLA NAVBAR
+=============================== */
+document.addEventListener('DOMContentLoaded', () => {
+    const searchToggle = document.getElementById('searchToggle');
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('search-input');
+
+    if (searchToggle && searchForm) {
+        //al click sulla lente:
+        searchToggle.addEventListener('click', (e) => {
+            e.stopPropagation(); //evita che il click si propaghi e chiuda subito
+            
+            //toggle classe 'active' per mostrare/nascondere
+            searchForm.classList.toggle('active');
+            
+            //accessibilità: aggiorna attributo aria
+            const isOpen = searchForm.classList.contains('active');
+            searchToggle.setAttribute('aria-expanded', isOpen);
+
+            //focus automatico sul campo input se aperto
+            if (isOpen && searchInput) {
+                searchInput.focus();
+            }
+        });
+
+        //chiudi se si clicca fuori dal form e dal bottone
+        document.addEventListener('click', (e) => {
+            if (!searchForm.contains(e.target) && !searchToggle.contains(e.target)) {
+                searchForm.classList.remove('active');
+                searchToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+        
+        //evita chiusura se clicco dentro il form stesso (es. sull'input)
+        searchForm.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    }
+});

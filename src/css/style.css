@@ -4541,3 +4541,56 @@ PAGINA UTENTE (stile unificato a pagine admin)
 .print-only{
     display: none;
 }
+
+/* RICERCA (cerca.php)*/
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-form {
+    display: none; /* nascosto di default */
+    position: absolute;
+    right: 100%; /* si posiziona a sinistra della lente */
+    top: 50%;
+    transform: translateY(-50%); /* centratura verticale perfetta */
+    
+    background: var(--bg-color);
+    border: 1px solid #ccc;
+    padding: 0.1em; 
+    
+    border-radius: 1em;
+    box-shadow: 0 0.25em 0.6em rgba(0,0,0,0.1);
+    margin-right: 0.5em;
+    z-index: 2000;
+    white-space: nowrap;
+}
+
+.search-form.active {
+    display: flex; /* mostra quando attivo */
+    align-items: center;
+}
+
+.search-form input {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--text-color);
+    font-size: 1.1em; 
+    padding: 0.2em 0.5em; 
+    width: 16em;
+}
+
+.search-btn-submit {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--button-bg);
+    font-size: 1.3em; 
+    padding: 0 0.5em 0 0;
+    display: flex;
+    align-items: center;
+}
+
