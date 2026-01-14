@@ -19,7 +19,7 @@
     }
 }
 /* --- Nascondere elementi non necessari --- */
-header, footer, nav, .skip-link, .hero-background, .hero-buttons, .fixed-filter-btn, .filter-panel, .sort-options-vertical, #noResults, .bottone-primario, .add-to-cart-icon, .slogan-section, .btn, .admin-actions, .riepilogo-mobile-overlay, .sidebar-config, .btn-reset-link, .btn-conferma, #form-blend, a.pulsante-torna-su, #aggiungiCarrello{
+header, footer, nav, .skip-link, .hero-background, .hero-buttons, .fixed-filter-btn, .filter-panel, .sort-options-vertical, #noResults, .bottone-primario, .add-to-cart-icon, .slogan-section, .btn, .admin-actions, .riepilogo-mobile-overlay, .sidebar-config, .btn-reset-link, .btn-conferma, #form-blend, a.pulsante-torna-su, .back-to-top, #aggiungiCarrello{
   display: none;
 }
 /* --- Immagini --- */
