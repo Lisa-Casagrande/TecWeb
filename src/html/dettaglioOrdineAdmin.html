@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta lang="it" xml:lang="it" xmlns="http://www.w3.org/1999/xhtml">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"/>
-    <title>Dettaglio Ordine #<?php echo $id_ordine; ?></title>
+    <title>Dettaglio Ordine #[ID_ORDINE]</title>
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="css/print.css" type="text/css" media="print">
 </head>
@@ -28,10 +28,7 @@
             <!-- Navigation (menù)-->
             <nav aria-label="Menu principale" role="navigation">
                 <ul class="main-nav">
-                    <li><a href="dashboardAdmin.php"><span lang="en">Dashboard</span></a></li>
-                    <li><a href="gestioneProdotti.php">Prodotti</a></li>
-                    <li><a href="gestioneIngredienti.php">Ingredienti</a></li>
-                    <li><a href="gestioneOrdini.php" class="current-page" aria-current="page">Ordini</a></li>
+                    [menuVoci]
                 </ul>
             </nav>
 
@@ -62,23 +59,17 @@
     <section class="admin-dashboard">
         <div class="admin-page-header">
             <div class="header-title-group">
-                <h1>Dettaglio Ordine #<?php echo $ordine['id_ordine']; ?></h1>
+                <h1>Dettaglio Ordine #[ID_ORDINE]</h1>
                 <div class="order-status-badge">
-                    <span class="<?php echo $classStato; ?>"></span>
-                    <strong><?php echo $statoFormattato; ?></strong>
+                    <span class="[CLASS_STATO]"></span>
+                    <strong>[STATO_TEXT]</strong>
                 </div>
             </div>
             
             <a href="gestioneOrdini.php" class="bottone-primario">Torna alla Lista</a>
         </div>
 
-        <?php if (isset($_GET['msg']) && $_GET['msg'] == 'updated'): ?>
-            <p class="messaggio-successo">Stato ordine aggiornato con successo!</p>
-        <?php endif; ?>
-
-        <?php if ($errore): ?>
-            <p class="messaggio-errore"><?php echo htmlspecialchars($errore); ?></p>
-        <?php endif; ?>
+        [MESSAGGI_SISTEMA]
 
         <div class="admin-grid">
             
@@ -86,14 +77,10 @@
                 <div class="card-content">
                     <h3>Informazioni del Cliente</h3>
                     <div class="admin-details">
-                        <p><strong>Nome:</strong> <?php echo htmlspecialchars($ordine['nome'] . " " . $ordine['cognome']); ?></p>
-                        <p><strong>Email:</strong> <?php echo htmlspecialchars($ordine['email']); ?></p>
-                        
-                        <p><strong>Indirizzo di Consegna:</strong>
-                        <?php echo htmlspecialchars($ordine['indirizzo_spedizione']); ?></p>
-                        
-                        <p><strong>Data dell'Ordine:</strong>
-                        <?php echo date("d/m/Y H:i", strtotime($ordine['data_ordine'])); ?></p>
+                        <p><strong>Nome:</strong> [NOME_CLIENTE]</p>
+                        <p><strong>Email:</strong> [EMAIL_CLIENTE]</p>
+                        <p><strong>Indirizzo di Consegna:</strong> [INDIRIZZO_SPEDIZIONE]</p>
+                        <p><strong>Data dell'Ordine:</strong> [DATA_ORDINE]</p>
                     </div>
                 </div>
             </article>
@@ -109,12 +96,7 @@
                             <div class="input-group">
                                 <label for="nuovo_stato" class="sr-only">Nuovo Stato</label>
                                 <select name="nuovo_stato" id="nuovo_stato">
-                                    <option value="in_attesa" <?php if($stato == 'in_attesa') echo 'selected'; ?>>In attesa</option>
-                                    <option value="pagato" <?php if($stato == 'pagato') echo 'selected'; ?>>Pagato</option>
-                                    <option value="in_preparazione" <?php if($stato == 'in_preparazione') echo 'selected'; ?>>In preparazione</option>
-                                    <option value="spedito" <?php if($stato == 'spedito') echo 'selected'; ?>>Spedito</option>
-                                    <option value="consegnato" <?php if($stato == 'consegnato') echo 'selected'; ?>>Consegnato</option>
-                                    <option value="annullato" <?php if($stato == 'annullato') echo 'selected'; ?>>Annullato</option>
+                                    [OPTIONS_STATO]
                                 </select>
                             </div>
                             <input type="submit" class="bottone-primario" value="Salva Modifica">
@@ -128,59 +110,25 @@
                     <h3>Articoli Acquistati</h3>
                     
                     <ul class="product-list">
-                        <?php foreach ($dettagli as $item): 
-                            $nomeItem = !empty($item['nome_prodotto']) ? $item['nome_prodotto'] : $item['nome_blend'];
-                            $tipoItem = !empty($item['nome_prodotto']) ? "Catalogo" : "Blend Custom";
-                        ?>
-                        <li class="product-item">
-                            <div class="product-info">
-                                <strong><?php echo htmlspecialchars($nomeItem); ?></strong>
-                                <span class="product-type"><?php echo $tipoItem; ?></span>
-                            </div>
-                            
-                            <div class="product-pricing">
-                                <span class="qty-badge">x<?php echo $item['quantita']; ?></span>
-                                <span class="price">€ <?php echo number_format($item['totale_riga'], 2); ?></span>
-                            </div>
-                        </li>
-                        <?php endforeach; ?>
-
-                        <?php if ($ordine['omaggio'] == 1): ?>
-                        <li class="product-item">
-                            <div class="product-info">
-                                <strong>Omaggio: <?php echo htmlspecialchars($ordine['descrizione_omaggio']); ?></strong>
-                                <span class="product-type">Omaggio per ordini sopra i 50 euro</span>
-                            </div>
-                            
-                            <div class="product-pricing">
-                                <span class="qty-badge">x1</span>
-                                <span class="price">Gratis</span>
-                            </div>
-                        </li>
-                        <?php endif; ?>
+                        [LISTA_PRODOTTI]
                     </ul>
 
                     <div class="order-summary">
                         <div class="summary-row">
                             <span>Sottototale</span>
-                            <span>€ <?php echo number_format($ordine['sottototale'], 2); ?></span>
+                            <span>€ [SOTTOTOTALE]</span>
                         </div>
                         <div class="summary-row">
                             <span>Spedizione</span>
-                            <span>€ <?php echo number_format($ordine['spese_spedizione'], 2); ?></span>
+                            <span>€ [SPEDIZIONE]</span>
                         </div>
                         <div class="summary-row total-row">
                             <strong>TOTALE</strong>
-                            <strong>€ <?php echo number_format($ordine['totale'], 2); ?></strong>
+                            <strong>€ [TOTALE]</strong>
                         </div>
                     </div>
 
-                    <?php if(!empty($ordine['note'])): ?>
-                        <div class="order-notes">
-                            <strong>Note del cliente:</strong>
-                            <p><?php echo htmlspecialchars($ordine['note']); ?></p>
-                        </div>
-                    <?php endif; ?>
+                    [NOTE_CLIENTE]
                 </div>
             </article>
         </div>

@@ -1,5 +1,5 @@
 <?php
-$loggedIn = $_SESSION['logged_in'] ?? false; //forse da invertire queste due righe
+$loggedIn = $_SESSION['logged_in'] ?? false;
 $currentPage = basename($_SERVER['PHP_SELF']);
 
 // CALCOLO TOTALE ARTICOLI NEL CARRELLO

@@ -28,10 +28,7 @@
             <!-- Navigation (menù)-->
             <nav aria-label="Menu principale" role="navigation">
                 <ul class="main-nav">
-                    <li><a href="dashboardAdmin.php"><span lang="en">Dashboard</span></a></li>
-                    <li><a href="gestioneProdotti.php" class="current-page" aria-current="page">Prodotti</a></li>
-                    <li><a href="gestioneIngredienti.php">Ingredienti</a></li>
-                    <li><a href="gestioneOrdini.php">Ordini</a></li>
+                    [menuVoci]
                 </ul>
             </nav>
 
@@ -73,7 +70,7 @@
 
         <!--mostra tutti i prodotti come catalogo ma per interfaccia admin: più informazioni perchè admin non accede al dettaglio prodotti-->
         <div class="admin-grid">
-            {{PRODOTTI_CONTENT}}
+            [PRODOTTI_CONTENT]
         </div>
     </section>
     </main>
