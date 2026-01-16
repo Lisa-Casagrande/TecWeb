@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <title>Dettaglio Ordine #<?php echo $id_ordine; ?> - InfuseMe</title>
+    <title>Dettaglio Ordine #[ID_ORDINE] - InfuseMe</title>
     <meta name="description" content="Visualizza i dettagli del tuo ordine InfuseMe." />
     <meta name="keywords" content="tè, infuso, tisana, ordine, dettaglio, utente, profilo, ordini, preferenze" />
     <link rel="stylesheet" href="css/style.css" type="text/css" />
+    <link rel="stylesheet" href="css/mini.css" type="text/css"/>
     <link rel="stylesheet" href="css/print.css" type="text/css" media="print">
 </head>
 
@@ -16,13 +17,12 @@
     [navbar]
 
     <main id="main-content" role="main">
-        <section class="admin-dashboard"> <!--stesse classi dettaglioProdottoAdmin.php-->
-            <div class="admin-page-header">
+        <section class="admin-dashboard"> <div class="admin-page-header">
                 <div class="header-title-group">
-                    <h1>Dettaglio Ordine #<?php echo $ordine['id_ordine']; ?></h1>
+                    <h1>Dettaglio Ordine #[ID_ORDINE]</h1>
                     <div class="order-status-badge">
-                        <span class="<?php echo $classStato; ?>"></span>
-                        <strong><?php echo $statoFormattato; ?></strong>
+                        <span class="[CLASSE_STATO]"></span>
+                        <strong>[STATO_FORMATTATO]</strong>
                     </div>
                 </div>
                 
@@ -34,8 +34,8 @@
                     <div class="card-content">
                         <h3>Dettagli Spedizione</h3>
                         <div class="admin-details">
-                            <p><strong>Data Ordine:</strong> <?php echo date("d/m/Y H:i", strtotime($ordine['data_ordine'])); ?></p>
-                            <p><strong>Indirizzo di Consegna:</strong> <?php echo htmlspecialchars($ordine['indirizzo_spedizione']); ?></p>
+                            <p><strong>Data Ordine:</strong> [DATA_ORDINE]</p>
+                            <p><strong>Indirizzo di Consegna:</strong> [INDIRIZZO_SPEDIZIONE]</p>
                         </div>
                     </div>
                 </article>
@@ -44,64 +44,25 @@
                     <div class="card-content">
                         <h3>Articoli Acquistati</h3>
                         <ul class="product-list">
-                            <?php if (!empty($dettagli)): ?>
-                                <?php foreach ($dettagli as $item): 
-                                    $nomeItem = !empty($item['nome_prodotto']) ? $item['nome_prodotto'] : $item['nome_blend'];
-                                    $tipoItem = !empty($item['nome_prodotto']) ? "Catalogo" : "Blend Custom";
-                                ?>
-                                <li class="product-item">
-                                    <div class="product-info">
-                                        <strong><?php echo htmlspecialchars($nomeItem); ?></strong>
-                                        <span class="product-type"><?php echo $tipoItem; ?></span>
-                                    </div>
-                                    
-                                    <div class="product-pricing">
-                                        <span class="qty-badge">x<?php echo $item['quantita']; ?></span>
-                                        <span class="price">€ <?php echo number_format($item['totale_riga'], 2); ?></span>
-                                    </div>
-                                </li>
-                                <?php endforeach; ?>
-
-                                <?php if ($ordine['omaggio'] == 1): ?>
-                                <li class="product-item omaggio-admin-row">
-                                    <div class="product-info">
-                                        <strong>🎁 Omaggio: <?php echo htmlspecialchars($ordine['descrizione_omaggio']); ?></strong>
-                                        <span class="product-type">Omaggio per ordini sopra i 50 euro</span>
-                                    </div>
-                                    
-                                    <div class="product-pricing">
-                                        <span class="qty-badge">x1</span>
-                                        <span class="price">Gratis</span>
-                                    </div>
-                                </li>
-                                <?php endif; ?>
-
-                            <?php else: ?>
-                                <li class="product-item"><p>Nessun articolo trovato.</p></li>
-                            <?php endif; ?>
+                            [LISTA_ARTICOLI]
                         </ul>
 
                         <div class="order-summary">
                             <div class="summary-row">
                                 <span>Sottototale</span>
-                                <span>€ <?php echo number_format($ordine['sottototale'], 2); ?></span>
+                                <span>€ [SOTTOTOTALE]</span>
                             </div>
                             <div class="summary-row">
                                 <span>Spedizione</span>
-                                <span>€ <?php echo number_format($ordine['spese_spedizione'], 2); ?></span>
+                                <span>€ [SPESE_SPEDIZIONE]</span>
                             </div>
                             <div class="summary-row total-row">
                                 <strong>TOTALE</strong>
-                                <strong>€ <?php echo number_format($ordine['totale'], 2); ?></strong>
+                                <strong>€ [TOTALE]</strong>
                             </div>
                         </div>
 
-                        <?php if(!empty($ordine['note'])): ?>
-                            <div class="order-notes">
-                                <strong>Note:</strong>
-                                <p><?php echo htmlspecialchars($ordine['note']); ?></p>
-                            </div>
-                        <?php endif; ?>
+                        [NOTE_ORDINE]
                     </div>
                 </article>
 
