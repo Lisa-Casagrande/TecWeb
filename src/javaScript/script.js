@@ -1,16 +1,10 @@
 /**
- * FILE UNICO JAVASCRIPT
- * tenendo tutto in un unico file il caricamento è più veloce
- -> da aggiornare tutti i file html e php alla fine includendo solo questo file e non tutti gli altri 
+ * FILE UNICO JAVASCRIPT: tenendo tutto in un unico file il caricamento è più veloce (da inserire in tutti i file html)
 */
 
 /* ==========================================================================
-   SEZIONE 1: GESTIONE TEMA (ex tema.js)
-   Gestione tema chiaro/scuro per InfuseMe
-   Implementazione accessibile e user-friendly
-   Persistenza tema
+   SEZIONE 1: GESTIONE TEMA (ex tema.js) con persistenza
    ========================================================================== */
-
 // Configurazione
 const ThemeManager = {
     // Elementi DOM
@@ -161,7 +155,7 @@ const ThemeManager = {
     addEventListeners() {
         console.log('Aggiunta event listeners...');
         
-        // **IMPORTANTE:** Aggiungi listener a TUTTI i toggle
+        // IMPORTANTE: Aggiungi listener a TUTTI i toggle
         const allThemeToggles = document.querySelectorAll('.theme-toggle');
         
         allThemeToggles.forEach(toggle => {
@@ -197,7 +191,7 @@ const ThemeManager = {
     }
 };
 
-// **FUNZIONE DI INIZIALIZZAZIONE CORRETTA**
+// FUNZIONE DI INIZIALIZZAZIONE
 function initializeTheme() {
     console.log('=== INIZIALIZZAZIONE TEMA ===');
     
@@ -231,18 +225,17 @@ function initializeTheme() {
     }
 }
 
-// **ESECUZIONE IMMEDIATA**
-// Questo viene eseguito non appena il file JS viene caricato
+// ESECUZIONE IMMEDIATA: viene eseguito non appena il file JS viene caricato
 console.log('tema.js caricato - avvio inizializzazione...');
 initializeTheme();
 
-// **AGGIUNTO:** Funzione per forzare il tema su tutte le pagine
+// Funzione per forzare il tema su tutte le pagine
 function forceThemeRefresh() {
     console.log('Forzando refresh tema...');
     ThemeManager.loadAndApplyTheme();
 }
 
-// **AGGIUNTO:** Salvataggio aggiuntivo quando l'utente lascia la pagina
+// Salvataggio aggiuntivo quando l'utente lascia la pagina
 window.addEventListener('beforeunload', () => {
     if (ThemeManager.states.userPreference) {
         localStorage.setItem('infuseme-theme', ThemeManager.states.userPreference);
@@ -250,7 +243,7 @@ window.addEventListener('beforeunload', () => {
     }
 });
 
-// **AGGIUNTO:** Controllo se il tema è stato applicato
+// Controllo se il tema è stato applicato
 window.addEventListener('load', () => {
     const currentTheme = localStorage.getItem('infuseme-theme');
     const bodyTheme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
@@ -327,6 +320,36 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    /*Funzione per aprire la barra di ricerca da mobile */
+    function setupMobileSearch() {
+        const mobileSearchBtn = mobileMenuWrapper.querySelector('#searchToggle');
+        
+        if (mobileSearchBtn) {
+            const newSearchBtn = mobileSearchBtn.cloneNode(true);
+            mobileSearchBtn.replaceWith(newSearchBtn);
+            
+            newSearchBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeMenu(); // chiude menu hamburger
+                
+                // apre la barra di ricerca principale
+                const mainSearchForm = document.getElementById('searchForm');
+                const mainSearchInput = document.getElementById('search-input');
+                
+                if (mainSearchForm) {
+                    mainSearchForm.classList.add('active'); // Apre la barra
+                    
+                    // mette il cursore per scrivere
+                    if (mainSearchInput) {
+                        setTimeout(() => {
+                            mainSearchInput.focus();
+                        }, 200);
+                    }
+                }
+            });
+        }
+    }
+
     // Funzione per aggiornare le icone del tema (fallback)
     function updateThemeIcons() {
         const isDark = body.classList.contains('dark-theme');
@@ -381,8 +404,9 @@ document.addEventListener('DOMContentLoaded', function() {
             closeMenu();
         });
         
-        // Setup iniziale del tema mobile
+        // Setup iniziale del tema mobile e della ricerca
         setupMobileThemeToggle();
+        setupMobileSearch();
     }
 
     // Toggle menu
@@ -408,6 +432,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Riapplica il setup del tema quando il menu viene riaperto
         setTimeout(() => {
             setupMobileThemeToggle();
+            setupMobileSearch();
         }, 50);
         
         // Aggiungi listener per chiudere dopo un breve delay
@@ -900,18 +925,15 @@ document.addEventListener('DOMContentLoaded', function() {
         prezzoIngrediente: 1.00
     };
 
-    /**
-     * Funzione per salvare lo stato nel browser
-     */
+    /* Funzione per salvare lo stato nel browser */
     function salvaStato() {
         localStorage.setItem('mioBlendSalvato', JSON.stringify(statoBlend));
     }
 
-    /**
-     * Aggiorna tutta l'interfaccia utente (Contatori, Riepilogo, Prezzo e Bottone)
-     */
+    /* Aggiorna tutta l'interfaccia utente (Contatori, Riepilogo, Prezzo e Bottone) */
+     
     function aggiornaUI() {
-        // --- 1. Aggiorna Contatori ---
+        // Aggiorna Contatori
         const contBase = document.getElementById('contatore-base');
         const contIng = document.getElementById('contatore-ingredienti');
         
@@ -926,7 +948,7 @@ document.addEventListener('DOMContentLoaded', function() {
             badgeMobile.style.display = totaleItems > 0 ? 'flex' : 'none';
         }
 
-        // --- 2. Aggiorna Riepilogo Base (con la X di rimozione) ---
+        // Aggiorna Riepilogo Base (con la X di rimozione)
         const baseDiv = document.getElementById('base-selezionata');
         if (baseDiv) {
             baseDiv.innerHTML = statoBlend.base 
@@ -937,7 +959,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 : '<p class="nessuna-selezione">Nessuna base selezionata</p>';
         }
 
-        // --- 3. Aggiorna Riepilogo Ingredienti (con la X di rimozione) ---
+        // Aggiorna Riepilogo Ingredienti (con la X di rimozione) 
         const ingDiv = document.getElementById('ingredienti-selezionati');
         if (ingDiv) {
             if (statoBlend.ingredienti.length > 0) {
@@ -952,7 +974,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // --- 4. Calcolo Prezzo Finale ---
+        // Calcolo Prezzo Finale
         let totale = statoBlend.base ? statoBlend.prezzoBase : 0;
         totale += statoBlend.ingredienti.length * statoBlend.prezzoIngrediente;
         if (statoBlend.ingredienti.length === 3) totale -= 0.50; // Sconto fedeltà 3 ingredienti
@@ -960,7 +982,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const importoPrezzo = document.getElementById('importo-prezzo');
         if (importoPrezzo) importoPrezzo.textContent = totale.toFixed(2);
 
-        // --- 5. Gestione stato Bottone Conferma ---
+        // -Gestione stato Bottone Conferma 
         const btnConferma = document.getElementById('btn-conferma');
         if (btnConferma) {
             const pronto = statoBlend.base && statoBlend.ingredienti.length >= 2;
@@ -982,16 +1004,14 @@ document.addEventListener('DOMContentLoaded', function() {
             // Se hai un listener sul bottone conferma mobile, aggiungilo qui o usa quello desktop
         }
 
-        // --- 6. Sincronizzazione Grafica Card ---
+        // Sincronizzazione Grafica Card 
         sincronizzaCardGrafiche();
         
         // Salva i dati localmente ad ogni modifica
         salvaStato();
     }
 
-    /**
-     * Sincronizza le classi 'selezionato' e i testi dei bottoni basandosi sullo stato
-     */
+    /* Sincronizza le classi 'selezionato' e i testi dei bottoni basandosi sullo stato */
     function sincronizzaCardGrafiche() {
         // Reset Basi
         document.querySelectorAll('.base-card').forEach(card => {
@@ -1035,9 +1055,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    /**
-     * Listener Selezione Basi
-     */
+    /* Listener Selezione Basi */
     document.querySelectorAll('.btn-seleziona-base').forEach(btn => {
         btn.addEventListener('click', function() {
             const card = this.closest('.base-card');
@@ -1046,9 +1064,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    /**
-     * Listener Selezione Ingredienti
-     */
+    /* Listener Selezione Ingredienti */
     document.querySelectorAll('.btn-aggiungi-ingrediente').forEach(btn => {
         btn.addEventListener('click', function() {
             const card = this.closest('.ingrediente-card');
@@ -1066,9 +1082,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    /**
-     * Radio Button 2/3 ingredienti
-     */
+    /* Radio Button 2/3 ingredienti */
     document.querySelectorAll('input[name="numIngredienti"]').forEach(radio => {
         radio.addEventListener('change', function() {
             statoBlend.maxIngredienti = parseInt(this.value);
@@ -1079,9 +1093,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    /**
-     * Funzioni Globali (X nel riepilogo)
-     */
+    /* Funzioni Globali (X nel riepilogo) */
     window.rimuoviBase = function() {
         statoBlend.base = null;
         aggiornaUI();
@@ -1092,16 +1104,13 @@ document.addEventListener('DOMContentLoaded', function() {
         aggiornaUI();
     };
 
-    /**
-     * Reset Totale
-    */
+    /* Reset Totale */
     function eseguiReset() {
         localStorage.removeItem('mioBlendSalvato');
         statoBlend.base = null;
         statoBlend.ingredienti = [];
         statoBlend.maxIngredienti = 2;
         aggiornaUI();
-        
         // Se siamo su mobile, chiudiamo anche la tendina per feedback visivo (opzionale)
         // const overlayMobile = document.getElementById('riepilogo-mobile-overlay');
         // if(overlayMobile) overlayMobile.classList.remove('active');
@@ -1115,9 +1124,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const btnResetMobile = document.getElementById('btn-reset-mobile');
     if (btnResetMobile) btnResetMobile.addEventListener('click', eseguiReset);
 
-    /**
-     * Invio Form
-     */
+    /* Invio Form */
     const btnConferma = document.getElementById('btn-conferma');
     if (btnConferma) {
         btnConferma.addEventListener('click', () => {
@@ -1408,6 +1415,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchForm = document.getElementById('searchForm');
     const searchInput = document.getElementById('search-input');
 
+    // riferimenti al menu hamburger e alla navigazione per il mobile
+    const hamburgerBtn = document.getElementById('hamburger');
+    const mainNav = document.querySelector('.main-nav');
+
     if (searchToggle && searchForm) {
         //al click sulla lente:
         searchToggle.addEventListener('click', (e) => {
@@ -1415,6 +1426,12 @@ document.addEventListener('DOMContentLoaded', () => {
             
             //toggle classe 'active' per mostrare/nascondere
             searchForm.classList.toggle('active');
+
+            // se la ricerca si apre, chiudi il menu hamburger (se è aperto) (MOBILE)
+            if (searchForm.classList.contains('active')) {
+                if (hamburgerBtn) hamburgerBtn.classList.remove('active');
+                if (mainNav) mainNav.classList.remove('active');
+            }
             
             //accessibilità: aggiorna attributo aria
             const isOpen = searchForm.classList.contains('active');
@@ -1422,7 +1439,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             //focus automatico sul campo input se aperto
             if (isOpen && searchInput) {
-                searchInput.focus();
+                // piccolo timeout per assicurarsi che la transizione mobile sia partita
+                setTimeout(() => {
+                    searchInput.focus();
+                }, 50);
             }
         });
 
@@ -1433,7 +1453,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 searchToggle.setAttribute('aria-expanded', 'false');
             }
         });
-        
         //evita chiusura se clicco dentro il form stesso (es. sull'input)
         searchForm.addEventListener('click', (e) => {
             e.stopPropagation();
