@@ -8,7 +8,7 @@
         --white: #FFFFFF;
         --section-bg: #FFFFFF;
         
-        /* Resettiamo anche le variabili del tema scuro nel caso venissero usate */
+        /* Resettiamo anche le variabili del tema scuro */
         --text-green: #000000; 
         --bg-dark: #FFFFFF;
         --card-dark: #FFFFFF;
@@ -23,12 +23,20 @@ header, footer, nav, .skip-link, .hero-background, .hero-buttons, .fixed-filter-
   display: none;
 }
 /* --- Immagini --- */
-.screen-only { display: none; }
-.print-only { display: block; }
-img { border: none; display: block; }
+.screen-only {
+ display: none; 
+}
+.print-only { 
+display: block;
+}
+img {
+   border: none; display: block; 
+  }
 
 /* --- Layout principale --- */
-main > article { min-height: 0; }
+main > article { 
+  min-height: 0; 
+}
 
 /* --- Container generale --- */
 .catalog-section .container, .crea-blend-layout .container-grid {
@@ -97,23 +105,23 @@ main > article { min-height: 0; }
   margin: 0 auto;
 }
 
-/* --- Titoli e Testi Card (VERSIONE INGRANDITA) --- */
+/* --- Titoli e Testi Card  --- */
 .catalog-grid .product-card h3, .admin-grid .admin-card h3, .ingredienti-grid .ingrediente-card h4, .products-grid .product-card h3 {
   margin: 0.15cm 0;
-  font-size: 13pt; /* Aumentato da 11pt */
+  font-size: 13pt; 
   font-weight: bold;
   line-height: 1.2;
 }
 
 .catalog-grid .product-card p, .admin-grid .admin-card .admin-desc, .ingredienti-grid .ingrediente-card p, .products-grid .product-card p {
   margin: 0.1cm 0;
-  font-size: 10.5pt; /* Aumentato da 9pt */
+  font-size: 10.5pt; 
   font-weight: normal;
 }
 
 /* --- Prezzi --- */
 .product-card b, .product-card strong, .price-tag {
-  font-size: 12pt; /* Aumentato da 11pt */
+  font-size: 12pt; 
   font-weight: 800;
   display: block;
   margin-top: 0.15cm;
@@ -214,7 +222,7 @@ main > article { min-height: 0; }
         list-style: none;
         padding: 0;
     }
-    /* lista puntata Chi Siamo (se sono caratteri o immagini piccole) */
+    /* lista puntata Chi Siamo  */
     .leaf-icon {
         list-style-type: none;
         padding-left: 0.5cm;
