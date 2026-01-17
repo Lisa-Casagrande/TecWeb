@@ -1,3 +1,53 @@
+/* ACCESSIBILITÀ: MOVIMENTO RIDOTTO */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms;
+        animation-iteration-count: 1;
+        transition-duration: 0.01ms;
+    }
+
+    .back-to-top,
+    .back-to-top::before,
+    .back-to-top::after {
+        transition-duration: 0.01ms;
+    }
+}
+
+/* tablet */
+@media screen and (min-width: 768px) {
+    .container,
+    .header-container {
+        max-width: 720px;
+        padding: 0 1.5em;
+    }
+}
+
+/*desktop piccolo*/
+@media screen and (min-width: 1024px) {
+    .container,
+    .header-container {
+        max-width: 960px;
+        padding: 0 2em;
+    }
+}
+
+/*desktop grande*/
+@media screen and (min-width: 1200px) {
+    .container,
+    .header-container {
+        max-width: 1140px;
+    }
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;          
+    gap: 2em;
+}
+
+
 /* HAMBURGER E MENU */
 @media (max-width: 1200px) and (min-width: 1025px) {
     header {
@@ -36,6 +86,145 @@
         background-color: transparent; 
     }
 }
+
+/* PAGINA CHI SIAMO */
+@media screen and (max-width: 1200px) { 
+    .p-title {
+        font-size: 1.6em;
+    }
+    
+    .content-text {
+        gap: 1.5em;
+        padding: 2em 1em;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .values-grid {
+        grid-template-columns: repeat(5, minmax(200px, 1fr));
+        gap: 2em;
+    }
+    
+    /* Prima rimuovi tutte le linee */
+    .value-item::after {
+        display: none;
+    }
+    
+    /* Linee per i primi 4 elementi di ogni riga (5 colonne) */
+    .value-item:nth-child(5n+1)::after,
+    .value-item:nth-child(5n+2)::after,
+    .value-item:nth-child(5n+3)::after,
+    .value-item:nth-child(5n+4)::after {
+        display: block;
+        content: "";
+        position: absolute;
+        right: -1em;
+        top: 15%;
+        bottom: 15%;
+        width: 1px;
+        background-color: var(--text-color);
+        opacity: 0.3;
+    }
+}
+
+/* HOME - hero section */
+@media screen and (max-width: 1110px) {
+    .slogan {
+        font-size: 1.8em;
+        white-space: normal;
+    }
+
+    .products-grid.catalog-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1em;
+    }
+
+    .product-card,
+    .products-grid.catalog-grid .product-card {
+        font-size: 0.85em;
+    }
+    
+    .ingredienti-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.2em;
+    }
+    
+    .ingrediente-card img {
+        width: 110px;
+        height: 110px;
+    }
+}
+
+/* MEDIA QUERIES UNIFICATE INIZIALI */
+@media screen and (max-width: 1024px) {
+    .login-container {
+        width: 95%;
+        padding: 2.2em;
+        border-width: 1.5px;
+    }
+    
+    .login-container h1 {
+        font-size: 1.8em;
+        margin-bottom: 1em;
+    }
+    
+    .form-group input {
+        padding: 0.7em 1em;
+        font-size: 0.95em;
+    }
+    
+    .btn-login {
+        padding: 0.85em;
+        font-size: 1.05em;
+        margin-top: 1em;
+    }
+    
+    .form-hint {
+        font-size: 0.85em;
+    }
+
+    .errore-content { /* PAGINE ERRORE RESPONSIVE */
+        flex-direction: column;
+        gap: 2em;
+        padding: 0 1.5em;
+    }
+    
+    .img-errore {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .img-errore img {
+        max-height: 400px;
+        min-width: 0;
+    }
+    
+    .testo-errore {
+        margin-left: 0;
+        padding: 0;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .testo-errore h1 {
+        font-size: 2.2em;
+        white-space: normal;
+    }
+    
+    .testo-errore p {
+        font-size: 1.1em;
+    }
+    
+    .separatore-testo {
+        margin: 1.3em auto 0.8em;
+    }
+    
+    .ultima-frase {
+        text-align: center;
+    }
+}
+
 
 @media (max-width: 1025px) {
     .header-container {
@@ -194,185 +383,7 @@
     body.dark-theme .mobile-menu-wrapper svg {
         fill: currentColor;
     }
-}
-
-
-/* HOME - hero section */
-@media screen and (max-width: 1110px) {
-    .slogan {
-        font-size: 1.8em;
-        white-space: normal;
-    }
-
-    .products-grid.catalog-grid {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 1em;
-    }
-
-    .product-card,
-    .products-grid.catalog-grid .product-card {
-        font-size: 0.85em;
-    }
-    
-    .ingredienti-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.2em;
-    }
-    
-    .ingrediente-card img {
-        width: 110px;
-        height: 110px;
-    }
-}
-
-
-/* VALUES ICON */
-@media screen and (min-width: 769px) {
-    .values-grid {
-        grid-template-columns: repeat(3, minmax(180px, 1fr));
-        gap: 2em;
-    }
-    
-    /* Prima rimuovi tutte le linee */
-    .value-item::after {
-        display: none;
-    }
-    
-    /* Poi aggiungi linee solo dove servono (primi 2 elementi di ogni riga) */
-    .value-item:nth-child(3n+1)::after,
-    .value-item:nth-child(3n+2)::after {
-        display: block;
-        content: "";
-        position: absolute;
-        right: -1em;
-        top: 15%;
-        bottom: 15%;
-        width: 1px;
-        background-color: var(--text-color);
-        opacity: 0.3;
-    }
-}
-
-@media screen and (min-width: 1200px) {
-    .values-grid {
-        grid-template-columns: repeat(5, minmax(200px, 1fr));
-        gap: 2em;
-    }
-    
-    /* Prima rimuovi tutte le linee */
-    .value-item::after {
-        display: none;
-    }
-    
-    /* Linee per i primi 4 elementi di ogni riga (5 colonne) */
-    .value-item:nth-child(5n+1)::after,
-    .value-item:nth-child(5n+2)::after,
-    .value-item:nth-child(5n+3)::after,
-    .value-item:nth-child(5n+4)::after {
-        display: block;
-        content: "";
-        position: absolute;
-        right: -1em;
-        top: 15%;
-        bottom: 15%;
-        width: 1px;
-        background-color: var(--text-color);
-        opacity: 0.3;
-    }
-}
-
-/* ACCESSIBILITÀ: MOVIMENTO RIDOTTO */
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-        animation-duration: 0.01ms;
-        animation-iteration-count: 1;
-        transition-duration: 0.01ms;
-    }
-
-    .back-to-top,
-    .back-to-top::before,
-    .back-to-top::after {
-        transition-duration: 0.01ms;
-    }
-}
-
-/* MEDIA QUERIES UNIFICATE INIZIALI */
-@media screen and (max-width: 1024px) {
-    .login-container {
-        width: 95%;
-        padding: 2.2em;
-        border-width: 1.5px;
-    }
-    
-    .login-container h1 {
-        font-size: 1.8em;
-        margin-bottom: 1em;
-    }
-    
-    .form-group input {
-        padding: 0.7em 1em;
-        font-size: 0.95em;
-    }
-    
-    .btn-login {
-        padding: 0.85em;
-        font-size: 1.05em;
-        margin-top: 1em;
-    }
-    
-    .form-hint {
-        font-size: 0.85em;
-    }
-
-    .errore-content { /* PAGINE ERRORE RESPONSIVE */
-        flex-direction: column;
-        gap: 2em;
-        padding: 0 1.5em;
-    }
-    
-    .img-errore {
-        margin-left: 0;
-        width: 100%;
-        justify-content: center;
-    }
-    
-    .img-errore img {
-        max-height: 400px;
-        min-width: 0;
-    }
-    
-    .testo-errore {
-        margin-left: 0;
-        padding: 0;
-        width: 100%;
-        text-align: center;
-    }
-    
-    .testo-errore h1 {
-        font-size: 2.2em;
-        white-space: normal;
-    }
-    
-    .testo-errore p {
-        font-size: 1.1em;
-    }
-    
-    .separatore-testo {
-        margin: 1.3em auto 0.8em;
-    }
-    
-    .ultima-frase {
-        text-align: center;
-    }
-}
-
-
-
-
-
-
-/* RESPONSIVE CREA BLEND */
-@media screen and (max-width: 1025px) {
+    /* RESPONSIVE CREA BLEND */
     .container-grid { /* LAYOUT PAGINA: colonna singola, nascondi sidebar */
         display: block;
         width: 100%;
@@ -426,19 +437,16 @@
         transform: translateX(-100%);
         transition: transform 0.3s ease-in-out;
         visibility: hidden; /* Evita click accidentali quando è chiuso */
-    }
-
-    .riepilogo-mobile-overlay.active {
-        transform: translateX(0);
-        visibility: visible;
-    }
-
-    .riepilogo-mobile-overlay {
         padding: 0 15px;
         box-sizing: border-box;
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    .riepilogo-mobile-overlay.active {
+        transform: translateX(0);
+        visibility: visible;
     }
 
     .riepilogo-mobile-content {
@@ -447,42 +455,8 @@
         border-radius: 12px;
         position: relative; /* Indispensabile per la X */
     }
-}
 
-
-@media screen and (max-width: 450px) {
-    #basi .base-content {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-
-    #basi .base-image-standard {
-        width: 100%;
-        height: 180px; 
-        max-width: 100%;
-        overflow: hidden;
-        border-radius: 6px;
-        flex-shrink: 0;
-    }
-}
-
-/* PAGINA CHI SIAMO */
-@media screen and (max-width: 1200px) { 
-    .p-title {
-        font-size: 1.6em;
-    }
-    
-    .content-text {
-        gap: 1.5em;
-        padding: 2em 1em;
-    }
-}
-
-
-/* CATALOGO RESPONSIVE: gestisce SOLO i filtri a scomparsa e la griglia del catalogo */
-@media screen and (max-width: 1025px) {
+    /* CATALOGO RESPONSIVE: gestisce SOLO i filtri a scomparsa e la griglia del catalogo */
     .fixed-filter-btn {
         display: flex;
         top: 130px;
@@ -562,16 +536,7 @@
         margin-top: 20px;
         padding-bottom: 40px;
     }
-}
-
-
-
-
-
-
-
-/* RICERCA SU MOBILE */
-@media screen and (max-width: 1025px) {
+    /* RICERCA SU MOBILE */
     /* nell'header: il contenitore deve esistere (per ospitare la barra di ricerca aperta)... */
     .header-container .header-utilities, 
     .header-container .search-container {
@@ -620,6 +585,33 @@
 @media (min-width: 992px) {
     .cart-layout {
         grid-template-columns: 2fr 1fr; /*desktop: 2/3 lista, 1/3 checkout */
+    }
+}
+
+/* VALUES ICON */
+@media screen and (min-width: 769px) {
+    .values-grid {
+        grid-template-columns: repeat(3, minmax(180px, 1fr));
+        gap: 2em;
+    }
+    
+    /* Prima rimuovi tutte le linee */
+    .value-item::after {
+        display: none;
+    }
+    
+    /* Poi aggiungi linee solo dove servono (primi 2 elementi di ogni riga) */
+    .value-item:nth-child(3n+1)::after,
+    .value-item:nth-child(3n+2)::after {
+        display: block;
+        content: "";
+        position: absolute;
+        right: -1em;
+        top: 15%;
+        bottom: 15%;
+        width: 1px;
+        background-color: var(--text-color);
+        opacity: 0.3;
     }
 }
 
@@ -717,12 +709,6 @@
 
     .user-info { /* PAGINA UTENTE RESPONSIVE (unificato admin) */
         flex-direction: column;
-        text-align: left;
-    }
-
-    .user-details p {
-        margin-bottom: 0.5em;
-        line-height: 1.5;
     }
 
     #mainErrore {
@@ -750,8 +736,48 @@
     .ultima-frase {
         font-size: 1em;
     }
-}
 
+    .order-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1em;
+    }
+    
+    .order-info, .order-price, .order-status-action {
+        width: 100%;
+        border: none; /* Toglie i bordi laterali */
+        padding: 0;
+        text-align: left;
+        align-items: flex-start;
+    }
+    
+    .order-price {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        border-top: 1px solid #eee;
+        padding-top: 1em;
+    }
+    
+    .order-status-action {
+        flex-direction: row; /* Stato e bottone sulla stessa riga su mobile */
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid #eee;
+        padding-top: 1em;
+    }
+
+    .user-dashboard {
+        padding: 1em;
+    }
+    
+    .user-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5em;
+        margin-top: 1.5em;
+    }
+
+}
 
 /* RESPONSIVE PAGINA PRODOTTO */
 @media screen and (max-width: 690px) {  /*Per convenzione si è deciso di farlo così, NON CAMBIARLO!!*/
@@ -832,42 +858,6 @@
     #btnRiepilogoMobile {
         display: flex;
         top: 130px;
-    }
-    
-    .riepilogo-badge {
-        position: absolute;
-        top: -5px;
-        right: -5px;
-        background-color: var(--bg-color);
-        color: var(--text-color);
-        border-radius: 50%;
-        width: 24px;
-        height: 24px;
-        font-size: 0.85em;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 2px solid var(--text-color);
-    }
-
-    .riepilogo-mobile-overlay {
-        display: block; 
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        z-index: 2000; /* Deve stare sopra a tutto */
-        background-color: var(--card-bg);
-        transform: translateX(-100%);
-        transition: transform 0.3s ease-in-out;
-        visibility: hidden; /* Evita click accidentali quando è chiuso */
-    }
-
-    .riepilogo-mobile-overlay.active {
-        transform: translateX(0);
-        visibility: visible;
     }
 
     .base-title {
@@ -1116,5 +1106,23 @@
     
     .separatore-testo {
         width: 100px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    #basi .base-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    #basi .base-image-standard {
+        width: 100%;
+        height: 180px; 
+        max-width: 100%;
+        overflow: hidden;
+        border-radius: 6px;
+        flex-shrink: 0;
     }
 }

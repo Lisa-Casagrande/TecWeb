@@ -16,9 +16,8 @@
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
     [navbar]
 
-
     <main id="main-content" role="main">
-        <section class="admin-dashboard"> <!--usa stesse classi admin-->
+        <section class="user-dashboard"> <!--usa stesse classi admin-->
             <div class="admin-page-header">
                 <div class="header-title-group">
                     <h1>Il Mio <span lang="en">Account</span></h1>
@@ -26,25 +25,23 @@
                 <a href="php/logout.php" class="bottone-primario">Esci</a>
             </div>
 
-            <div class="admin-grid">
-                <article class="admin-card">
+            <div class="user-grid">
+                <article class="user-card">
                     <div class="card-content">
                         <h3>Dati Personali</h3>
-                        <div class="user-info">
-                            <div class="user-details">
-                                <p><strong>Nome:</strong> <br>[NOME_COMPLETO]</p>
-                                <p><strong>Email:</strong> <br>[EMAIL_UTENTE]</p>
-                                <p><strong>Indirizzo:</strong> <br>[INDIRIZZO_COMPLETO]</p>
-                                <p><strong>Data registrazione:</strong> <br>[DATA_REGISTRAZIONE]</p>
-                            </div>
+                        <div class="admin-details">
+                            <p><strong>Nome:</strong> <br>[NOME_COMPLETO]</p>
+                            <p><strong>Email:</strong> <br>[EMAIL_UTENTE]</p>
+                            <p><strong>Indirizzo:</strong> <br>[INDIRIZZO_COMPLETO]</p>
+                            <p><strong>Data registrazione:</strong> <br>[DATA_REGISTRAZIONE]</p>
                         </div>
-                        <div class="admin-actions">
+                        <div>
                             <a href="modificaProfilo.php" class="bottone-primario">Modifica Profilo</a>
                         </div>
                     </div>
                 </article>
 
-                <article class="admin-card card-full-width">
+                <article class="user-card card-full-width">
                     <div class="card-content">
                         <h3>I Miei Ordini Recenti</h3>
                         <div class="order-list">
