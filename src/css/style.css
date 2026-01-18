@@ -51,7 +51,7 @@ body.dark-theme {
 /* ===================================
    STILI GENERALI
    =================================== */
-@view-transition { /*crea uan dissolvenza tra le pagine, non sembra che ci sia uno "scattino" quando si cambia pagina*/
+@view-transition {
     navigation: auto;
 }
 
@@ -224,7 +224,9 @@ a.logo-button:focus-visible {
 body.dark-theme .logo-dark { display: block; }
 body.dark-theme .logo-light { display: none; }
 
-/* Navigazione */
+/* ===================================
+  NAVIGAZIONE
+  =================================== */
 .main-nav {
     flex: 1;
     display: flex;
@@ -1281,7 +1283,6 @@ button:focus, a:focus, input:focus, select:focus, textarea:focus {
     text-decoration: underline;
 }
 
-
 /* ======
   ERRORI 
 ========*/
@@ -1400,10 +1401,10 @@ body.dark-theme .separatore-testo {
     color: var(--text-color);
 }
 
-
 /* ===================================
    PAGINA PRODOTTO
    =================================== */
+
 /* Breadcrumb */
 .breadcrumb {
     background-color: var(--alt-section-bg);
@@ -1532,7 +1533,7 @@ body.dark-theme .separatore-testo {
 
 /* Aggiungi al carrello */
 .add-to-cart-section {
-    padding: 1.3em;
+    padding: 1em;
     background-color: var(--alt-section-bg);
     border-radius: 12px;
     border: 2px solid var(--text-color);
@@ -1542,13 +1543,13 @@ body.dark-theme .separatore-testo {
     display: flex;
     align-items: center;
     gap: 1em;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
     justify-content: center;
 }
 
 .quantity-selector label {
     font-weight: 600;
-    font-size: 1.1em;
+    font-size: 1em;
     color: var(--text-color);
 }
 
@@ -1566,7 +1567,7 @@ body.dark-theme .separatore-testo {
     display: flex;
     align-items: center;
     gap: 5px;
-    margin-top: 8px;
+    margin-top: 3px;
 }
 
 .quantity-btn {
@@ -1595,7 +1596,7 @@ body.dark-theme .separatore-testo {
 }
 
 #quantita,
-.quantity-controls input[type="number"] { /*anche per carrello*/
+.quantity-controls input[type="number"] {
     width: 50px;
     height: 36px;
     text-align: center;
@@ -1615,7 +1616,6 @@ body.dark-theme .separatore-testo {
     outline: 3px solid var(--text-color);
     outline-offset: 3px;
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     z-index: 10;
 }
 
@@ -1722,32 +1722,9 @@ body.dark-theme .separatore-testo {
     font-size: 1em;
 }
 
-/* Container ingredienti */
-.ingrediente-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    text-align: center;
-    padding: 0;
-    gap: 0.5em; 
-    min-height: auto;
-}
-
-.ingrediente-card img {
-    width: 150px; 
-    height: 150px;
-    object-fit: cover;
-}
-
 .ingrediente-nome {
     font-size: 0.9em;
     margin-top: 0.2em;
-}
-
-/* Testo dell'ingrediente */
-.ingrediente-nome {
-    font-size: 1em;
-    color: var(--text-color);
 }
 
 /* Preparazione */
@@ -1787,7 +1764,6 @@ section.product-details-section .product-detail-block {
     width: 100%;
     float: none;
 }
-
 
 /* ===================================
    PAGINE ADMIN + PAGINA UTENTE
@@ -2048,8 +2024,9 @@ section.product-details-section .product-detail-block {
     display: none;
 }
 
-
-/* gestioneOrdini.php */
+/* ======================
+   gestioneOrdini
+   ======================*/
 .order-list {
     display: flex;
     flex-direction: column;
@@ -2581,7 +2558,6 @@ body.dark-theme .bottone-primario:focus {
     justify-content: center;
 }
 
-
 /* ==================================================
    CREABLEND
    ================================================== */
@@ -2594,47 +2570,29 @@ body.dark-theme .bottone-primario:focus {
 .container-grid {
     display: grid;
     grid-template-columns: 280px 1fr; 
-    gap: 2em;
+    gap: 1em;
     align-items: start;
 }
 
-.sidebar-config {
-    position: sticky;
-    top: 100px; /* Distanza dall'header */
-    z-index: 10;
-    max-height: calc(100vh - 120px); /* Altezza massima viewport meno header */
-    overflow-y: auto;
-    background-color: var(--card-bg);
-    padding: 1.2em;
-    border-radius: 8px;
-    border: 2px solid var(--button-bg); /* Stesso bordo marrone */
-    color: var(--text-color);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* Stessa ombra leggera */
-    display: flex;
-    flex-direction: column;
-    gap: 1.5em;
+.riepilogo-header {
+    margin: 0;
+    padding: 0;
 }
-/*parametri come catalogo*/
-.sidebar-config::-webkit-scrollbar { width: 8px; }
-.sidebar-config::-webkit-scrollbar-track {
-    background: var(--alt-section-bg);
-    border-radius: 10px; 
-}
-.sidebar-config::-webkit-scrollbar-thumb {
-    background: var(--button-bg);
-    border-radius: 10px;
-}
-.sidebar-config::-webkit-scrollbar-thumb:hover { background: var(--text-color); }
 
+.riepilogo-header h3 {
+    margin: 0 0 0em 0;
+    padding: 0;
+}
 
 /* Sezione ingredienti extra */
 .config-group {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0em;
-    padding-bottom: 0em;
-    border-bottom: px solid #e0e0e0;
+    gap: 0;
+    padding: 0;
+    margin: 0em 0;
+    border-bottom: none;
 }
 
 .config-group .label {
@@ -2644,21 +2602,17 @@ body.dark-theme .bottone-primario:focus {
 
 .radio-box {
     display: flex;
-    gap: 1em;
-}
-
-.config-group {
-    justify-content: flex-start;
+    gap: 0.3em;
 }
 
 .radio-box label {
     display: inline-flex;
     align-items: center;
-    gap: 0.7em;
+    gap: 0.3em;
     cursor: pointer;
     min-width: 44px;
     min-height: 44px;
-    padding: 10px;
+    padding: 2px; 
 }
 
 .radio-box input[type="radio"] {
@@ -2671,18 +2625,20 @@ body.dark-theme .bottone-primario:focus {
 .stato-selezione {
     display: flex;
     flex-direction: column;
-    gap: 0.3em;
-    padding: 0.5em;
+    gap: 0; 
+    padding: 0.3em;
     background-color: var(--card-bg);
     border-radius: 8px;
+    margin: 0em 0;
 }
 
 .stato-selezione p {
     margin: 0;
     font-size: 0.95em;
+    line-height: 1.3; 
 }
 
-/* Bottone reset */
+/* Bottone reset "Svuota tutto" */
 .btn-reset-link {
     align-self: flex-start;
     background: none;
@@ -2690,7 +2646,8 @@ body.dark-theme .bottone-primario:focus {
     color: var(--button-bg);
     text-decoration: underline;
     cursor: pointer;
-    padding: 0.5em 0;
+    padding: 0;
+    margin: 0em 0;
     font-size: 0.95em;
 }
 
@@ -2698,12 +2655,11 @@ body.dark-theme .bottone-primario:focus {
 .riepilogo-scroll-area {
     display: flex;
     flex-direction: column;
-    gap: 1.5em;
 }
 
 .sezione-riepilogo h4 {
     color: var(--text-color);
-    margin-bottom: 0.5em;
+    margin: 0 0 0em 0;
     font-size: 1em;
     font-weight: 600;
 }
@@ -2711,9 +2667,10 @@ body.dark-theme .bottone-primario:focus {
 .item-selezionato {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.item-selezionato * {
+    margin: 0.3em;
 }
 
 /* PULSANTE RIEPILOGO MOBILE - NASCOSTO SU DESKTOP */
@@ -2725,7 +2682,6 @@ body.dark-theme .bottone-primario:focus {
 .riepilogo-mobile-overlay {
     display: none;
 }
-
 
 /* ==================================================
    GRIGLIE
@@ -2832,6 +2788,7 @@ body.dark-theme .bottone-primario:focus {
 /* ==================================================
    CARD INGREDIENTE
    ================================================== */
+/* Container ingredienti */
 #ingredienti {
     grid-column: 2;
     grid-row: 2;
@@ -2848,36 +2805,14 @@ body.dark-theme .bottone-primario:focus {
     grid-column: 1 / -1;  
 }
 
-.ingrediente-card h4 {
-    margin-bottom: 0px;  
-    font-size: 1.1em;
-}
-
-.descrizione-ingrediente {
-    margin-top: 0;
-    font-size: 0.9em;
-    line-height: 1.3;
-}
-
 .ingrediente-card {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 1em;
-    height: auto;    
-}
-
-.btn-aggiungi-ingrediente {
-    margin-top: 0px;  
-    width: 100%;         
-}
-
-/*IMMAGINE */
-.ingrediente-card img {
-    height: 130px;  
-    width: 100%;
-    object-fit: cover;
-    margin-bottom: 10px;
+    min-height: auto;
+    height: auto;
+    position: relative;
 }
 
 .ingrediente-card:hover {
@@ -2904,36 +2839,38 @@ body.dark-theme .bottone-primario:focus {
     font-weight: 700;
 }
 
+/* IMMAGINE - UNA SOLA DEFINIZIONE */
 .ingrediente-card img {
-    width: 100%;
-    height: 120px;
-    object-fit: cover;
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    display: block;
     border-radius: 8px;
-    margin-bottom: 0.8em;
+    margin: 0;
 }
 
+/* Titolo ingrediente */
 .ingrediente-card h4 {
     font-size: 1em;
-    min-height: 2.5em;
+    margin: 0.5em 0 0 0;
+    text-align: center;
 }
 
+/* Descrizione ingrediente */
 .descrizione-ingrediente {
     font-size: 0.95em;
     line-height: 1.5;
     color: var(--text-color);
-    opacity: 1;            
-    margin: 10px 0 20px 0;
+    margin: 0.5em 0 1em 0; 
     text-align: center;    
     word-wrap: break-word; 
-    overflow: visible;  
-    flex-grow: 1;         
+    flex-grow: 1; 
 }
 
-.ingrediente-card {
-    min-height: 350px;  
-    height: auto;      
-    display: flex;
-    flex-direction: column;
+/* Bottone aggiungi */
+.btn-aggiungi-ingrediente {
+    margin-top: auto;
+    width: 100%;
 }
 
 /* ==================================================
