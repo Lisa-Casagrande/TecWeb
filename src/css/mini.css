@@ -456,7 +456,6 @@
         position: relative; /* Indispensabile per la X */
     }
 
-    /* CATALOGO RESPONSIVE: gestisce SOLO i filtri a scomparsa e la griglia del catalogo */
     .fixed-filter-btn {
         display: flex;
         top: 130px;
@@ -826,7 +825,6 @@
     }
 }
 
-
 @media screen and (max-width: 600px) {
     .login-container {
         max-width: 450px;
@@ -853,11 +851,6 @@
 
     .crea-blend-layout {
         padding: 20px 15px;
-    }
-
-    #btnRiepilogoMobile {
-        display: flex;
-        top: 130px;
     }
 
     .base-title {
