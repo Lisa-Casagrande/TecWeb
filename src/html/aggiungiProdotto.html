@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" xml:lang="it" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <meta lang="it" xml:lang="it" xmlns="http://www.w3.org/1999/xhtml">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"/>
 
     <title>Aggiungi Nuovo Prodotto - Admin</title>
@@ -18,11 +17,11 @@
 
     <header>
         <div class="header-container">
-            <div class="logo">
-                <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="screen-only logo-image logo-light">
-                <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="screen-only logo-image logo-dark">
-                <img src="images/logo/logoStampa.png" alt="InfuseMe" class="print-only logo-image logo-dark">
-            </div>
+            <span class="logo">
+                <img src="images/logo/logoChiaro.webp" alt="InfuseMe" class="logo-image logo-light">
+                <img src="images/logo/logoScuro.webp" alt="InfuseMe" class="logo-image logo-dark">
+                <img src="images/logo/logoStampa.png" alt="InfuseMe" class="logo-image logo-print print-only">
+            </span>
 
            <button class="hamburger" id="hamburger" aria-label="Apri il menu navigazione">
                 <span></span>
@@ -31,7 +30,7 @@
             </button>
 
             <!-- Navigation (menù)-->
-            <nav aria-label="Menu principale" role="navigation">
+            <nav aria-label="Menu principale">
                 <ul class="main-nav">
                     [menuVoci]
                 </ul>

@@ -1744,7 +1744,7 @@ section.product-details-section .product-detail-block {
     flex-grow: 1;
 }
 
-.user-card h3 {
+.user-card h2 {
     color: var(--button-bg);
     margin-bottom: 0.8em;
     font-size: 1.3em;
@@ -2085,7 +2085,7 @@ section.product-details-section .product-detail-block {
 
 .header-title-group h1{
     margin-bottom: 0;
-    margin-right: 0.5em; /* Un piccolo spazio extra di sicurezza */
+    margin-right: 0.5em;
     line-height: 1.2;
 }
 
