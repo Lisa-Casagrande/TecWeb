@@ -14,60 +14,66 @@
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
     [navbar]
 
-    <main id="main-content">
-        <section class="login-container">
-            <h1>Modifica il tuo profilo</h1>
-            
-            <div class="display-success" role="alert">[successoGenerale]</div>
-            <div class="display-error" role="alert">[erroreGenerale]</div>
+   <main id="main-content">
+    <section class="login-container">
+        <h1>Modifica il tuo profilo</h1>
+        <div class="form-links">
+        <h2><a href="paginaUtente.php" class="btn-link">Annulla e torna alla pagina utente</a></h2>
+        </div>
+        <div class="display-success" role="alert" aria-live="polite">[successoGenerale]</div>
+        <div class="display-error" role="alert" aria-live="polite">[erroreGenerale]</div>
 
-            <form id="modifica-form" action="php/elabora_modificaUtente.php" method="post" novalidate>
-        <fieldset class="form-data">
-            <legend class="sr-only">Modifica i tuoi dati</legend>
+        <form id="modifica-form" action="php/elabora_modificaUtente.php" method="post" novalidate>
+            <fieldset class="form-data">
+                <legend class="sr-only">Modifica i tuoi dati</legend>
 
-            <div class="form-group">
-                <label for="reg_nome">Nome *</label>
-                <input type="text" id="reg_nome" name="reg_nome" value="[valoreNome]" class="[css_reg_nome]" autocomplete="given-name">
-                <span id="reg_nome-error" class="errorSuggestion">[err_reg_nome]</span>
-                <small id="reg_nome-help" class="form-hint">Inserisci il tuo nome, minimo 2 caratteri, senza numeri o caratteri speciali.</small>
-            </div>
+                <div class="form-group">
+                    <label for="reg_nome">Nome *</label>
+                    <input type="text" id="reg_nome" name="reg_nome" value="[valoreNome]" class="[css_reg_nome]"
+                           autocomplete="given-name" aria-describedby="reg_nome-error reg_nome-help" >
+                    <span id="reg_nome-error" class="errorSuggestion" role="alert" aria-live="polite">[err_reg_nome]</span>
+                    <small id="reg_nome-help" class="form-hint">Inserisci il tuo nome, minimo 2 caratteri, senza numeri o caratteri speciali.</small>
+                </div>
 
-            <div class="form-group">
-                <label for="reg_cognome">Cognome *</label>
-                <input type="text" id="reg_cognome" name="reg_cognome" value="[valoreCognome]" class="[css_reg_cognome]" autocomplete="family-name">
-                <span id="reg_cognome-error" class="errorSuggestion">[err_reg_cognome]</span>
-                 <small id="reg_cognome-help" class="form-hint">Inserisci il tuo cognome, minimo 2 caratteri, senza numeri o caratteri speciali.</small>
-            </div>
+                <div class="form-group">
+                    <label for="reg_cognome">Cognome *</label>
+                    <input type="text" id="reg_cognome" name="reg_cognome" value="[valoreCognome]" class="[css_reg_cognome]"
+                           autocomplete="family-name" aria-describedby="reg_cognome-error reg_cognome-help">
+                    <span id="reg_cognome-error" class="errorSuggestion" role="alert" aria-live="polite">[err_reg_cognome]</span>
+                    <small id="reg_cognome-help" class="form-hint">Inserisci il tuo cognome, minimo 2 caratteri, senza numeri o caratteri speciali.</small>
+                </div>
 
-            <div class="form-group">
-                <label for="reg_citta">Città *</label>
-                <input type="text" id="reg_citta" name="reg_citta" value="[valoreCitta]" class="[css_reg_citta]">
-                <span id="reg_citta-error" class="errorSuggestion">[err_reg_citta]</span>
-                <small id="reg_citta-help" class="form-hint">Inserisci la tua città (<abbr title="Esempio">es.</abbr> Roma). Usata solo per spedizione.</small>
-            </div>
+                <div class="form-group">
+                    <label for="reg_citta">Città *</label>
+                    <input type="text" id="reg_citta" name="reg_citta" value="[valoreCitta]" class="[css_reg_citta]"
+                           aria-describedby="reg_citta-error reg_citta-help" >
+                    <span id="reg_citta-error" class="errorSuggestion" role="alert" aria-live="polite">[err_reg_citta]</span>
+                    <small id="reg_citta-help" class="form-hint">Inserisci la tua città (<abbr title="Esempio">es.</abbr> Roma). Usata solo per spedizione.</small>
+                </div>
 
-            <div class="form-group">
-                <label for="reg_indirizzo">Indirizzo *</label>
-                <input type="text" id="reg_indirizzo" name="reg_indirizzo" value="[valoreIndirizzo]" class="[css_reg_indirizzo]">
-                <span id="reg_indirizzo-error" class="errorSuggestion">[err_reg_indirizzo]</span>
-                <small id="reg_indirizzo-help" class="form-hint">Inserisci il tuo indirizzo (<abbr title="Esempio">es.</abbr> Via Turchese 18). Usato solo per spedizione.</small>
-            </div>
+                <div class="form-group">
+                    <label for="reg_indirizzo">Indirizzo *</label>
+                    <input type="text" id="reg_indirizzo" name="reg_indirizzo" value="[valoreIndirizzo]" class="[css_reg_indirizzo]"
+                           aria-describedby="reg_indirizzo-error reg_indirizzo-help" >
+                    <span id="reg_indirizzo-error" class="errorSuggestion" role="alert" aria-live="polite">[err_reg_indirizzo]</span>
+                    <small id="reg_indirizzo-help" class="form-hint">Inserisci il tuo indirizzo (<abbr title="Esempio">es.</abbr> Via Turchese 18). Usato solo per spedizione.</small>
+                </div>
 
-            <div class="form-group">
-                <label for="reg_cap">CAP *</label>
-                <input type="text" id="reg_cap" name="reg_cap" value="[valoreCap]" class="[css_reg_cap]">
-                <span id="reg_cap-error" class="errorSuggestion">[err_reg_cap]</span>
-                 <small id="reg_cap-help" class="form-hint">Inserisci il <abbr title="Codice di Avviamento Postale">CAP</abbr> a 5 cifre (<abbr title="Esempio">es.</abbr> 20121).</small>
-            </div>
+                <div class="form-group">
+                    <label for="reg_cap">CAP *</label>
+                    <input type="text" id="reg_cap" name="reg_cap" value="[valoreCap]" class="[css_reg_cap]"
+                           aria-describedby="reg_cap-error reg_cap-help" a>
+                    <span id="reg_cap-error" class="errorSuggestion" role="alert" aria-live="polite">[err_reg_cap]</span>
+                    <small id="reg_cap-help" class="form-hint">Inserisci il <abbr title="Codice di Avviamento Postale">CAP</abbr> a 5 cifre (<abbr title="Esempio">es.</abbr> 20121).</small>
+                </div>
 
-            <div class="form-buttons">
-                <button type="submit" class="bottone-primario">Salva Modifiche</button>
-                <a href="paginaUtente.php" class="btn-link">Annulla e torna alla pagina utente</a>
-            </div>
-        </fieldset>
-    </form>
+                <div class="form-buttons">
+                    <button type="submit" class="bottone-primario">Salva Modifiche</button>
+                </div>
+            </fieldset>
+        </form>
     </section>
-    </main>
+</main>
     
     <!-- Footer -->
     <footer>
