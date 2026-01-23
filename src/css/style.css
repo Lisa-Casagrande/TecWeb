@@ -402,7 +402,6 @@ body.dark-theme .moon-icon { opacity: 1; }
     font-size: 1.2em;
 }
 
-/* SEZIONE UTILITIES SEMPRE VISIBILE IN FONDO */
 .mobile-menu-wrapper .header-utilities {
     display: flex;
     flex-direction: row;
@@ -445,7 +444,7 @@ body.dark-theme .moon-icon { opacity: 1; }
 }
 
 /* ===================================
-   MAIN CONTENT E SEZIONI
+   HOME
    =================================== */
 
 main { min-height: calc(100vh - 400px); }
@@ -575,7 +574,7 @@ body.dark-theme .hero {
     text-align: left;
     margin-bottom: 1.5em;
     width: 100%;
-    order: -1; /* Posiziona il titolo sopra a tutto */
+    order: -1;
 }
 
 .featured-products .container > div:last-child {
@@ -583,7 +582,6 @@ body.dark-theme .hero {
     width: 100%;
 }
 
-/*centra il pulsante Esplora il catalogo*/
 .featured-products .container > div:last-of-type {
     display: flex;
     justify-content: center;
@@ -617,9 +615,6 @@ body.dark-theme .slogan {
     font-weight: 400;
 }
 
-/* ===================================
-   HOME - LA NOSTRA FILOSOFIA - SOLO TITOLO
-   =================================== */
 .about-preview .container {
     display: flex;
     flex-direction: column;
@@ -639,7 +634,7 @@ body.dark-theme .slogan {
    VALUES SECTION
    =================================== */
 .values-section {
-    background-color: var(--bg-color); /*usa lo sfondo principale*/
+    background-color: var(--bg-color);
     padding: 4em 0;
 }
 
@@ -652,26 +647,24 @@ body.dark-theme .slogan {
 
 .value-item {
     text-align: center;
-    padding: 0; /*rimosso padding*/
+    padding: 0;
     position: relative;
-    background: none; /*rimosso sfondo*/
-    border: none; /*rimossi bordi*/
-    box-shadow: none; /*rimossa ombra*/
-    transition: none; /*rimossa transizione*/
+    background: none;
+    border: none;
+    box-shadow: none;
+    transition: none;
 }
 
-/*rimossi effetti hover*/
 .value-item:hover {
     transform: none;
     box-shadow: none;
 }
 
-/*dimensione e colore icone nel css: separazione contenuto presentazione*/
 .value-item svg {
     width: 60px;
     height: 60px;
     margin: 0 auto 1.5em;
-    fill: currentColor; /*colore ereditato da parent: marrone*/
+    fill: currentColor;
 }
 
 .value-item h3 {
@@ -693,14 +686,14 @@ body.dark-theme .slogan {
 footer {
     background-color: var(--header-bg); 
     color: var(--header-text); 
-    padding: 1.5em 0 0.3em; /* Padding: 1.5em sopra, 0 laterale, 0.8em sotto */
-    margin-top: 2em; /* Margine superiore per separare dal contenuto sopra */
+    padding: 1.5em 0 0.3em;
+    margin-top: 2em;
 }
 
 .footer-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Colonne responsive che si adattano con larghezza minima 250px */
-    gap: 1.9em; /* Spazio aumentato tra gli elementi della grid */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.9em;
     margin-bottom: 1em; 
 }
 
@@ -710,37 +703,33 @@ footer {
     gap: 0.2em; 
 }
 
-/*InfuseMe*/
 .brand-name {
     font-size: 1.6em;
     font-weight: 700;
     color: var(--header-text); 
     font-family: 'Helvetica Neue', 'Arial', sans-serif; 
-    letter-spacing: 0.5px; /* Spaziatura tra lettere */
-    line-height: 1; /* Altezza di linea normale */
+    letter-spacing: 0.5px;
+    line-height: 1;
 }
 
-/*Taste Tradition*/
 .motto-brand {
     font-size: 1em; 
     color: var(--header-text);
     opacity: 0.8;
     font-weight: 300; 
-    letter-spacing: 1.8px; /* Spaziatura tra lettere aumentata */
+    letter-spacing: 1.8px;
 }
 
-/*titoli delle varie micro sezioni del footer*/
 .footer-section h3 {
     color: var(--header-text); 
-    margin: 1.5em 0 0.5em 0; /* Spazio tra righe */
+    margin: 1.5em 0 0.5em 0;
     font-size: 1.1em; 
     font-family: 'Helvetica Neue', 'Arial', sans-serif; 
     font-weight: 600; 
 }
 
-/*informazioni nel footer*/
 .contact, .location-item, .hours, .work-item {
-    margin-bottom: 0em; /* Margine inferiore */
+    margin-bottom: 0em;
     font-size: 1em; 
 }
 
@@ -758,14 +747,12 @@ footer {
     gap: 0.5em; 
 }
 
-/* Titolo della sezione social */
 .footer-social h3 {
     margin-bottom: 0; 
     font-size: 1.2em;
     color: var(--header-text);
 }
 
-/* Contenitore delle icone social */
 .social-icons {
     display: flex;
     gap: 0.6em; 
@@ -774,26 +761,23 @@ footer {
     flex-wrap: wrap; 
 }
 
-/* Stile delle singole icone social: per fare cerchio semi trasparente intorno*/
 .social-icon {
     display: inline-flex; 
     align-items: center; 
     justify-content: center; 
-    width: 40px; /*larghezza icona*/
-    height: 40px; /*altezza icona*/
-    border-radius: 50%; /*forma circolare*/
-    background-color: rgba(255, 255, 255, 0.1); /*sfondo semi-trasparente*/
-    color: var(--header-text); /*colore dell'icona */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--header-text);
 }
 
-/*icona vera e propria (dentro il cerchio)*/
 .social-icon svg {
-    width: 24px;  /*dimensioni icona*/
+    width: 24px; 
     height: 24px;
     fill: currentColor;
 }
 
-/* FOOTER BOTTOM: Sezione inferiore del footer */
 .footer-bottom {
     grid-column: 1 / -1;
     font-size: 0.8em; 
@@ -805,7 +789,6 @@ footer {
 
 /* ===================================
    PULSANTE TORNA SU
-   + script.js (backToTop) per farlo apparire allo scroll
    =================================== */
 .back-to-top {
     position: fixed;
@@ -833,7 +816,6 @@ footer {
     transform: scale(1);
 }
 
-/* Hover e Focus */
 .back-to-top:hover,
 .back-to-top:focus {
     background-color: var(--button-bg);
@@ -858,14 +840,13 @@ footer {
     fill: currentColor;
 }
 
-/* Tema scuro */
 body.dark-theme .back-to-top {
     color: var(--header-bg);
 }
 
 body.dark-theme .back-to-top:hover,
 body.dark-theme .back-to-top:focus {
-    outline-color: var(--text-color); /* Verde chiaro */
+    outline-color: var(--text-color);
 }
 
 /* ===================================
@@ -898,7 +879,6 @@ body.dark-theme .back-to-top:focus {
     transform: translateY(0);
 }
 
-/* PAGINA LOGIN, REGISTRAZIONE E MODIFICA UTENTE */
 #login-section,
 #signin-section {
     display: flex;
@@ -908,7 +888,6 @@ body.dark-theme .back-to-top:focus {
     padding: 2em 0;
 }
 
-/* Contenitore form */
 .login-container {
     max-width: 600px;
     width: 90%;
@@ -922,7 +901,6 @@ body.dark-theme .back-to-top:focus {
   font-size: 1.2rem;
 }
 
-/* Reset fieldset */
 fieldset {
     border: 0;
     margin: 0;
@@ -930,7 +908,6 @@ fieldset {
     min-width: 0;
 }
 
-/* Titolo */
 .login-container h1 {
     text-align: center;
     margin-bottom: 0.5em;
@@ -938,7 +915,6 @@ fieldset {
     font-weight: 700;
 }
 
-/* Link */
 .form-links {
     margin-bottom: 1.5em;
     text-align: center;
@@ -953,7 +929,6 @@ fieldset {
     color: var(--link-visited);
 }
 
-/* Gruppo campo e Hint */
 .form-group {
     display: flex;
     flex-direction: column;
@@ -961,7 +936,6 @@ fieldset {
     margin-bottom: 0.6em;
 }
 
-/* Uniforma i link dentro form-hint  */
 .form-hint a {
     font-weight: 700;
     text-decoration: none;
@@ -975,7 +949,6 @@ fieldset {
     text-decoration: underline;
 }
 
-/* Input */
 .form-group input {
     width: 100%;
     padding: 0.8em 1.2em;
@@ -999,7 +972,6 @@ fieldset {
     border-color: #43a047;
 }
 
-/* Lista password */
 .form-hint ul {
     padding-left: 1.2em;
     margin-top: 0.5em;
@@ -1008,7 +980,6 @@ fieldset {
 .form-hint ul li {
     margin-bottom: 0.3em;
 }
-
 
 :focus-visible {
   outline: 3px solid var(--accent-color);
@@ -1257,7 +1228,6 @@ fieldset {
     position: relative;
 }
 
-/* Immagine errore */
 .img-errore {
     flex: 1;
     display: flex;
@@ -1278,7 +1248,6 @@ fieldset {
     min-width: 100%;
 }
 
-/* Testo errore */
 .testo-errore {
     flex: 1;
     display: flex;
@@ -1289,7 +1258,6 @@ fieldset {
     width: 105%;
 }
 
-/* Titoli */
 .testo-errore h1 {
     font-size: 2.8em;
     margin: 0 0 0.4em 0;
@@ -1297,14 +1265,12 @@ fieldset {
     font-weight: 700;
 }
 
-/* Paragrafi */
 .testo-errore p {
     font-size: 1.3em;
     line-height: 1.6;
     margin-bottom: 1.1em;
 }
 
-/* Link */
 .testo-errore a {
     color: var(--text-color);
     text-decoration: none;
@@ -1326,7 +1292,6 @@ fieldset {
     outline: none;
 }
 
-/* Linea separatrice */
 .separatore-testo {
     width: 150px;
     height: 3px;
@@ -1339,7 +1304,6 @@ body.dark-theme .separatore-testo {
     background-color: var(--text-green);
 }
 
-/* Ultima frase in corsivo */
 .ultima-frase {
     font-size: 1.1em;
     font-style: italic;
@@ -1353,8 +1317,6 @@ body.dark-theme .separatore-testo {
 /* ===================================
    PAGINA PRODOTTO
    =================================== */
-
-/* Breadcrumb */
 .breadcrumb {
     background-color: var(--alt-section-bg);
     padding: 1em 0;
@@ -1378,7 +1340,6 @@ body.dark-theme .separatore-testo {
     text-decoration: underline;
 }
 
-/*focus da tastiera*/
 .breadcrumb a:focus-visible{
     outline: 3px solid var(--text-color);
     outline-offset: 3px;
@@ -1395,7 +1356,6 @@ body.dark-theme .separatore-testo {
     font-weight: 500;
 }
 
-/* Layout prodotto principale */
 .product-detail-section {
     padding: 3em 0;
     background-color: var(--bg-color);
@@ -1408,7 +1368,6 @@ body.dark-theme .separatore-testo {
     align-items: start;
 }
 
-/* Colonna immagine */
 .product-image-column {
     position: relative;
 }
@@ -1447,7 +1406,6 @@ body.dark-theme .separatore-testo {
     color: white;
 }
 
-/* Colonna informazioni */
 .product-info-column h1 {
     margin-bottom: 0.5em;
 }
@@ -1479,7 +1437,6 @@ body.dark-theme .separatore-testo {
     opacity: 0.9;
 }
 
-/* Aggiungi al carrello */
 .add-to-cart-section {
     padding: 1em;
     background-color: var(--alt-section-bg);
@@ -1556,7 +1513,6 @@ body.dark-theme .separatore-testo {
     color: var(--text-color);
 }
 
-/* FOCUS DA TASTIERA BOTTONI QUANTITÀ (+ e -) */
 .quantity-btn:focus-visible {
     background-color: var(--button-bg);
     color: var(--button-text); 
@@ -1593,12 +1549,11 @@ body.dark-theme .separatore-testo {
     color: var(--bg-color);
 }
 
-#aggiungiCarrello:disabled { /*nel caso in cui un prodotto non fosse più disponibile*/
+#aggiungiCarrello:disabled {
     opacity: 0.6;
     cursor: not-allowed;
 }
 
-/* Informazioni preparazione */
 .preparation-info {
     display: flex;
     flex-direction: column;
@@ -1675,7 +1630,6 @@ body.dark-theme .separatore-testo {
     margin-top: 0.2em;
 }
 
-/* Preparazione */
 .step {
     display: flex;
     gap: 1em;
@@ -1701,8 +1655,6 @@ body.dark-theme .separatore-testo {
     flex: 1;
     color: var(--text-color);
 }
-
-/* Prodotti consigliati */
 
 section.product-details-section .container {
     display: block;
@@ -1763,9 +1715,8 @@ section.product-details-section .product-detail-block {
     border-bottom: 1px solid var(--text-color);
 }
 
-/* Azioni e Bottoni Admin */
 .admin-actions {
-    margin-top: auto; /*bottoni in fondo alla card*/
+    margin-top: auto;
     display: flex;
     gap: 1em;
     flex-wrap: wrap;
@@ -1777,13 +1728,11 @@ section.product-details-section .product-detail-block {
 }
 
 /*gestioneProdotti.php */
-/* stesse classi di dashboardAdmin.php e altri file + queste specifiche: */
 .admin-details p {
     margin-bottom: 0.5em;
     font-size: 1.1em;
 }
 
-/*per la descrizione dei prodotti: la mostra tutta perchè admin non vede dettaglio prodotto*/
 .admin-desc {
     font-size: 1em;
     color: var(--text-color);
@@ -1806,22 +1755,21 @@ section.product-details-section .product-detail-block {
     padding: 0 0.3em;
 }
 
-/* classi per definire lo stato di basi e ingredienti: disponibile (qta>0) e non disponibile */
 .stato-disponibile {
     display: inline-block;
     width: 12px;
     height: 12px;
-    background-color: #28a745; /*verde*/
+    background-color: #28a745;
     border-radius: 50%;
     margin-right: 6px;
-    vertical-align: middle; /*allinea il pallino al testo*/
+    vertical-align: middle;
 }
 
 .stato-non-disponibile {
     display: inline-block;
     width: 12px;
     height: 12px;
-    background-color: #d9534f; /*rosso*/
+    background-color: #d9534f;
     border-radius: 50%;
     margin-right: 6px;
     vertical-align: middle;
@@ -1838,7 +1786,6 @@ section.product-details-section .product-detail-block {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* raggruppa le sezioni (fieldset)*/
 .form-container fieldset {
     border: 1px solid var(--text-color);
     border-radius: 8px;
@@ -1864,10 +1811,9 @@ section.product-details-section .product-detail-block {
 }
 
 .input-group{
-    margin-bottom: 1.5em; /*spaziatura tra i campi*/
+    margin-bottom: 1.5em;
 }
 
-/* Stile Unificato per Input, Textarea e Select */
 .input-group input[type="text"],
 .input-group input[type="number"],
 .input-group input[type="file"],
@@ -1884,7 +1830,6 @@ section.product-details-section .product-detail-block {
     box-shadow: none;
 }
 
-/*focus State quando clicca nel campo*/
 .input-group input:focus,
 .input-group textarea:focus,
 .input-group select:focus {
@@ -1895,17 +1840,15 @@ section.product-details-section .product-detail-block {
 
 .input-group textarea {
     min-height: 120px;
-    resize: vertical; /*permette di allungarla solo in verticale*/
+    resize: vertical;
     line-height: 1.5;
 }
 
-/*cursore Pointer per elementi cliccabili*/
 .input-group select, 
 .input-group input[type="file"] {
     cursor: pointer;
 }
 
-/*input file = immagine da scegliere*/
 .input-group input[type="file"] {
     background-color: var(--bg-color);
     border: 2px solid var(--text-color);
@@ -1917,27 +1860,24 @@ section.product-details-section .product-detail-block {
     width: 100%;
 }
 
-/*bottone interno "Scegli file"*/
 .input-group input[type="file"]::file-selector-button {
-    background-color: var(--alt-section-bg); /* Sfondo leggero (crema/grigio scuro) */
+    background-color: var(--alt-section-bg);
     color: var(--text-color);
-    border: 2px solid var(--button-bg); /* Bordo colorato del tema */
+    border: 2px solid var(--button-bg);
     padding: 0.5em 1em;
     border-radius: 4px;
-    margin-right: 1em; /* Spazio tra bottone e nome file */
+    margin-right: 1em;
     cursor: pointer;
     font-family: inherit;
     font-weight: bold;
 }
 
 .input-group input[type="file"]:hover::file-selector-button {
-    background-color: var(--button-bg); /*diventa colorato al passaggio*/
-    color: var(--button-text); /*testo chiaro*/
+    background-color: var(--button-bg);
+    color: var(--button-text);
 }
 
-
 /* validazioneForm.js */
-/* classe per i messaggi di suggerimento che compaiono nella form aggiungiProdotto.php */
 .default-text {
     display: block;
     font-size: 0.85em;
@@ -1947,7 +1887,6 @@ section.product-details-section .product-detail-block {
     font-style: italic;
 }
 
-/* classe per i messaggi di errore della form aggiungiProdotto.php */
 .errorSuggestion {
     display: block;
     font-size: 0.9em;
@@ -1958,7 +1897,6 @@ section.product-details-section .product-detail-block {
     position: relative;
 }
 
-/* piccola icona di errore prima del testo (x) - opzionale, da vedere*/
 .errorSuggestion::before {
     content: "✖"; 
     position: absolute;
@@ -1976,22 +1914,20 @@ section.product-details-section .product-detail-block {
 .order-list {
     display: flex;
     flex-direction: column;
-    gap: 1.5em; /*spazio verticale tra le card*/
+    gap: 1.5em;
     margin: 2em 0;
 }
 
-/*card di anteprima degli ordini*/
 .order-card {
     background-color: var(--card-bg);
     border: 1px solid var(--text-color);
     border-radius: 12px;
     padding: 1.5em;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    /*layout flex orizzontale*/
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap; /*importante per mobile*/
+    flex-wrap: wrap;
     gap: 1.5em;
 }
 
@@ -2017,7 +1953,6 @@ section.product-details-section .product-detail-block {
     font-size: 0.95em;
 }
 
-/* Parte centrale: prezzo */
 .order-price {
     flex: 1;
     text-align: center;
@@ -2027,14 +1962,14 @@ section.product-details-section .product-detail-block {
     padding: 0 1em;
 }
 
-.order-price p:first-child { /*label "Totale" */
+.order-price p:first-child {
     font-size: 0.85em;
     text-transform: uppercase;
     color: var(--text-color);
     margin-bottom: 0.2em;
 }
 
-.order-price p:last-child { /* importo */
+.order-price p:last-child { 
     font-size: 1.3em;
     font-weight: bold;
     color: var(--text-color);
@@ -2043,8 +1978,8 @@ section.product-details-section .product-detail-block {
 .order-status-action {
     flex: 1;
     display: flex;
-    flex-direction: column; /* Stato sopra, bottone sotto */
-    align-items: flex-end; /* Allinea a destra */
+    flex-direction: column;
+    align-items: flex-end;
     gap: 1em;
     min-width: 180px;
 }
@@ -2055,7 +1990,6 @@ section.product-details-section .product-detail-block {
     font-weight: 600;
 }
 
-/* PALLINI STATO */
 .stato-rosso, .stato-giallo, .stato-verde, .stato-blu {
     display: inline-block;
     width: 12px;
@@ -2070,10 +2004,7 @@ section.product-details-section .product-detail-block {
 .stato-verde { background-color: #28a745; }   /* Spedito / Pagato */
 .stato-blu { background-color: #17a2b8; }     /* Consegnato */
 
-
 /* gestioneOrdini.php */
-/*Dettaglio degli ordini (visualizzazione per l'admin, diversa sa utente): permette di cambiare lo stato degli ordini*/
-/* intestazione pagina dettaglio ordine admin */
 .admin-page-header {
     display: flex;
     justify-content: space-between;
@@ -2096,7 +2027,6 @@ section.product-details-section .product-detail-block {
     flex-wrap: wrap;
 }
 
-/* badge per stato dell'ordine in dettaglioOrdineAdmin.php*/
 .order-status-badge {
     font-size: 1.2em;
     display: flex;
@@ -2108,7 +2038,6 @@ section.product-details-section .product-detail-block {
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-/* messaggio di feedback positivo (verde) se cambio ordine ha successo*/
 .messaggio-successo {
     color: #28a745;
     background-color: transparent; 
@@ -2120,13 +2049,10 @@ section.product-details-section .product-detail-block {
     font-size: 1.1em;
 }
 
-/*card a larghezza intera (tutta la pagina) - per la lista prodotti acquistati*/
-/* .user-card card-full-width */
 .card-full-width {
     grid-column: 1 / -1;
 }
 
-/* LISTA PRODOTTI */
 .product-list {
     list-style: none;
     padding: 0;
@@ -2143,7 +2069,6 @@ section.product-details-section .product-detail-block {
     font-size: 1.1em;
 }
 
-/* Parte sinistra: nome e tipo*/
 .product-info {
     display: flex;
     flex-direction: column;
@@ -2155,7 +2080,6 @@ section.product-details-section .product-detail-block {
     margin-top: 0.2em;
 }
 
-/* Parte destra: quantità e prezzo */
 .product-pricing {
     display: flex;
     align-items: center;
@@ -2164,7 +2088,7 @@ section.product-details-section .product-detail-block {
 }
 
 .qty-badge {
-    background-color: var(--alt-section-bg); /* Colore sfondo leggero */
+    background-color: var(--alt-section-bg);
     padding: 0.3em 0.6em;
     border-radius: 4px;
     font-size: 1em;
@@ -2177,23 +2101,21 @@ section.product-details-section .product-detail-block {
     font-size: 1.1em;
 }
 
-/* RIEPILOGO TOTALI */
 .order-summary {
     margin-top: 1.5em;
     display: flex;
     flex-direction: column;
     gap: 0.5em;
-    align-items: flex-end; /* Spinge tutto a destra */
+    align-items: flex-end;
 }
 
 .summary-row {
     display: flex;
     justify-content: space-between;
-    width: 250px; /* Larghezza fissa per allineare i numeri */
+    width: 250px;
     font-size: 1em;
 }
 
-/* .summary-row total-row */
 .total-row {
     margin-top: 0.5em;
     padding-top: 0.5em;
@@ -2202,7 +2124,6 @@ section.product-details-section .product-detail-block {
     color: var(--button-bg);
 }
 
-/* NOTE CLIENTE */
 .order-notes {
     margin-top: 2em;
     background-color: var(--section-bg);
@@ -2214,16 +2135,14 @@ section.product-details-section .product-detail-block {
 /* =========================================
    CARRELLO
 ========================================= */
-/*layout a griglia per vedere ordini uno sotto l'altro*/
 .cart-layout {
     display: grid;
-    grid-template-columns: 1fr; /*una colonna su mobile*/
+    grid-template-columns: 1fr;
     gap: 2rem;
     align-items: start;
     margin-top: 1.5rem;
 }
 
-/* stile contenitori messaggi (Carrello vuoto / Successo) */
 .cart-message-container {
     text-align: center;
     padding: 3rem 1rem;
@@ -2246,7 +2165,6 @@ section.product-details-section .product-detail-block {
     margin: 0;
 }
 
-/*singola riga prodotto*/
 .cart-item {
     display: flex;
     flex-wrap: wrap;
@@ -2271,7 +2189,7 @@ section.product-details-section .product-detail-block {
     color: var(--text-color);
 }
 
-.cart-item-info h3{ /*omaggio*/
+.cart-item-info h3{
     font-size: 1em;
     margin-bottom: 0.5rem;
     color: var(--text-color);
@@ -2283,7 +2201,6 @@ section.product-details-section .product-detail-block {
     margin-top: 5px;
 }
 
-/*fix per la classe product-price che è troppo grande nel catalogo per metterla anche qua, ma lo stile va bene*/
 .product-price.cart-price-fix {
     font-size: 1.2rem;
     margin: 0;
@@ -2291,7 +2208,6 @@ section.product-details-section .product-detail-block {
     padding: 0;
 }
 
-/*riga del totale*/
 .cart-total-row {
     display: flex;
     justify-content: flex-end;
@@ -2319,10 +2235,9 @@ section.product-details-section .product-detail-block {
     font-weight: normal;
 }
 
-/* colonna destra: checkout */
 .cart-summary {
     padding: 20px;
-    position: sticky; /*rimane ferma mentre scorri */
+    position: sticky;
     top: 20px;
 }
 
@@ -2339,7 +2254,6 @@ section.product-details-section .product-detail-block {
     margin-top: 1em;
 }
 
-/*bottoni per checkout e per rimozione articolo*/
 .cart-item-remove .bottone-primario:hover,
 .cart-item-remove .bottone-primario:focus,
 .checkout .bottone-primario:hover,
@@ -2352,13 +2266,11 @@ section.product-details-section .product-detail-block {
     transform: translateY(-3px);
 }
 
-/*tema scuro - l'outline deve essere chiara per vedersi sullo scuro */
 body.dark-theme .bottone-primario:hover,
 body.dark-theme .bottone-primario:focus {
-    outline-color: var(--text-color); /* Verde chiaro */
+    outline-color: var(--text-color);
 }
 
-/* Box che contiene l'indirizzo */
 .indirizzo-container {
     background-color: var(--card-bg);
     padding: 1.5em;
@@ -2378,7 +2290,6 @@ body.dark-theme .bottone-primario:focus {
     letter-spacing: 0.5px;
 }
 
-/* Link "Modificalo nel profilo" */
 .indirizzo-container a {
     display: inline-block;
     font-size: 1em;
@@ -2395,28 +2306,16 @@ body.dark-theme .bottone-primario:focus {
     outline: none;
 }
 
-/* Link Visitato */
 .indirizzo-container a:visited {
     color: var(--link-visited);
     text-decoration: underline;
 }
 
-/*RIMUOVE FRECCETTE DALLA CASELLA DELLA QUANTITÀ*/
-/* Chrome, Safari, Edge, Opera */
-.quantity-controls input[type="number"]::-webkit-outer-spin-button,
-.quantity-controls input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/* Firefox */
 .quantity-controls input[type="number"] {
     -moz-appearance: textfield;
-    appearance: textfield; /* Standard moderno */
+    appearance: textfield;
 }
 
-/* BADGE CHE INDICA IL NUMERO DI ARTICOLI NEL CARRELLO (nell'icona del carrello) */
-/* Bottone relativo per poter posizionare il badge dentro */
 .icon-button {
     position: relative;
 }
@@ -2440,14 +2339,12 @@ body.dark-theme .bottone-primario:focus {
     pointer-events: none;
 }
 
-
-/* IMMAGINI PER STAMPA */
 .print-only{
     display: none;
 }
 
 /* ===============
- RICERCA (cerca.php)
+ RICERCA
 ================== */
 .search-container {
     position: relative;
@@ -2456,7 +2353,7 @@ body.dark-theme .bottone-primario:focus {
 }
 
 .search-form {
-    display: none; /* nascosto di default */
+    display: none;
     position: absolute;
     top: 100%; /*sotto all'header*/
     right: 0;
@@ -2475,7 +2372,7 @@ body.dark-theme .bottone-primario:focus {
 }
 
 .search-form.active {
-    display: flex; /* mostra quando attivo */
+    display: flex;
     align-items: center;
 }
 
@@ -2514,7 +2411,7 @@ body.dark-theme .bottone-primario:focus {
 .container-grid {
     display: grid;
     grid-template-columns: 280px 1fr; 
-    gap: 1em;
+    gap: 2em;
     align-items: start;
 }
 
@@ -2523,12 +2420,11 @@ body.dark-theme .bottone-primario:focus {
     padding: 0;
 }
 
-.riepilogo-header h3 {
+.riepilogo-header h1 {
     margin: 0 0 0em 0;
     padding: 0;
 }
 
-/* Sezione ingredienti extra */
 .config-group {
     display: flex;
     align-items: center;
@@ -2565,7 +2461,6 @@ body.dark-theme .bottone-primario:focus {
     margin: 0;
 }
 
-/* Stato selezione */
 .stato-selezione {
     display: flex;
     flex-direction: column;
@@ -2582,7 +2477,6 @@ body.dark-theme .bottone-primario:focus {
     line-height: 1.3; 
 }
 
-/* Bottone reset "Svuota tutto" */
 .btn-reset-link {
     align-self: flex-start;
     background: none;
@@ -2593,12 +2487,6 @@ body.dark-theme .bottone-primario:focus {
     padding: 0;
     margin: 0em 0;
     font-size: 0.95em;
-}
-
-/* Area scrollabile riepilogo */
-.riepilogo-scroll-area {
-    display: flex;
-    flex-direction: column;
 }
 
 .sezione-riepilogo h4 {
@@ -2617,19 +2505,13 @@ body.dark-theme .bottone-primario:focus {
     margin: 0.3em;
 }
 
-/* PULSANTE RIEPILOGO MOBILE - NASCOSTO SU DESKTOP */
 .btn-riepilogo-mobile {
     display: none;
 }
 
-/* MODAL MOBILE OVERLAY - NASCOSTO DI DEFAULT */
 .riepilogo-mobile-overlay {
     display: none;
 }
-
-/* ==================================================
-   GRIGLIE
-   ================================================== */
 
 .basi-grid {
     display: grid;
@@ -2649,23 +2531,22 @@ body.dark-theme .bottone-primario:focus {
 #basi {
     grid-column: 2;
     grid-row: 1;
+    padding-top: 0.1;
 }
 
-/* Layout a lista verticale */
 .basi-grid {
     display: flex;
     flex-direction: column;
-    gap: 3.5em; /* Spazio tra una base e l'altra */
+    gap: 3.5em;
 }
 
 .base-card {
-    background: transparent; /* Rimosso sfondo bianco */
-    border: none;            /* Rimosso bordo card */
+    background: transparent;
+    border: none;
     padding: 0;
     width: 100%;
 }
 
-/* Titolo sopra l'immagine */
 .base-title {
     font-size: 1.6em;
     color: var(--button-bg);
@@ -2674,14 +2555,12 @@ body.dark-theme .bottone-primario:focus {
     font-weight: bold;
 }
 
-/* Contenitore orizzontale */
 .base-content {
     display: flex;
     gap: 25px;
     align-items: flex-start;
 }
 
-/* MISURA STANDARD IMMAGINE 5:4 */
 .base-image-standard {
     width: 300px;   
     height: 240px; 
@@ -2697,12 +2576,10 @@ body.dark-theme .bottone-primario:focus {
     display: block;
 }
 
-/* Rimuovi eventuali hover che aggiungono bordi o ombre pesanti */
 .base-card.selected .base-image-standard {
     border: 2px solid var(--button-bg);
 }
 
-/* Colonna info a destra */
 .base-info {
     display: flex;
     flex-direction: column;
@@ -2715,7 +2592,6 @@ body.dark-theme .bottone-primario:focus {
     color: var(--text-color);
 }
 
-/* Temperatura e Minuti */
 .info-infusione {
     display: flex;
     gap: 15px;
@@ -2723,7 +2599,6 @@ body.dark-theme .bottone-primario:focus {
     padding: 0;
 }
 
-/* Bottone allineato a sinistra sotto le info */
 .btn-seleziona-base {
     align-self: flex-start;
     margin-top: 10px;
@@ -2732,13 +2607,11 @@ body.dark-theme .bottone-primario:focus {
 /* ==================================================
    CARD INGREDIENTE
    ================================================== */
-/* Container ingredienti */
 #ingredienti {
     grid-column: 2;
     grid-row: 2;
 }
 
-/* SPAZIO TRA LE CATEGORIE (es: Frutta, Spezie...) */
 .titolo-categoria {
     margin-top: 3em;    
     margin-bottom: 1em;  
@@ -2783,7 +2656,6 @@ body.dark-theme .bottone-primario:focus {
     font-weight: 700;
 }
 
-/* IMMAGINE - UNA SOLA DEFINIZIONE */
 .ingrediente-card img {
     width: 150px;
     height: 150px;
@@ -2793,14 +2665,12 @@ body.dark-theme .bottone-primario:focus {
     margin: 0;
 }
 
-/* Titolo ingrediente */
 .ingrediente-card h4 {
     font-size: 1em;
     margin: 0.5em 0 0 0;
     text-align: center;
 }
 
-/* Descrizione ingrediente */
 .descrizione-ingrediente {
     font-size: 0.95em;
     line-height: 1.5;
@@ -2811,7 +2681,6 @@ body.dark-theme .bottone-primario:focus {
     flex-grow: 1; 
 }
 
-/* Bottone aggiungi */
 .btn-aggiungi-ingrediente {
     margin-top: auto;
     width: 100%;
@@ -2867,7 +2736,6 @@ button:hover {
     width: auto;
     min-width: 0;
     
-    /* Stile personalizzato */
     color: var(--button-bg);
     font-size: 1.8rem;
     font-weight: bold;
@@ -2878,11 +2746,24 @@ button:hover {
     justify-content: center;
 }
 
-
-
 /* =================================== 
    CATALOGO: BARRA STRUMENTI E FILTRI 
    =================================== */
+
+.filter-panel h1,
+.riepilogo-header h1 {
+    font-size: 1.7em;
+    margin-bottom: 0.5em;
+    line-height: 1.2;
+}
+
+.filter-panel h2,
+.filter-panel h3{
+    font-size: 1.1em;
+    margin-top: 0.7em;
+    margin-bottom: 0.5em;
+}
+
 .catalog-section {
     padding: 1.5em 0;
 }
@@ -2895,7 +2776,6 @@ button:hover {
     padding: 0 1em;
 }
 
-/* filtri: ORDINAMENTO */
 .sort-options {
     display: flex;
     gap: 0.8em;
@@ -2944,42 +2824,18 @@ button:hover {
     flex-direction: column;
     gap: 1.5em;
     position: sticky;
-    top: 100px;
-    max-height: calc(100vh - 120px);
-    overflow-y: auto;
+    top: 150px; 
+    max-height: calc(100vh - 170px); 
+    overflow-y: auto; 
     background-color: var(--card-bg);
     padding: 1.2em;
     border-radius: 8px;
     border: 2px solid var(--button-bg);
     color: var(--text-color);
-}
-
-/* Scrollbar personalizzata */
-.filter-panel::-webkit-scrollbar {
-    width: 8px;
-}
-
-.filter-panel::-webkit-scrollbar-track {
-    background: var(--alt-section-bg);
-    border-radius: 10px;
-}
-
-.filter-panel::-webkit-scrollbar-thumb {
-    background: var(--button-bg);
-    border-radius: 10px;
-}
-
-.filter-panel::-webkit-scrollbar-thumb:hover {
-    background: var(--text-color);
-}
-
-/* Per Firefox */
-.filter-panel {
     scrollbar-width: thin;
     scrollbar-color: var(--button-bg) var(--alt-section-bg);
 }
 
-/* Gruppi filtri */
 .filter-group {
     padding-bottom: 1.2em;
     border-bottom: 1px solid var(--alt-section-bg);
@@ -3019,6 +2875,7 @@ button:hover {
     cursor: pointer;
 }
 
+
 /* =======================
     GRID PRODOTTI
 ==========================*/
@@ -3026,7 +2883,6 @@ button:hover {
     grid-column: 2 / 3;
 }
 
-/* BOTTONI E IMMAGINI CARD */
 .product-card {
     background-color: var(--card-bg);
     border-radius: 12px;
@@ -3039,7 +2895,6 @@ button:hover {
     margin: 0 auto;
 }
 
-/*forza l'altezza delle immagini per uniformità */
 .product-card .product-image {
     position: relative;
     border-radius: 8px;
@@ -3048,7 +2903,7 @@ button:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    aspect-ratio: 1 / 1; /*mantiene immagine quadrata*/
+    aspect-ratio: 1 / 1;
 }
 
 .product-card .product-image img {
@@ -3058,10 +2913,9 @@ button:hover {
 }
 
 .product-card:hover .product-image img {
-    transform: scale(1.05); /*zoom leggero all'hover*/
+    transform: scale(1.05);
 }
 
-/*Bottone "Scopri di più" */
 .product-card .bottone-primario {
     font-family: 'Helvetica Neue', 'Arial', sans-serif;
     font-weight: 700;
@@ -3072,7 +2926,6 @@ button:hover {
     margin-top: auto;
 }
 
-/*icona carrello per aggiunta rapida nelle card*/
 .add-to-cart-icon {
     position: absolute;
     top: 10px;
@@ -3089,8 +2942,6 @@ button:hover {
     background-color: var(--card-bg);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     color: var(--text-color);
-    /*z-index: 10;*/
-
 }
 
 .add-to-cart-icon svg {
@@ -3127,7 +2978,7 @@ button:hover {
    =================================== */
 .fixed-filter-btn {
     position: fixed;
-    top: 100px; /*in alto a sinistra, sotto l'header (fisso)*/
+    top: 100px;
     left: 1.5em; 
     z-index: 998;
     width: 3.5em;
@@ -3136,9 +2987,8 @@ button:hover {
     color: var(--button-text);
     border: 2px solid var(--button-bg);
     border-radius: 50%;
-    
     cursor: pointer;
-    display: none; /*nascosto su desktop*/
+    display: none;
     align-items: center;
     justify-content: center;
 }
@@ -3153,7 +3003,6 @@ button:hover {
     fill: currentColor;
 }
 
-/* Intestazione filtri - visibile sempre */
 .filters-header {
     display: flex;
     justify-content: space-between;
@@ -3171,4 +3020,3 @@ button:hover {
 .mobile-only {
     display: none;
 }
-
