@@ -1,12 +1,13 @@
 <?php
-$db_host = "127.0.0.1";
-$db_name = "lcasagra";
-$db_username = "lcasagra";
-$db_password = "Aedi1ou1gohphi9u";
+// Configurazione per Docker
+$host = 'db'; // Nome del servizio nel docker-compose
+$db   = 'db_InfuseMe';
+$user = 'infuseme_user';
+$pass = 'InfuseMe123!';
 
 // Stringa di connessione (DSN)
 $charset = 'utf8mb4';
-$dsn = "mysql:host=$db_host;dbname=$db_name;charset=$charset"; // CORRETTO: usare le variabili giuste
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 
 $options = [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
@@ -18,7 +19,11 @@ $options = [
 
 try {
     // Crea la connessione
-    $pdo = new PDO($dsn, $db_username, $db_password, $options); // CORRETTO: usare le variabili giuste
+    $pdo = new PDO($dsn, $user, $pass, $options);
+    
+    // Imposta esplicitamente il charset della connessione (ridondante ma sicuro)
+    $pdo->exec("SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci");
+    $pdo->exec("SET CHARACTER SET utf8mb4");
     
 } catch (\PDOException $e) {
     // In caso di errore
