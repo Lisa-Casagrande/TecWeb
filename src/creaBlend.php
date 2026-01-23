@@ -25,7 +25,6 @@ try {
         $temp = htmlspecialchars($base['temperatura_infusione']);
         $time = htmlspecialchars($base['tempo_infusione']);
         
-        // Costruiamo la card ESATTAMENTE come l'originale (con article, SVG, classi)
         $basiHtml .= <<<HTML
         <article class="base-card" data-id="$id" 
                 data-nome="$nome"
@@ -33,7 +32,7 @@ try {
                 data-temperatura="$temp"
                 data-tempo="$time">
             
-            <h3 class="base-title">$nome</h3>
+            <h2 class="base-title">$nome</h2>
             
             <div class="base-content">
                 <div class="base-image-standard">
