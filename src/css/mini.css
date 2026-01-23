@@ -167,16 +167,10 @@
         font-size: 1.8em;
         margin-bottom: 1em;
     }
-    
+   
     .form-group input {
         padding: 0.7em 1em;
         font-size: 0.95em;
-    }
-    
-    .btn-login {
-        padding: 0.85em;
-        font-size: 1.05em;
-        margin-top: 1em;
     }
     
     .form-hint {
@@ -964,16 +958,12 @@
         font-size: 1.5em;
         margin-bottom: 0.8em;
     }
-    
+    .login-container h2 {
+        font-size: 1.1em;
+    }
     .form-group input {
         padding: 0.65em 0.8em;
         font-size: 0.9em;
-    }
-    
-    .btn-login {
-        padding: 0.75em;
-        font-size: 1em;
-        margin-top: 0.8em;
     }
     
     .form-hint {
@@ -981,7 +971,7 @@
     }
 
     .p-title {
-        font-size: 1.2em;
+        font-size: 0.8em;
     }
     
     .content-text p {
@@ -1010,7 +1000,11 @@
     #DoveTrovarci h2 {
         font-size: 1.6em;
     }
-    
+
+   .login-container h2 {
+        font-size: 1em;
+    }
+
     #DoveTrovarci ul li {
         font-size: 1em;
         padding: 0.5em 1em;

@@ -918,6 +918,9 @@ body.dark-theme .back-to-top:focus {
     border: 2px solid var(--text-color);
     border-radius: 0.8em;
 }
+.form-links h2 {
+  font-size: 1.2rem;
+}
 
 /* Reset fieldset */
 fieldset {
@@ -1006,26 +1009,6 @@ fieldset {
     margin-bottom: 0.3em;
 }
 
-/* Bottone */
-.btn-login {
-    display: block;
-    width: 100%;
-    margin-top: 1.2em;
-    padding: 0.9em;
-    font-size: 1.1em;
-    font-weight: 600;
-    color: var(--button-text);
-    background-color: var(--button-bg);
-    border: 2px solid var(--button-bg);
-    border-radius: 0.6em;
-    cursor: pointer;
-}
-
-.btn-login:hover,
-.btn-login:focus {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-}
 
 :focus-visible {
   outline: 3px solid var(--accent-color);
