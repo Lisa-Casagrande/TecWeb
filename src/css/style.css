@@ -2102,7 +2102,7 @@ section.product-details-section .product-detail-block {
 
 .header-title-group h1{
     margin-bottom: 0;
-    margin-right: 0.5em; /* Un piccolo spazio extra di sicurezza */
+    margin-right: 0.5em;
     line-height: 1.2;
 }
 
