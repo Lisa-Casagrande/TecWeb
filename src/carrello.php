@@ -104,9 +104,9 @@ $html_output = '';
 // CASO 1: SUCCESSO
 if ($ordine_completato) {
     $html_output = <<<HTML
-    <section class="cart-message-container admin-card" role="alert">
+    <section class="cart-message-container user-card" role="alert">
         <h1>Grazie! L'ordine è stato completato.</h1>
-        <p>Abbiamo ricevuto la tua richiesta. Numero ordine: <strong>#{$id_ordine_creato}</strong></p>
+        <h2>Abbiamo ricevuto la tua richiesta. Numero ordine: <strong>#{$id_ordine_creato}</strong></h2>
         <div class="cart-actions">
             <a href="index.php" class="bottone-primario">Torna alla Home</a>
             <a href="paginaUtente.php" class="bottone-primario">I miei ordini</a>
@@ -117,9 +117,9 @@ HTML;
 // CASO 2: VUOTO
 } elseif (empty($_SESSION['carrello'])) {
     $html_output = <<<HTML
-    <section class="cart-message-container admin-card">
+    <section class="cart-message-container user-card">
         <h1>Il tuo carrello è vuoto</h1>
-        <p>Non hai ancora aggiunto prodotti.</p>
+        <h2>Non hai ancora aggiunto prodotti.</h2>
         <div class="cart-actions">
             <a href="catalogo.php" class="bottone-primario">Vai al Catalogo</a>
         </div>
@@ -271,13 +271,13 @@ HTML;
     {$error_block}
 
     <div class="cart-layout">
-        <div class="cart-list-container admin-card">
+        <div class="cart-list-container user-card">
             <ul class="cart-list" aria-label="Elenco prodotti nel carrello">
                 {$items_html}
             </ul>
         </div>
 
-        <section class="cart-summary admin-card" aria-labelledby="titolo-spedizione">
+        <section class="cart-summary user-card" aria-labelledby="titolo-spedizione">
             <form action="carrello.php" method="POST" class="form-checkout">
                 <input type="hidden" name="sottototale_calcolato" value="{$sottototale}">
                 <input type="hidden" name="indirizzo_spedizione" value="{$addrValue}">

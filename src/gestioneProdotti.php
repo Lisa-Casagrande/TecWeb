@@ -19,15 +19,15 @@ foreach ($prodotti as $prodotto) {
     $prezzoFmt = number_format($prodotto['prezzo'], 2);
     
     $imgTag = $prodotto['img_path'] 
-        ? '<img src="' . htmlspecialchars($prodotto['img_path']) . '" alt="' . htmlspecialchars($prodotto['nome']) . '" class="admin-card-img">'
+        ? '<img src="' . htmlspecialchars($prodotto['img_path']) . '" alt="' . htmlspecialchars($prodotto['nome']) . '" class="user-card-img">'
         : '';
     
     $prodottiHTML .= <<<HTML
-    <article class="admin-card">
+    <article class="user-card">
         {$imgTag}
         
         <div class="card-content">
-            <h3>{$prodotto['nome']}</h3>
+            <h2>{$prodotto['nome']}</h2>
             
             <div class="admin-desc">
                 {$prodotto['descrizione']}
@@ -44,7 +44,7 @@ foreach ($prodotti as $prodotto) {
             <div class="admin-actions">
                 <form action="php/eliminaProdotto.php" method="POST" onsubmit="return confirm('Sei sicuro di voler eliminare questo prodotto? Questa azione è irreversibile.');">
                     <input type="hidden" name="id_prodotto" value="{$prodotto['id_prodotto']}">
-                    <input type="submit" class="bottone-primario" value="Elimina">
+                    <button type="submit" class="bottone-primario" aria-label="Elimina {$prodotto['nome']}">Elimina</button>
                 </form>
             </div>
         </div>

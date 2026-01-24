@@ -14,11 +14,11 @@ try {
 $basiHTML = '';
 foreach ($basi as $base) {
     $imgTag = !empty($base['img_path']) 
-        ? '<img src="' . htmlspecialchars($base['img_path']) . '" alt="" class="admin-card-img">' 
+        ? '<img src="' . htmlspecialchars($base['img_path']) . '" alt="" class="user-card-img">' 
         : '';
     
     $basiHTML .= '
-    <article class="admin-card">
+    <article class="user-card">
         ' . $imgTag . '
         <div class="card-content">
             <h3>' . htmlspecialchars($base['nome']) . '</h3>
@@ -39,7 +39,7 @@ $ingredientiHTML = '';
 foreach ($ingredienti as $ing) {
     $qtIng = isset($ing['disponibile']) ? $ing['disponibile'] : 0;
     $imgTag = !empty($ing['img_path']) 
-        ? '<img src="' . htmlspecialchars($ing['img_path']) . '" alt="" class="admin-card-img">' 
+        ? '<img src="' . htmlspecialchars($ing['img_path']) . '" alt="" class="user-card-img">' 
         : '';
     
     $statoHTML = $qtIng > 0 
@@ -47,7 +47,7 @@ foreach ($ingredienti as $ing) {
         : '<span class="stato-non-disponibile"></span> Esaurito';
     
     $ingredientiHTML .= '
-    <article class="admin-card">
+    <article class="user-card">
         ' . $imgTag . '
         <div class="card-content">
             <h3>' . htmlspecialchars($ing['nome']) . '</h3>

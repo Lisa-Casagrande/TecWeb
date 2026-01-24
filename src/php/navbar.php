@@ -111,12 +111,32 @@ if ($loggedIn) {
     }
 }
 
+
+// ======== RICERCA =======
+$ricercaHtml = '
+<div class="search-container">
+    <form action="cerca.php" method="GET" class="search-form" id="searchForm">
+        <label for="search-input" class="sr-only">Cerca</label>
+        <input type="search" name="q" id="search-input" placeholder="Cerca prodotti...">
+        <button type="submit" class="search-btn-submit" aria-label="Invia ricerca">&rarr;</button>
+    </form>
+    
+    <button class="icon-button" id="searchToggle" aria-label="Cerca prodotti">
+        <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M23.55,21.44l-4.64-4.65c3.47-4.64,2.53-11.23-2.12-14.7S5.56-.43,2.09,4.21s-2.53,11.23,2.12,14.7
+                    c3.73,2.79,8.85,2.79,12.58,0l4.65,4.65c0.58,0.58,1.53,0.58,2.11,0s0.58-1.53,0-2.11L23.55,21.44z M10.54,18.01
+                    c-4.13,0-7.47-3.34-7.47-7.47s3.34-7.47,7.47-7.47s7.47,3.34,7.47,7.47C18.00,14.66,14.67,17.99,10.54,18.01z"/>
+        </svg>
+    </button>
+</div>';
+
+
 // CARICAMENTO TEMPLATE E SOSTITUZIONE
 $templateNavbar = file_get_contents(__DIR__ . '/../html/navbar.html');
 
 $navbarBlock = str_replace(
-    ['[logoHtml]', '[menuVoci]', '[carrelloHtml]', '[utenteHtml]'],
-    [$logoHtml, $menuHtml, $carrelloHtml, $utenteHtml],
+    ['[logoHtml]', '[menuVoci]', '[carrelloHtml]', '[utenteHtml]', '[ricercaHtml]'],
+    [$logoHtml, $menuHtml, $carrelloHtml, $utenteHtml, $ricercaHtml],
     $templateNavbar
 );
 ?>

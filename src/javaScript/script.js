@@ -348,7 +348,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         }
-    }
+    } 
 
     // Funzione per aggiornare le icone del tema (fallback)
     function updateThemeIcons() {
@@ -392,6 +392,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const navClone = nav.cloneNode(true);
         const utilitiesClone = headerUtilities.cloneNode(true);
         
+        // rimuovw gli ID dai cloni per evitare duplicati
+        utilitiesClone.querySelectorAll('[id]').forEach(el => {
+            el.id = el.id + '-mobile-clone';
+        });
+
         mobileMenuWrapper.appendChild(closeButton);
         mobileMenuWrapper.appendChild(navClone);
         mobileMenuWrapper.appendChild(utilitiesClone);
