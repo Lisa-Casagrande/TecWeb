@@ -17,112 +17,111 @@
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
 
    [navbar]
+<main id="main-content">
+    <section id="login-section">
+        <div class="login-container">
+            <h1>Crea il tuo <span lang="en">account</span></h1>
+            <div class="form-links">
+                <h2>Hai già un <span lang="en">account</span>? <a href="login.php" id="torna-login">Accedi</a></h2>
+            </div>
 
-    <main id="main-content">
-        <section id="login-section">
-            <div class="login-container">
-                <h1>Crea il tuo <span lang="en">account</span></h1>
-                <div class="form-links">
-                    <h2>Hai già un <span lang="en">account</span>? <a href="login.php" id="torna-login">Accedi</a></h2>
-                </div>
+            <div class="display-error" role="alert">[erroreGenerale]</div>
 
-                <div class="display-error" role="alert">[erroreGenerale]</div>
+            <form id="registrazione-form" action="php/elabora_registrazione.php" method="post" novalidate>
+                <fieldset class="form-data">
+                    <legend class="sr-only">Inserisci i dati per registrarsi</legend>
 
-                <form id="registrazione-form" action="php/elabora_registrazione.php" method="post" novalidate>
-                    <fieldset class="form-data">
-                        <legend class="sr-only">Inserisci i dati per registrarsi</legend>
+                    <fieldset>
+                        <legend class="sr-only">Dati anagrafici</legend>
 
-                        <fieldset>
-                            <legend class="sr-only">Dati anagrafici</legend>
-
-                            <div class="form-group">
-                                <label for="reg_nome">Nome *:</label>
-                                <input type="text" id="reg_nome" name="reg_nome" autocomplete="given-name" required aria-describedby="reg_nome-help reg_nome-error" value="[valoreNome]" class="[classeNome]">
-                                <span id="reg_nome-error" class="errorSuggestion" role="alert">[erroreNome]</span>
-                                <small id="reg_nome-help" class="form-hint">Inserisci il tuo nome, minimo 2 caratteri, senza numeri o caratteri speciali.</small>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="reg_cognome">Cognome *:</label>
-                                <input type="text" id="reg_cognome" name="reg_cognome" autocomplete="family-name" required aria-describedby="reg_cognome-help reg_cognome-error" value="[valoreCognome]" class="[classeCognome]">
-                                <span id="reg_cognome-error" class="errorSuggestion" role="alert">[erroreCognome]</span>
-                                <small id="reg_cognome-help" class="form-hint">Inserisci il tuo cognome, minimo 2 caratteri, senza numeri o caratteri speciali.</small>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="reg_data-nascita">Data di nascita *:</label>
-                                <input type="date" id="reg_data-nascita" name="reg_data-nascita" required aria-describedby="reg_data-nascita-help reg_data-nascita-error" value="[valoreData]" max="[maxDataNascita]" class="[classeData]">
-                                <span id="reg_data-nascita-error" class="errorSuggestion" role="alert">[erroreNascita]</span>
-                                <small id="reg_data-nascita-help" class="form-hint">La vendita è dedicata esclusivamente ai maggiorenni. In caso contrario è necessaria la supervisione di un adulto.</small>
-                            </div>
-                        </fieldset>
-
-                        <fieldset>
-                            <legend class="sr-only">Indirizzo di spedizione</legend>
-
-                            <div class="form-group">
-                                <label for="reg_citta">Città *:</label>
-                                <input type="text" id="reg_citta" name="reg_citta" required aria-describedby="reg_citta-help reg_citta-error" value="[valoreCitta]" class="[classeCitta]">
-                                <span id="reg_citta-error" class="errorSuggestion" role="alert">[erroreCitta]</span>
-                                <small id="reg_citta-help" class="form-hint">Inserisci la tua città (<abbr title="Esempio">es.</abbr> Roma). Usata solo per spedizione.</small>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="reg_indirizzo">Indirizzo *:</label>
-                                <input type="text" id="reg_indirizzo" name="reg_indirizzo" required aria-describedby="reg_indirizzo-help reg_indirizzo-error" value="[valoreIndirizzo]" class="[classeIndirizzo]">
-                                <span id="reg_indirizzo-error" class="errorSuggestion" role="alert">[erroreIndirizzo]</span>
-                                <small id="reg_indirizzo-help" class="form-hint">Inserisci il tuo indirizzo (<abbr title="Esempio">es.</abbr> Via Turchese 18). Usato solo per spedizione.</small>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="reg_cap"><abbr title="Codice di Avviamento Postale"> CAP </abbr>*:</label>
-                                <input type="text" id="reg_cap" name="reg_cap" maxlength="5" inputmode="numeric" pattern="\d{5}" required aria-describedby="reg_cap-help reg_cap-error" value="[valoreCap]" class="[classeCap]">
-                                <span id="reg_cap-error" class="errorSuggestion" role="alert">[erroreCap]</span>
-                                <small id="reg_cap-help" class="form-hint">Inserisci il <abbr title="Codice di Avviamento Postale">CAP</abbr> a 5 cifre (<abbr title="Esempio">es.</abbr> 20121).</small>
-                            </div>
-                        </fieldset>
-
-                        <fieldset>
-                            <legend class="sr-only">Credenziali di accesso</legend>
-
-                            <div class="form-group">
-                                <label for="reg_email">Email *:</label>
-                                <input type="email" id="reg_email" name="reg_email" required aria-describedby="reg_email-help reg_email-error" value="[valoreEmail]" class="[classeEmail]">
-                                <span id="reg_email-error" class="errorSuggestion" role="alert">[erroreEmail]</span> 
-                                <small id="reg_email-help" class="form-hint">Inserisci un indirizzo email valido (<abbr title="Esempio">es.</abbr> giulia.bianchi@esempio.it). Se i dati sono corretti ma la registrazione non va a buon fine, <strong>l'email è già in uso</strong>: <a href="login.php">fai il login qui</a>.</small>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="reg_password">Password *:</label>
-                                <input type="password" id="reg_password" name="reg_password" required aria-describedby="reg_password-help reg_password-error" class="[classePassword]">
-                                <span id="reg_password-error" class="errorSuggestion" role="alert">[errorePassword]</span>
-                                <div id="reg_password-help" class="form-hint">La password deve contenere:
-                                    <ul class="password-rules">
-                                        <li>Almeno 8 caratteri</li>
-                                        <li>Almeno una lettera maiuscola (A-Z)</li>
-                                        <li>Almeno una lettera minuscola (a-z)</li>
-                                        <li>Almeno un numero (0-9)</li>
-                                        <li>Almeno un carattere speciale (@, $, !, %, *, ?, &amp;)</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="reg_conferma-password">Conferma Password *:</label>
-                                <input type="password" id="reg_conferma-password" name="reg_conferma-password" required aria-describedby="reg_conf-help reg_conf-error" class="[classeConferma]">
-                                <span id="reg_conf-error" class="errorSuggestion" role="alert">[erroreConferma]</span>
-                                <small id="reg_conf-help" class="form-hint">La password deve corrispondere a quella inserita precedentemente.</small>
-                            </div>
-                        </fieldset>
                         <div class="form-group">
-                            <button type="submit" class="bottone-primario"> Registrati </button>
+                            <label for="reg_nome">Nome *:</label>
+                            <input type="text" id="reg_nome" name="reg_nome" autocomplete="given-name" required aria-describedby="reg_nome-help reg_nome-error" value="[valoreNome]" class="[classeNome]">
+                            <span id="reg_nome-error" class="errorSuggestion" role="alert">[erroreNome]</span>
+                            <small id="reg_nome-help" class="form-hint">Inserisci il tuo nome, minimo 2 caratteri, senza numeri o caratteri speciali.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg_cognome">Cognome *:</label>
+                            <input type="text" id="reg_cognome" name="reg_cognome" autocomplete="family-name" required aria-describedby="reg_cognome-help reg_cognome-error" value="[valoreCognome]" class="[classeCognome]">
+                            <span id="reg_cognome-error" class="errorSuggestion" role="alert">[erroreCognome]</span>
+                            <small id="reg_cognome-help" class="form-hint">Inserisci il tuo cognome, minimo 2 caratteri, senza numeri o caratteri speciali.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg_data-nascita">Data di nascita *:</label>
+                            <input type="date" id="reg_data-nascita" name="reg_data-nascita" autocomplete="bday" required aria-describedby="reg_data-nascita-help reg_data-nascita-error" value="[valoreData]" max="[maxDataNascita]" class="[classeData]">
+                            <span id="reg_data-nascita-error" class="errorSuggestion" role="alert">[erroreNascita]</span>
+                            <small id="reg_data-nascita-help" class="form-hint">La vendita è dedicata esclusivamente ai maggiorenni. In caso contrario è necessaria la supervisione di un adulto.</small>
                         </div>
                     </fieldset>
-                </form>
-            </div>
-        </section>
-    </main>
-    
+
+                    <fieldset>
+                        <legend class="sr-only">Indirizzo di spedizione</legend>
+
+                        <div class="form-group">
+                            <label for="reg_citta">Città *:</label>
+                            <input type="text" id="reg_citta" name="reg_citta" autocomplete="address-level2" required aria-describedby="reg_citta-help reg_citta-error" value="[valoreCitta]" class="[classeCitta]">
+                            <span id="reg_citta-error" class="errorSuggestion" role="alert">[erroreCitta]</span>
+                            <small id="reg_citta-help" class="form-hint">Inserisci la tua città (<abbr title="Esempio">es.</abbr> Roma). Usata solo per spedizione.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg_indirizzo">Indirizzo *:</label>
+                            <input type="text" id="reg_indirizzo" name="reg_indirizzo" autocomplete="street-address" required aria-describedby="reg_indirizzo-help reg_indirizzo-error" value="[valoreIndirizzo]" class="[classeIndirizzo]">
+                            <span id="reg_indirizzo-error" class="errorSuggestion" role="alert">[erroreIndirizzo]</span>
+                            <small id="reg_indirizzo-help" class="form-hint">Inserisci il tuo indirizzo (<abbr title="Esempio">es.</abbr> Via Turchese 18). Usato solo per spedizione.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg_cap"><abbr title="Codice di Avviamento Postale"> CAP </abbr>*:</label>
+                            <input type="text" id="reg_cap" name="reg_cap" autocomplete="postal-code" maxlength="5" inputmode="numeric" pattern="\d{5}" required aria-describedby="reg_cap-help reg_cap-error" value="[valoreCap]" class="[classeCap]">
+                            <span id="reg_cap-error" class="errorSuggestion" role="alert">[erroreCap]</span>
+                            <small id="reg_cap-help" class="form-hint">Inserisci il <abbr title="Codice di Avviamento Postale">CAP</abbr> a 5 cifre (<abbr title="Esempio">es.</abbr> 20121).</small>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend class="sr-only">Credenziali di accesso</legend>
+
+                        <div class="form-group">
+                            <label for="reg_email">Email *:</label>
+                            <input type="email" id="reg_email" name="reg_email" autocomplete="email" required aria-describedby="reg_email-help reg_email-error" value="[valoreEmail]" class="[classeEmail]">
+                            <span id="reg_email-error" class="errorSuggestion" role="alert">[erroreEmail]</span> 
+                            <small id="reg_email-help" class="form-hint">Inserisci un indirizzo email valido (<abbr title="Esempio">es.</abbr> giulia.bianchi@esempio.it). Se i dati sono corretti ma la registrazione non va a buon fine, <strong>l'email è già in uso</strong>: fai login!</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg_password">Password *:</label>
+                            <input type="password" id="reg_password" name="reg_password" autocomplete="new-password" required aria-describedby="reg_password-help reg_password-error" class="[classePassword]">
+                            <span id="reg_password-error" class="errorSuggestion" role="alert">[errorePassword]</span>
+                            <div id="reg_password-help" class="form-hint">La password deve contenere:
+                                <ul class="password-rules">
+                                    <li>Almeno 8 caratteri</li>
+                                    <li>Almeno una lettera maiuscola (A-Z)</li>
+                                    <li>Almeno una lettera minuscola (a-z)</li>
+                                    <li>Almeno un numero (0-9)</li>
+                                    <li>Almeno un carattere speciale (@, $, !, %, *, ?, &amp;)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg_conferma-password">Conferma Password *:</label>
+                            <input type="password" id="reg_conferma-password" name="reg_conferma-password" autocomplete="new-password" required aria-describedby="reg_conf-help reg_conf-error" class="[classeConferma]">
+                            <span id="reg_conf-error" class="errorSuggestion" role="alert">[erroreConferma]</span>
+                            <small id="reg_conf-help" class="form-hint">La password deve corrispondere a quella inserita precedentemente.</small>
+                        </div>
+                    </fieldset>
+
+                    <div class="form-group">
+                        <button type="submit" class="bottone-primario"> Registrati </button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </section>
+</main>
     <!-- Footer -->
     <footer>
         <div class="container">
