@@ -81,6 +81,18 @@ main > article {
   min-height: 4cm;
 }
 
+.products-grid.catalog-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8mm;
+}
+
+.products-grid.catalog-grid .product-card {
+  width: auto;
+  max-width: none;
+  margin: 0;
+}
+
 .catalog-grid .product-card .product-image, .products-grid .product-card .product-image, .admin-grid .admin-card .image-container, .ingredienti-grid .ingrediente-card .image-container {
   width: 100%;
   display: flex;
@@ -197,15 +209,14 @@ main > article {
     margin-top: 1cm;
 }
 
-#DoveTrovarci img {
-    width: 60%;
-    margin: 0.3cm auto;
-    display: block;
-}
-
 #DoveTrovarci ul {
     list-style: none;
     padding: 0;
+}
+
+#DoveTrovarci div.map-container,
+#DoveTrovarci p.map-link{
+  display: none;  
 }
 
 .leaf-icon {
