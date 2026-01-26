@@ -2,6 +2,18 @@
 require_once 'php/connessione.php';
 require_once 'php/verificaSessioneAdmin.php';
 
+// ===== GESTIONE LOGOUT =====
+if (isset($_GET['azione']) && $_GET['azione'] === 'logout') {
+    $_SESSION = array();
+    if (isset($_COOKIE[session_name()])) {
+        setcookie(session_name(), '', time()-3600, '/');
+    }
+    session_destroy();
+    header("Location: login.php");
+    exit();
+}
+// ===========================
+
 // DEFINIZIONE VOCI MENU ADMIN
 $menuVociAdmin = [
     'dashboardAdmin.php' => '<span lang="en">Dashboard</span>',

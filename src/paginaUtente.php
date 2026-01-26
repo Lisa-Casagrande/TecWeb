@@ -2,21 +2,32 @@
 require_once 'php/verificaSessione.php';
 requireUser();
 
-require_once 'php/connessione.php';
+// ===== GESTIONE LOGOUT =====
+if (isset($_GET['azione']) && $_GET['azione'] === 'logout') {
+    $_SESSION = array();
+    if (isset($_COOKIE[session_name()])) {
+        setcookie(session_name(), '', time()-3600, '/');
+    }
+    session_destroy();
+    header("Location: login.php");
+    exit();
+}
+// ===========================
 
+require_once 'php/connessione.php';
 require_once 'php/navbar.php';
 
 try {
     $userId = userId();
 
     // Dati utente
-   $stmt = $pdo->prepare("
-    SELECT id_utente, nome, cognome, email, data_registrazione, citta, indirizzo, cap
-    FROM utente
-    WHERE id_utente = :id
-    LIMIT 1");
-$stmt->execute([':id' => $userId]);
-$utente = $stmt->fetch();
+    $stmt = $pdo->prepare("
+        SELECT id_utente, nome, cognome, email, data_registrazione, citta, indirizzo, cap
+        FROM utente
+        WHERE id_utente = :id
+        LIMIT 1");
+    $stmt->execute([':id' => $userId]);
+    $utente = $stmt->fetch();
 
     // Ultimi 5 ordini
     $stmt_ordini = $pdo->prepare("
@@ -94,15 +105,11 @@ if (!empty($ordini)) {
         </div>';
 }
 
-// Genera dati utente per il template
-$nomeCompleto = htmlspecialchars($utente['nome'] . ' ' . $utente['cognome']);
-$emailUtente = htmlspecialchars($utente['email']);
-
 $templatePath = 'html/paginaUtente.html';
 if (file_exists($templatePath)) {
     $template = file_get_contents($templatePath);
     
-    // 3. Sostituzioni
+    // Sostituzioni
     $template = str_replace('[navbar]', $navbarBlock, $template);
     $template = str_replace('[NOME_COMPLETO]', $nomeCompleto, $template);
     $template = str_replace('[EMAIL_UTENTE]', $emailUtente, $template);
@@ -112,7 +119,6 @@ if (file_exists($templatePath)) {
     
     echo $template;
 } else {
-    die("Errore: Template paginaUtente.html non trovato in src/html/.");
+    die("Errore: Template paginaUtente.html non trovato in html/.");
 }
-
 ?>
