@@ -1021,10 +1021,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Reset Basi
         document.querySelectorAll('.base-card').forEach(card => {
             const id = card.dataset.id;
+            const nome = card.dataset.nome;
             const btn = card.querySelector('.btn-seleziona-base');
             if (statoBlend.base && statoBlend.base.id == id) {
                 card.classList.add('selezionato');
-                if (btn) btn.textContent = 'Selezionata ✓';
+                if (btn) btn.textContent = 'Selezionata <span aria-hidden="true">✓</span>';
             } else {
                 card.classList.remove('selezionato');
                 if (btn) btn.textContent = 'Seleziona Base';

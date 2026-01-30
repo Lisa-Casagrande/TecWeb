@@ -69,7 +69,7 @@ try {
                         </span>
                     </div>
 
-                    <button class="btn btn-seleziona-base">Seleziona Base</button>
+                    <button class="btn btn-seleziona-base">Seleziona $nome </button>
                 </div>
             </div>
         </article>
@@ -120,14 +120,10 @@ HTML;
                                         data-prezzo="1.50">
                 
                 <img src="$img" alt="$nome">
-                
                 <h4>$nome</h4>
-                
                 $descrizioneIng
                 
-                <button class="btn btn-aggiungi-ingrediente">
-                    Aggiungi Ingrediente
-                </button>
+                <button class="btn btn-aggiungi-ingrediente">Aggiungi $nome</button>
             </div>
 HTML;
         }

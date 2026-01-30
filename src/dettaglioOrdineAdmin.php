@@ -178,6 +178,7 @@ $templatePath = 'html/dettaglioOrdineAdmin.html';
 
 if (file_exists($templatePath)) {
     $html = file_get_contents($templatePath);
+    $html = str_replace('[ACTION_URL]', "dettaglioOrdineAdmin.php?id=$id_ordine", $html);
     $html = str_replace('[menuVoci]', $menuHtml, $html);
     $html = str_replace('[ID_ORDINE]', $id_ordine, $html);
     $html = str_replace('[CLASS_STATO]', $classStato, $html);

@@ -37,7 +37,7 @@ if (!empty($q)) {
         $numRisultati = count($prodotti);
         
         if ($numRisultati > 0) {
-            $messaggio = "<p>Abbiamo trovato <strong>$numRisultati</strong> prodotti per la tua ricerca.</p>";
+            $messaggio = "Abbiamo trovato <strong>$numRisultati</strong> prodotti per la tua ricerca.";
             
             // Generazione Card (Stile identico a catalogo.php)
             foreach ($prodotti as $row) {
@@ -65,17 +65,17 @@ if (!empty($q)) {
 HTML;
             }
         } else {
-            $messaggio = "<p>Nessun prodotto trovato per \"<strong>" . htmlspecialchars($q) . "</strong>\".<br>Prova a cercare qualcos'altro, come \"Tè Verde\" o \"Relax\".</p>";
+            $messaggio = "Nessun prodotto trovato per \"<strong>" . htmlspecialchars($q) . "</strong>\".<br>Prova a cercare qualcos'altro, come \"Tè Verde\" o \"Relax\".";
             $risultatiHtml = ''; 
         }
 
     } catch (PDOException $e) {
-        $messaggio = "<p style='color:red'>Si è verificato un errore tecnico durante la ricerca.</p>";
+        $messaggio = "Si è verificato un errore tecnico durante la ricerca.";
         // Log dell'errore per il debug (non visibile all'utente)
         error_log("Errore ricerca DB: " . $e->getMessage());
     }
 } else {
-    $messaggio = "<p>Inserisci un termine per iniziare la ricerca.</p>";
+    $messaggio = "Inserisci un termine per iniziare la ricerca.";
 }
 
 // 3. Caricamento Template

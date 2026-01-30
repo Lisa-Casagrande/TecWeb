@@ -18,7 +18,7 @@ foreach ($basi as $base) {
     $opzioni_basi .= '</option>' . "\n";
 }
 
-//GENERAZIONE MENU ADMIN
+//MENU ADMIN
 $menuVociAdmin = [
     'dashboardAdmin.php' => '<span lang="en">Dashboard</span>',
     'gestioneProdotti.php' => 'Prodotti',

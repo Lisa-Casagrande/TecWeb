@@ -169,12 +169,16 @@ HTML;
                 <form action="php/gestioneCarrello.php" method="POST">
                     <input type="hidden" name="azione" value="aggiorna">
                     <input type="hidden" name="chiave_carrello" value="{$chiave}">
-                    <label for="qty-{$chiave}" class="sr-only">Quantità</label>
+                    <label for="qty-{$chiave}" class="sr-only">Quantità {$nome}</label>
                     
                     <div class="quantity-controls">
-                        <button type="submit" name="nuova_quantita" value="{$qtyMinus}" class="quantity-btn" aria-label="Diminuisci">-</button>
+                        <button type="submit" name="nuova_quantita" value="{$qtyMinus}" class="quantity-btn" aria-label="Diminuisci quantità {$nome}">
+                            <span aria-hidden="true">-</span>
+                        </button>
                         <input type="number" id="qty-{$chiave}" value="{$qty}" readonly>
-                        <button type="submit" name="nuova_quantita" value="{$qtyPlus}" class="quantity-btn" aria-label="Aumenta">+</button>
+                        <button type="submit" name="nuova_quantita" value="{$qtyPlus}" class="quantity-btn" aria-label="Aumenta quantità {$nome}">
+                            <span aria-hidden="true">+</span>
+                        </button>
                     </div>
                 </form>
             </div>
@@ -187,7 +191,9 @@ HTML;
                 <form action="php/gestioneCarrello.php" method="POST">
                     <input type="hidden" name="azione" value="rimuovi">
                     <input type="hidden" name="chiave_carrello" value="{$chiave}">
-                    <button type="submit" class="bottone-primario" aria-label="Rimuovi {$nome}">Rimuovi</button>
+                    <button type="submit" class="bottone-primario" aria-label="Rimuovi {$nome} dal carrello">
+                    <span aria-hidden="true">Rimuovi</span>
+                    </button>
                 </form>
             </div>
         </li>
@@ -277,7 +283,7 @@ HTML;
             </ul>
         </div>
 
-        <section class="cart-summary user-card" aria-labelledby="titolo-spedizione">
+        <section class="cart-summary user-card" aria-label="Riepilogo ordine">
             <form action="carrello.php" method="POST" class="form-checkout">
                 <input type="hidden" name="sottototale_calcolato" value="{$sottototale}">
                 <input type="hidden" name="indirizzo_spedizione" value="{$addrValue}">
