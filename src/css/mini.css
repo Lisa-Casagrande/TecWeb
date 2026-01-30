@@ -251,8 +251,6 @@
         display: flex;
         flex-direction: column;
         gap: 6px;
-        -webkit-tap-highlight-color: transparent;
-
         background-color: transparent; /* Rimuove lo sfondo ereditato dai bottoni */
         border: none; /* Rimuove il bordo ereditato */
         padding: 0; /* Rimuove padding interno indesiderato */
