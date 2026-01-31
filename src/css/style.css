@@ -12,6 +12,8 @@
     --bg-light: #FFFBE9; /*sfondo */
     --text-brown: #33231C; /*testo principale, Header, Bottoni */
     --visited: #74997F; /*visitati*/
+    /*--text-brown: #4E362E;   OPZIONE marrone più chiaro e visitati gialli
+    --visited: #FEBA17; */
     --white: #FFFFFF; /*sfondo Card */
     --section-bg: #F5F0D7; /*sfondo 2 */
     /* Tema Scuro */
@@ -261,7 +263,6 @@ body.dark-theme .logo-light { display: none; }
     border: 2px solid transparent;
     white-space: nowrap;
     cursor: pointer;
-    transition: transform 0.2s ease;
     text-decoration: none;
 }
 
@@ -789,8 +790,8 @@ footer {
     display: inline-flex; 
     align-items: center; 
     justify-content: center; 
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.1);
     color: var(--header-text);
@@ -2893,8 +2894,8 @@ button:hover {
     top: 10px;
     right: 10px;
     z-index: 10;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     border: none;
     display: flex;
@@ -2907,8 +2908,8 @@ button:hover {
 }
 
 .add-to-cart-icon svg {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     fill: var(--text-color);
 }
 
@@ -2960,8 +2961,8 @@ button:hover {
 }
 
 .fixed-filter-btn svg {
-    width: 45px;
-    height: 45px;
+    width: 44px;
+    height: 44px;
     fill: currentColor;
 }
 
