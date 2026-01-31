@@ -10,6 +10,8 @@ if (isset($_SESSION['id_utente'])) {
     session_destroy();
 }
 
+$successoRegistrazione = isset($_GET['success']) ? "Registrazione avvenuta con successo! Ora puoi accedere." : "";
+
 // Recupera eventuali errori e valori precedenti
 $errors = $_SESSION['errors'] ?? [];
 $old = $_SESSION['old'] ?? [];
@@ -67,11 +69,6 @@ $sostituzioni = [
     '[maxDataNascita]'   => $maxDataNascita
 ];
 
-/* PARTE MODIFICATA: ho tolto (dipende se teniamo header uguale alle altre pagine)
-ob_start();
-include 'navbar.php';
-$navbar_html = ob_get_clean();
-*/
 
 require_once 'php/navbar.php';
 

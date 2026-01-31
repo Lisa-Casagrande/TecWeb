@@ -17,49 +17,49 @@
     [navbar]
 
 
-   <main id="main-content">
-        <section id="login-section">
-            <div class="login-container">
-                <h1>Accedi al tuo <span lang="en">account</span></h1>
+<main id="main-content">
+    <section id="login-section">
+        <div class="login-container">
+            <h1>Accedi al tuo <span lang="en">account</span></h1>
 
-                <div class="form-links">
-                    <h2>Non hai un <span lang="en">account</span>? <a href="registrazione.php">Registrati</a></h2>
-                </div>
-
-                <div class="display-error" role="alert" aria-live="polite">
-                    [erroreGenerale]
-                </div>
-
-                <form id="login-form" action="login.php" method="post" novalidate>
-                    <fieldset class="form-data">
-                        <legend class="sr-only">Inserisci le credenziali per il login</legend>
-
-                        <div class="form-group">
-                            <label for="email"> Email *:</label>
-                            <input type="email" id="email" name="email" autocomplete="email"
-                                   required aria-describedby="email-hint email-error" 
-                                   value="[valoreEmail]" class="[classeEmail]" >
-                            <span id="email-error" class="errorSuggestion" role="alert">[erroreEmail]</span>
-                            <small id="email-hint" class="form-hint">Inserisci l'email associata al tuo account</small>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password"> Password *: </label>
-                            <input type="password" id="password" name="password" autocomplete="current-password" 
-                                   required aria-describedby="password-hint password-error" 
-                                   class="[classePassword]" >
-                            <span id="password-error" class="errorSuggestion" role="alert">[errorePassword]</span>
-                            <small id="password-hint" class="form-hint">Inserisci la password associata al tuo account</small>
-                        </div>
-
-                        <div class="form-group">
-                            <button type="submit" class="bottone-primario">Accedi</button>
-                        </div>
-                    </fieldset>
-                </form>
+            <div class="form-links">
+                <h2>Non hai un <span lang="en">account</span>? <a href="registrazione.php">Registrati</a></h2>
             </div>
-        </section>
-    </main>
+
+           <div id="error-summary" class="display-error" role="alert" tabindex="-1">
+                [erroreGenerale]
+            </div>
+
+            <form id="login-form" action="login.php" method="post" novalidate>
+                <fieldset class="form-data">
+                    <legend class="sr-only">Inserisci le credenziali per il login</legend>
+
+                    <div class="form-group">
+                        <label for="email"> Email *:</label>
+                        <input type="email" id="email" name="email" autocomplete="email"
+                               required aria-describedby="email-hint email-error" 
+                               value="[valoreEmail]" class="[classeEmail]" >
+                        <span id="email-error" class="errorSuggestion" role="alert">[erroreEmail]</span>
+                        <small id="email-hint" class="form-hint">Inserisci l'email associata al tuo account</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password"> Password *: </label>
+                        <input type="password" id="password" name="password" autocomplete="current-password" 
+                               required aria-describedby="password-hint password-error" 
+                               class="[classePassword]" >
+                        <span id="password-error" class="errorSuggestion" role="alert">[errorePassword]</span>
+                        <small id="password-hint" class="form-hint">Inserisci la password associata al tuo account</small>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="bottone-primario">Accedi</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </section>
+</main>
 
     <!-- Footer -->
     <footer>

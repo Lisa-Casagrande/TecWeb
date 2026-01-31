@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const feedback = document.getElementById('error-summary');
+    const firstInput = document.getElementById('email');
     const inputs = document.querySelectorAll('#login-form input');
-
     inputs.forEach(input => {
         input.addEventListener('input', function() {
             input.classList.remove('input-error');
-
             const errorId = input.getAttribute('aria-describedby')?.split(' ')?.find(id => id.includes('error'));
             if (errorId) {
                 const errorElem = document.getElementById(errorId);

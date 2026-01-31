@@ -14,6 +14,10 @@ $data = [
     'erroreGenerale' => ''
 ];
 
+if (isset($_GET['success'])) {
+    $data['erroreGenerale'] = "Registrazione avvenuta con successo! Ora puoi accedere.";
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data['valoreEmail'] = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';

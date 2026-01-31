@@ -130,9 +130,7 @@ $stmt->execute([
     'reg_citta'       => $citta
 ]);
 
-/* =============================
-   SUCCESSO → REDIRECT LOGIN
-============================= */
+/*  SUCCESSO → REDIRECT LOGIN */
 unset($_SESSION['old'], $_SESSION['errors']);
-header('Location: ../login.php');
+header('Location: ../login.php?success=1'); 
 exit;
