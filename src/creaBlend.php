@@ -25,6 +25,9 @@ try {
         $temp = htmlspecialchars($base['temperatura_infusione']);
         $time = htmlspecialchars($base['tempo_infusione']);
         
+        // ID univoco per il bottone
+        $btnId = "btn-seleziona-base-{$id}";
+        
         $basiHtml .= <<<HTML
         <article class="base-card" data-id="$id" 
                 data-nome="$nome"
@@ -69,7 +72,7 @@ try {
                         </span>
                     </div>
 
-                    <button class="btn btn-seleziona-base">Seleziona $nome </button>
+                    <button id="$btnId" class="btn btn-seleziona-base" aria-label="Seleziona $nome come base">Seleziona $nome</button>
                 </div>
             </div>
         </article>
@@ -112,6 +115,9 @@ HTML;
             $img = !empty($ing['img_path']) ? $ing['img_path'] : 'images/ingredienti/placeholder.webp';
             $descrizioneIng = !empty($ing['descrizione']) ? '<p class="descrizione-ingrediente">'.htmlspecialchars($ing['descrizione']).'</p>' : '';
             
+            // ID univoco per il bottone
+            $btnIngId = "btn-aggiungi-ingrediente-{$id}";
+            
             // Card Ingrediente (struttura originale)
             $ingredientiHtml .= <<<HTML
             <div class="ingrediente-card" data-id="$id" 
@@ -123,7 +129,7 @@ HTML;
                 <h4>$nome</h4>
                 $descrizioneIng
                 
-                <button class="btn btn-aggiungi-ingrediente">Aggiungi $nome</button>
+                <button id="$btnIngId" class="btn btn-aggiungi-ingrediente" aria-label="Aggiungi $nome al blend">Aggiungi $nome</button>
             </div>
 HTML;
         }

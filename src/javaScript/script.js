@@ -278,98 +278,42 @@ console.log('tema.js completamente caricato e inizializzato');
 /* ==========================================================================
    SEZIONE 2: MENU HAMBURGER
    ========================================================================== */
+/* ==========================================================================
+   SEZIONE 2: MENU HAMBURGER
+   ========================================================================== */
 document.addEventListener('DOMContentLoaded', function() {
-    
     const hamburger = document.getElementById('hamburger');
     const nav = document.querySelector('nav');
     const headerUtilities = document.querySelector('.header-utilities');
     const body = document.body;
-    
-    // Debug per vedere se trova gli elementi
-    console.log('Hamburger trovato:', hamburger);
-    console.log('Nav trovata:', nav);
-    console.log('Utilities trovate:', headerUtilities);
 
-    // Se non siamo in una pagina con header (es. login standalone), esci
-    if (!hamburger || !nav || !headerUtilities) {
-        console.warn('Elementi header mancanti - menu hamburger non inizializzato');
-        return;
-    }
+    if (!hamburger || !nav || !headerUtilities) return;
 
-    // Funzione per configurare il toggle tema nel menu mobile
-    function setupMobileThemeToggle() {
-        const mobileThemeToggle = document.querySelector('.mobile-menu-wrapper .theme-toggle');
-        if (!mobileThemeToggle) return;
-        
-        // Clona per rimuovere vecchi listener ed evitare duplicati
-        const newToggle = mobileThemeToggle.cloneNode(true);
-        mobileThemeToggle.replaceWith(newToggle);
-        
-        newToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            // Usa il ThemeManager se disponibile, altrimenti fallback
-            if (typeof ThemeManager !== 'undefined') {
-                ThemeManager.toggleTheme();
-            } else {
-                // Fallback se ThemeManager non è caricato
-                body.classList.toggle('dark-theme');
-                const isDark = body.classList.contains('dark-theme');
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
-                updateThemeIcons();
-            }
-        });
-    }
+    let mobileMenuWrapper = document.querySelector('.mobile-menu-wrapper');
 
-    /*Funzione per aprire la barra di ricerca da mobile */
-    function setupMobileSearch() {
-        const mobileSearchBtn = mobileMenuWrapper.querySelector('#searchToggle');
-        
-        if (mobileSearchBtn) {
-            const newSearchBtn = mobileSearchBtn.cloneNode(true);
-            mobileSearchBtn.replaceWith(newSearchBtn);
-            
-            newSearchBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                closeMenu(); // chiude menu hamburger
-                
-                // apre la barra di ricerca principale
-                const mainSearchForm = document.getElementById('searchForm');
-                const mainSearchInput = document.getElementById('search-input');
-                
-                if (mainSearchForm) {
-                    mainSearchForm.classList.add('active'); // Apre la barra
-                    
-                    // mette il cursore per scrivere
-                    if (mainSearchInput) {
-                        setTimeout(() => {
-                            mainSearchInput.focus();
-                        }, 200);
-                    }
-                }
-            });
-        }
-    } 
-
-    // Funzione per aggiornare le icone del tema (fallback)
     function updateThemeIcons() {
         const isDark = body.classList.contains('dark-theme');
         document.querySelectorAll('.theme-toggle').forEach(toggle => {
             const sunIcon = toggle.querySelector('.sun-icon');
             const moonIcon = toggle.querySelector('.moon-icon');
             if (sunIcon && moonIcon) {
-                if (isDark) {
-                    sunIcon.style.display = 'block';
-                    moonIcon.style.display = 'none';
-                } else {
-                    sunIcon.style.display = 'none';
-                    moonIcon.style.display = 'block';
-                }
+                sunIcon.style.display = isDark ? 'block' : 'none';
+                moonIcon.style.display = isDark ? 'none' : 'block';
             }
         });
     }
 
-    // Crea wrapper per menu mobile
-    let mobileMenuWrapper = document.querySelector('.mobile-menu-wrapper');
+    function handleThemeToggle(e) {
+        e.stopPropagation();
+        if (typeof ThemeManager !== 'undefined') {
+            ThemeManager.toggleTheme();
+        } else {
+            body.classList.toggle('dark-theme');
+            localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
+            updateThemeIcons();
+        }
+    }
+
     if (!mobileMenuWrapper) {
         mobileMenuWrapper = document.createElement('div');
         mobileMenuWrapper.className = 'mobile-menu-wrapper';
@@ -377,70 +321,55 @@ document.addEventListener('DOMContentLoaded', function() {
         mobileMenuWrapper.setAttribute('role', 'dialog');
         mobileMenuWrapper.setAttribute('aria-modal', 'true');
         mobileMenuWrapper.setAttribute('aria-label', 'Menu di navigazione mobile');
-        
-        // Crea il pulsante di chiusura (X)
+
         const closeButton = document.createElement('button');
         closeButton.className = 'mobile-close-btn';
         closeButton.setAttribute('aria-label', 'Chiudi menu');
         closeButton.innerHTML = `
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M18.707 6.707l-1.414-1.414L12 10.586 6.707 5.293 5.293 6.707 10.586 12l-5.293 5.293 1.414 1.414L12 13.414l5.293 5.293 1.414-1.414L13.414 12l5.293-5.293z"/>
-            </svg>
-        `;
-        
-        // Clona nav e utilities nel wrapper
+            </svg>`;
+
+        // Clona la navigazione
         const navClone = nav.cloneNode(true);
+        
+        // Clona header-utilities (carrello, utente, tema)
         const utilitiesClone = headerUtilities.cloneNode(true);
         
-        // rimuovw gli ID dai cloni per evitare duplicati
+        // Rimuovi tutti gli ID dai cloni per evitare duplicati
         utilitiesClone.querySelectorAll('[id]').forEach(el => {
             el.id = el.id + '-mobile-clone';
         });
 
+        // Aggiungi event listener al tema clonato
+        const mobileThemeToggle = utilitiesClone.querySelector('.theme-toggle');
+        if (mobileThemeToggle) {
+            mobileThemeToggle.addEventListener('click', handleThemeToggle);
+        }
+
         mobileMenuWrapper.appendChild(closeButton);
         mobileMenuWrapper.appendChild(navClone);
         mobileMenuWrapper.appendChild(utilitiesClone);
-        
         body.appendChild(mobileMenuWrapper);
-        
-        // Event listener per il pulsante di chiusura
-        closeButton.addEventListener('click', function(e) {
+
+        closeButton.addEventListener('click', (e) => {
             e.stopPropagation();
             closeMenu();
         });
-        
-        // Setup iniziale del tema mobile e della ricerca
-        setupMobileThemeToggle();
-        setupMobileSearch();
     }
 
-    // Toggle menu
-    hamburger.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const isOpen = hamburger.classList.contains('active');
-        if (isOpen) {
-            closeMenu();
-        } else {
-            openMenu();
-        }
-    });
-    
     function openMenu() {
-        console.log('Apertura menu...');
         hamburger.classList.add('active');
         hamburger.setAttribute('aria-expanded', 'true');
         mobileMenuWrapper.style.display = 'flex';
-        
-        // Previeni lo scroll del body
         body.style.overflow = 'hidden';
         
-        // Riapplica il setup del tema quando il menu viene riaperto
-        setTimeout(() => {
-            setupMobileThemeToggle();
-            setupMobileSearch();
-        }, 50);
-        
-        // Aggiungi listener per chiudere dopo un breve delay
+        // Chiudi ricerca se aperta
+        const searchForm = document.getElementById('searchForm');
+        if (searchForm) {
+            searchForm.classList.remove('active');
+        }
+
         setTimeout(() => {
             document.addEventListener('click', handleClickOutside);
             mobileMenuWrapper.addEventListener('click', handleMenuClick);
@@ -448,45 +377,41 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function closeMenu() {
-        console.log('Chiusura menu...');
         hamburger.classList.remove('active');
         hamburger.setAttribute('aria-expanded', 'false');
         mobileMenuWrapper.style.display = 'none';
-        
-        // Ripristina lo scroll del body
         body.style.overflow = '';
-        
-        // Rimuovi i listener
         document.removeEventListener('click', handleClickOutside);
         mobileMenuWrapper.removeEventListener('click', handleMenuClick);
     }
-    
+
     function handleClickOutside(e) {
         if (!mobileMenuWrapper.contains(e.target) && !hamburger.contains(e.target)) {
             closeMenu();
         }
     }
-    
+
     function handleMenuClick(e) {
-        // Chiudi se clicchi su un link o direttamente sul background
         if (e.target.tagName === 'A' || e.target === mobileMenuWrapper) {
             closeMenu();
         }
     }
-    
-    // Chiudi con tasto ESC
+
+    hamburger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        hamburger.classList.contains('active') ? closeMenu() : openMenu();
+    });
+
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && hamburger.classList.contains('active')) {
             closeMenu();
         }
     });
-    
-    // Chiudi se si ridimensiona la finestra a desktop
+
     let resizeTimer;
     window.addEventListener('resize', function() {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function() {
-            console.log('Resize detected:', window.innerWidth);
             if (window.innerWidth > 900 && hamburger.classList.contains('active')) {
                 closeMenu();
             }
@@ -888,34 +813,29 @@ function updateCartCounter() {
 
 document.addEventListener('DOMContentLoaded', function() {
 
-   // --- GESTIONE TENDINA RIEPILOGO MOBILE ---
+    // --- GESTIONE SIDEBAR MOBILE (PATTERN CATALOGO) ---
+    const fixedBlendBtn = document.getElementById('fixedBlendBtn');
+    const blendPanel = document.getElementById('blendPanel');
+    const closeBlendBtn = document.getElementById('closeBlendBtn');
     
-    // 1. Selezioniamo gli elementi (Nota: usiamo getElementById per il nuovo bottone)
-    const btnApriMobile = document.getElementById('btnRiepilogoMobile');
-    const overlayMobile = document.getElementById('riepilogo-mobile-overlay');
-    const btnChiudiMobile = document.querySelector('.btn-chiudi-riepilogo');
-
-    if (btnApriMobile && overlayMobile) {
-        
-        // APERTURA: Aggiunge classe active e BLOCCA lo scroll del corpo pagina
-        btnApriMobile.addEventListener('click', () => {
-            overlayMobile.classList.add('active');
-            document.body.style.overflow = 'hidden'; // blocca lo scroll sotto
+    if (fixedBlendBtn && blendPanel && closeBlendBtn) {
+        // Apertura sidebar
+        fixedBlendBtn.addEventListener('click', () => {
+            blendPanel.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Blocca scroll del body
         });
-
-        // CHIUSURA (Tasto X): Rimuove classe e RIABILITA lo scroll
-        if (btnChiudiMobile) {
-            btnChiudiMobile.addEventListener('click', () => {
-                overlayMobile.classList.remove('active');
-                document.body.style.overflow = ''; // <--- ECCOLO: Riabilita lo scroll
-            });
-        }
-
-        // CHIUSURA (Click fuori): Opzionale, se clicchi sulla parte scura (se presente)
-        overlayMobile.addEventListener('click', (e) => {
-            if (e.target === overlayMobile) {
-                overlayMobile.classList.remove('active');
-                document.body.style.overflow = ''; // Riabilita lo scroll anche qui
+        
+        // Chiusura con bottone X
+        closeBlendBtn.addEventListener('click', () => {
+            blendPanel.classList.remove('active');
+            document.body.style.overflow = ''; // Riabilita scroll
+        });
+        
+        // Chiusura cliccando fuori (opzionale)
+        blendPanel.addEventListener('click', (e) => {
+            if (e.target === blendPanel) {
+                blendPanel.classList.remove('active');
+                document.body.style.overflow = '';
             }
         });
     }
@@ -936,7 +856,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     /* Aggiorna tutta l'interfaccia utente (Contatori, Riepilogo, Prezzo e Bottone) */
-     
     function aggiornaUI() {
         // Aggiorna Contatori
         const contBase = document.getElementById('contatore-base');
@@ -946,11 +865,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (contIng) contIng.textContent = `${statoBlend.ingredienti.length}/${statoBlend.maxIngredienti}`;
 
         // Aggiorna Badge Mobile
-        const badgeMobile = document.getElementById('badge-riepilogo-mobile');
-        if (badgeMobile) {
+        const badgeRiepilogo = document.getElementById('badgeRiepilogo');
+        if (badgeRiepilogo) {
             const totaleItems = (statoBlend.base ? 1 : 0) + statoBlend.ingredienti.length;
-            badgeMobile.textContent = totaleItems;
-            badgeMobile.style.display = totaleItems > 0 ? 'flex' : 'none';
+            badgeRiepilogo.textContent = totaleItems;
+            badgeRiepilogo.style.display = totaleItems > 0 ? 'flex' : 'none';
         }
 
         // Aggiorna Riepilogo Base (con la X di rimozione)
@@ -959,7 +878,7 @@ document.addEventListener('DOMContentLoaded', function() {
             baseDiv.innerHTML = statoBlend.base 
                 ? `<div class="item-selezionato">
                     <span><strong>Base:</strong> ${statoBlend.base.nome}</span>
-                    <button class="btn-rimuovi-x" onclick="rimuoviBase()">✕</button>
+                    <button class="btn-rimuovi-x" onclick="rimuoviBase()" aria-label="Rimuovi ${statoBlend.base.nome}">✕</button>
                    </div>` 
                 : '<p class="nessuna-selezione">Nessuna base selezionata</p>';
         }
@@ -971,7 +890,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 ingDiv.innerHTML = statoBlend.ingredienti.map(i => `
                     <div class="item-selezionato">
                         <span>${i.nome}</span>
-                        <button class="btn-rimuovi-x" onclick="rimuoviIng(${i.id})">✕</button>
+                        <button class="btn-rimuovi-x" onclick="rimuoviIng(${i.id})" aria-label="Rimuovi ${i.nome}">✕</button>
                     </div>
                 `).join('');
             } else {
@@ -987,26 +906,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const importoPrezzo = document.getElementById('importo-prezzo');
         if (importoPrezzo) importoPrezzo.textContent = totale.toFixed(2);
 
-        // -Gestione stato Bottone Conferma 
+        // Gestione stato Bottone Conferma 
         const btnConferma = document.getElementById('btn-conferma');
         if (btnConferma) {
             const pronto = statoBlend.base && statoBlend.ingredienti.length >= 2;
             btnConferma.disabled = !pronto;
-        }
-
-        const baseDivMob = document.getElementById('base-selezionata-mobile');
-        const ingDivMob = document.getElementById('ingredienti-selezionati-mobile');
-        const importoMob = document.getElementById('importo-prezzo-mobile');
-        const btnConfMob = document.getElementById('btn-conferma-mobile');
-        
-        // Copia il contenuto generato per il desktop dentro i contenitori mobile
-        if (baseDivMob && baseDiv) baseDivMob.innerHTML = baseDiv.innerHTML;
-        if (ingDivMob && ingDiv) ingDivMob.innerHTML = ingDiv.innerHTML;
-        if (importoMob && importoPrezzo) importoMob.textContent = importoPrezzo.textContent;
-        
-        if (btnConfMob) {
-            btnConfMob.disabled = !statoBlend.base || statoBlend.ingredienti.length < 2;
-            // Se hai un listener sul bottone conferma mobile, aggiungilo qui o usa quello desktop
         }
 
         // Sincronizzazione Grafica Card 
@@ -1025,10 +929,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const btn = card.querySelector('.btn-seleziona-base');
             if (statoBlend.base && statoBlend.base.id == id) {
                 card.classList.add('selezionato');
-                if (btn) btn.textContent = 'Selezionata <span aria-hidden="true">✓</span>';
+                if (btn) {
+                    btn.innerHTML = 'Selezionata <span aria-hidden="true">✓</span>';
+                    btn.setAttribute('aria-label', `${nome} selezionata`);
+                }
             } else {
                 card.classList.remove('selezionato');
-                if (btn) btn.textContent = 'Seleziona Base';
+                if (btn) {
+                    btn.textContent = `Seleziona ${nome}`;
+                    btn.setAttribute('aria-label', `Seleziona ${nome} come base`);
+                }
             }
         });
 
@@ -1036,21 +946,34 @@ document.addEventListener('DOMContentLoaded', function() {
         const raggiuntoMax = statoBlend.ingredienti.length >= statoBlend.maxIngredienti;
         document.querySelectorAll('.ingrediente-card').forEach(card => {
             const id = card.dataset.id;
+            const nome = card.dataset.nome;
             const btn = card.querySelector('.btn-aggiungi-ingrediente');
             const isSelezionato = statoBlend.ingredienti.some(i => i.id == id);
 
             if (isSelezionato) {
                 card.classList.add('selezionato');
                 card.classList.remove('disabilitato');
-                if (btn) { btn.textContent = 'Rimuovi'; btn.disabled = false; }
+                if (btn) { 
+                    btn.textContent = 'Rimuovi'; 
+                    btn.disabled = false;
+                    btn.setAttribute('aria-label', `Rimuovi ${nome} dal blend`);
+                }
             } else {
                 card.classList.remove('selezionato');
                 if (raggiuntoMax) {
                     card.classList.add('disabilitato');
-                    if (btn) { btn.textContent = 'Aggiungi'; btn.disabled = true; }
+                    if (btn) { 
+                        btn.textContent = 'Aggiungi'; 
+                        btn.disabled = true;
+                        btn.setAttribute('aria-label', `Impossibile aggiungere ${nome}, limite raggiunto`);
+                    }
                 } else {
                     card.classList.remove('disabilitato');
-                    if (btn) { btn.textContent = 'Aggiungi'; btn.disabled = false; }
+                    if (btn) { 
+                        btn.textContent = 'Aggiungi'; 
+                        btn.disabled = false;
+                        btn.setAttribute('aria-label', `Aggiungi ${nome} al blend`);
+                    }
                 }
             }
         });
@@ -1117,18 +1040,17 @@ document.addEventListener('DOMContentLoaded', function() {
         statoBlend.ingredienti = [];
         statoBlend.maxIngredienti = 2;
         aggiornaUI();
-        // Se siamo su mobile, chiudiamo anche la tendina per feedback visivo (opzionale)
-        // const overlayMobile = document.getElementById('riepilogo-mobile-overlay');
-        // if(overlayMobile) overlayMobile.classList.remove('active');
+        
+        // Chiudi sidebar mobile se aperta
+        if (blendPanel && blendPanel.classList.contains('active')) {
+            blendPanel.classList.remove('active');
+            document.body.style.overflow = '';
+        }
     }
 
-    // Collega al bottone Desktop
+    // Collega al bottone Reset
     const btnReset = document.getElementById('btn-reset');
     if (btnReset) btnReset.addEventListener('click', eseguiReset);
-
-    // Collega al bottone Mobile
-    const btnResetMobile = document.getElementById('btn-reset-mobile');
-    if (btnResetMobile) btnResetMobile.addEventListener('click', eseguiReset);
 
     /* Invio Form */
     const btnConferma = document.getElementById('btn-conferma');

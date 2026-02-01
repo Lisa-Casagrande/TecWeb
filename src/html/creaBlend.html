@@ -15,75 +15,28 @@
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
     [navbar]
 
-    <!-- Pulsante Riepilogo Mobile (visibile solo su mobile) -->
-    <button id="btnRiepilogoMobile" class="fixed-filter-btn" aria-label="Apri riepilogo blend">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <!-- Pulsante Riepilogo Mobile (stile catalogo) -->
+    <button id="fixedBlendBtn" class="fixed-filter-btn" aria-label="Apri riepilogo blend">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
             <path d="m4,7h3c1.103,0,2-.897,2-2v-3c0-1.103-.897-2-2-2h-3c-1.103,0-2,.897-2,2v3c0,1.103.897,2,2,2Zm-1-5c0-.552.448-1,1-1h3c.552,0,1,.448,1,1v3c0,.552-.448,1-1,1h-3c-.552,0-1-.448-1-1v-3Zm6,12v-3c0-1.103-.897-2-2-2h-3c-1.103,0-2,.897-2,2v3c0,1.103.897,2,2,2h3c1.103,0,2-.897,2-2Zm-6,0v-3c0-.552.448-1,1-1h3c.552,0,1,.448,1,1v3c0,.552-.448,1-1,1h-3c-.552,0-1-.448-1-1Zm10-7h3c1.103,0,2-.897,2-2v-3c0-1.103-.897-2-2-2h-3c-1.103,0-2,.897-2,2v3c0,1.103.897,2,2,2Zm-1-5c0-.552.448-1,1-1h3c.552,0,1,.448,1,1v3c0,.552-.448,1-1,1h-3c-.552,0-1-.448-1-1v-3Zm1.5,3h2c.276,0,.5-.224.5-.5v-2c0-.276-.224-.5-.5-.5h-2c-.276,0-.5.224-.5.5v2c0,.276.224.5.5.5Zm.5-2h1v1h-1v-1Zm10,20.5c0,.276-.224.5-.5.5s-.5-.224-.5-.5c0-1.637-.994-3.026-2.596-3.627l-5.08-1.905c-.195-.073-.324-.26-.324-.468v-5.893c0-.789-.535-1.471-1.244-1.587-.45-.07-.886.046-1.227.336-.337.286-.529.703-.529,1.144v8.424c0,.421-.235.796-.615.979-.379.18-.819.132-1.146-.13,0,0-1.716-1.367-1.719-1.371-.606-.562-1.553-.529-2.115.073-.565.604-.534,1.557.064,2.118l1.633,1.551c.325.309.107.856-.342.856-.127,0-.249-.048-.341-.135l-1.64-1.548c-1-.937-1.048-2.518-.106-3.524.928-.994,2.482-1.054,3.49-.149.003.002,1.698,1.347,1.698,1.347l.138-.066v-8.424c0-.734.321-1.429.881-1.905.561-.476,1.307-.68,2.035-.561,1.188.193,2.084,1.3,2.084,2.573v5.546l4.756,1.784c2.001.75,3.244,2.498,3.244,4.562Z"/>
         </svg>
-        <span class="riepilogo-badge" id="badge-riepilogo-mobile">0</span>
+        <span class="riepilogo-badge" id="badgeRiepilogo">0</span>
     </button>
-
-    <!-- Overlay Modal Mobile -->
-    <div class="riepilogo-mobile-overlay" id="riepilogo-mobile-overlay">
-        <div class="riepilogo-mobile-content">
-            
-            <div class="riepilogo-header">
-                <h1>Il tuo Blend</h1>
-                <button class="btn-chiudi-riepilogo">✕</button>
-            </div>
-            
-            <div class="riepilogo-box-mobile">
-                
-                <div class="config-group">
-                    <span class="label">Ingredienti:</span>
-                    <div class="radio-box">
-                        <label><input type="radio" name="numIngredientiMobile" value="2" checked> 2</label>
-                        <label><input type="radio" name="numIngredientiMobile" value="3"> 3</label>
-                    </div>
-                </div>
-
-                <div class="stato-selezione">
-                    <p>Base: <span id="contatore-base-mobile">0/1</span></p>
-                    <p>Ingredienti: <span id="contatore-ingredienti-mobile">0/2</span></p>
-                </div>
-
-                <button class="btn-reset-link" id="btn-reset-mobile">Svuota tutto</button>
-
-                <!-- Area Riepilogo -->
-                <div class="riepilogo-scroll-area">
-                    <div class="sezione-riepilogo">
-                        <h2>Base selezionata:</h2>
-                        <div id="base-selezionata-mobile">
-                            <p class="nessuna-selezione">Nessuna base selezionata</p>
-                        </div>
-                    </div>
-                    
-                    <div class="sezione-riepilogo">
-                        <h2>Ingredienti:</h2>
-                        <div id="ingredienti-selezionati-mobile">
-                            <p class="nessuna-selezione">Nessun ingrediente aggiunto</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Footer Prezzo e Conferma -->
-                <div class="riepilogo-footer">
-                    <div class="prezzo-finale">Totale: € <span id="importo-prezzo-mobile">0.00</span></div>
-                    <button id="btn-conferma-mobile" class="btn-conferma" disabled>Conferma Blend</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <main id="main-content" class="crea-blend-layout">
         <div class="container-grid">
-            <!--SIDEBAR-->
-            <aside class="filter-panel">
-                <div class="riepilogo-header">
+            <!-- SIDEBAR RIEPILOGO -->
+            <aside id="blendPanel" class="filter-panel">
+                
+                <div class="filters-header">
                     <h1>Il tuo Blend</h1>
+                    <button id="closeBlendBtn" class="bottone-primario mobile-only" aria-label="Chiudi riepilogo">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M18.707 6.707l-1.414-1.414L12 10.586 6.707 5.293 5.293 6.707 10.586 12l-5.293 5.293 1.414 1.414L12 13.414l5.293 5.293 1.414-1.414L13.414 12l5.293-5.293z"/>
+                        </svg>
+                    </button>
                 </div>
 
-                <!-- Sezione Personalizza (sopra) -->
                 <div class="config-group">
                     <span class="label">Ingredienti:</span>
                     <div class="radio-box">
@@ -99,7 +52,6 @@
 
                 <button class="btn-reset-link" id="btn-reset">Svuota tutto</button>
                     
-                <!-- Area scrollabile -->
                 <div class="riepilogo-scroll-area">
                     <div class="sezione-riepilogo">
                         <h2>Base selezionata:</h2>
@@ -114,6 +66,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <!-- Footer con prezzo e bottone -->
                 <div class="riepilogo-footer">
                     <div class="prezzo-finale">Totale: € <span id="importo-prezzo">0.00</span></div>
@@ -203,7 +156,7 @@
                 </div> <!--fine footer content-->
 
 
-                <!-- Social Media Icons - solo icoe dei social-->
+                <!-- Social Media Icons - solo icone dei social-->
                 <div class="footer-social">
                     <h3>Seguici sui social</h3>
                     <div class="social-icons">
@@ -261,7 +214,7 @@
             </div> <!--fine class container-->
     </footer>
 
-    <!-- Pulsante Torna Su (no title perchè c'è nel css)-->
+    <!-- Pulsante Torna Su -->
    <button class="back-to-top" id="backToTop" aria-label="Torna all'inizio della pagina">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M18,15.5a1,1,0,0,1-.71-.29l-4.58-4.59a1,1,0,0,0-1.42,0L6.71,15.21a1,1,0,0,1-1.42-1.42L9.88,9.21a3.06,3.06,0,0,1,4.24,0l4.59,4.58a1,1,0,0,1,0,1.42A1,1,0,0,1,18,15.5Z"/>
