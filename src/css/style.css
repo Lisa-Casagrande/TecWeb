@@ -538,8 +538,17 @@ body.dark-theme .hero {
     margin-bottom: 2em;
 }
 
-.products-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-.values-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.products-grid { 
+    grid-template-columns: repeat(3, 1fr); 
+}
+
+.values-grid { 
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+}
+
+.catalog-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
 
 .product-card, .value-item, .base {
     background-color: var(--card-bg);

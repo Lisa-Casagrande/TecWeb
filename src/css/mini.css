@@ -105,12 +105,10 @@
         gap: 2em;
     }
     
-    /* Prima rimuovi tutte le linee */
     .value-item::after {
         display: none;
     }
     
-    /* Linee per i primi 4 elementi di ogni riga (5 colonne) */
     .value-item:nth-child(5n+1)::after,
     .value-item:nth-child(5n+2)::after,
     .value-item:nth-child(5n+3)::after,
@@ -155,7 +153,6 @@
     }
 }
 
-/* MEDIA QUERIES UNIFICATE INIZIALI */
 @media screen and (max-width: 1024px) {
     .login-container {
         width: 95%;
@@ -244,9 +241,9 @@
         display: flex;
         flex-direction: column;
         gap: 6px;
-        background-color: transparent; /* Rimuove lo sfondo ereditato dai bottoni */
-        border: none; /* Rimuove il bordo ereditato */
-        padding: 0; /* Rimuove padding interno indesiderato */
+        background-color: transparent;
+        border: none;
+        padding: 0;
         cursor: pointer;
         width: auto;
     }
@@ -319,7 +316,7 @@
         background-color: rgba(255, 255, 255, 0.05);
     }
     
-    /* SEZIONE UTILITIES MOBILE - REPLICA DESKTOP */
+    /* SEZIONE UTILITIES */
     .mobile-menu-wrapper .header-utilities {
         display: flex;
         flex-direction: row;
@@ -345,7 +342,6 @@
         position: relative;
     }
     
-    /* Effetto Hover e Focus replicato dal desktop */
     .mobile-menu-wrapper .header-utilities .icon-button:hover,
     .mobile-menu-wrapper .header-utilities .icon-button:focus {
         background-color: rgba(255, 255, 255, 0.1);
@@ -529,7 +525,7 @@
 /* CARRELLO */
 @media (min-width: 992px) {
     .cart-layout {
-        grid-template-columns: 2fr 1fr; /*desktop: 2/3 lista, 1/3 checkout */
+        grid-template-columns: 2fr 1fr;
     }
 }
 
@@ -540,12 +536,10 @@
         gap: 2em;
     }
     
-    /* Prima rimuovi tutte le linee */
     .value-item::after {
         display: none;
     }
     
-    /* Poi aggiungi linee solo dove servono (primi 2 elementi di ogni riga) */
     .value-item:nth-child(3n+1)::after,
     .value-item:nth-child(3n+2)::after {
         display: block;
@@ -568,6 +562,10 @@
         margin-bottom: 0.6em;
         padding-left: 0;
         margin-left: 0;
+    }
+
+    .products-grid, .catalog-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     }
 
     .login-container { /*login*/
@@ -913,9 +911,9 @@
         font-size: 0.75em;
     }
 
-    /* CHI SIAMO - MOBILE */
+    /* CHI SIAMO*/
     .p-title {
-        font-size: 1.3em; /* CORREZIONE: era 0.8em nel file mini.css */
+        font-size: 1.3em;
     }
     
     .content-text p {
