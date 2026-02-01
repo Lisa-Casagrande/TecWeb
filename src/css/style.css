@@ -1305,9 +1305,10 @@ body.dark-theme .separatore-testo {
     color: var(--text-color);
 }
 
-/* ===================================
-   PAGINA PRODOTTO
-   =================================== */
+/* ===========
+    BREADCRUM 
+   =========== */
+
 .breadcrumb {
     background-color: var(--alt-section-bg);
     padding: 1em 0;
@@ -1335,6 +1336,10 @@ body.dark-theme .separatore-testo {
     color: var(--button-bg);
     font-weight: 500;
 }
+
+/* ===================================
+   PAGINA PRODOTTO
+   =================================== */
 
 .product-detail-section {
     padding: 3em 0;
