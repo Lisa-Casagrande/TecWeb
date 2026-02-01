@@ -262,8 +262,6 @@ body.dark-theme .logo-light { display: none; }
     font-size: 1.1em;
     white-space: nowrap;
     color: var(--header-text);
-    text-decoration: underline;
-    text-decoration-color: transparent;
     text-underline-offset: 4px;
 }
 
@@ -276,6 +274,7 @@ body.dark-theme .logo-light { display: none; }
 /* HOVER E FOCUS */
 .main-nav .nav-link:hover,
 .main-nav .nav-link:focus-visible {
+    text-decoration: underline;
     text-decoration-color: currentColor;
 }
 
@@ -309,6 +308,11 @@ header .icon-button svg {
     width: 27px;
     height: 27px;
     fill: var(--header-text);
+}
+
+header .icon-button.current-page {
+    outline: 1.5px solid var(--header-text);
+    background-color: transparent;
 }
 
 a.icon-button:visited svg {
@@ -345,7 +349,6 @@ body.dark-theme .moon-icon { opacity: 1; }
     font-size: 1.1em;
     font-weight: bold;
     text-align: center;
-    text-decoration: none;
     border-radius: 8px;
     cursor: pointer;
     background-color: var(--button-bg);
