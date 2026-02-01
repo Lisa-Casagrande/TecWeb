@@ -192,7 +192,7 @@ HTML;
                     <input type="hidden" name="azione" value="rimuovi">
                     <input type="hidden" name="chiave_carrello" value="{$chiave}">
                     <button type="submit" class="bottone-primario" aria-label="Rimuovi {$nome} dal carrello">
-                    <span aria-hidden="true">Rimuovi</span>
+                        <span aria-hidden="true">Rimuovi</span>
                     </button>
                 </form>
             </div>

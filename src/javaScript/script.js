@@ -878,7 +878,9 @@ document.addEventListener('DOMContentLoaded', function() {
             baseDiv.innerHTML = statoBlend.base 
                 ? `<div class="item-selezionato">
                     <span><strong>Base:</strong> ${statoBlend.base.nome}</span>
-                    <button class="btn-rimuovi-x" onclick="rimuoviBase()" aria-label="Rimuovi ${statoBlend.base.nome}">✕</button>
+                    <button class="btn-rimuovi-x" onclick="rimuoviBase()" aria-label="Rimuovi ${statoBlend.base.nome} dalla selezione">
+                        <span aria-hidden="true">✕</span>
+                    </button>
                    </div>` 
                 : '<p class="nessuna-selezione">Nessuna base selezionata</p>';
         }
@@ -890,7 +892,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 ingDiv.innerHTML = statoBlend.ingredienti.map(i => `
                     <div class="item-selezionato">
                         <span>${i.nome}</span>
-                        <button class="btn-rimuovi-x" onclick="rimuoviIng(${i.id})" aria-label="Rimuovi ${i.nome}">✕</button>
+                        <button class="btn-rimuovi-x" onclick="rimuoviIng(${i.id})" aria-label="Rimuovi ${i.nome} dalla selezione">
+                            <span aria-hidden="true">✕</span>
+                        </button>
+
                     </div>
                 `).join('');
             } else {
@@ -936,7 +941,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 card.classList.remove('selezionato');
                 if (btn) {
-                    btn.textContent = `Seleziona ${nome}`;
+                    btn.innerHTML = `<span aria-hidden="true">Seleziona</span>`;
                     btn.setAttribute('aria-label', `Seleziona ${nome} come base`);
                 }
             }
@@ -954,7 +959,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 card.classList.add('selezionato');
                 card.classList.remove('disabilitato');
                 if (btn) { 
-                    btn.textContent = 'Rimuovi'; 
+                    btn.innerHTML = `<span aria-hidden="true">Rimuovi</span>`;
                     btn.disabled = false;
                     btn.setAttribute('aria-label', `Rimuovi ${nome} dal blend`);
                 }
@@ -963,14 +968,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (raggiuntoMax) {
                     card.classList.add('disabilitato');
                     if (btn) { 
-                        btn.textContent = 'Aggiungi'; 
+                        btn.innerHTML = `<span aria-hidden="true">Aggiungi</span>`;
                         btn.disabled = true;
                         btn.setAttribute('aria-label', `Impossibile aggiungere ${nome}, limite raggiunto`);
                     }
                 } else {
                     card.classList.remove('disabilitato');
                     if (btn) { 
-                        btn.textContent = 'Aggiungi'; 
+                        btn.innerHTML = `<span aria-hidden="true">Aggiungi</span>`;
                         btn.disabled = false;
                         btn.setAttribute('aria-label', `Aggiungi ${nome} al blend`);
                     }

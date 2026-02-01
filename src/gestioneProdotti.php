@@ -44,7 +44,9 @@ foreach ($prodotti as $prodotto) {
             <div class="admin-actions">
                 <form action="php/eliminaProdotto.php" method="POST" onsubmit="return confirm('Sei sicuro di voler eliminare questo prodotto? Questa azione è irreversibile.');">
                     <input type="hidden" name="id_prodotto" value="{$prodotto['id_prodotto']}">
-                    <button type="submit" class="bottone-primario" aria-label="Elimina {$prodotto['nome']}">Elimina</button>
+                    <button type="submit" class="bottone-primario" aria-label="Elimina {$prodotto['nome']}">
+                        <span aria-hidden="true">Elimina</span>
+                    </button>
                 </form>
             </div>
         </div>

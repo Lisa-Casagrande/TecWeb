@@ -72,7 +72,9 @@ try {
                         </span>
                     </div>
 
-                    <button id="$btnId" class="btn btn-seleziona-base" aria-label="Seleziona $nome come base">Seleziona $nome</button>
+                    <button id="$btnId" class="btn btn-seleziona-base" aria-label="Seleziona $nome come base">
+                        <span aria-hidden="true">Seleziona</span>
+                    </button>
                 </div>
             </div>
         </article>
@@ -128,8 +130,10 @@ HTML;
                 <img src="$img" alt="$nome">
                 <h4>$nome</h4>
                 $descrizioneIng
-                
-                <button id="$btnIngId" class="btn btn-aggiungi-ingrediente" aria-label="Aggiungi $nome al blend">Aggiungi $nome</button>
+
+                <button id="$btnIngId" class="btn btn-aggiungi-ingrediente" aria-label="Aggiungi $nome al blend">
+                    <span aria-hidden="true">Aggiungi</span>
+                </button>
             </div>
 HTML;
         }
