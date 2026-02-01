@@ -2437,6 +2437,13 @@ section.product-details-section .product-detail-block {
     margin: 0;
 }
 
+.radio-box input[type="radio"]:focus-visible,
+.btn-reset-link:focus-visible,
+.btn-seleziona-base:focus-visible,
+.btn-aggiungi-ingrediente {
+    outline: 2px solid var(--button-bg);
+}
+
 .stato-selezione {
     display: flex;
     flex-direction: column;
@@ -2846,6 +2853,11 @@ button:hover {
     margin-right: 0.8em;
     accent-color: var(--button-bg);
     cursor: pointer;
+}
+
+.filter-group input[type="checkbox"]:focus-visible,
+.filter-group input[type="radio"]:focus-visible {
+    outline: 2px solid var(--button-bg);
 }
 
 
