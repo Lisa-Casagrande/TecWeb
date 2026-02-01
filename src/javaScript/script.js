@@ -274,10 +274,6 @@ if (!window.localStorage) {
 
 console.log('tema.js completamente caricato e inizializzato');
 
-
-/* ==========================================================================
-   SEZIONE 2: MENU HAMBURGER
-   ========================================================================== */
 /* ==========================================================================
    SEZIONE 2: MENU HAMBURGER
    ========================================================================== */
@@ -1286,7 +1282,6 @@ document.addEventListener('DOMContentLoaded', function() {
     filterProducts();
 });
 
-
 /* ==============================
     GESTIONE RICERCA DELLA NAVBAR
 =============================== */
@@ -1294,20 +1289,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchToggle = document.getElementById('searchToggle');
     const searchForm = document.getElementById('searchForm');
     const searchInput = document.getElementById('search-input');
-
-    // riferimenti al menu hamburger e alla navigazione per il mobile
     const hamburgerBtn = document.getElementById('hamburger');
     const mainNav = document.querySelector('.main-nav');
 
     if (searchToggle && searchForm) {
         //al click sulla lente:
         searchToggle.addEventListener('click', (e) => {
-            e.stopPropagation(); //evita che il click si propaghi e chiuda subito
+            e.stopPropagation();
             
-            //toggle classe 'active' per mostrare/nascondere
             searchForm.classList.toggle('active');
 
-            // se la ricerca si apre, chiudi il menu hamburger (se è aperto) (MOBILE)
+            // se la ricerca si apre, chiudi il menu hamburger (se è aperto)
             if (searchForm.classList.contains('active')) {
                 if (hamburgerBtn) hamburgerBtn.classList.remove('active');
                 if (mainNav) mainNav.classList.remove('active');
@@ -1319,20 +1311,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
             //focus automatico sul campo input se aperto
             if (isOpen && searchInput) {
-                // piccolo timeout per assicurarsi che la transizione mobile sia partita
                 setTimeout(() => {
                     searchInput.focus();
                 }, 50);
             }
         });
 
-        //chiudi se si clicca fuori dal form e dal bottone
+        //si chiude se si clicca fuori dal form e dal bottone
         document.addEventListener('click', (e) => {
             if (!searchForm.contains(e.target) && !searchToggle.contains(e.target)) {
                 searchForm.classList.remove('active');
                 searchToggle.setAttribute('aria-expanded', 'false');
             }
         });
+
         //evita chiusura se clicco dentro il form stesso (es. sull'input)
         searchForm.addEventListener('click', (e) => {
             e.stopPropagation();

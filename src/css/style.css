@@ -271,13 +271,6 @@ body.dark-theme .logo-light { display: none; }
     text-decoration-color: currentColor;
 }
 
-/* HOVER E FOCUS */
-.main-nav .nav-link:hover,
-.main-nav .nav-link:focus-visible {
-    text-decoration: underline;
-    text-decoration-color: currentColor;
-}
-
 .main-nav li.current-page .nav-leaf-icon {
     width: 17px;
     height: auto;
@@ -724,9 +717,9 @@ footer {
 
 .footer-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.9em;
-    margin-bottom: 1em; 
+    margin-bottom: 1em;
 }
 
 .footer-brand {
@@ -768,8 +761,8 @@ footer {
 /* ===================================
    SOCIAL ICONS
    =================================== */
-.footer-social {
-    grid-column: 1 / -1; 
+.footer-social { 
+    grid-column: 1 / -1;
     text-align: right; 
     padding-top: 0.1em; 
     margin-top: 0.1em; 
@@ -1333,34 +1326,31 @@ body.dark-theme .separatore-testo {
     BREADCRUM 
    =========== */
 
+/* --- STILE GENERALE (LIGHT MODE) --- */
 .breadcrumb {
     background-color: var(--alt-section-bg);
-    padding: 1em 0;
+    padding: 0.3em 0;
     border-bottom: 1px solid rgba(0,0,0,0.1);
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
 }
 
 .breadcrumb .container {
-    display: flex;
-    gap: 0.5em;
-    flex-wrap: wrap;
-    font-size: 0.95em;
-    justify-content: flex-start; /* Forza l'allineamento a sinistra (all'inizio) */
-    align-items: center;
-}
-
-.breadcrumb a {
-    text-decoration: none;
-}
-
-.breadcrumb a:hover,
-.breadcrumb a:focus-visible {
-    transform: translateY(-3px);
-    color: var(--button-bg);
+    justify-content: flex-start;
 }
 
 .breadcrumb span {
     color: var(--button-bg);
     font-weight: 500;
+}
+
+body.dark-theme .breadcrumb {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+}
+
+body.dark-theme .breadcrumb a, 
+body.dark-theme .breadcrumb span {
+    color: var(--button-text);
 }
 
 /* ===================================
@@ -1733,9 +1723,9 @@ section.product-details-section .product-detail-block {
     flex-wrap: wrap;
 }
 
-.footer-section-admin{
-    padding: 1em;
-    margin-bottom: 1em;
+.footer-section-admin {
+    padding: 1fraem;
+    margin-bottom: 0;
 }
 
 /*gestioneProdotti.php */
@@ -2317,15 +2307,15 @@ section.product-details-section .product-detail-block {
     right: -5px;
     background-color: var(--text-color);
     color: var(--bg-color);
-    font-size: 1em;
+    font-size: 0.75em;
     font-weight: bold;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
     min-width: 20px;
     height: 20px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--bg-color);
     z-index: 10;
     pointer-events: none;
 }
@@ -2483,6 +2473,11 @@ section.product-details-section .product-detail-block {
     padding: 0;
     margin: 0em 0;
     font-size: 0.95em;
+}
+
+.btn-reset-link:hover {
+    color: var(--button-bg);
+    transform: translateY(-4px);
 }
 
 .sezione-riepilogo h4 {
