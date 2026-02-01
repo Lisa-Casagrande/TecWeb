@@ -570,27 +570,6 @@
         margin-left: 0;
     }
 
-    .back-to-top { /* PULSNTE TORNA SU */
-        bottom: 1.5em;
-        right: 1.5em;
-        width: 3em;
-        height: 3em;
-    }
-    
-    .back-to-top svg {
-        width: 1.7em;
-        height: 1.7em;
-    }
-    
-    .back-to-top::before {
-        font-size: 0.85em;
-        padding: 0.5em 0.8em;
-    }
-    
-    .back-to-top::after {
-        right: 1em;
-    }
-
     .login-container { /*login*/
         max-width: 500px;
         padding: 2em;
@@ -841,8 +820,19 @@
     }
 }
 
-
 @media screen and (max-width: 480px) {
+    header {
+        padding: 0.3em 0;
+    }
+    
+    .header-container {
+        min-height: 45px;
+    }
+
+    .logo {
+        height: 65px;
+    }
+
     .hero {
         padding: 4em 1.5em;
     }
@@ -880,15 +870,13 @@
     }
 
     .back-to-top {
-        bottom: 1em;
-        right: 1em;
-        width: 2.8em;
-        height: 2.8em;
+        width: 44px;   
+        height: 44px;  
     }
     
     .back-to-top svg {
-        width: 1.6em;
-        height: 1.6em;
+        width: 24px;  
+        height: 24px;
     }
     
     .back-to-top::before {
@@ -969,6 +957,13 @@
     .fixed-filter-btn {
         top: 130px;
         left: 1em;
+        width: 44px;
+        height: 44px;
+    }
+
+    .fixed-filter-btn svg {
+    width: 24px; 
+    height: 24px; 
     }
 
     .product-detail-container {

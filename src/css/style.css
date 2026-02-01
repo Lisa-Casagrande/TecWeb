@@ -823,8 +823,7 @@ footer {
     background-color: var(--button-bg);
     color: var(--button-text);
     border: 2px solid var(--button-bg);
-    border-radius: 5
-    0%; 
+    border-radius: 50%; 
     cursor: pointer;
     opacity: 0;
     visibility: hidden;
