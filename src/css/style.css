@@ -142,6 +142,7 @@ address { font-style: normal; }
 .skip-link:focus {
    top: 10px;
    background-color: var(--button-bg);
+   text-decoration: underline;
    color: var(--button-text);
    outline: 3px solid var(--button-text);
    outline-offset: 3px;
@@ -261,19 +262,19 @@ body.dark-theme .logo-light { display: none; }
     font-size: 1.1em;
     white-space: nowrap;
     color: var(--header-text);
-    text-decoration: underline;
-    text-decoration-color: transparent;
     text-underline-offset: 4px;
 }
 
 .main-nav .nav-link:visited{
     color:var(--link-visited);
+    text-decoration: underline;
     text-decoration-color: currentColor;
 }
 
 /* HOVER E FOCUS */
 .main-nav .nav-link:hover,
 .main-nav .nav-link:focus-visible {
+    text-decoration: underline;
     text-decoration-color: currentColor;
 }
 
@@ -307,6 +308,11 @@ header .icon-button svg {
     width: 27px;
     height: 27px;
     fill: var(--header-text);
+}
+
+header .icon-button.current-page {
+    outline: 1.5px solid var(--header-text);
+    background-color: transparent;
 }
 
 a.icon-button:visited svg {
@@ -343,7 +349,6 @@ body.dark-theme .moon-icon { opacity: 1; }
     font-size: 1.1em;
     font-weight: bold;
     text-align: center;
-    text-decoration: none;
     border-radius: 8px;
     cursor: pointer;
     background-color: var(--button-bg);
@@ -1331,6 +1336,8 @@ body.dark-theme .separatore-testo {
     gap: 0.5em;
     flex-wrap: wrap;
     font-size: 0.95em;
+    justify-content: flex-start; /* Forza l'allineamento a sinistra (all'inizio) */
+    align-items: center;
 }
 
 .breadcrumb a {
@@ -2335,11 +2342,9 @@ section.product-details-section .product-detail-block {
     right: 0;
     margin-top: 12px;
     margin-right: 0;
-    
     background: var(--bg-color);
     border: 1px solid #ccc;
     padding: 0.1em; 
-    
     border-radius: 1em;
     box-shadow: 0 0.25em 0.6em rgba(0,0,0,0.1);
     margin-right: 0.5em;
