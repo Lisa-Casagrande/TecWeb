@@ -142,6 +142,7 @@ address { font-style: normal; }
 .skip-link:focus {
    top: 10px;
    background-color: var(--button-bg);
+   text-decoration: underline;
    color: var(--button-text);
    outline: 3px solid var(--button-text);
    outline-offset: 3px;
@@ -268,6 +269,7 @@ body.dark-theme .logo-light { display: none; }
 
 .main-nav .nav-link:visited{
     color:var(--link-visited);
+    text-decoration: underline;
     text-decoration-color: currentColor;
 }
 
@@ -1320,6 +1322,8 @@ body.dark-theme .separatore-testo {
     gap: 0.5em;
     flex-wrap: wrap;
     font-size: 0.95em;
+    justify-content: flex-start; /* Forza l'allineamento a sinistra (all'inizio) */
+    align-items: center;
 }
 
 .breadcrumb a {
@@ -2324,11 +2328,9 @@ section.product-details-section .product-detail-block {
     right: 0;
     margin-top: 12px;
     margin-right: 0;
-    
     background: var(--bg-color);
     border: 1px solid #ccc;
     padding: 0.1em; 
-    
     border-radius: 1em;
     box-shadow: 0 0.25em 0.6em rgba(0,0,0,0.1);
     margin-right: 0.5em;
