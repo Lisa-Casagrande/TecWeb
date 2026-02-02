@@ -284,9 +284,12 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.theme-toggle').forEach(toggle => {
             const sunIcon = toggle.querySelector('.sun-icon');
             const moonIcon = toggle.querySelector('.moon-icon');
-            if (sunIcon && moonIcon) {
-                sunIcon.style.display = isDark ? 'block' : 'none';
-                moonIcon.style.display = isDark ? 'none' : 'block';
+            if (isDark) {
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            } else {
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
             }
         });
     }
@@ -305,7 +308,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!mobileMenuWrapper) {
         mobileMenuWrapper = document.createElement('div');
         mobileMenuWrapper.className = 'mobile-menu-wrapper';
-        mobileMenuWrapper.style.display = 'none';
+        mobileMenuWrapper.classList.add('hidden');
         mobileMenuWrapper.setAttribute('role', 'dialog');
         mobileMenuWrapper.setAttribute('aria-modal', 'true');
         mobileMenuWrapper.setAttribute('aria-label', 'Menu di navigazione mobile');
@@ -662,7 +665,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const cartCounter = document.querySelector('.cart-counter');
         if (cartCounter) {
             cartCounter.textContent = totalItems;
-            cartCounter.style.display = totalItems > 0 ? 'inline' : 'none';
+            if (totalItems > 0) {
+                cartCounter.classList.remove('hidden');
+            } else {
+                cartCounter.classList.add('hidden');
+            }
         }
     }
 });
@@ -779,7 +786,11 @@ function updateCartCounter() {
     const cartCounter = document.querySelector('.cart-counter');
     if (cartCounter) {
         cartCounter.textContent = totalItems;
-        cartCounter.style.display = totalItems > 0 ? 'inline' : 'none';
+        if (totalItems > 0) {
+            cartCounter.classList.remove('hidden');
+        } else {
+            cartCounter.classList.add('hidden');
+        }
     }
 }
 
@@ -1149,7 +1160,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (selectedCategory !== 'all') {
                 const productCategory = product.dataset.category?.toLowerCase() || '';
-                if (productCategory !== selectedCategory) shouldShow = false;
+                if (productCategory !== selectedCategory.toLowerCase()) shouldShow = false;
             }
 
             if (selectedIngredients.length > 0) {
@@ -1173,10 +1184,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (shouldShow) {
-                product.classList.remove('hidden');
+                product.style.display = '';
                 visibleCount++;
             } else {
-                product.classList.add('hidden');
+                product.style.display = 'none';
             }
         });
 
