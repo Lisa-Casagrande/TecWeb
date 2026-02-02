@@ -11,9 +11,7 @@
     /* Tema Chiaro */
     --bg-light: #FFFBE9; /*sfondo */
     --text-brown: #33231C; /*testo principale, Header, Bottoni */
-    --visited: #74997F; /*visitati*/
-    /*--text-brown: #4E362E;   OPZIONE marrone più chiaro e visitati gialli
-    --visited: #FEBA17; */
+    --visited: #5B7B63; /*visitati*/
     --white: #FFFFFF; /*sfondo Card */
     --section-bg: #F5F0D7; /*sfondo 2 */
     /* Tema Scuro */
@@ -275,10 +273,19 @@ body.dark-theme .logo-light { display: none; }
     fill: var(--header-text);
 }
 
-.main-nav li.current-page .nav-leaf-icon {
-    width: 17px;
-    height: auto;
-    fill: var(--header-text);
+.main-nav li.current-page .nav-link {
+    color: var(--header-text);
+    text-decoration: none;
+    cursor: default;
+}
+
+.main-nav a.nav-link:visited {
+    color: var(--link-visited);
+}
+
+.main-nav li.current-page:hover,
+.main-nav li.current-page:focus {
+    text-decoration: transparent;
 }
 
 .main-nav .nav-link:hover,
@@ -1145,10 +1152,14 @@ fieldset {
     position: absolute;
     left: 0;
     top: 0.2em;
-    width: 16px;
-    height: 16px;
-    background-color: var(--text-color);
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M23,.988A3.385,3.385,0,0,0,20.275.016C17.577.277,8.493,1.406,4.92,4.979a10,10,0,0,0-.973,12.953L.439,21.439a1.5,1.5,0,0,0,2.122,2.122l3.507-3.508a10,10,0,0,0,12.953-.973C22.644,15.457,23.737,6.4,23.985,3.709A3.388,3.388,0,0,0,23,.988Zm-6.1,15.97A6.991,6.991,0,0,1,8.22,17.9l8.341-8.34a1.5,1.5,0,0,0-2.122-2.122L6.1,15.78A6.991,6.991,0,0,1,7.042,7.1C9.322,4.82,15.751,3.468,20.565,3a.391.391,0,0,1,.319.113A.385.385,0,0,1,21,3.433C20.555,8.225,19.216,14.642,16.9,16.958Z'/%3E%3C/svg%3E") no-repeat;
+    width: 1.2em;
+    height: 1.2em;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3.707,21.707,6.674,18.74a7.533,7.533,0,0,0,4.2,1.23,8.888,8.888,0,0,0,6.332-2.763C21.02,13.4,21.958,3.509,22,3.09a1,1,0,0,0-.289-.8A1.028,1.028,0,0,0,20.91,2c-.419.038-10.3.976-14.117,4.789C3.224,10.362,3.579,14.857,5.26,17.326L2.293,20.293a1,1,0,0,0,1.414,1.414Zm4.5-13.5c2.584-2.583,8.956-3.7,11.65-4.063-.365,2.693-1.477,9.062-4.064,11.649C13,18.581,9.848,18.25,8.125,17.289l4.582-4.582a1,1,0,0,0-1.414-1.414L6.712,15.874C5.751,14.151,5.42,10.994,8.207,8.207Z'/%3E%3C/svg%3E");
+}
+
+[data-theme="dark"] .leaf-icon li::before,
+.dark-mode .leaf-icon li::before {
+    filter: brightness(0) saturate(100%) invert(1);
 }
 
 #DoveTrovarci {
@@ -2526,6 +2537,17 @@ section.product-details-section .product-detail-block {
     gap: 1.5em;
 }
 
+:focus-visible {
+    outline: 3px solid var(--button-bg);
+    outline-width: 2px;
+}
+
+#fixedBlendBtn:focus-visible, 
+#closeBlendBtn:focus-visible,
+.back-to-top:focus-visible {
+    outline: 2px solid var(--text-color);
+}
+
 /* ==================================================
    CARD BASE
    ================================================== */
@@ -2815,12 +2837,12 @@ button:hover {
     border-color: var(--button-bg);
 }
 
+/* Stili per il pannello filtri */
 .filter-panel {
     grid-column: 1 / 2;
     grid-row: 1 / 4;
     display: flex;
     flex-direction: column;
-    gap: 1.5em;
     position: sticky;
     top: 150px; 
     max-height: calc(100vh - 170px); 
@@ -2834,35 +2856,36 @@ button:hover {
     scrollbar-color: var(--button-bg) var(--alt-section-bg);
 }
 
-.filter-group {
-    padding-bottom: 1.2em;
-    border-bottom: 1px solid var(--alt-section-bg);
+.filter-panel fieldset.filter-group {
+    border: none;
+    padding: 0 0 1em 0;
+    margin: 0;
 }
 
-.filter-group:last-child {
+.filter-panel fieldset.filter-group:last-child {
     border-bottom: none;
     padding-bottom: 0;
 }
 
-.filter-group h4 {
+.filter-panel fieldset.filter-group legend {
     color: var(--text-color);
     margin-bottom: 0.8em;
     font-size: 1em;
     font-weight: 600;
     text-transform: uppercase;
+    padding: 0;
+    width: 100%;
 }
 
 .filter-group label {
     display: flex;
     align-items: center;
-    margin-bottom: 0.6em;
+    margin-bottom: 0.3em;
     cursor: pointer;
     font-size: 0.95em;
     color: var(--text-color);
-}
-
-.filter-group label:hover {
-    color: var(--button-bg);
+    padding: 0.2em 0.3em;
+    border-radius: 4px;
 }
 
 .filter-group input[type="checkbox"],
@@ -2870,13 +2893,14 @@ button:hover {
     margin-right: 0.8em;
     accent-color: var(--button-bg);
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .filter-group input[type="checkbox"]:focus-visible,
 .filter-group input[type="radio"]:focus-visible {
     outline: 2px solid var(--button-bg);
+    outline-offset: 2px;
 }
-
 
 /* =======================
     GRID PRODOTTI
