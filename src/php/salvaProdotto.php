@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $disponibilita = $_POST['disponibilita'] ?? '';
     
     // Campi opzionali: usiamo stringa vuota come default per facilitare i controlli dopo
-    $grammi = $_POST['grammi'] ?? ''; 
+    $grammi = !empty($_POST['grammi']) ? $_POST['grammi'] : 50; 
     $id_base = $_POST['id_base'] ?? ''; 
 
     // VALIDAZIONE LATO SERVER

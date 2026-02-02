@@ -51,17 +51,16 @@ body.dark-theme {
 /* ===================================
    STILI GENERALI
    =================================== */
-@view-transition {
-    navigation: auto;
-}
-
 body {
     font-family: 'Georgia', 'Times New Roman', serif;
-    font-size: 100%;
+    font-size: 1em;
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--bg-color);
     min-width: 320px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -263,18 +262,29 @@ body.dark-theme .logo-light { display: none; }
     white-space: nowrap;
     color: var(--header-text);
     text-underline-offset: 4px;
+    text-decoration: none;
 }
 
 .main-nav .nav-link:visited{
     color:var(--link-visited);
-    text-decoration: underline;
-    text-decoration-color: currentColor;
 }
 
 .main-nav li.current-page .nav-leaf-icon {
     width: 17px;
     height: auto;
     fill: var(--header-text);
+}
+
+.main-nav li.current-page .nav-leaf-icon {
+    width: 17px;
+    height: auto;
+    fill: var(--header-text);
+}
+
+.main-nav .nav-link:hover,
+.main-nav .nav-link:focus {
+    text-decoration: underline;
+    text-decoration-thickness: 1px; 
 }
 
 .header-utilities {
@@ -446,7 +456,9 @@ body.dark-theme .moon-icon { opacity: 1; }
    HOME
    =================================== */
 
-main { min-height: calc(100vh - 400px); }
+main { flex: 1;
+       min-height: auto;
+}
 
 section { padding: 4em 0; }
 
@@ -733,7 +745,6 @@ footer {
     font-weight: 700;
     color: var(--header-text); 
     font-family: 'Helvetica Neue', 'Arial', sans-serif; 
-    letter-spacing: 0.5px;
     line-height: 1;
 }
 
@@ -741,8 +752,7 @@ footer {
     font-size: 1em; 
     color: var(--header-text);
     opacity: 0.8;
-    font-weight: 300; 
-    letter-spacing: 1.8px;
+    font-weight: 300;
 }
 
 .footer-section h3 {
@@ -923,7 +933,7 @@ body.dark-theme .back-to-top:focus {
     border-radius: 0.8em;
 }
 .form-links h2 {
-  font-size: 1.2rem;
+  font-size: 1.2em;
 }
 
 fieldset {
@@ -1212,7 +1222,7 @@ fieldset {
 }
 
 .map-link {
-    font-size: 0.9rem;
+    font-size: 0.9em;
     color: var(--button-bg);
     text-align: center;
     margin-bottom: 1.5em;
@@ -1482,7 +1492,7 @@ body.dark-theme .breadcrumb span {
     border: 2px solid var(--button-bg);
     background: var(--card-bg);
     color: var(--button-bg);
-    font-size: 18px;
+    font-size: 1.1em;
     border-radius: 4px;
     display: flex;
     align-items: center;
@@ -1531,7 +1541,7 @@ body.dark-theme .breadcrumb span {
 .available-stock {
     display: block;
     margin-top: 5px;
-    font-size: 14px;
+    font-size: 0.9em;
     color: var(--text-color);
     opacity: 0.7;
 }
@@ -1724,7 +1734,7 @@ section.product-details-section .product-detail-block {
 }
 
 .footer-section-admin {
-    padding: 1fraem;
+    padding: 1em;
     margin-bottom: 0;
 }
 
@@ -2204,12 +2214,12 @@ section.product-details-section .product-detail-block {
 
 .cart-item-details {
     display: inline-block;
-    font-size: 0.85rem;
+    font-size: 0.85em;
     margin-top: 5px;
 }
 
 .product-price.cart-price-fix {
-    font-size: 1.2rem;
+    font-size: 1.2em;
     margin: 0;
     border: none;
     padding: 0;
@@ -2249,7 +2259,7 @@ section.product-details-section .product-detail-block {
 }
 
 .cart-summary h2 {
-    font-size: 1.3rem;
+    font-size: 1.3em;
     color: var(--text-color);
     border-bottom: 2px solid var(--text-color);
     padding-bottom: 0.5rem;
@@ -2277,7 +2287,6 @@ section.product-details-section .product-detail-block {
     color: var(--text-color);
     margin-bottom: 0.5em;
     font-size: 1em;
-    letter-spacing: 0.5px;
 }
 
 .indirizzo-container a {
@@ -2318,6 +2327,7 @@ section.product-details-section .product-detail-block {
     justify-content: center;
     z-index: 10;
     pointer-events: none;
+    box-shadow: 0 0 0 1px var(--bg-color);
 }
 
 .print-only{
@@ -2522,7 +2532,7 @@ section.product-details-section .product-detail-block {
 #basi {
     grid-column: 2;
     grid-row: 1;
-    padding-top: 0.1;
+    padding-top: 0em;
 }
 
 .basi-grid {
@@ -2700,7 +2710,7 @@ button:hover {
     background: none;
     border: none;
     color: var(--text-color);
-    font-size: 18px;
+    font-size: 1.2em;
     padding: 0;
     width: auto;
     cursor: pointer;
@@ -2725,7 +2735,7 @@ button:hover {
     width: auto;
     min-width: 0;
     color: var(--button-bg);
-    font-size: 1.8rem;
+    font-size: 1.8em;
     font-weight: bold;
     cursor: pointer;
     line-height: 1;
@@ -2840,7 +2850,6 @@ button:hover {
     font-size: 1em;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
 .filter-group label {
@@ -2914,7 +2923,6 @@ button:hover {
     font-weight: 700;
     text-transform: uppercase;
     font-size: 0.9em;
-    letter-spacing: 1px;
     width: 100%;
     margin-top: auto;
 }

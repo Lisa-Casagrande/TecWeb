@@ -1,7 +1,3 @@
-/**
- * FILE UNICO JAVASCRIPT: tenendo tutto in un unico file il caricamento è più veloce (da inserire in tutti i file html)
-*/
-
 /* ==========================================================================
    SEZIONE 1: GESTIONE TEMA (ex tema.js) con persistenza
    ========================================================================== */
@@ -137,17 +133,13 @@ const ThemeManager = {
         this.elements.themeToggle.setAttribute('aria-label', label);
         this.elements.themeToggle.setAttribute('title', label);
         
-        // **AGGIUNTO:** Aggiorna icone se presenti
-        if (this.elements.sunIcon && this.elements.moonIcon) {
-            if (this.states.isDark) {
-                this.elements.sunIcon.style.display = 'none';
-                this.elements.moonIcon.style.display = 'block';
-            } else {
-                this.elements.sunIcon.style.display = 'block';
-                this.elements.moonIcon.style.display = 'none';
-            }
+        if (this.states.isDark) {
+            this.elements.sunIcon.classList.add('hidden');
+            this.elements.moonIcon.classList.remove('hidden');
+        } else {
+            this.elements.sunIcon.classList.remove('hidden');
+            this.elements.moonIcon.classList.add('hidden');
         }
-        
         console.log(`UI aggiornata: ${label}`);
     },
 
@@ -448,24 +440,12 @@ document.addEventListener('DOMContentLoaded', function() {
             top: 0,
             behavior: 'smooth'
         });
-
-        // ACCESSIBILITÀ: Focus sul skip link dopo scroll
-        // (migliora navigazione tastiera) - opzionale
-        setTimeout(function() {
-            const skipLink = document.querySelector('.skip-link');
-            if (skipLink) {
-                skipLink.focus();
-            }
-        }, 500);
     }
     
     // Event Listeners
     window.addEventListener('scroll', toggleButtonVisibility, { passive: true });
     backToTopButton.addEventListener('click', scrollToTop);
-    
-    // Controllo iniziale al caricamento
-    toggleButtonVisibility();
-
+    toggleButtonVisibility(); // Controllo iniziale al caricamento
 })();
 
 
@@ -636,7 +616,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Feedback visivo
                 const originalText = this.innerHTML;
-                this.innerHTML = "<span style='color:white'>✓ Aggiunto!</span>";
+                this.innerHTML = "<span>✓ Aggiunto!</span>";
                 this.classList.add('aggiunto');
                 
                 // Ripristina dopo 2 secondi
@@ -753,7 +733,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Feedback visivo
             const originalText = this.innerHTML;
-            this.innerHTML = "<span style='color:white'>✓ Aggiunto!</span>";
+            this.innerHTML = "<span>✓ Aggiunto!</span>";
             this.classList.add('aggiunto');
             
             // Ripristina dopo 2 secondi
@@ -1193,14 +1173,18 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (shouldShow) {
-                product.style.display = '';
+                product.classList.remove('hidden');
                 visibleCount++;
             } else {
-                product.style.display = 'none';
+                product.classList.add('hidden');
             }
         });
 
-        noResultsMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+        if (visibleCount === 0) {
+            noResultsMsg.classList.remove('hidden');
+        } else {
+            noResultsMsg.classList.add('hidden');
+        }
 
         const selectedSort = document.querySelector('input[name="sortOrder"]:checked')?.value || 'default';
         sortProducts(selectedSort);
@@ -1208,7 +1192,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function sortProducts(sortType) {
         const productsArray = Array.from(allProducts);
-        const visibleProducts = productsArray.filter(p => p.style.display !== 'none');
+        const visibleProducts = productsArray.filter(p => !p.classList.contains('hidden'));
 
         visibleProducts.sort((a, b) => {
             switch(sortType) {
