@@ -19,7 +19,7 @@ INSERT INTO admin (nome, cognome, email, password_hash) VALUES
 -- 2. UTENTE
 -- ================================================================
 INSERT INTO utente (email, password_hash, nome, cognome, data_nascita, indirizzo, citta, CAP) VALUES
-('utente', '$2y$10$9CPSl7SPwSoyYAjk8jtOFu.GkXlxUzFekLF2RUNZC0b/C/yA9Or2G', 'utente', 'utente', '1975-01-02', 'Via Luzzati', 'Padova', '35121');
+('user', '$2a$12$gr2DNHPznCImVG0ad8sTQ.q0unaiK/M2DCSQFyzf8ffLTbsFIDOC.', 'user', 'user', '1975-01-02', 'Via Luzzati', 'Padova', '35121');
 
 -- ================================================================
 -- 3. BASI
