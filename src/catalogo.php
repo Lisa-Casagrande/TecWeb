@@ -123,7 +123,7 @@ try {
                     data-id='$idProdotto'>
                 
                 <div class='product-image'>
-                    <img src='$img' alt='$nome' loading='lazy' onerror=\"this.src='images/placeholder_tea.jpg'\">
+                    <img src='$img' alt='' loading='lazy' onerror=\"this.src='images/placeholder_tea.jpg'\">
                     <form action='php/gestioneCarrello.php' method='POST'>
                         <input type='hidden' name='azione' value='aggiungi'>
                         <input type='hidden' name='tipo' value='standard'>

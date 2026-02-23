@@ -39,7 +39,7 @@ try {
             
             <div class="base-content">
                 <div class="base-image-standard">
-                    <img src="$img" alt="$nome">
+                    <img src="$img" alt="">
                 </div>
 
                 <div class="base-info">
@@ -127,7 +127,7 @@ HTML;
                                         data-tipo="$tipo"
                                         data-prezzo="1.50">
                 
-                <img src="$img" alt="$nome">
+                <img src="$img" alt="">
                 <h4>$nome</h4>
                 $descrizioneIng
 

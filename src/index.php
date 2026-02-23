@@ -45,13 +45,12 @@ try {
             $img = htmlspecialchars($row['img_path'] ?? '', ENT_QUOTES, 'UTF-8');
             $descrizione = htmlspecialchars(substr($row['descrizione'] ?? '', 0, 90), ENT_QUOTES, 'UTF-8');
             $idProdotto = $row['id_prodotto'];
-            $imgAlt = htmlspecialchars($row['nome'], ENT_QUOTES, 'UTF-8');
             $immagineProdotto = !empty($img) ? $img : 'images/placeholder_tea.jpg';
             
             $prodottiPiuAmati .= "
             <article class='product-card'>
                 <div class='product-image'>
-                    <img src='$immagineProdotto' alt='$imgAlt' loading='lazy' onerror=\"this.src='images/placeholder_tea.jpg'\">
+                    <img src='$immagineProdotto' alt='' loading='lazy' onerror=\"this.src='images/placeholder_tea.jpg'\">
                 </div>
                 <h3>$nome</h3>
                 <p>$descrizione...</p>
@@ -83,13 +82,12 @@ try {
                 $img = htmlspecialchars($row['img_path'] ?? '', ENT_QUOTES, 'UTF-8');
                 $descrizione = htmlspecialchars(substr($row['descrizione'] ?? '', 0, 90), ENT_QUOTES, 'UTF-8');
                 $idProdotto = $row['id_prodotto'];
-                $imgAlt = htmlspecialchars($row['nome'], ENT_QUOTES, 'UTF-8');
                 $immagineProdotto = !empty($img) ? $img : 'images/placeholder_tea.jpg';
                 
                 $prodottiPiuAmati .= "
                 <article class='product-card'>
                     <div class='product-image'>
-                        <img src='$immagineProdotto' alt='$imgAlt' loading='lazy' onerror=\"this.src='images/placeholder_tea.jpg'\">
+                        <img src='$immagineProdotto' alt='' loading='lazy' onerror=\"this.src='images/placeholder_tea.jpg'\">
                     </div>
                     <h3>$nome</h3>
                     <p>$descrizione...</p>

@@ -1,9 +1,7 @@
 <?php
-session_start();
-
-/**
- * Funzioni di utilità per la sessione
- */
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Controlla se l'utente è loggato
 function isLoggedIn() {
@@ -20,28 +18,10 @@ function userId() {
     return $_SESSION['user_id'] ?? null;
 }
 
-/**
- * --- CONTROLLI PER PAGINE UTENTE NORMALE ---
- * Deve essere incluso prima di qualsiasi query o output
- */
-if (basename($_SERVER['PHP_SELF']) === 'paginaUtente.php') {
-
-    // Se non loggato o tipo utente diverso da 'utente'
-    if (!isLoggedIn() || userType() !== 'utente') {
-
-        // Se arriva da un link interno → redirect login
-       if (!isset($_SESSION['user_id'])) {
-    header('HTTP/1.1 401 Unauthorized');
-    include $_SERVER['DOCUMENT_ROOT'] . '/401.php';
-    exit();
-}
-}
-
+// Richiede che l'utente sia loggato come 'utente', altrimenti redirect al login
 function requireUser() {
     if (!isLoggedIn() || userType() !== 'utente') {
-        header('HTTP/1.1 401 Unauthorized');
-        include $_SERVER['DOCUMENT_ROOT'].'/401.php';
+        header("Location: login.php");
         exit();
     }
-}}
-?>
+}

@@ -19,7 +19,7 @@ foreach ($prodotti as $prodotto) {
     $prezzoFmt = number_format($prodotto['prezzo'], 2);
     
     $imgTag = $prodotto['img_path'] 
-        ? '<img src="' . htmlspecialchars($prodotto['img_path']) . '" alt="' . htmlspecialchars($prodotto['nome']) . '" class="user-card-img">'
+        ? '<img src="' . htmlspecialchars($prodotto['img_path']) . '" alt="" class="user-card-img">'
         : '';
     
     $prodottiHTML .= <<<HTML

@@ -82,7 +82,7 @@ try {
             $img_ing_esc = htmlspecialchars($ingrediente['img_path'], ENT_QUOTES, 'UTF-8');
             
             $ingredienti_html .= '<div class="ingrediente-card">';
-            $ingredienti_html .= '<img src="' . $img_ing_esc . '" alt="' . $nome_ing_esc . '" onerror="this.src=\'images/ingredienti/default-ingrediente.webp\'">';
+            $ingredienti_html .= '<img src="' . $img_ing_esc . '" alt="" onerror="this.src=\'images/ingredienti/default-ingrediente.webp\'">';
             $ingredienti_html .= '<p class="ingrediente-nome">' . $nome_ing_esc . '</p>';
             $ingredienti_html .= '</div>';
         }
@@ -157,7 +157,7 @@ try {
             $consigliati_html .= '
             <article class="product-card">
                 <div class="product-image">
-                    <img src="' . $img_cons . '" alt="' . $nome_cons . '" loading="lazy" onerror="this.src=\'images/placeholder_tea.jpg\'">
+                    <img src="' . $img_cons . '" alt="" loading="lazy" onerror="this.src=\'images/placeholder_tea.jpg\'">
                     
                     <form action="php/gestioneCarrello.php" method="POST">
                         <input type="hidden" name="azione" value="aggiungi">

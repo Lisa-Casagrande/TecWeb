@@ -52,7 +52,7 @@ if (!empty($q)) {
                 $risultatiHtml .= <<<HTML
                 <article class='product-card'>
                     <div class='product-image'>
-                        <img src='$img' alt='$nome' loading='lazy'>
+                        <img src='$img' alt='' loading='lazy'>
                     </div>
                     <h3>$nome</h3>
                     <p>$descrizione...</p>

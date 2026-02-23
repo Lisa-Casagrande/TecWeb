@@ -1001,7 +1001,7 @@ fieldset {
 }
 
 .form-group input.input-error {
-    border-color: #e53935;
+    border-color: #c72334;
 }
 
 .form-group input.input-valid {
@@ -1424,7 +1424,7 @@ body.dark-theme .breadcrumb span {
 }
 
 .availability-badge.out-of-stock {
-    background-color: #dc3545;
+    background-color: #c72334;
     color: white;
 }
 
@@ -1791,7 +1791,7 @@ section.product-details-section .product-detail-block {
     display: inline-block;
     width: 12px;
     height: 12px;
-    background-color: #d9534f;
+    background-color: #c72334;
     border-radius: 50%;
     margin-right: 6px;
     vertical-align: middle;
@@ -1920,7 +1920,7 @@ section.product-details-section .product-detail-block {
 .errorSuggestion {
     display: block;
     font-size: 0.9em;
-    color: #d9534f;
+    color: #c72334;
     font-weight: bold;
     margin-top: 0.4em;
     padding-left: 1.5em;
@@ -2033,7 +2033,7 @@ section.product-details-section .product-detail-block {
     vertical-align: middle;
 }
 
-.stato-rosso { background-color: #d9534f; }   /* Annullato */
+.stato-rosso { background-color: #c72334; }   /* Annullato */
 .stato-giallo { background-color: #ffc107; }  /* In attesa / In Preparazione */
 .stato-verde { background-color: #28a745; }   /* Spedito / Pagato */
 .stato-blu { background-color: #17a2b8; }     /* Consegnato */
