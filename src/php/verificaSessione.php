@@ -18,10 +18,24 @@ function userId() {
     return $_SESSION['user_id'] ?? null;
 }
 
-// Richiede che l'utente sia loggato come 'utente', altrimenti redirect al login
+// Richiede che l'utente sia loggato (qualsiasi tipo), altrimenti → 401
+function requireLogin() {
+    if (!isLoggedIn()) {
+        header("Location: /lcasagra/401.php");
+        exit();
+    }
+}
+
+// Richiede che l'utente sia loggato come 'utente' (non admin), altrimenti:
+// - non loggato → 401
+// - loggato ma tipo sbagliato → 403
 function requireUser() {
-    if (!isLoggedIn() || userType() !== 'utente') {
-        header("Location: login.php");
+    if (!isLoggedIn()) {
+        header("Location: /lcasagra/401.php");
+        exit();
+    }
+    if (userType() !== 'utente') {
+        header("Location: /lcasagra/403.php");
         exit();
     }
 }
