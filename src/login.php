@@ -68,22 +68,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-//Generazione Logica Navbar (crea $navbarBlock)
 require_once 'php/navbar.php';
-//Caricamento template
 $templatePath = __DIR__ . '/html/Area_login.html';
 
-//HO TOLTO:  $navbar_html = ob_get_clean();
 
 if (file_exists($templatePath)) {
     $template = file_get_contents($templatePath);
 
-    // sostituzione navbar
     $template = str_replace("[navbar]", $navbarBlock, $template);
 
-    // 4. Sostituzione dei dati dinamici del form
     foreach ($data as $key => $value) {
-        // [valoreEmail], [erroreEmail], etc.
         $template = str_replace("[$key]", $value, $template);
     }
 

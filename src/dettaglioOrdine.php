@@ -1,11 +1,6 @@
 <?php
-// dettaglioOrdine.php
 require_once 'php/connessione.php';
 require_once 'php/verificaSessione.php';
-
-// CORREZIONE NAVBAR:
-// Includendo navbar.php, la variabile $navbarBlock viene creata automaticamente.
-// Non serve usare ob_start() perché navbar.php non fa 'echo'.
 require_once 'php/navbar.php'; 
 
 // Controllo ID Ordine
@@ -23,7 +18,7 @@ if (!$userId) {
 }
 
 try {
-    // 1. Recupero Dati Ordine
+    // Recupero Dati Ordine
     $stmt_ordine = $pdo->prepare("
         SELECT o.*, u.nome, u.cognome, u.email
         FROM ordine o
@@ -41,7 +36,7 @@ try {
         die("Ordine non trovato o non accessibile.");
     }
 
-    // 2. Recupero Dettagli Prodotti
+    // Recupero Dettagli Prodotti
     $stmt_dettagli = $pdo->prepare("
         SELECT d.*, 
                p.nome AS nome_prodotto, p.img_path,
@@ -54,7 +49,7 @@ try {
     $stmt_dettagli->execute([':id_ordine' => $id_ordine]);
     $dettagli = $stmt_dettagli->fetchAll();
 
-    // 3. Logica Stato (Classi CSS)
+    // Logica Stato (Classi CSS)
     $mappaStati = [
         'annullato'       => 'stato-rosso',
         'in_attesa'       => 'stato-giallo',
@@ -67,7 +62,7 @@ try {
     $classStato = isset($mappaStati[$statoKey]) ? $mappaStati[$statoKey] : 'stato-giallo';
     $statoFormattato = ucfirst(str_replace('_', ' ', $statoKey));
 
-    // 4. Costruzione HTML Lista Articoli
+    // Costruzione HTML Lista Articoli
     $listaArticoliHtml = '';
 
     if (!empty($dettagli)) {
@@ -113,7 +108,7 @@ HTML;
         $listaArticoliHtml = '<li class="product-item"><p>Nessun articolo trovato.</p></li>';
     }
 
-    // 5. Gestione Note Ordine
+    // Gestione Note Ordine
     $noteHtml = '';
     if (!empty($ordine['note'])) {
         $noteTesto = htmlspecialchars($ordine['note']);
@@ -129,7 +124,7 @@ HTML;
     die("Errore caricamento dati: " . $e->getMessage());
 }
 
-// 6. Caricamento e Rendering Template
+// Caricamento e Rendering Template
 $templatePath = 'html/dettaglioOrdine.html';
 
 if (file_exists($templatePath)) {
@@ -142,8 +137,6 @@ if (file_exists($templatePath)) {
     $spedizione = number_format($ordine['spese_spedizione'], 2);
     $totale = number_format($ordine['totale'], 2);
 
-    // SOSTITUZIONI
-    // Qui usiamo $navbarBlock che è stato generato dall'include 'php/navbar.php'
     $template = str_replace('[navbar]', $navbarBlock, $template);
     
     $template = str_replace('[ID_ORDINE]', $id_ordine, $template);

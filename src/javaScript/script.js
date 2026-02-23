@@ -21,15 +21,11 @@ const ThemeManager = {
     init() {
         console.log('ThemeManager inizializzato');
         
-        // Riferimenti agli elementi DOM
         this.elements.body = document.body;
         this.elements.themeToggle = document.querySelector('.theme-toggle');
-        
-        // **IMPORTANTE:** Cerca in tutta la pagina, non solo nel header
         this.elements.sunIcon = document.querySelector('.sun-icon');
         this.elements.moonIcon = document.querySelector('.moon-icon');
 
-        // **APPLICA SUBITO** il tema all'avvio
         this.loadAndApplyTheme();
 
         // Aggiungi event listeners
@@ -43,28 +39,22 @@ const ThemeManager = {
     loadAndApplyTheme() {
         console.log('Caricamento tema in corso...');
         
-        // 1. Controlla preferenza utente salvata
         const savedTheme = localStorage.getItem('infuseme-theme');
         console.log('Tema salvato in localStorage:', savedTheme);
         
-        // 2. Controlla preferenza sistema
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         console.log('Sistema preferisce scuro:', systemPrefersDark);
         
-        // 3. Logica di priorità
         if (savedTheme === 'light' || savedTheme === 'dark') {
-            // Utente ha scelto esplicitamente
             this.states.userPreference = savedTheme;
             this.states.isDark = savedTheme === 'dark';
             console.log('Usando preferenza utente:', savedTheme);
         } else {
-            // Usa preferenza sistema (o default chiaro)
             this.states.userPreference = 'system';
             this.states.isDark = systemPrefersDark;
             console.log('Usando preferenza sistema:', systemPrefersDark ? 'dark' : 'light');
         }
         
-        // 4. APPLICA IMMEDIATAMENTE il tema al DOM
         this.applyTheme();
         
         console.log(`Tema applicato: ${this.states.isDark ? 'scuro' : 'chiaro'}`);
@@ -79,8 +69,6 @@ const ThemeManager = {
             this.elements.body.classList.add('dark-theme');
             this.elements.body.classList.remove('light-theme');
             document.documentElement.setAttribute('data-theme', 'dark');
-            
-            // **AGGIUNTO:** Imposta anche un attributo custom per CSS
             document.documentElement.classList.add('dark-theme');
             document.documentElement.classList.remove('light-theme');
             
@@ -90,8 +78,6 @@ const ThemeManager = {
             this.elements.body.classList.add('light-theme');
             this.elements.body.classList.remove('dark-theme');
             document.documentElement.setAttribute('data-theme', 'light');
-            
-            // **AGGIUNTO:** Imposta anche un attributo custom per CSS
             document.documentElement.classList.add('light-theme');
             document.documentElement.classList.remove('dark-theme');
             
@@ -146,12 +132,9 @@ const ThemeManager = {
     // Aggiungi tutti gli event listeners
     addEventListeners() {
         console.log('Aggiunta event listeners...');
-        
-        // IMPORTANTE: Aggiungi listener a TUTTI i toggle
         const allThemeToggles = document.querySelectorAll('.theme-toggle');
         
         allThemeToggles.forEach(toggle => {
-            // Rimuovi listener esistenti per evitare duplicati
             const newToggle = toggle.cloneNode(true);
             toggle.parentNode.replaceChild(newToggle, toggle);
             
@@ -187,7 +170,7 @@ const ThemeManager = {
 function initializeTheme() {
     console.log('=== INIZIALIZZAZIONE TEMA ===');
     
-    // 1. APPLICA SUBITO senza aspettare DOMContentLoaded
+    // APPLICA SUBITO senza aspettare DOMContentLoaded
     const savedTheme = localStorage.getItem('infuseme-theme');
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const isDark = savedTheme ? savedTheme === 'dark' : systemPrefersDark;
@@ -205,7 +188,7 @@ function initializeTheme() {
         document.documentElement.setAttribute('data-theme', 'light');
     }
     
-    // 2. Inizializza il manager quando il DOM è pronto
+    // Inizializza il manager quando il DOM è pronto
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
             console.log('DOMContentLoaded - inizializzo ThemeManager');
@@ -217,7 +200,7 @@ function initializeTheme() {
     }
 }
 
-// ESECUZIONE IMMEDIATA: viene eseguito non appena il file JS viene caricato
+// viene eseguito non appena il file JS viene caricato
 console.log('tema.js caricato - avvio inizializzazione...');
 initializeTheme();
 
@@ -235,7 +218,7 @@ window.addEventListener('beforeunload', () => {
     }
 });
 
-// Controllo se il tema è stato applicato
+// Controlla se il tema è stato applicato
 window.addEventListener('load', () => {
     const currentTheme = localStorage.getItem('infuseme-theme');
     const bodyTheme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
@@ -326,12 +309,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Clona header-utilities (carrello, utente, tema)
         const utilitiesClone = headerUtilities.cloneNode(true);
         
-        // Rimuovi tutti gli ID dai cloni per evitare duplicati
+        // Rimuove tutti gli ID dai cloni per evitare duplicati
         utilitiesClone.querySelectorAll('[id]').forEach(el => {
             el.id = el.id + '-mobile-clone';
         });
 
-        // Aggiungi event listener al tema clonato
+        // Aggiunge event listener al tema clonato
         const mobileThemeToggle = utilitiesClone.querySelector('.theme-toggle');
         if (mobileThemeToggle) {
             mobileThemeToggle.addEventListener('click', handleThemeToggle);
@@ -600,7 +583,6 @@ window.addEventListener("load", caricamentoForm);
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', function() {
     const cartButtons = document.querySelectorAll('.aggiungi-carrello');
-    // Se non ci sono bottoni carrello, non fare nulla ma aggiorna counter se esiste
     updateCartCounter();
 
     if (cartButtons.length > 0) {
@@ -613,7 +595,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const productPrice = this.getAttribute('data-prezzo');
                 const productImg = this.getAttribute('data-img');
                 
-                // Aggiungi prodotto al carrello (localStorage)
+                // Aggiunge prodotto al carrello (localStorage)
                 addToCart(productId, productName, productPrice, productImg);
                 
                 // Feedback visivo
@@ -660,7 +642,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const cart = JSON.parse(localStorage.getItem('carrello')) || [];
         const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
         
-        // Se hai un contatore nel carrello nell'header, aggiornalo
+        // aggiorna contatore nel carrello se già esistente
         const cartCounter = document.querySelector('.cart-counter');
         if (cartCounter) {
             cartCounter.textContent = totalItems;
@@ -700,7 +682,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             
-            // Disabilita pulsanti all'inizio se necessario
             toggleButtonsState(input, minusBtn, plusBtn);
         }
     }
@@ -826,7 +807,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // 1. Recupero dati dal localStorage o inizializzo stato vuoto
+    // Recupera dati dal localStorage o inizializza stato vuoto
     const datiSalvati = localStorage.getItem('mioBlendSalvato');
     const statoBlend = datiSalvati ? JSON.parse(datiSalvati) : {
         base: null,
@@ -892,7 +873,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Calcolo Prezzo Finale
         let totale = statoBlend.base ? statoBlend.prezzoBase : 0;
         totale += statoBlend.ingredienti.length * statoBlend.prezzoIngrediente;
-        if (statoBlend.ingredienti.length === 3) totale -= 0.50; // Sconto fedeltà 3 ingredienti
+        if (statoBlend.ingredienti.length === 3) totale -= 0.50; 
         
         const importoPrezzo = document.getElementById('importo-prezzo');
         if (importoPrezzo) importoPrezzo.textContent = totale.toFixed(2);
@@ -904,7 +885,6 @@ document.addEventListener('DOMContentLoaded', function() {
             btnConferma.disabled = !pronto;
         }
 
-        // Sincronizzazione Grafica Card 
         sincronizzaCardGrafiche();
         
         // Salva i dati localmente ad ogni modifica
@@ -1048,7 +1028,7 @@ document.addEventListener('DOMContentLoaded', function() {
         btnConferma.addEventListener('click', () => {
             if (!statoBlend.base || statoBlend.ingredienti.length < 2) return;
             
-            // Prima dell'invio pulisco il storage
+            // Prima dell'invio pulisce il storage
             localStorage.removeItem('mioBlendSalvato');
 
             document.getElementById('input-id-base').value = statoBlend.base.id;

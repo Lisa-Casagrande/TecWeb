@@ -1,12 +1,8 @@
 <?php
-// src/cerca.php
 session_start();
 require_once 'php/connessione.php';
-
-// 1. Includiamo la navbar per generare $navbarBlock
 require_once 'php/navbar.php'; 
 
-// 2. Recupero Query
 $q = isset($_GET['q']) ? trim($_GET['q']) : '';
 $risultatiHtml = '';
 $messaggio = '';
@@ -15,19 +11,13 @@ $titoloPagina = 'Cerca';
 if (!empty($q)) {
     $titoloPagina = "Risultati per: \"" . htmlspecialchars($q) . "\"";
     try {
-        // CORREZIONE QUERY: Usiamo due placeholder diversi (:q1 e :q2)
-        // per compatibilità con tutti i driver PDO.
         $sql = "SELECT * FROM prodotto 
                 WHERE (nome LIKE :q1 OR descrizione LIKE :q2) 
                 AND disponibilita > 0 
                 ORDER BY nome ASC";
         
         $stmt = $pdo->prepare($sql);
-        
-        // Prepariamo il termine di ricerca con i jolly %
         $searchTerm = "%" . $q . "%";
-        
-        // Eseguiamo passando il valore a entrambi i placeholder
         $stmt->execute([
             ':q1' => $searchTerm,
             ':q2' => $searchTerm
@@ -43,7 +33,6 @@ if (!empty($q)) {
             foreach ($prodotti as $row) {
                 $idProdotto = $row['id_prodotto'];
                 $nome = htmlspecialchars($row['nome']);
-                // Tagliamo la descrizione
                 $descrizione = htmlspecialchars(substr($row['descrizione'], 0, 100)); 
                 $prezzo = number_format($row['prezzo'], 2);
                 

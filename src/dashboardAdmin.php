@@ -22,7 +22,6 @@ $menuVociAdmin = [
     'gestioneOrdini.php' => 'Ordini'
 ];
 
-// GENERAZIONE HTML MENU (identico a navbar.php)
 $currentPage = basename($_SERVER['PHP_SELF']);
 $menuHtml = '';
 
@@ -47,8 +46,6 @@ $templatePath = 'html/dashboardAdmin.html';
 
 if (file_exists($templatePath)) {
     $template = file_get_contents($templatePath);
-    
-    // Sostituiamo il segnaposto [menuVoci] con l'HTML generato
     $template = str_replace('[menuVoci]', $menuHtml, $template);
     
     echo $template;

@@ -2,7 +2,6 @@
 require_once 'php/connessione.php';
 require_once 'php/verificaSessioneAdmin.php';
 
-// RECUPERO DATI PER VISUALIZZAZIONE (solo SELECT) - altre operazioni nel file aggiornaDisponibilita.php
 try {
     $basi = $pdo->query("SELECT * FROM base ORDER BY nome ASC")->fetchAll();
     $ingredienti = $pdo->query("SELECT * FROM ingrediente ORDER BY nome ASC")->fetchAll();
@@ -77,7 +76,7 @@ foreach ($ingredienti as $ing) {
     </article>';
 }
 
-// GENERAZIONE MENU ADMIN (Nuova parte)
+// GENERAZIONE MENU ADMIN
 $menuVociAdmin = [
     'dashboardAdmin.php' => '<span lang="en">Dashboard</span>',
     'gestioneProdotti.php' => 'Prodotti',

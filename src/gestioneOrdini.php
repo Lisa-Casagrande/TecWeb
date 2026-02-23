@@ -2,7 +2,6 @@
 require_once 'php/connessione.php';
 require_once 'php/verificaSessioneAdmin.php';
 
-//recupero dati ordini
 $ordiniHtml = '';
 
 //query: ordini più recenti per primi

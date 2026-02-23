@@ -1,11 +1,8 @@
 <?php
-// Includi la connessione al database
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 require_once 'php/connessione.php';
-
-//logica della Navbar: includendo questo file, viene generata la variabile $navbarBlock
 require_once 'php/navbar.php';
 
 //variabili per il template

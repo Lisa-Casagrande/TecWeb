@@ -12,23 +12,18 @@ if (isset($_SESSION['id_utente'])) {
 
 $successoRegistrazione = isset($_GET['success']) ? "Registrazione avvenuta con successo! Ora puoi accedere." : "";
 
-// Recupera eventuali errori e valori precedenti
 $errors = $_SESSION['errors'] ?? [];
 $old = $_SESSION['old'] ?? [];
 unset($_SESSION['errors'], $_SESSION['old']);
 
-// Funzione helper per decidere la classe CSS iniziale
 function getClasse($campo, $errors, $old) {
     if (isset($errors[$campo])) return 'input-error';
-    // Solo se il campo ha un valore **non vuoto e non è password** diventa valido
     if (isset($old[$campo]) && !empty($old[$campo]) && $campo !== 'reg_password' && $campo !== 'reg_conf') return 'input-valid';
     return '';
 }
 
-// Calcola la data massima per essere maggiorenne (18 anni)
 $maxDataNascita = date('Y-m-d', strtotime('-18 years'));
 
-// Prepara le sostituzioni per i placeholder nel template
 $sostituzioni = [
     // Errore generale
     '[erroreGenerale]' => isset($errors['generale']) ? htmlspecialchars($errors['generale'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : '',
@@ -77,9 +72,7 @@ $templatePath = __DIR__ . '/html/Area_registrazione.html';
 
 if (file_exists($templatePath)) {
     $template = file_get_contents($templatePath);
-    //sostituzione della navbar
     $template = str_replace('[navbar]', $navbarBlock, $template);
-    //sostituzione di tutti i placeholder definiti nell'array
     $template = str_replace(array_keys($sostituzioni), array_values($sostituzioni), $template);
 
     echo $template;

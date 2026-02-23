@@ -1,13 +1,10 @@
 <?php
-// src/creaBlend.php
 
 if (session_status() === PHP_SESSION_NONE) { session_start(); }
 require_once 'php/connessione.php';
 
-// 1. Logica Navbar
 require_once 'php/navbar.php';
 
-// Variabili per l'HTML generato
 $basiHtml = '';
 $ingredientiHtml = '';
 
@@ -81,12 +78,10 @@ try {
 HTML;
     }
     
-    // --- B. GENERAZIONE HTML INGREDIENTI ---
     $sqlIng = "SELECT * FROM ingrediente ORDER BY tipo, nome";
     $stmtIng = $pdo->query($sqlIng);
     $ingredientiRaw = $stmtIng->fetchAll();
     
-    // Raggruppa per tipo
     $gruppi = [];
     foreach ($ingredientiRaw as $ing) {
         $gruppi[$ing['tipo']][] = $ing;
@@ -107,7 +102,7 @@ HTML;
     foreach ($gruppi as $tipo => $listaIngredienti) {
         $titolo = getTitoloTipo($tipo);
         
-        // Costruiamo il blocco completo per Categoria: Titolo + Griglia + Card
+        // blocco completo per Categoria: Titolo + Griglia + Card
         $ingredientiHtml .= '<h3 class="titolo-categoria">' . $titolo . '</h3>';
         $ingredientiHtml .= '<div class="ingredienti-grid">';
         
@@ -146,13 +141,13 @@ HTML;
     $basiHtml = "<p class='error'>Impossibile caricare le basi.</p>";
 }
 
-// 2. CARICAMENTO TEMPLATE
+// CARICAMENTO TEMPLATE
 $templatePath = 'html/creaBlend.html';
 
 if (file_exists($templatePath)) {
     $template = file_get_contents($templatePath);
     
-    // 3. SOSTITUZIONI
+    // SOSTITUZIONI
     $template = str_replace('[navbar]', $navbarBlock, $template);
     $template = str_replace('[LISTA_BASI]', $basiHtml, $template);
     $template = str_replace('[LISTA_INGREDIENTI]', $ingredientiHtml, $template);

@@ -11,8 +11,6 @@ require_once 'php/navbar.php';
 $templatePath = 'html/errore404.html';
 if (file_exists($templatePath)) {
     $template = file_get_contents($templatePath);
-    
-    // Sostituisci il placeholder navbar
     $paginaFinale = str_replace('[navbar]', $navbarBlock, $template);
     
     echo $paginaFinale;

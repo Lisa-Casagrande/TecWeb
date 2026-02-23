@@ -17,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nuovo_stato'])) {
     try {
         $stmtUpdate = $pdo->prepare("UPDATE ordine SET stato_ord = ? WHERE id_ordine = ?");
         $stmtUpdate->execute([$nuovo_stato, $id_ordine]);
-        //ricarica la pagina con messaggio
         header("Location: dettaglioOrdineAdmin.php?id=$id_ordine&msg=updated");
         exit;
     } catch (PDOException $e) {

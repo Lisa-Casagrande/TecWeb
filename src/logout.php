@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Distruggi la sessione
+// Distrugge la sessione
 $_SESSION = array();
 
 // Cancella il cookie di sessione
