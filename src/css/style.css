@@ -2461,13 +2461,6 @@ section.product-details-section .product-detail-block {
     margin: 0;
 }
 
-.radio-box input[type="radio"]:focus-visible,
-.btn-reset-link:focus-visible,
-.btn-seleziona-base:focus-visible,
-.btn-aggiungi-ingrediente {
-    outline: 2px solid var(--button-bg);
-}
-
 .stato-selezione {
     display: flex;
     flex-direction: column;
@@ -2707,6 +2700,26 @@ section.product-details-section .product-detail-block {
 .btn-aggiungi-ingrediente {
     margin-top: auto;
     width: 100%;
+}
+
+/* ==================================================
+   MESSAGGIO INLINE BLEND (sotto bottone Conferma)
+   ================================================== */
+.blend-msg-conferma {
+    font-size: 0.88em;
+    font-weight: 600;
+    color: var(--text-color);
+    background-color: var(--alt-section-bg);
+    border: 1px solid var(--text-color);
+    border-radius: 6px;
+    padding: 0.5em 0.8em;
+    margin-top: 0.5em;
+    display: none;
+    text-align: center;
+}
+
+.blend-msg-conferma.blend-msg-conferma--visibile {
+    display: block;
 }
 
 /* ==================================================
@@ -3069,5 +3082,13 @@ body.no-scroll {
 }
 
 .product-card.product-hidden {
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+#noResults {
     display: none;
 }

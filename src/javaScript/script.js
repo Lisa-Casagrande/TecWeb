@@ -784,21 +784,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const fixedBlendBtn = document.getElementById('fixedBlendBtn');
     const blendPanel = document.getElementById('blendPanel');
     const closeBlendBtn = document.getElementById('closeBlendBtn');
-    
+
     if (fixedBlendBtn && blendPanel && closeBlendBtn) {
-        // Apertura sidebar
         fixedBlendBtn.addEventListener('click', () => {
             blendPanel.classList.add('active');
-            document.body.classList.add('no-scroll'); // Blocca scroll del body
+            document.body.classList.add('no-scroll');
         });
-        
-        // Chiusura con bottone X
+
         closeBlendBtn.addEventListener('click', () => {
             blendPanel.classList.remove('active');
-            document.body.classList.remove('no-scroll'); // Riabilita scroll
+            document.body.classList.remove('no-scroll');
         });
-        
-        // Chiusura cliccando fuori (opzionale)
+
         blendPanel.addEventListener('click', (e) => {
             if (e.target === blendPanel) {
                 blendPanel.classList.remove('active');
@@ -807,7 +804,45 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Recupera dati dal localStorage o inizializza stato vuoto
+    // --------------------------------------------------
+    // MESSAGGIO INLINE SOTTO BOTTONE CONFERMA
+    // --------------------------------------------------
+    function aggiornaMessaggioConferma() {
+        let msgEl = document.getElementById('blend-msg-conferma');
+        if (!msgEl) return;
+
+        const mancaBase = !statoBlend.base;
+        const mancaIng = statoBlend.ingredienti.length < statoBlend.maxIngredienti;
+
+        if (mancaBase && mancaIng) {
+            msgEl.textContent = 'Seleziona una base e aggiungi ' + statoBlend.maxIngredienti + ' ingredienti per procedere.';
+            msgEl.classList.add('blend-msg-conferma--visibile');
+        } else if (mancaBase) {
+            msgEl.textContent = 'Seleziona una base per procedere.';
+            msgEl.classList.add('blend-msg-conferma--visibile');
+        } else if (mancaIng) {
+            const rimanenti = statoBlend.maxIngredienti - statoBlend.ingredienti.length;
+            msgEl.textContent = 'Aggiungi ancora ' + rimanenti + ' ingredient' + (rimanenti === 1 ? 'e' : 'i') + ' per procedere.';
+            msgEl.classList.add('blend-msg-conferma--visibile');
+        } else {
+            msgEl.textContent = '';
+            msgEl.classList.remove('blend-msg-conferma--visibile');
+        }
+    }
+
+    // Inserisce il div del messaggio inline dopo il bottone conferma
+    const btnConfermaEl = document.getElementById('btn-conferma');
+    if (btnConfermaEl) {
+        const msgDiv = document.createElement('p');
+        msgDiv.id = 'blend-msg-conferma';
+        msgDiv.className = 'blend-msg-conferma';
+        msgDiv.setAttribute('role', 'status');
+        btnConfermaEl.parentNode.insertBefore(msgDiv, btnConfermaEl.nextSibling);
+    }
+
+    // --------------------------------------------------
+    // STATO BLEND
+    // --------------------------------------------------
     const datiSalvati = localStorage.getItem('mioBlendSalvato');
     const statoBlend = datiSalvati ? JSON.parse(datiSalvati) : {
         base: null,
@@ -817,21 +852,17 @@ document.addEventListener('DOMContentLoaded', function() {
         prezzoIngrediente: 1.00
     };
 
-    /* Funzione per salvare lo stato nel browser */
     function salvaStato() {
         localStorage.setItem('mioBlendSalvato', JSON.stringify(statoBlend));
     }
 
-    /* Aggiorna tutta l'interfaccia utente (Contatori, Riepilogo, Prezzo e Bottone) */
     function aggiornaUI() {
-        // Aggiorna Contatori
         const contBase = document.getElementById('contatore-base');
         const contIng = document.getElementById('contatore-ingredienti');
-        
-        if (contBase) contBase.textContent = `${statoBlend.base ? 1 : 0}/1`;
-        if (contIng) contIng.textContent = `${statoBlend.ingredienti.length}/${statoBlend.maxIngredienti}`;
 
-        // Aggiorna Badge Mobile
+        if (contBase) contBase.textContent = (statoBlend.base ? 1 : 0) + '/1';
+        if (contIng) contIng.textContent = statoBlend.ingredienti.length + '/' + statoBlend.maxIngredienti;
+
         const badgeRiepilogo = document.getElementById('badgeRiepilogo');
         if (badgeRiepilogo) {
             const totaleItems = (statoBlend.base ? 1 : 0) + statoBlend.ingredienti.length;
@@ -839,62 +870,54 @@ document.addEventListener('DOMContentLoaded', function() {
             badgeRiepilogo.classList.toggle('badge--visible', totaleItems > 0);
         }
 
-        // Aggiorna Riepilogo Base (con la X di rimozione)
         const baseDiv = document.getElementById('base-selezionata');
         if (baseDiv) {
-            baseDiv.innerHTML = statoBlend.base 
-                ? `<div class="item-selezionato">
-                    <span><strong>Base:</strong> ${statoBlend.base.nome}</span>
-                    <button class="btn-rimuovi-x" onclick="rimuoviBase()" aria-label="Rimuovi ${statoBlend.base.nome} dalla selezione">
-                        <span aria-hidden="true">✕</span>
-                    </button>
-                   </div>` 
+            baseDiv.innerHTML = statoBlend.base
+                ? '<div class="item-selezionato">' +
+                    '<span><strong>Base:</strong> ' + statoBlend.base.nome + '</span>' +
+                    '<button class="btn-rimuovi-x" onclick="rimuoviBase()" aria-label="Rimuovi ' + statoBlend.base.nome + ' dalla selezione">' +
+                        '<span aria-hidden="true">✕</span>' +
+                    '</button>' +
+                  '</div>'
                 : '<p class="nessuna-selezione">Nessuna base selezionata</p>';
         }
 
-        // Aggiorna Riepilogo Ingredienti (con la X di rimozione) 
         const ingDiv = document.getElementById('ingredienti-selezionati');
         if (ingDiv) {
             if (statoBlend.ingredienti.length > 0) {
-                ingDiv.innerHTML = statoBlend.ingredienti.map(i => `
-                    <div class="item-selezionato">
-                        <span>${i.nome}</span>
-                        <button class="btn-rimuovi-x" onclick="rimuoviIng(${i.id})" aria-label="Rimuovi ${i.nome} dalla selezione">
-                            <span aria-hidden="true">✕</span>
-                        </button>
-
-                    </div>
-                `).join('');
+                ingDiv.innerHTML = statoBlend.ingredienti.map(function(i) {
+                    return '<div class="item-selezionato">' +
+                        '<span>' + i.nome + '</span>' +
+                        '<button class="btn-rimuovi-x" onclick="rimuoviIng(' + i.id + ')" aria-label="Rimuovi ' + i.nome + ' dalla selezione">' +
+                            '<span aria-hidden="true">✕</span>' +
+                        '</button>' +
+                    '</div>';
+                }).join('');
             } else {
                 ingDiv.innerHTML = '<p class="nessuna-selezione">Nessun ingrediente selezionato</p>';
             }
         }
 
-        // Calcolo Prezzo Finale
         let totale = statoBlend.base ? statoBlend.prezzoBase : 0;
         totale += statoBlend.ingredienti.length * statoBlend.prezzoIngrediente;
-        if (statoBlend.ingredienti.length === 3) totale -= 0.50; 
-        
+        if (statoBlend.ingredienti.length === 3) totale -= 0.50;
+
         const importoPrezzo = document.getElementById('importo-prezzo');
         if (importoPrezzo) importoPrezzo.textContent = totale.toFixed(2);
 
-        // Gestione stato Bottone Conferma 
         const btnConferma = document.getElementById('btn-conferma');
         if (btnConferma) {
-            const pronto = statoBlend.base && statoBlend.ingredienti.length >= 2;
+            const pronto = statoBlend.base && statoBlend.ingredienti.length >= statoBlend.maxIngredienti;
             btnConferma.disabled = !pronto;
         }
 
+        aggiornaMessaggioConferma();
         sincronizzaCardGrafiche();
-        
-        // Salva i dati localmente ad ogni modifica
         salvaStato();
     }
 
-    /* Sincronizza le classi 'selezionato' e i testi dei bottoni basandosi sullo stato */
     function sincronizzaCardGrafiche() {
-        // Reset Basi
-        document.querySelectorAll('.base-card').forEach(card => {
+        document.querySelectorAll('.base-card').forEach(function(card) {
             const id = card.dataset.id;
             const nome = card.dataset.nome;
             const btn = card.querySelector('.btn-seleziona-base');
@@ -902,61 +925,59 @@ document.addEventListener('DOMContentLoaded', function() {
                 card.classList.add('selezionato');
                 if (btn) {
                     btn.innerHTML = 'Selezionata <span aria-hidden="true">✓</span>';
-                    btn.setAttribute('aria-label', `${nome} selezionata`);
+                    btn.setAttribute('aria-label', nome + ' selezionata');
                 }
             } else {
                 card.classList.remove('selezionato');
                 if (btn) {
-                    btn.innerHTML = `<span aria-hidden="true">Seleziona</span>`;
-                    btn.setAttribute('aria-label', `Seleziona ${nome} come base`);
+                    btn.innerHTML = '<span aria-hidden="true">Seleziona</span>';
+                    btn.setAttribute('aria-label', 'Seleziona ' + nome + ' come base');
                 }
             }
         });
 
-        // Reset Ingredienti
         const raggiuntoMax = statoBlend.ingredienti.length >= statoBlend.maxIngredienti;
-        document.querySelectorAll('.ingrediente-card').forEach(card => {
+        document.querySelectorAll('.ingrediente-card').forEach(function(card) {
             const id = card.dataset.id;
             const nome = card.dataset.nome;
             const btn = card.querySelector('.btn-aggiungi-ingrediente');
-            const isSelezionato = statoBlend.ingredienti.some(i => i.id == id);
+            const isSelezionato = statoBlend.ingredienti.some(function(i) { return i.id == id; });
 
             if (isSelezionato) {
                 card.classList.add('selezionato');
                 card.classList.remove('disabilitato');
-                if (btn) { 
-                    btn.innerHTML = `<span aria-hidden="true">Rimuovi</span>`;
+                if (btn) {
+                    btn.innerHTML = '<span aria-hidden="true">Rimuovi</span>';
                     btn.disabled = false;
-                    btn.setAttribute('aria-label', `Rimuovi ${nome} dal blend`);
+                    btn.setAttribute('aria-label', 'Rimuovi ' + nome + ' dal blend');
                 }
             } else {
                 card.classList.remove('selezionato');
                 if (raggiuntoMax) {
                     card.classList.add('disabilitato');
-                    if (btn) { 
-                        btn.innerHTML = `<span aria-hidden="true">Aggiungi</span>`;
+                    if (btn) {
+                        btn.innerHTML = '<span aria-hidden="true">Aggiungi</span>';
                         btn.disabled = true;
-                        btn.setAttribute('aria-label', `Impossibile aggiungere ${nome}, limite raggiunto`);
+                        btn.setAttribute('aria-label', 'Impossibile aggiungere ' + nome + ', limite raggiunto');
                     }
                 } else {
                     card.classList.remove('disabilitato');
-                    if (btn) { 
-                        btn.innerHTML = `<span aria-hidden="true">Aggiungi</span>`;
+                    if (btn) {
+                        btn.innerHTML = '<span aria-hidden="true">Aggiungi</span>';
                         btn.disabled = false;
-                        btn.setAttribute('aria-label', `Aggiungi ${nome} al blend`);
+                        btn.setAttribute('aria-label', 'Aggiungi ' + nome + ' al blend');
                     }
                 }
             }
         });
 
-        // Sincronizza Radio Button (2 o 3)
-        document.querySelectorAll('input[name="numIngredienti"]').forEach(radio => {
+        document.querySelectorAll('input[name="numIngredienti"]').forEach(function(radio) {
             if (parseInt(radio.value) === statoBlend.maxIngredienti) radio.checked = true;
         });
     }
 
     /* Listener Selezione Basi */
-    document.querySelectorAll('.btn-seleziona-base').forEach(btn => {
+    document.querySelectorAll('.btn-seleziona-base').forEach(function(btn) {
         btn.addEventListener('click', function() {
             const card = this.closest('.base-card');
             statoBlend.base = { id: card.dataset.id, nome: card.dataset.nome };
@@ -965,28 +986,34 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     /* Listener Selezione Ingredienti */
-    document.querySelectorAll('.btn-aggiungi-ingrediente').forEach(btn => {
+    document.querySelectorAll('.btn-aggiungi-ingrediente').forEach(function(btn) {
         btn.addEventListener('click', function() {
             const card = this.closest('.ingrediente-card');
             const id = card.dataset.id;
             const nome = card.dataset.nome;
 
-            const index = statoBlend.ingredienti.findIndex(i => i.id === id);
-            
+            const index = statoBlend.ingredienti.findIndex(function(i) { return i.id === id; });
+
             if (index > -1) {
+                // L'ingrediente era già presente: lo rimuove
                 statoBlend.ingredienti.splice(index, 1);
-            } else if (statoBlend.ingredienti.length < statoBlend.maxIngredienti) {
-                statoBlend.ingredienti.push({ id, nome });
+                aggiornaUI();
+            } else if (statoBlend.ingredienti.length >= statoBlend.maxIngredienti) {
+                // Limite raggiunto: il messaggio inline nella sidebar informa già l'utente
+                aggiornaUI();
+            } else {
+                statoBlend.ingredienti.push({ id: id, nome: nome });
+                aggiornaUI();
             }
-            aggiornaUI();
         });
     });
 
     /* Radio Button 2/3 ingredienti */
-    document.querySelectorAll('input[name="numIngredienti"]').forEach(radio => {
+    document.querySelectorAll('input[name="numIngredienti"]').forEach(function(radio) {
         radio.addEventListener('change', function() {
-            statoBlend.maxIngredienti = parseInt(this.value);
-            if (statoBlend.ingredienti.length > statoBlend.maxIngredienti) {
+            const nuovoMax = parseInt(this.value);
+            statoBlend.maxIngredienti = nuovoMax;
+            if (statoBlend.ingredienti.length > nuovoMax) {
                 statoBlend.ingredienti.pop();
             }
             aggiornaUI();
@@ -1000,7 +1027,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     window.rimuoviIng = function(id) {
-        statoBlend.ingredienti = statoBlend.ingredienti.filter(i => i.id != id);
+        statoBlend.ingredienti = statoBlend.ingredienti.filter(function(i) { return i.id != id; });
         aggiornaUI();
     };
 
@@ -1011,13 +1038,12 @@ document.addEventListener('DOMContentLoaded', function() {
         statoBlend.ingredienti = [];
         statoBlend.maxIngredienti = 2;
         aggiornaUI();
-        
-        // Chiudi sidebar mobile se aperta
+
         if (blendPanel && blendPanel.classList.contains('active')) {
             blendPanel.classList.remove('active');
             document.body.classList.remove('no-scroll');
-            }
         }
+    }
 
     const btnReset = document.getElementById('btn-reset');
     if (btnReset) btnReset.addEventListener('click', eseguiReset);
@@ -1025,15 +1051,19 @@ document.addEventListener('DOMContentLoaded', function() {
     /* Invio Form */
     const btnConferma = document.getElementById('btn-conferma');
     if (btnConferma) {
-        btnConferma.addEventListener('click', () => {
-            if (!statoBlend.base || statoBlend.ingredienti.length < 2) return;
-            
-            // Prima dell'invio pulisce il storage
-            localStorage.removeItem('mioBlendSalvato');
+        btnConferma.addEventListener('click', function() {
+            // Controllo difensivo: il bottone è disabilitato finché il blend non è completo,
+            // ma verifichiamo anche qui per sicurezza
+            if (!statoBlend.base || statoBlend.ingredienti.length < statoBlend.maxIngredienti) {
+                aggiornaMessaggioConferma();
+                return;
+            }
 
+            // Tutto ok: prepara e invia il form
+            localStorage.removeItem('mioBlendSalvato');
             document.getElementById('input-id-base').value = statoBlend.base.id;
-            document.getElementById('input-ingredienti').value = JSON.stringify(statoBlend.ingredienti.map(i => i.id));
-            document.getElementById('input-nome-blend').value = `Blend Personalizzato: ${statoBlend.base.nome}`;
+            document.getElementById('input-ingredienti').value = JSON.stringify(statoBlend.ingredienti.map(function(i) { return i.id; }));
+            document.getElementById('input-nome-blend').value = 'Blend Personalizzato: ' + statoBlend.base.nome;
             document.getElementById('input-prezzo').value = document.getElementById('importo-prezzo').textContent;
             document.getElementById('form-blend').submit();
         });
@@ -1050,7 +1080,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const body = document.body;
     const productContainer = document.getElementById('productContainer');
     const noResultsMsg = document.getElementById('noResults');
-    const allProducts = document.querySelectorAll('.product-card');
 
     if (!productContainer) return;
 
@@ -1124,6 +1153,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function filterProducts() {
+        const allProducts = document.querySelectorAll('.product-card');
         const selectedCategory = document.querySelector('input[name="category"]:checked')?.value || 'all';
         const selectedPriceRange = document.querySelector('input[name="priceRange"]:checked')?.value || 'all';
         const selectedBase = document.querySelector('input[name="baseFilter"]:checked')?.value || 'all';
@@ -1180,6 +1210,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function sortProducts(sortType) {
+        const allProducts = document.querySelectorAll('.product-card');
         const productsArray = Array.from(allProducts);
         const visibleProducts = productsArray.filter(p => !p.classList.contains('product-hidden'));
 
