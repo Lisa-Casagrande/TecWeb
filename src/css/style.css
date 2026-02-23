@@ -3045,3 +3045,33 @@ button:hover {
 .mobile-only {
     display: none;
 }
+
+/* ==========================================================================
+   CLASSI DI UTILITÀ (migrate da JS: separazione presentazione/funzionamento)
+   ========================================================================== */
+
+/* Blocca lo scroll del body quando una sidebar/menu è aperto */
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* Menu mobile: nascosto di default, visibile con classe .open */
+.mobile-menu-wrapper {
+    display: none;
+}
+.mobile-menu-wrapper.open {
+    display: flex;
+}
+
+/* Badge riepilogo blend: nascosto di default, visibile quando ci sono elementi */
+#badgeRiepilogo {
+    display: none;
+}
+#badgeRiepilogo.badge--visible {
+    display: flex;
+}
+
+/* Prodotti nascosti dal filtro catalogo */
+.product-card.product-hidden {
+    display: none;
+}

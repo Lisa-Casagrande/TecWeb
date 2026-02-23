@@ -308,7 +308,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!mobileMenuWrapper) {
         mobileMenuWrapper = document.createElement('div');
         mobileMenuWrapper.className = 'mobile-menu-wrapper';
-        mobileMenuWrapper.classList.add('hidden');
         mobileMenuWrapper.setAttribute('role', 'dialog');
         mobileMenuWrapper.setAttribute('aria-modal', 'true');
         mobileMenuWrapper.setAttribute('aria-label', 'Menu di navigazione mobile');
@@ -352,8 +351,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function openMenu() {
         hamburger.classList.add('active');
         hamburger.setAttribute('aria-expanded', 'true');
-        mobileMenuWrapper.style.display = 'flex';
-        body.style.overflow = 'hidden';
+        mobileMenuWrapper.classList.add('open');
+        body.classList.add('no-scroll');
         
         // Chiudi ricerca se aperta
         const searchForm = document.getElementById('searchForm');
@@ -370,8 +369,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function closeMenu() {
         hamburger.classList.remove('active');
         hamburger.setAttribute('aria-expanded', 'false');
-        mobileMenuWrapper.style.display = 'none';
-        body.style.overflow = '';
+        mobileMenuWrapper.classList.remove('open');
+        body.classList.remove('no-scroll');
         document.removeEventListener('click', handleClickOutside);
         mobileMenuWrapper.removeEventListener('click', handleMenuClick);
     }
@@ -809,20 +808,20 @@ document.addEventListener('DOMContentLoaded', function() {
         // Apertura sidebar
         fixedBlendBtn.addEventListener('click', () => {
             blendPanel.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Blocca scroll del body
+            document.body.classList.add('no-scroll'); // Blocca scroll del body
         });
         
         // Chiusura con bottone X
         closeBlendBtn.addEventListener('click', () => {
             blendPanel.classList.remove('active');
-            document.body.style.overflow = ''; // Riabilita scroll
+            document.body.classList.remove('no-scroll'); // Riabilita scroll
         });
         
         // Chiusura cliccando fuori (opzionale)
         blendPanel.addEventListener('click', (e) => {
             if (e.target === blendPanel) {
                 blendPanel.classList.remove('active');
-                document.body.style.overflow = '';
+                document.body.classList.remove('no-scroll');
             }
         });
     }
@@ -856,7 +855,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (badgeRiepilogo) {
             const totaleItems = (statoBlend.base ? 1 : 0) + statoBlend.ingredienti.length;
             badgeRiepilogo.textContent = totaleItems;
-            badgeRiepilogo.style.display = totaleItems > 0 ? 'flex' : 'none';
+            badgeRiepilogo.classList.toggle('badge--visible', totaleItems > 0);
         }
 
         // Aggiorna Riepilogo Base (con la X di rimozione)
@@ -1036,11 +1035,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // Chiudi sidebar mobile se aperta
         if (blendPanel && blendPanel.classList.contains('active')) {
             blendPanel.classList.remove('active');
-            document.body.style.overflow = '';
+            document.body.classList.remove('no-scroll');
+            }
         }
-    }
 
-    // Collega al bottone Reset
     const btnReset = document.getElementById('btn-reset');
     if (btnReset) btnReset.addEventListener('click', eseguiReset);
 
@@ -1080,21 +1078,21 @@ document.addEventListener('DOMContentLoaded', function() {
         filterBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             filterPanel.classList.add('active');
-            body.style.overflow = 'hidden';
+            body.classList.add('no-scroll');
         });
 
         if (closeBtn) {
             closeBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 filterPanel.classList.remove('active');
-                body.style.overflow = '';
+                body.classList.remove('no-scroll');
             });
         }
 
         window.addEventListener('resize', function() {
             if (window.innerWidth > 1025 && filterPanel.classList.contains('active')) {
                 filterPanel.classList.remove('active');
-                body.style.overflow = '';
+                body.classList.remove('no-scroll');
             }
         });
     }
@@ -1184,10 +1182,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (shouldShow) {
-                product.style.display = '';
+                product.classList.remove('product-hidden');
                 visibleCount++;
             } else {
-                product.style.display = 'none';
+                product.classList.add('product-hidden');
             }
         });
 
@@ -1203,7 +1201,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function sortProducts(sortType) {
         const productsArray = Array.from(allProducts);
-        const visibleProducts = productsArray.filter(p => !p.classList.contains('hidden'));
+        const visibleProducts = productsArray.filter(p => !p.classList.contains('product-hidden'));
 
         visibleProducts.sort((a, b) => {
             switch(sortType) {
