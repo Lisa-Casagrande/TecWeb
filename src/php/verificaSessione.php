@@ -21,7 +21,7 @@ function userId() {
 // Richiede che l'utente sia loggato (qualsiasi tipo), altrimenti → 401
 function requireLogin() {
     if (!isLoggedIn()) {
-        header("Location: /lcasagra/401.php");
+        header("Location: ../401.php");
         exit();
     }
 }
@@ -31,11 +31,11 @@ function requireLogin() {
 // - loggato ma tipo sbagliato → 403
 function requireUser() {
     if (!isLoggedIn()) {
-        header("Location: /lcasagra/401.php");
+        header("Location: ../401.php");
         exit();
     }
     if (userType() !== 'utente') {
-        header("Location: /lcasagra/403.php");
+        header("Location: ../403.php");
         exit();
     }
 }
